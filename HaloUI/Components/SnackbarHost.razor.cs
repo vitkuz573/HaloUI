@@ -216,10 +216,10 @@ public partial class SnackbarHost
 
     private static HaloIconToken GetIcon(SnackbarSeverity severity) => severity switch
     {
-        SnackbarSeverity.Success => HaloMaterialIcons.CheckCircle,
-        SnackbarSeverity.Warning => HaloMaterialIcons.Warning,
-        SnackbarSeverity.Error => HaloMaterialIcons.Error,
-        _ => HaloMaterialIcons.Info
+        SnackbarSeverity.Success => HaloDefaultIcons.CheckCircle,
+        SnackbarSeverity.Warning => HaloDefaultIcons.Warning,
+        SnackbarSeverity.Error => HaloDefaultIcons.Error,
+        _ => HaloDefaultIcons.Info
     };
 
     private static string GetTitle(SnackbarSeverity severity) => severity switch

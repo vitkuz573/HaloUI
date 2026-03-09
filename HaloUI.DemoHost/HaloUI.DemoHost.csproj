@@ -2,10 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HaloUI\HaloUI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\HaloUI\Iconography\Packs\Material\material-icons-regular.json" Link="icon-packs/material-icons-regular.json" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\HaloUI.IconPacks.Material\HaloUI.IconPacks.Material.csproj" />
   </ItemGroup>
 
 </Project>

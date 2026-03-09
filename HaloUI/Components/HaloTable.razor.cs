@@ -48,7 +48,7 @@ public partial class HaloTable<TItem>
             builder.AddAttribute(4, "aria-label", "Clear search");
             builder.AddAttribute(5, "title", "Clear search");
             builder.OpenComponent<HaloIcon>(6);
-            builder.AddAttribute(7, nameof(HaloIcon.Name), HaloMaterialIcons.Close);
+            builder.AddAttribute(7, nameof(HaloIcon.Name), HaloDefaultIcons.Close);
             builder.AddAttribute(8, nameof(HaloIcon.Class), "halo-table__toolbar-icon");
             builder.AddAttribute(9, nameof(HaloIcon.Decorative), true);
             builder.CloseComponent();
@@ -384,9 +384,9 @@ public partial class HaloTable<TItem>
 
         return direction switch
         {
-            TableSortDirection.Ascending => HaloMaterialIcons.ArrowUpward,
-            TableSortDirection.Descending => HaloMaterialIcons.ArrowDownward,
-            _ => HaloMaterialIcons.UnfoldMore
+            TableSortDirection.Ascending => HaloDefaultIcons.ArrowUpward,
+            TableSortDirection.Descending => HaloDefaultIcons.ArrowDownward,
+            _ => HaloDefaultIcons.UnfoldMore
         };
     }
 

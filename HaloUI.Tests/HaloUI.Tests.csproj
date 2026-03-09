@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HaloUI\HaloUI.csproj" />
+    <ProjectReference Include="..\HaloUI.IconPacks.Material\HaloUI.IconPacks.Material.csproj" />
   </ItemGroup>
 
   <ItemGroup>

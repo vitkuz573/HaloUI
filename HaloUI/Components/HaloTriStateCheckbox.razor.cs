@@ -81,9 +81,9 @@ public partial class HaloTriStateCheckbox
     {
         return State switch
         {
-            TriState.All => HaloMaterialIcons.Check,
-            TriState.Partial => HaloMaterialIcons.Remove,
-            _ => HaloMaterialIcons.Check
+            TriState.All => HaloDefaultIcons.Check,
+            TriState.Partial => HaloDefaultIcons.Remove,
+            _ => HaloDefaultIcons.Check
         };
     }
 

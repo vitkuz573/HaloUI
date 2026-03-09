@@ -472,7 +472,7 @@ public partial class DialogHost : IAsyncDisposable
     }
 
     private static HaloIconToken ResolveDrawerHandleIcon(DialogDrawerPlacement placement) =>
-        placement == DialogDrawerPlacement.Start ? HaloMaterialIcons.ChevronLeft : HaloMaterialIcons.ChevronRight;
+        placement == DialogDrawerPlacement.Start ? HaloDefaultIcons.ChevronLeft : HaloDefaultIcons.ChevronRight;
 
     private static string BuildDialogStyle(DialogDesignTokens tokens, DialogSizeTokens sizeTokens, DialogVariantOptions variant)
     {

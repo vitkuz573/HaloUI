@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\HaloUI\HaloUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Iconography\Packs\Material\material-icons-*.json" />
+    <EmbeddedResource Include="Iconography\Packs\Material\material-icons.index.json" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/HaloUI/">
     <Project Path="HaloUI/HaloUI.csproj" />
+    <Project Path="HaloUI.IconPacks.Material/HaloUI.IconPacks.Material.csproj" />
     <Project Path="HaloUI.DemoHost/HaloUI.DemoHost.csproj" />
     <Project Path="HaloUI.Tests/HaloUI.Tests.csproj" />
     <Project Path="HaloUI.Tests.E2E/HaloUI.Tests.E2E.csproj" />

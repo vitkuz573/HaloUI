@@ -17,6 +17,7 @@ HaloUI is a standalone Blazor component toolkit for building production UI with:
 
 ## Repository layout
 - `HaloUI/` component library and theming infrastructure.
+- `HaloUI.IconPacks.Material/` embedded Material icon pack project (typed catalog + manifests + DI helper).
 - `HaloUI.DemoHost/` runnable showcase app with real component scenarios.
 - `HaloUI.Tests/`, `HaloUI.Tests.E2E/` component-level and end-to-end validation.
 - `tests/accessibility/` Playwright + axe automation.
@@ -51,9 +52,8 @@ services.AddHaloUIPassthroughLigatureIcons("my-icon-font-class");
 ```
 
 ```csharp
-// Manifest-backed resolver:
-var manifest = HaloIconPackManifest.Parse(File.ReadAllText("icon-pack.json"));
-services.AddHaloUIIconPack(manifest);
+// Embedded Material pack resolver:
+services.AddHaloUIMaterialIconPack(HaloMaterialIconStyle.Regular);
 ```
 
 Generate full Material icon manifests (all official `.codepoints` styles):
@@ -62,7 +62,7 @@ Generate full Material icon manifests (all official `.codepoints` styles):
 ./scripts/generate-material-icon-packs.sh
 ```
 
-This writes JSON manifests to `HaloUI/Iconography/Packs/Material/`.
+This writes JSON manifests to `HaloUI.IconPacks.Material/Iconography/Packs/Material/`.
 
 ## Accessibility and UI automation
 From `tests/accessibility`:

@@ -177,10 +177,10 @@ public partial class HaloRadioButton<TValue>
     {
         if (segmented)
         {
-            return selected ? HaloMaterialIcons.Check : null;
+            return selected ? HaloDefaultIcons.Check : null;
         }
 
-        return selected ? HaloMaterialIcons.RadioButtonChecked : HaloMaterialIcons.RadioButtonUnchecked;
+        return selected ? HaloDefaultIcons.RadioButtonChecked : HaloDefaultIcons.RadioButtonUnchecked;
     }
 
     private string GetDisplayLabel()
