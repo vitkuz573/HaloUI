@@ -10,32 +10,34 @@ namespace HaloUI.Abstractions;
 /// <param name="MaxHistory">Maximum number of inspection events retained in memory.</param>
 /// <param name="AutoShowOnError">Whether the overlay should open automatically when an error is detected.</param>
 /// <param name="AutoShowOnWarning">Whether the overlay should open automatically when a warning is detected.</param>
-public sealed class AriaInspectorOptions
+public sealed record AriaInspectorOptions
 {
-    public bool IsEnabled { get; set; } = false;
+    public bool IsEnabled { get; init; } = false;
 
-    public int MaxHistory { get; set; } = 200;
+    public int MaxHistory { get; init; } = 200;
 
-    public int MaxQueueSize { get; set; } = 512;
+    public int MaxQueueSize { get; init; } = 512;
 
-    public bool AutoShowOnError { get; set; } = false;
+    public bool AutoShowOnError { get; init; } = false;
 
-    public bool AutoShowOnWarning { get; set; } = false;
+    public bool AutoShowOnWarning { get; init; } = false;
 
     public static AriaInspectorOptions Default { get; } = new();
 
     public AriaInspectorOptions Normalize()
     {
-        if (MaxHistory <= 0)
+        var normalizedMaxHistory = MaxHistory > 0 ? MaxHistory : Default.MaxHistory;
+        var normalizedMaxQueueSize = MaxQueueSize > 0 ? MaxQueueSize : Default.MaxQueueSize;
+
+        if (normalizedMaxHistory == MaxHistory && normalizedMaxQueueSize == MaxQueueSize)
         {
-            MaxHistory = Default.MaxHistory;
+            return this;
         }
 
-        if (MaxQueueSize <= 0)
+        return this with
         {
-            MaxQueueSize = Default.MaxQueueSize;
-        }
-
-        return this;
+            MaxHistory = normalizedMaxHistory,
+            MaxQueueSize = normalizedMaxQueueSize
+        };
     }
 }

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using HaloUI.Abstractions;
-using HaloUI.Accessibility.Aria;
 
 namespace HaloUI.Services;
 
@@ -40,7 +39,6 @@ public sealed class AriaDiagnosticsHub : IAriaDiagnosticsHub, IDisposable
         });
 
         _processor = Task.Run(ProcessAsync);
-        AriaDiagnosticsChannel.Register(this);
     }
 
     public event Action<AriaDiagnosticsEvent>? OnEvent;
@@ -144,7 +142,6 @@ public sealed class AriaDiagnosticsHub : IAriaDiagnosticsHub, IDisposable
             // ignored
         }
 
-        AriaDiagnosticsChannel.Unregister(this);
         OnEvent = null;
         _cts.Dispose();
     }

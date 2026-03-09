@@ -69,7 +69,7 @@ public sealed class ThemeSdkGenerator : IIncrementalGenerator
     private const string LeafFallbackIdentifier = "Literal";
 
     private static readonly DiagnosticDescriptor MissingManualAliasTargetDescriptor = new(
-        id: "RMTSG001",
+        id: "HALG001",
         title: "Theme variable alias target missing",
         messageFormat: "Manual theme CSS variable '{0}' references missing target '{1}'",
         category: "ThemeSdk",

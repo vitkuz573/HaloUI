@@ -63,24 +63,6 @@ public partial class HaloTextField
 
     private bool IsInvalid => HasError || (EditContext is not null && EditContext.GetValidationMessages(FieldIdentifier).Any());
 
-    private string? AdditionalInputStyle
-    {
-        get
-        {
-            if (AdditionalAttributes is null)
-            {
-                return null;
-            }
-
-            if (AdditionalAttributes.TryGetValue("style", out var value) && value is not null)
-            {
-                return value.ToString();
-            }
-
-            return null;
-        }
-    }
-
     protected override bool TryParseValueFromString(string? value, out string result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
         result = value ?? string.Empty;

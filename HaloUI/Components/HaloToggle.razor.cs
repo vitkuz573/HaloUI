@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Microsoft.AspNetCore.Components;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Enums;
@@ -46,6 +47,9 @@ public partial class HaloToggle
     
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Inject]
+    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     private readonly string _inputId = AccessibilityIdGenerator.Create("halo-toggle");
     private readonly string _generatedLabelId = AccessibilityIdGenerator.Create("halo-toggle-label");
@@ -150,7 +154,7 @@ public partial class HaloToggle
 
         var attributes = AccessibilityAttributesBuilder.Merge(
             AdditionalAttributes,
-            builder.Build());
+            builder.Build(AriaDiagnosticsHub));
 
         attributes["id"] = _inputId;
 

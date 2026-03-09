@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 
@@ -41,6 +42,9 @@ public partial class HaloRadioGroup<TValue>
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Inject]
+    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     [Parameter]
     public string? SegmentClass { get; set; }
@@ -291,7 +295,7 @@ public partial class HaloRadioGroup<TValue>
 
         var attributes = AccessibilityAttributesBuilder.Merge(
             AdditionalAttributes,
-            builder.Build(),
+            builder.Build(AriaDiagnosticsHub),
             "role",
             "aria-label",
             "aria-labelledby",

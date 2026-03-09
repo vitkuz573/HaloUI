@@ -13,6 +13,12 @@ install:
       Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1;
       .\dotnet-install.ps1 -Version 10.0.103 -InstallDir C:\dotnet;
       Remove-Item .\dotnet-install.ps1 -Force
+  - ps: >-
+      if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
+          choco install nodejs-lts -y --no-progress;
+      }
+      node --version;
+      npm --version
   - set PATH=C:\dotnet;%PATH%
 
 build_script:
@@ -23,6 +29,12 @@ build_script:
 test_script:
   - pwsh ./HaloUI.Tests.E2E/bin/Release/net10.0/playwright.ps1 install chromium
   - dotnet test HaloUI.slnx -c Release --no-build
+  - cd tests/accessibility
+  - npm ci
+  - npx playwright install chromium
+  - npm run test:matrix
+  - npm run test:a11y
+  - cd ../..
   - dotnet test HaloUI.Tests/HaloUI.Tests.csproj -c Release --no-build --filter FullyQualifiedName~TokenValidationTests --logger "trx;LogFileName=token_validation.trx"
   - dotnet run --project tools/BrandPreviewCli/BrandPreviewCli.csproj --configuration Release -- --manifest HaloUI/Theme/Tokens/design-tokens.json --themes Light,DarkGlass --brands HaloUI --output artifacts/brand-previews
 
@@ -31,3 +43,7 @@ artifacts:
     name: brand-previews
   - path: HaloUI.Tests/TestResults/**/token_validation.trx
     name: token-validation-report
+  - path: tests/accessibility/playwright-report
+    name: accessibility-playwright-report
+  - path: tests/accessibility/test-results
+    name: accessibility-test-results

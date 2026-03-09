@@ -32,6 +32,7 @@ public abstract class HaloLabellableInputBase<TValue> : ThemeAwareInputBase<TVal
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public bool Required { get; set; }
+    [Inject] protected IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     /// <inheritdoc />
     public string InputId => _inputId;
@@ -98,7 +99,7 @@ public abstract class HaloLabellableInputBase<TValue> : ThemeAwareInputBase<TVal
         configure?.Invoke(builder);
         builder.WithAccessibleNameFromAdditionalAttributes(AdditionalAttributes);
 
-        var accessibilityAttributes = builder.Build();
+        var accessibilityAttributes = builder.Build(AriaDiagnosticsHub);
 
         return AccessibilityAttributesBuilder.Merge(AdditionalAttributes, accessibilityAttributes, excludedAttributes);
     }

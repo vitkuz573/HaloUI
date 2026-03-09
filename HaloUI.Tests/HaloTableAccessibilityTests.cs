@@ -40,8 +40,10 @@ public sealed class HaloTableAccessibilityTests : BunitContext
     [Fact]
     public void ColumnFilterInput_ExposesContextualAriaLabel()
     {
-        var options = TableOptions.Default.Clone();
-        options.ShowColumnFilters = true;
+        var options = TableOptions.Default with
+        {
+            ShowColumnFilters = true
+        };
 
         var cut = Render<HaloTable<TestRow>>(parameters => parameters
             .Add(p => p.Items, new[] { new TestRow("1", "APAC Edge 01") })

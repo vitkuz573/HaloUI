@@ -5,6 +5,7 @@
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Runtime;
 using HaloUI.Theme.Tokens;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
 namespace HaloUI.Services;
@@ -18,21 +19,22 @@ public sealed class ThemeState
 
     private readonly HaloThemeContext _context;
     private readonly IJSRuntime? _jsRuntime;
+    private readonly ILogger<ThemeState>? _logger;
     private string _currentThemeKey;
     private bool _hasExplicitTheme;
 
-    public ThemeState(IThemeCatalog catalog, IJSRuntime jsRuntime)
-        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, jsRuntime)
+    public ThemeState(IThemeCatalog catalog, IJSRuntime jsRuntime, ILogger<ThemeState>? logger = null)
+        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, jsRuntime, logger)
     {
     }
 
-    public ThemeState(IThemeCatalog catalog, string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null)
-        : this(themeKey, theme, hasExplicitTheme, jsRuntime)
+    public ThemeState(IThemeCatalog catalog, string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null, ILogger<ThemeState>? logger = null)
+        : this(themeKey, theme, hasExplicitTheme, jsRuntime, logger)
     {
         ArgumentNullException.ThrowIfNull(catalog);
     }
 
-    public ThemeState(string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null)
+    public ThemeState(string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null, ILogger<ThemeState>? logger = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(themeKey);
         ArgumentNullException.ThrowIfNull(theme);
@@ -41,6 +43,7 @@ public sealed class ThemeState
         _currentThemeKey = themeKey;
         _hasExplicitTheme = hasExplicitTheme;
         _jsRuntime = jsRuntime;
+        _logger = logger;
         
         SetBodyThemeAttribute(theme);
     }
@@ -111,18 +114,23 @@ public sealed class ThemeState
         }
         catch (JSDisconnectedException)
         {
+            _logger?.LogDebug("Skipping body theme attribute update because JS runtime disconnected.");
         }
         catch (TaskCanceledException)
         {
+            _logger?.LogDebug("Skipping body theme attribute update because JS invocation was canceled.");
         }
         catch (ObjectDisposedException)
         {
+            _logger?.LogDebug("Skipping body theme attribute update because JS runtime was disposed.");
         }
-        catch (InvalidOperationException)
+        catch (InvalidOperationException ex)
         {
+            _logger?.LogDebug(ex, "Skipping body theme attribute update due to invalid operation state.");
         }
-        catch (JSException)
+        catch (JSException ex)
         {
+            _logger?.LogDebug(ex, "Skipping body theme attribute update due to JS exception.");
         }
     }
 

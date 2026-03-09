@@ -3,10 +3,10 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using HaloUI.Abstractions;
@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
         services.AddHaloUIThemeProvider();
         services.AddHaloUIDialogHost();
         services.AddHaloUISnackbarHost();
+        services.TryAddSingleton<IAriaDiagnosticsHub, NoOpAriaDiagnosticsHub>();
 
         return services;
     }
@@ -55,68 +56,46 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddHttpContextAccessor();
         services.TryAddSingleton<IThemeCatalog>(_ => GeneratedThemeCatalog.Instance);
+        services.TryAddScoped<IThemePreferenceStore, ThemePreferenceStore>();
 
         services.AddScoped<ThemeState>(sp =>
         {
-            var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
-            var httpContext = httpContextAccessor.HttpContext;
             var catalog = sp.GetRequiredService<IThemeCatalog>();
+            var themePreferenceStore = sp.GetRequiredService<IThemePreferenceStore>();
             var jsRuntime = sp.GetService<IJSRuntime>();
+            var logger = sp.GetService<ILogger<ThemeState>>();
 
             var defaultKey = catalog.DefaultThemeKey;
-            var themeKey = defaultKey;
-            var hasExplicit = false;
-            HaloTheme theme;
-
-            string? requestedKey = null;
-            var fromQuery = false;
-
-            if (httpContext is not null)
-            {
-                if (httpContext.Request.Query.TryGetValue(ThemeState.CookieName, out var queryValue) &&
-                    !string.IsNullOrWhiteSpace(queryValue))
-                {
-                    requestedKey = queryValue.ToString();
-                    fromQuery = true;
-                }
-                else if (httpContext.Request.Cookies.TryGetValue(ThemeState.CookieName, out var storedKey) &&
-                         !string.IsNullOrWhiteSpace(storedKey))
-                {
-                    requestedKey = storedKey;
-                }
-            }
+            var preference = themePreferenceStore.Resolve(defaultKey);
+            var requestedKey = preference.ThemeKey;
 
             if (!string.IsNullOrWhiteSpace(requestedKey) &&
                 catalog.TryCreateThemeSystem(requestedKey, out var requestedSystem) &&
                 catalog.TryGetDescriptor(requestedKey, out var descriptor))
             {
-                themeKey = descriptor.Key;
-                theme = new HaloTheme { Tokens = requestedSystem };
-                hasExplicit = true;
-
-                if (fromQuery && httpContext?.Response is { } response)
-                {
-                    response.Cookies.Append(
-                        ThemeState.CookieName,
-                        themeKey,
-                        new CookieOptions
-                        {
-                            Path = "/",
-                            MaxAge = TimeSpan.FromDays(365)
-                        });
-                }
-            }
-            else
-            {
-                theme = new HaloTheme { Tokens = catalog.CreateThemeSystem(defaultKey) };
+                var theme = new HaloTheme { Tokens = requestedSystem };
+                return new ThemeState(catalog, descriptor.Key, theme, preference.HasExplicitTheme, jsRuntime, logger);
             }
 
-            return new ThemeState(catalog, themeKey, theme, hasExplicit, jsRuntime);
+            var fallbackTheme = new HaloTheme { Tokens = catalog.CreateThemeSystem(defaultKey) };
+            return new ThemeState(catalog, defaultKey, fallbackTheme, false, jsRuntime, logger);
         });
 
         services.AddCascadingValue(sp => sp.GetRequiredService<ThemeState>().Context);
+
+        return services;
+    }
+
+    /// <summary>
+    /// Enables HTTP query/cookie-backed theme preference resolution.
+    /// </summary>
+    public static IServiceCollection AddHaloUIHttpThemePreferenceStore(this IServiceCollection services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.AddHttpContextAccessor();
+        services.Replace(ServiceDescriptor.Scoped<IThemePreferenceStore, HttpThemePreferenceStore>());
 
         return services;
     }
@@ -181,7 +160,7 @@ public static class ServiceCollectionExtensions
         }
 
         services.TryAddSingleton<AriaInspectorState>();
-        services.TryAddSingleton<IAriaDiagnosticsHub>(sp =>
+        services.Replace(ServiceDescriptor.Singleton<IAriaDiagnosticsHub>(sp =>
         {
             var options = sp.GetRequiredService<IOptions<AriaInspectorOptions>>().Value.Normalize();
 
@@ -191,7 +170,7 @@ public static class ServiceCollectionExtensions
             }
 
             return ActivatorUtilities.CreateInstance<AriaDiagnosticsHub>(sp);
-        });
+        }));
 
         return services;
     }

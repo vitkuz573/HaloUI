@@ -5,4 +5,4 @@
 
 Rule ID | Category | Severity | Notes
 --------|----------|----------|------
-RMTSG001 | ThemeSdk | Error | Theme variable alias target missing
+HALG001 | ThemeSdk | Error | Theme variable alias target missing

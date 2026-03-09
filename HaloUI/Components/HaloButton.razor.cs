@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Microsoft.AspNetCore.Components;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Enums;
@@ -65,6 +66,9 @@ public partial class HaloButton
     
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Inject]
+    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     protected override bool ShouldRender() => true;
 
@@ -193,7 +197,7 @@ public partial class HaloButton
         builder.WithAccessibleNameFromContent(!IconOnly && ChildContent is not null);
         builder.WithAccessibleNameFromAdditionalAttributes(AdditionalAttributes);
 
-        var attributes = AccessibilityAttributesBuilder.Merge(AdditionalAttributes, builder.Build());
+        var attributes = AccessibilityAttributesBuilder.Merge(AdditionalAttributes, builder.Build(AriaDiagnosticsHub));
 
         AutoThemeStyleBuilder.MergeInto(attributes);
 

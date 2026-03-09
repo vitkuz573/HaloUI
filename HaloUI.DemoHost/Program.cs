@@ -10,6 +10,7 @@ using HaloUI.Abstractions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHaloUICore();
+builder.Services.AddHaloUIHttpThemePreferenceStore();
 builder.Services.AddHaloUIDiagnostics(builder.Configuration);
 builder.Services.AddScoped<IDialogContextProvider, StaticDialogContextProvider>();
 builder.Services.AddScoped<DemoDialogState>();

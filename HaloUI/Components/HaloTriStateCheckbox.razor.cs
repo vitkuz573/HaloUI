@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Microsoft.AspNetCore.Components;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Enums;
@@ -37,6 +38,9 @@ public partial class HaloTriStateCheckbox
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Inject]
+    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     private async Task HandleToggle()
     {
@@ -125,7 +129,7 @@ public partial class HaloTriStateCheckbox
 
         var attributes = AccessibilityAttributesBuilder.Merge(
             AdditionalAttributes,
-            builder.Build(),
+            builder.Build(AriaDiagnosticsHub),
             "role",
             "aria-checked",
             "aria-disabled",

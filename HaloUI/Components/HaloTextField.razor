@@ -16,7 +16,7 @@
             </div>
         }
 
-        <input @attributes="BuildInputAttributes()" class="@BuildInputClass()" style="@AdditionalInputStyle" value="@CurrentValueAsString" @oninput="HandleInputAsync" @onchange="HandleChangeAsync" />
+        <input @attributes="BuildInputAttributes()" class="@BuildInputClass()" value="@CurrentValueAsString" @oninput="HandleInputAsync" @onchange="HandleChangeAsync" />
 
         @if (EndAdornment is not null)
         {

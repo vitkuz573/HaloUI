@@ -430,6 +430,11 @@ public sealed class AccessibilityAttributesBuilder
 
     public IReadOnlyDictionary<string, object> Build()
     {
+        return Build(null);
+    }
+
+    public IReadOnlyDictionary<string, object> Build(IAriaDiagnosticsHub? diagnosticsHub)
+    {
         var result = new Dictionary<string, object>(_attributes, AttributeComparer);
 
         foreach (var (attribute, accumulator) in _tokenAttributes)
@@ -446,7 +451,7 @@ public sealed class AccessibilityAttributesBuilder
 
         var compliance = EvaluateRoleCompliance(result);
         
-        PublishInspection(result, compliance);
+        PublishInspection(diagnosticsHub, result, compliance);
 
         if (!_enforceCompliance || !compliance.HasFailures)
         {
@@ -682,11 +687,9 @@ public sealed class AccessibilityAttributesBuilder
         return builder.ToString();
     }
 
-    private void PublishInspection(IReadOnlyDictionary<string, object> attributes, ComplianceEvaluation evaluation)
+    private void PublishInspection(IAriaDiagnosticsHub? diagnosticsHub, IReadOnlyDictionary<string, object> attributes, ComplianceEvaluation evaluation)
     {
-        var hub = AriaDiagnosticsChannel.Hub;
-
-        if (hub is null)
+        if (diagnosticsHub is null)
         {
             return;
         }
@@ -713,7 +716,7 @@ public sealed class AccessibilityAttributesBuilder
 
         var @event = new AriaDiagnosticsEvent(Guid.NewGuid(), DateTimeOffset.UtcNow, role, _roleCompliance, severity, snapshot, evaluation.MissingRequired, evaluation.Disallowed, evaluation.Recommendations, metadata);
 
-        hub.Publish(@event);
+        diagnosticsHub.Publish(@event);
     }
 
     private static AriaRole? TryResolveRole(IReadOnlyDictionary<string, object> attributes)

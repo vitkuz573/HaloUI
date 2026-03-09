@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 
@@ -53,6 +54,9 @@ public partial class HaloRadioButton<TValue>
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Inject]
+    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
 
     internal string OptionId => _optionId;
 
@@ -140,7 +144,7 @@ public partial class HaloRadioButton<TValue>
 
         var attributes = AccessibilityAttributesBuilder.Merge(
             AdditionalAttributes,
-            builder.Build(),
+            builder.Build(AriaDiagnosticsHub),
             "role",
             "aria-checked",
             "aria-disabled",

@@ -34,7 +34,7 @@ public sealed class HaloTableState<TItem>
     /// <param name="rowKeySelector">Row key selector used for identity comparisons.</param>
     public HaloTableState(TableOptions options, Func<TItem, object?>? rowKeySelector = null)
     {
-        _options = options ?? TableOptions.Default;
+        _options = (options ?? TableOptions.Default).Normalize();
         _rowKeySelector = rowKeySelector ?? (item => item);
         _selectedKeys = new HashSet<object>(EqualityComparer<object>.Default);
         _selectedItems = new Dictionary<object, TItem>(EqualityComparer<object>.Default);
@@ -115,7 +115,7 @@ public sealed class HaloTableState<TItem>
     public void UpdateOptions(TableOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-        _options = options;
+        _options = options.Normalize();
         Pagination.PageSize = Math.Max(1, _options.PageSize);
         Pagination.EnsureBounds();
         NormalizeSelection();

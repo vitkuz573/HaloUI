@@ -116,13 +116,10 @@ public partial class HaloTable<TItem>
     {
         await base.OnParametersSetAsync();
 
-        var baseOptions = Options ?? TableOptions.Default;
-        _options = baseOptions.Clone();
-
-        if (SelectionMode.HasValue)
-        {
-            _options.SelectionMode = SelectionMode.Value;
-        }
+        _options = (Options ?? TableOptions.Default).Normalize();
+        _options = SelectionMode.HasValue
+            ? _options.WithSelectionMode(SelectionMode.Value)
+            : _options;
 
         _state.UpdateOptions(_options);
         _state.ConfigureSearch(SearchPredicate, SearchFields);

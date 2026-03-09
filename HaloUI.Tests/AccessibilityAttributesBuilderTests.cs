@@ -82,7 +82,7 @@ public class AccessibilityAttributesBuilderTests
             .RequireCompliance()
             .WithRole(AriaRole.Switch);
 
-        var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
+        var exception = Assert.Throws<InvalidOperationException>(() => builder.Build(hub));
 
         Assert.Contains("aria-checked", exception.Message, StringComparison.OrdinalIgnoreCase);
         var published = WaitForDiagnosticsEvent(hub);
@@ -100,7 +100,7 @@ public class AccessibilityAttributesBuilderTests
             .WithAttribute(AriaAttributes.Checked, AriaCheckedState.True)
             .WithAria("foo", "bar");
 
-        var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
+        var exception = Assert.Throws<InvalidOperationException>(() => builder.Build(hub));
 
         Assert.Contains("aria-foo", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -108,8 +108,6 @@ public class AccessibilityAttributesBuilderTests
     [Fact]
     public void WithoutRoleCompliance_AllowsCustomAttributes()
     {
-        using var hub = new AriaDiagnosticsHub();
-
         var attributes = new AccessibilityAttributesBuilder()
             .WithRole(AriaRole.Switch)
             .WithoutRoleCompliance()
@@ -128,12 +126,27 @@ public class AccessibilityAttributesBuilderTests
             .WithRole(AriaRole.Button)
             .CaptureSuccessfulInspections()
             .WithAttribute(AriaAttributes.Label, "Submit")
-            .Build();
+            .Build(hub);
 
         Assert.NotNull(attributes);
         var published = WaitForDiagnosticsEvent(hub);
         Assert.Equal(AriaDiagnosticsSeverity.Success, published.Severity);
         Assert.Equal("button", published.Role?.ToAttributeValue());
+    }
+
+    [Fact]
+    public void Build_WithoutDiagnosticsHub_DoesNotPublishDiagnostics()
+    {
+        using var hub = new AriaDiagnosticsHub();
+
+        _ = new AccessibilityAttributesBuilder()
+            .WithRole(AriaRole.Button)
+            .CaptureSuccessfulInspections()
+            .WithAttribute(AriaAttributes.Label, "Submit")
+            .Build();
+
+        var observed = SpinWait.SpinUntil(() => hub.GetRecentEvents(1).Count > 0, TimeSpan.FromMilliseconds(250));
+        Assert.False(observed);
     }
 
     private static AriaDiagnosticsEvent WaitForDiagnosticsEvent(AriaDiagnosticsHub hub)
