@@ -21,6 +21,7 @@ build_script:
   - dotnet build HaloUI.slnx -c Release --no-restore
 
 test_script:
+  - pwsh ./HaloUI.Tests.E2E/bin/Release/net10.0/playwright.ps1 install chromium
   - dotnet test HaloUI.slnx -c Release --no-build
   - dotnet test HaloUI.Tests/HaloUI.Tests.csproj -c Release --no-build --filter FullyQualifiedName~TokenValidationTests --logger "trx;LogFileName=token_validation.trx"
   - dotnet run --project tools/BrandPreviewCli/BrandPreviewCli.csproj --configuration Release -- --manifest HaloUI/Theme/Tokens/design-tokens.json --themes Light,DarkGlass --brands HaloUI --output artifacts/brand-previews
