@@ -1,0 +1,22 @@
+<div class="@BuildWrapperClass()" @attributes="BuildWrapperAttributes()">
+    @if (Header is not null)
+    {
+        <div class="ui-container__section ui-container__section--header">
+            @Header
+        </div>
+    }
+
+    @if (ChildContent is not null)
+    {
+        <div class="ui-container__body">
+            @ChildContent
+        </div>
+    }
+
+    @if (Footer is not null)
+    {
+        <div class="ui-container__section ui-container__section--footer">
+            @Footer
+        </div>
+    }
+</div>

@@ -1,0 +1,28 @@
+@using HaloUI.Components.Base
+
+@inherits HaloLabellableInputBase<string>
+
+<div class="@BuildWrapperClass()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId" For="@InputId" Text="@Label" Variant="@ResolveLabelVariant()" Disabled="@(Disabled || ReadOnly)" ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <div class="ui-textfield__container">
+        @if (StartAdornment is not null)
+        {
+            <div class="ui-textfield__adornment ui-textfield__adornment--start">
+                @StartAdornment
+            </div>
+        }
+
+        <input @attributes="BuildInputAttributes()" class="@BuildInputClass()" style="@AdditionalInputStyle" value="@CurrentValueAsString" @oninput="HandleInputAsync" @onchange="HandleChangeAsync" />
+
+        @if (EndAdornment is not null)
+        {
+            <div class="ui-textfield__adornment ui-textfield__adornment--end">
+                @EndAdornment
+            </div>
+        }
+    </div>
+</div>

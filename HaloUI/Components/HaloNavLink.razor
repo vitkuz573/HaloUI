@@ -1,0 +1,26 @@
+@if (!string.IsNullOrWhiteSpace(Href))
+{
+    <a class="@BuildCssClass()"
+       href="@Href"
+       target="@Target"
+       rel="@Rel"
+       aria-label="@AriaLabel"
+       aria-disabled="@(Disabled ? "true" : null)"
+       tabindex="@(Disabled ? "-1" : null)"
+       @onclick="OnClick"
+       @onclick:preventDefault="Disabled"
+       @attributes="AdditionalAttributes">
+        @RenderContent()
+    </a>
+}
+else
+{
+    <button type="button"
+            class="@BuildCssClass()"
+            disabled="@Disabled"
+            aria-label="@AriaLabel"
+            @onclick="OnClick"
+            @attributes="AdditionalAttributes">
+        @RenderContent()
+    </button>
+}

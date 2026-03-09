@@ -1,0 +1,75 @@
+.ui-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ui-badge-gap);
+        min-width: 0;
+        max-width: 100%;
+        padding: var(--ui-badge-padding-y) var(--ui-badge-padding-x);
+        border-radius: var(--ui-badge-border-radius);
+        font-size: var(--ui-badge-font-size);
+        font-weight: var(--ui-badge-font-weight);
+        line-height: var(--ui-badge-line-height);
+        letter-spacing: var(--ui-badge-letter-spacing);
+        text-transform: var(--ui-badge-text-transform);
+        border: 1px solid var(--ui-badge-border);
+        background: var(--ui-badge-background);
+        color: var(--ui-badge-text-color);
+        white-space: nowrap;
+    }
+
+    .ui-badge__icon {
+        font-size: var(--ui-badge-icon-size);
+        line-height: 1;
+    }
+
+    .ui-badge__label {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ui-badge--neutral {
+        --ui-badge-background: var(--ui-badge-neutral-background);
+        --ui-badge-text-color: var(--ui-badge-neutral-text);
+        --ui-badge-border: var(--ui-badge-neutral-border);
+    }
+
+    .ui-badge--success {
+        --ui-badge-background: var(--ui-badge-success-background);
+        --ui-badge-text-color: var(--ui-badge-success-text);
+        --ui-badge-border: var(--ui-badge-success-border);
+    }
+
+    .ui-badge--warning {
+        --ui-badge-background: var(--ui-badge-warning-background);
+        --ui-badge-text-color: var(--ui-badge-warning-text);
+        --ui-badge-border: var(--ui-badge-warning-border);
+    }
+
+    .ui-badge--danger {
+        --ui-badge-background: var(--ui-badge-danger-background);
+        --ui-badge-text-color: var(--ui-badge-danger-text);
+        --ui-badge-border: var(--ui-badge-danger-border);
+    }
+
+    .ui-badge--info {
+        --ui-badge-background: var(--ui-badge-info-background);
+        --ui-badge-text-color: var(--ui-badge-info-text);
+        --ui-badge-border: var(--ui-badge-info-border);
+    }
+
+    @media (max-width: 640px) {
+        .ui-badge {
+            white-space: normal;
+            line-height: 1.25;
+            text-wrap: balance;
+        }
+
+        .ui-badge__label {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+        }
+    }

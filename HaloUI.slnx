@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/HaloUI/">
+    <Project Path="HaloUI/HaloUI.csproj" />
+    <Project Path="HaloUI.DemoHost/HaloUI.DemoHost.csproj" />
+    <Project Path="HaloUI.Tests/HaloUI.Tests.csproj" />
+    <Project Path="HaloUI.Tests.E2E/HaloUI.Tests.E2E.csproj" />
+    <Project Path="HaloUI.ThemeSdk.Analyzers/HaloUI.ThemeSdk.Analyzers.csproj" />
+    <Project Path="HaloUI.ThemeSdk.Analyzers.CodeFixes/HaloUI.ThemeSdk.Analyzers.CodeFixes.csproj" />
+    <Project Path="HaloUI.ThemeSdk.Analyzers.Tests/HaloUI.ThemeSdk.Analyzers.Tests.csproj" />
+    <Project Path="HaloUI.ThemeSdk.Generators/HaloUI.ThemeSdk.Generators.csproj" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <Project Path="tools/BrandPreviewCli/BrandPreviewCli.csproj" />
+    <Project Path="tools/ThemeSdk.DiffTool/ThemeSdk.DiffTool.csproj" />
+    <Project Path="tools/ThemeSdk.SnapshotTool/ThemeSdk.SnapshotTool.csproj" />
+  </Folder>
+</Solution>

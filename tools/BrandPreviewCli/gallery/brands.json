@@ -1,0 +1,15 @@
+﻿{
+  "HaloUI": {
+    "displayName": "HaloUI",
+    "tagline": "Remote Device Management",
+    "description": "Comprehensive remote device management solution",
+    "category": "Default",
+    "icon": "hub",
+    "colors": {
+      "primary": "#4f46e5",
+      "secondary": "#06b6d4",
+      "accent": "#f59e0b",
+      "neutral": "#64748b"
+    }
+  }
+}

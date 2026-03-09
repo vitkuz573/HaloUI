@@ -1,0 +1,20 @@
+/* Roboto font self-hosted using variable font files. */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75% 100%;
+  src: local('Roboto'),
+       url('../fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 75% 100%;
+  src: local('Roboto Italic'),
+       url('../fonts/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-display: swap;
+}

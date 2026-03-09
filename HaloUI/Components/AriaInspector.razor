@@ -1,0 +1,207 @@
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.Extensions.Options
+@using HaloUI.Abstractions
+@using HaloUI.Accessibility.Aria
+@using HaloUI.Services
+
+@inject IAriaDiagnosticsHub DiagnosticsHub
+@inject AriaInspectorState InspectorState
+@inject IOptions<AriaInspectorOptions>? InspectorOptionsAccessor
+
+@if (_isVisible)
+{
+    <div class="rm-ai">
+        <header class="rm-ai__header">
+            <div class="rm-ai__top">
+                <div class="rm-ai__titles">
+                    <span class="rm-ai__title">ARIA Inspector</span>
+                    <span class="rm-ai__status">@HeaderStatus</span>
+                    <div class="rm-ai__badges">
+                        @if (_preferences.IsPinned)
+                        {
+                            <span class="rm-ai-badge rm-ai-badge--pinned">Pinned</span>
+                        }
+                        @if (HasFilters)
+                        {
+                            <span class="rm-ai-badge rm-ai-badge--filters">Filters</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="rm-ai__actions">
+                    <HaloButton Size="ButtonSize.ExtraSmall"
+                              Variant="ButtonVariant.Secondary"
+                              Density="ButtonDensity.Compact"
+                              OnClick="TogglePin">
+                        @(_preferences.IsPinned ? "Unpin" : "Pin")
+                    </HaloButton>
+
+                    <HaloButton Size="ButtonSize.ExtraSmall"
+                              Variant="ButtonVariant.Ghost"
+                              Density="ButtonDensity.Compact"
+                              Icon="close"
+                              IconOnly="true"
+                              AriaLabel="Hide inspector"
+                              OnClick="Hide" />
+                </div>
+            </div>
+
+            <div class="rm-ai__toggles">
+                <HaloButton Size="ButtonSize.ExtraSmall"
+                          Variant="ButtonVariant.Secondary"
+                          Density="ButtonDensity.Compact"
+                          Toggle="true"
+                          Active="@_preferences.ShowOnlyFailures"
+                          OnClick="ToggleOnlyFailures">
+                    @(_preferences.ShowOnlyFailures ? "All Events" : "Only Failures")
+                </HaloButton>
+
+                <HaloButton Size="ButtonSize.ExtraSmall"
+                          Variant="ButtonVariant.Warning"
+                          Density="ButtonDensity.Compact"
+                          Toggle="true"
+                          Active="@(!_preferences.IncludeWarnings)"
+                          OnClick="ToggleWarnings">
+                    @(_preferences.IncludeWarnings ? "Hide Warnings" : "Show Warnings")
+                </HaloButton>
+
+                <HaloButton Size="ButtonSize.ExtraSmall"
+                          Variant="ButtonVariant.Secondary"
+                          Density="ButtonDensity.Compact"
+                          Toggle="true"
+                          Active="@_preferences.ShowAttributes"
+                          OnClick="ToggleAttributes">
+                    @(_preferences.ShowAttributes ? "Hide Attributes" : "Show Attributes")
+                </HaloButton>
+
+                <HaloButton Size="ButtonSize.ExtraSmall"
+                          Variant="ButtonVariant.Ghost"
+                          Density="ButtonDensity.Compact"
+                          OnClick="ResetFilters">
+                    Reset Filters
+                </HaloButton>
+            </div>
+
+            <div class="rm-ai__search-row">
+                <HaloTextField Type="TextFieldType.Search"
+                             Size="InputFieldSize.Small"
+                             Placeholder="Search in attributes..."
+                             Value="@_preferences.SearchTerm"
+                             UpdateBehavior="TextFieldUpdateBehavior.OnInput"
+                             OnInput="HandleSearch" />
+
+                <HaloSelect TValue="string"
+                          Size="InputFieldSize.Small"
+                          Value="@GetRoleFilterToken()"
+                          ValueChanged="HandleRoleFilter">
+                    <HaloSelectOption TValue="string" Value="@string.Empty">All roles</HaloSelectOption>
+                    @foreach (var role in _availableRoles)
+                    {
+                        <HaloSelectOption TValue="string" Value="@role.ToAttributeValue()">@role.ToAttributeValue()</HaloSelectOption>
+                    }
+                </HaloSelect>
+            </div>
+        </header>
+
+        <div class="rm-ai__content">
+            <section class="rm-ai__events">
+                @{ var filteredEvents = GetFilteredEvents().ToList(); }
+
+                @if (_eventLog.Count == 0)
+                {
+                    <div class="rm-ai-state">
+                        No accessibility inspections recorded yet.
+                    </div>
+                }
+                else if (!filteredEvents.Any())
+                {
+                    <div class="rm-ai-state">
+                        No accessibility inspections match the current filters.
+                    </div>
+                }
+                else
+                {
+                    <ul class="rm-ai-list">
+                        @foreach (var entry in filteredEvents)
+                        {
+                            <li class="@GetEntryClass(entry.Severity)">
+                                <div class="rm-ai-entry__header">
+                                    <div class="rm-ai-entry__identity">
+                                        <span class="rm-ai-entry__role">@FormatRole(entry.Role)</span>
+                                        <span class="rm-ai-entry__compliance">Compliance: @entry.Compliance</span>
+
+                                        <div class="rm-ai-entry__chips">
+                                            <span class="@GetSeverityPillClass(entry.Severity)">@entry.Severity</span>
+
+                                            @if (!string.IsNullOrWhiteSpace(entry.Metadata.Source))
+                                            {
+                                                <span class="rm-ai-chip">@entry.Metadata.Source</span>
+                                            }
+
+                                            @if (!string.IsNullOrWhiteSpace(entry.Metadata.ElementId))
+                                            {
+                                                <span class="rm-ai-chip">id: @entry.Metadata.ElementId</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="rm-ai-entry__stamp">
+                                        <span>@FormatTimestamp(entry.Timestamp)</span>
+                                        <span>@entry.Id</span>
+                                    </div>
+                                </div>
+
+                                @if (entry.Metadata.Tags.Count > 0)
+                                {
+                                    <div class="rm-ai-entry__chips rm-ai-entry__chips--tags">
+                                        @foreach (var tag in entry.Metadata.Tags)
+                                        {
+                                            <span class="rm-ai-chip">@tag.Key: @tag.Value</span>
+                                        }
+                                    </div>
+                                }
+
+                                @if (entry.MissingRequired.Count > 0)
+                                {
+                                    <div class="rm-ai-note rm-ai-note--danger">
+                                        <span class="rm-ai-note__title">Missing required:</span>
+                                        <span>@string.Join(", ", entry.MissingRequired)</span>
+                                    </div>
+                                }
+
+                                @if (entry.Disallowed.Count > 0)
+                                {
+                                    <div class="rm-ai-note rm-ai-note--error">
+                                        <span class="rm-ai-note__title">Disallowed attributes:</span>
+                                        <span>@string.Join(", ", entry.Disallowed)</span>
+                                    </div>
+                                }
+
+                                @if (entry.Recommendations.Count > 0)
+                                {
+                                    <div class="rm-ai-note rm-ai-note--warning">
+                                        <span class="rm-ai-note__title">Recommendations:</span>
+                                        <span>@string.Join(", ", entry.Recommendations)</span>
+                                    </div>
+                                }
+
+                                @if (_preferences.ShowAttributes)
+                                {
+                                    <dl class="rm-ai-attrs">
+                                        @foreach (var attr in entry.Attributes.OrderBy(static pair => pair.Key, StringComparer.OrdinalIgnoreCase))
+                                        {
+                                            <dt>@attr.Key</dt>
+                                            <dd>@attr.Value</dd>
+                                        }
+                                    </dl>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+            </section>
+        </div>
+    </div>
+}

@@ -1,0 +1,14 @@
+﻿<span class="@BuildCssClass()" @attributes="BuildAccessibilityAttributes()">
+    @if (!string.IsNullOrWhiteSpace(Icon))
+    {
+        <span class="material-icons ui-badge__icon" aria-hidden="true">@Icon</span>
+    }
+    @if (ChildContent is not null)
+    {
+        <span class="ui-badge__label">@ChildContent</span>
+    }
+    else if (!string.IsNullOrWhiteSpace(Text))
+    {
+        <span class="ui-badge__label">@Text</span>
+    }
+</span>

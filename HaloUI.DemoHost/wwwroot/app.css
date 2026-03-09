@@ -1,0 +1,177 @@
+:root {
+    font-family: "Roboto", "Segoe UI", sans-serif;
+    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--ui-color-interactive-primary, #3b82f6) 22%, transparent), transparent 55%),
+               radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--ui-color-semantic-info, #0ea5e9) 16%, transparent), transparent 40%),
+               var(--ui-color-background-primary, #f6f8fc);
+    --demo-surface: color-mix(in srgb, var(--ui-color-surface-default, #ffffff) 94%, rgba(15, 23, 42, 0.05));
+    --demo-border: color-mix(in srgb, var(--ui-color-interactive-primary, #3b82f6) 20%, rgba(148, 163, 184, 0.3));
+    --demo-muted: color-mix(in srgb, var(--ui-color-text-secondary, #475569) 92%, transparent);
+    --demo-gap: clamp(1rem, 2vw, 1.4rem);
+    --demo-radius: 18px;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ui-color-text-primary, #0f172a);
+    background: var(--demo-bg);
+}
+
+body[data-theme="dark"] {
+    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--ui-color-interactive-primary, #60a5fa) 30%, transparent), transparent 60%),
+               radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--ui-color-semantic-info, #38bdf8) 20%, transparent), transparent 44%),
+               var(--ui-color-background-primary, #040816);
+    --demo-surface: color-mix(in srgb, var(--ui-color-surface-default, #0b1325) 92%, rgba(56, 189, 248, 0.1));
+    --demo-border: color-mix(in srgb, var(--ui-color-interactive-primary, #60a5fa) 24%, rgba(148, 163, 184, 0.35));
+    --demo-muted: color-mix(in srgb, var(--ui-color-text-secondary, #cbd5e1) 88%, transparent);
+}
+
+.halo-demo {
+    margin: 0 auto;
+    max-width: 1680px;
+    padding: clamp(1rem, 2.5vw, 2rem);
+    display: grid;
+    gap: var(--demo-gap);
+}
+
+.demo-hero {
+    border: 1px solid var(--demo-border);
+    border-radius: calc(var(--demo-radius) + 4px);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--demo-surface) 92%, rgba(59, 130, 246, 0.08)), var(--demo-surface));
+    padding: clamp(1rem, 2.3vw, 1.8rem);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+.demo-hero__content {
+    display: grid;
+    gap: 0.45rem;
+    max-width: 68ch;
+}
+
+.demo-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.76rem;
+    color: var(--demo-muted);
+}
+
+.demo-hero h1 {
+    margin: 0;
+    font-size: clamp(1.65rem, 3.2vw, 2.45rem);
+    line-height: 1.1;
+}
+
+.demo-hero p {
+    margin: 0;
+    color: var(--demo-muted);
+}
+
+.demo-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--demo-gap);
+}
+
+.demo-section {
+    border: 1px solid var(--demo-border);
+    border-radius: var(--demo-radius);
+    background: var(--demo-surface);
+    padding: clamp(0.9rem, 2vw, 1.2rem);
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    min-height: 220px;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+}
+
+.demo-section--full {
+    grid-column: 1 / -1;
+}
+
+.demo-section h2 {
+    margin: 0;
+    font-size: 1.03rem;
+}
+
+.demo-section p {
+    margin: 0;
+    color: var(--demo-muted);
+    font-size: 0.92rem;
+}
+
+.demo-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.demo-row--align-center {
+    align-items: center;
+}
+
+.demo-stack {
+    display: grid;
+    gap: 0.62rem;
+}
+
+.demo-cards {
+    display: grid;
+    gap: 0.62rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.demo-list {
+    margin: 0;
+    padding-left: 1rem;
+    display: grid;
+    gap: 0.4rem;
+    color: var(--demo-muted);
+}
+
+.table-subtitle {
+    font-size: 0.82rem;
+    color: var(--demo-muted);
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--demo-muted);
+}
+
+@media (max-width: 920px) {
+    .demo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    .halo-demo {
+        padding: 0.9rem;
+    }
+
+    .demo-hero {
+        border-radius: 14px;
+    }
+
+    .demo-section {
+        border-radius: 14px;
+        min-height: 200px;
+    }
+}

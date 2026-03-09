@@ -1,0 +1,9 @@
+@using HaloUI.Enums
+
+<button type="button"
+        class="@GetClasses()"
+        disabled="@Disabled"
+        @onclick="HandleToggle"
+        @attributes="BuildAttributes()">
+    <span class="material-icons" aria-hidden="true">@GetIcon()</span>
+</button>

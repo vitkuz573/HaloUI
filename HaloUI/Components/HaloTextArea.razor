@@ -1,0 +1,17 @@
+@using HaloUI.Components.Base
+
+@inherits HaloLabellableInputBase<string>
+
+<div class="@BuildWrapperClass()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId" For="@InputId" Text="@Label" Variant="@ResolveLabelVariant()" Disabled="@(Disabled)" ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <textarea id="@InputId" class="@BuildInputClass()" rows="@Rows" placeholder="@Placeholder" @attributes="BuildTextAreaAttributes()" value="@CurrentValueAsString" @onchange="HandleChangeAsync" @oninput="HandleInputAsync"></textarea>
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p class="ui-textarea__description" id="@DescriptionElementId">@Description</p>
+    }
+</div>

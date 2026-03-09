@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["HaloUI.DemoHost.styles.css"]" />
+    <link rel="stylesheet" href="_content/HaloUI/HaloUI.bundle.scp.css" />
+	<link rel="stylesheet" href="css/material-icons.css" />
+    <link rel="stylesheet" href="css/roboto.css" />
+    <ImportMap />
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes />
+    <script autostart="false" src="_framework/blazor.web.js"></script>
+    <script>
+        window.__haloUiHaloReady = window.Blazor.start().then(() => {
+            document.documentElement.setAttribute('data-circuit-ready', 'true');
+        }).catch(err => {
+            console.error('Failed to start Blazor circuit', err);
+        });
+    </script>
+</body>
+
+</html>

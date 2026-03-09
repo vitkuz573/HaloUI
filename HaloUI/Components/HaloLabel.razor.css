@@ -1,0 +1,159 @@
+.ui-label {
+        display:flex;
+        align-items:center;
+        gap:var(--ui-label-gap, 0.35rem);
+        max-width:100%;
+        min-width:0;
+        font-family:var(--ui-label-font-family, var(--ui-brand-typography-body-font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif));
+        font-size:var(--ui-label-font-size, 0.75rem);
+        line-height:var(--ui-label-line-height, 1rem);
+        letter-spacing:var(--ui-label-letter-spacing, 0.08em);
+        text-transform:var(--ui-label-text-transform, uppercase);
+        color:var(--ui-label-color, var(--ui-color-text-tertiary, #64748b));
+        margin-bottom:var(--ui-label-margin-bottom, 0.35rem);
+        width:auto;
+    }
+
+    .ui-label--block {
+        width:100%;
+    }
+
+    .ui-label--inline {
+        display:inline-flex;
+        width:auto;
+        margin-bottom:var(--ui-label-inline-margin, 0);
+    }
+
+    .ui-label--no-margin {
+        margin-bottom:0 !important;
+    }
+
+    .ui-label--no-wrap {
+        white-space:nowrap;
+    }
+
+    .ui-label--full-width {
+        width:100%;
+    }
+
+    .ui-label--visually-hidden {
+        position:absolute;
+        width:1px;
+        height:1px;
+        padding:0;
+        margin:-1px;
+        overflow:hidden;
+        clip:rect(0, 0, 0, 0);
+        white-space:nowrap;
+        border:0;
+    }
+
+    .ui-label--state-disabled {
+        cursor:default;
+        opacity:0.75;
+    }
+
+    .ui-label--no-transform {
+        text-transform:none !important;
+        letter-spacing:0 !important;
+    }
+
+    .ui-label__inner {
+        display:inline-flex;
+        align-items:center;
+        gap:inherit;
+        width:100%;
+    }
+
+    .ui-label__text {
+        display:inline-flex;
+        align-items:center;
+        font:inherit;
+        color:inherit;
+    }
+
+    .ui-label__icon {
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        font-size:var(--ui-label-icon-size, 1rem);
+        color:var(--ui-label-icon-color, var(--ui-label-color, var(--ui-color-text-tertiary, #64748b)));
+    }
+
+    .ui-label__indicator {
+        display:inline-flex;
+        align-items:center;
+        font:inherit;
+        line-height:inherit;
+        color:var(--ui-label-indicator-color, var(--ui-label-color, var(--ui-color-text-tertiary, #64748b)));
+    }
+
+.ui-label__indicator--required {
+    color:var(--ui-label-required-color, var(--ui-color-feedback-danger-text, #ef4444));
+}
+
+.ui-label__indicator--optional {
+    color:var(--ui-label-optional-color, var(--ui-label-color, var(--ui-color-text-tertiary, #64748b)));
+    font-weight:var(--ui-label-optional-weight, 500);
+}
+
+    .ui-label__suffix {
+        display:inline-flex;
+        align-items:center;
+        gap:0.25rem;
+    }
+
+    .ui-label__sr-only {
+        position:absolute;
+        width:1px;
+        height:1px;
+        padding:0;
+        margin:-1px;
+        overflow:hidden;
+        clip:rect(0, 0, 0, 0);
+        white-space:nowrap;
+        border:0;
+    }
+
+    .ui-label__description {
+        display:block;
+        margin-top:var(--ui-label-description-spacing, 0.25rem);
+        font-size:var(--ui-label-description-font-size, 0.75rem);
+        line-height:var(--ui-label-description-line-height, 1rem);
+        color:var(--ui-label-description-color, var(--ui-color-text-tertiary, #64748b));
+    }
+
+    .ui-label__description--disabled {
+        opacity:0.65;
+    }
+
+    .ui-label--weight-regular {
+        font-weight:var(--ui-label-weight-regular, 400);
+    }
+
+    .ui-label--weight-medium {
+        font-weight:var(--ui-label-weight-medium, 500);
+    }
+
+    .ui-label--weight-semibold {
+        font-weight:var(--ui-label-weight-semibold, 600);
+    }
+
+    .ui-label--weight-bold {
+        font-weight:var(--ui-label-weight-bold, 700);
+    }
+
+    @media (max-width:640px) {
+        .ui-label {
+            align-items:flex-start;
+        }
+
+        .ui-label__inner {
+            flex-wrap:wrap;
+        }
+
+        .ui-label__text,
+        .ui-label__description {
+            overflow-wrap:anywhere;
+        }
+    }

@@ -1,0 +1,212 @@
+.ui-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-radius: var(--ui-card-border-radius);
+    border-width: var(--ui-card-border-width);
+    border-style: solid;
+    border-color: var(--ui-card-default-border-color);
+    background: var(--ui-card-default-background);
+    padding: var(--ui-card-padding-y) var(--ui-card-padding-x);
+    box-shadow: var(--ui-card-shadow);
+    transition: var(--ui-card-transition);
+    color: inherit;
+    text-decoration: none;
+    --ui-card-hover-border-color-instance: var(--ui-card-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-header-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-header-icon-hover-color);
+    --ui-card-media-border-radius: var(--ui-card-border-radius);
+    --ui-card-media-aspect-ratio: auto;
+    max-width: 100%;
+    min-width: 0;
+    container-type: inline-size;
+}
+
+.ui-card:hover {
+    border-color: var(--ui-card-hover-border-color-instance);
+    background: var(--ui-card-hover-background-instance);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.ui-card__media {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    border-radius: var(--ui-card-media-border-radius);
+    aspect-ratio: var(--ui-card-media-aspect-ratio);
+}
+
+.ui-card__media--full-bleed {
+    width: calc(100% + (var(--ui-card-padding-x) * 2));
+    margin-left: calc(-1 * var(--ui-card-padding-x));
+    margin-right: calc(-1 * var(--ui-card-padding-x));
+}
+
+.ui-card__media>* {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: inherit;
+}
+
+.ui-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ui-card__header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.ui-card__header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.ui-card__title {
+    font-size: var(--ui-card-header-title-font-size);
+    font-weight: var(--ui-card-header-title-font-weight);
+    color: var(--ui-card-header-title-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.ui-card__subtitle {
+    font-size: var(--ui-card-header-subtitle-font-size);
+    color: var(--ui-card-header-title-color);
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.ui-card__icon {
+    font-size: var(--ui-card-header-icon-size);
+    color: var(--ui-card-icon-color-instance);
+    transition: var(--ui-card-transition);
+}
+
+.ui-card:hover .ui-card__icon {
+    color: var(--ui-card-icon-hover-color-instance);
+}
+
+.ui-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ui-card__value {
+    font-size: var(--ui-card-content-value-font-size);
+    font-weight: var(--ui-card-content-value-font-weight);
+    color: var(--ui-card-content-value-color);
+    margin: 0.25rem 0 0;
+    overflow-wrap: anywhere;
+}
+
+.ui-card__label {
+    font-size: var(--ui-card-content-label-font-size);
+    color: color-mix(in srgb, var(--ui-card-content-label-color) 25%, var(--ui-card-content-value-color) 75%);
+    margin: 0.25rem 0 0;
+    overflow-wrap: anywhere;
+}
+
+.ui-card__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+@media (max-width: 640px) {
+    .ui-card {
+        padding: calc(var(--ui-card-padding-y) * 0.75) calc(var(--ui-card-padding-x) * 0.75);
+    }
+
+    .ui-card__header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .ui-card__icon {
+        align-self: flex-end;
+    }
+
+    .ui-card__title {
+        font-size: calc(var(--ui-card-header-title-font-size) * 0.9);
+    }
+
+    .ui-card__subtitle {
+        word-break: break-word;
+    }
+}
+
+@container (max-width: 420px) {
+    .ui-card {
+        padding: calc(var(--ui-card-padding-y) * 0.7) calc(var(--ui-card-padding-x) * 0.7);
+    }
+
+    .ui-card__header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ui-card__icon {
+        align-self: flex-start;
+    }
+}
+
+.ui-card--variant-default {
+    --ui-card-hover-border-color-instance: var(--ui-card-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-header-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-header-icon-hover-color);
+}
+
+.ui-card--variant-primary {
+    --ui-card-hover-border-color-instance: var(--ui-card-primary-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-primary-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-primary-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-primary-icon-hover-color);
+}
+
+.ui-card--variant-success {
+    --ui-card-hover-border-color-instance: var(--ui-card-success-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-success-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-success-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-success-icon-hover-color);
+}
+
+.ui-card--variant-warning {
+    --ui-card-hover-border-color-instance: var(--ui-card-warning-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-warning-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-warning-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-warning-icon-hover-color);
+}
+
+.ui-card--variant-danger {
+    --ui-card-hover-border-color-instance: var(--ui-card-danger-hover-border-color);
+    --ui-card-hover-background-instance: var(--ui-card-danger-hover-background);
+    --ui-card-icon-color-instance: var(--ui-card-danger-icon-color);
+    --ui-card-icon-hover-color-instance: var(--ui-card-danger-icon-hover-color);
+}

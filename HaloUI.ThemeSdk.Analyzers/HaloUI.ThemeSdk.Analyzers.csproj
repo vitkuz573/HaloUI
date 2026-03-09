@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <NoWarn>$(NoWarn);RS2007</NoWarn>
+    <ThemeSdkMinimalMode>true</ThemeSdkMinimalMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\HaloUI\Theme\Tokens\**\*.cs"
+             Exclude="..\HaloUI\Theme\Tokens\Generation\**\*.cs;..\HaloUI\Theme\Tokens\Validation\**\*.cs"
+             Link="Theme\Tokens\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AnalyzerReleases.Shipped.md;AnalyzerReleases.Unshipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\HaloUI\Theme\Tokens\design-tokens.json" Link="design-tokens.json" />
+    <AdditionalFiles Include="..\HaloUI.ThemeSdk.Generators\ThemeSdk.json" Link="ThemeSdk.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HaloUI.ThemeSdk.Generators\HaloUI.ThemeSdk.Generators.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="ThemeSdkMinimalMode" />
+  </ItemGroup>
+
+</Project>

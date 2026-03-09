@@ -1,0 +1,50 @@
+<div class="ui-sparkline @Class" style="@BuildStyle()" @attributes="AdditionalAttributes">
+    @if (HasData)
+    {
+        <svg class="ui-sparkline__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="@AriaLabel">
+            <defs>
+                <linearGradient id="@_areaGradientId" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="var(--ui-sparkline-fill-start)" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="var(--ui-sparkline-fill-end)" stop-opacity="0" />
+                </linearGradient>
+                <linearGradient id="@_lineGradientId" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0%" stop-color="var(--ui-sparkline-line-start)" />
+                    <stop offset="100%" stop-color="var(--ui-sparkline-line-end)" />
+                </linearGradient>
+            </defs>
+
+            @if (ShowGrid)
+            {
+                <g class="ui-sparkline__grid">
+                    <line x1="0" y1="25" x2="100" y2="25" />
+                    <line x1="0" y1="50" x2="100" y2="50" />
+                    <line x1="0" y1="75" x2="100" y2="75" />
+                </g>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(AreaPoints))
+            {
+                <polyline class="ui-sparkline__area" fill="url(#@_areaGradientId)" stroke="none" points="@AreaPoints" />
+            }
+
+            @if (!string.IsNullOrWhiteSpace(PolylinePoints))
+            {
+                <polyline class="ui-sparkline__line" fill="none" stroke="url(#@_lineGradientId)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="@PolylinePoints" />
+            }
+
+            @foreach (var marker in Markers)
+            {
+                <circle class="ui-sparkline__marker" cx="@marker.X" cy="@marker.Y" r="2.5">
+                    @if (!string.IsNullOrWhiteSpace(marker.Label))
+                    {
+                        <title>@marker.Label</title>
+                    }
+                </circle>
+            }
+        </svg>
+    }
+    else
+    {
+        <div class="ui-sparkline__empty">@EmptyMessage</div>
+    }
+</div>

@@ -1,0 +1,422 @@
+﻿@using System
+@using System.Linq
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using HaloUI.Enums
+@using HaloUI.Components
+@using HaloUI.Theme
+@using HaloUI.Theme.Tokens
+@using HaloUI.Theme.Tokens.Component
+@using HaloUI.Theme.Tokens.Core
+@using HaloUI.Theme.Tokens.Semantic
+@using HaloUI.Theme.Tokens.Variants
+
+@typeparam TItem
+
+<div class="@GetTableContainerClasses()">
+    <CascadingValue Value="this">
+        @Columns
+    </CascadingValue>
+
+    @if (_state is not null)
+    {
+        var state = _state;
+        var activeFilters = GetActiveFilters().ToList();
+        var hasFilterableColumns = state.Columns.Any(static column => !column.Hidden && column.Filterable);
+        var canToggleFilters = _options.ShowColumnFilters && hasFilterableColumns;
+
+        <div class="@GetHeaderContainerClasses()">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div class="flex min-w-0 w-full items-center gap-2 sm:flex-1">
+                    @if (Expandable)
+                    {
+                        <button type="button"
+                                class="@GetToggleButtonClasses()"
+                                @onclick="ToggleExpanded"
+                                @attributes="GetToggleButtonAttributes()">
+                            <span class="material-icons ui-table__toggle-icon" aria-hidden="true">chevron_right</span>
+                            <span class="ui-table__title text-base font-semibold whitespace-nowrap">@Title</span>
+                        </button>
+                    }
+                    else if (!string.IsNullOrWhiteSpace(Title))
+                    {
+                        <div class="ui-table__title text-base font-semibold whitespace-nowrap">@Title</div>
+                    }
+                </div>
+                @if ((!Expandable || _isExpanded) && _options.ShowToolbar && _state is not null)
+                {
+                    if (activeFilters.Count == 0 && _filtersExpanded)
+                    {
+                        _filtersExpanded = false;
+                    }
+
+                    <div class="ui-table__toolbar flex w-full items-center gap-2 sm:ml-auto sm:w-auto sm:justify-end">
+                    @if (ShowSearch)
+                    {
+                        <div class="min-w-0 flex-1 sm:w-64 sm:flex-none">
+                            <HaloTextField @bind-value="SearchText"
+                                         Placeholder="Search"
+                                         Type="TextFieldType.Search"
+                                         InputMode="TextFieldInputMode.Search"
+                                         Autocomplete="TextFieldAutocomplete.Off"
+                                         Spellcheck="false"
+                                         UpdateBehavior="TextFieldUpdateBehavior.OnInput"
+                                         AriaLabel="@GetSearchAriaLabel()"
+                                         EndAdornment="@ClearSearchAdornment">
+                                <StartAdornment>
+                                    <span class="material-icons text-lg ui-table__toolbar-icon" aria-hidden="true">search</span>
+                                </StartAdornment>
+                            </HaloTextField>
+                        </div>
+                    }
+                    @if (Actions is not null)
+                    {
+                        <div class="flex shrink-0 items-center gap-2">
+                            @Actions
+                        </div>
+                    }
+
+                    @if (canToggleFilters)
+                    {
+                        <HaloButton Variant="@GetFilterToggleVariant(activeFilters.Count)"
+                                  Size="ButtonSize.Small"
+                                  Icon="filter_alt"
+                                  AdditionalAttributes="@GetFilterToggleAttributes()"
+                                  OnClick="@ToggleFilterPanel"
+                                  AriaLabel="Toggle filters">
+                            <span>@(_filtersExpanded ? "Hide filters" : "Filters")</span>
+                            @if (activeFilters.Count > 0)
+                            {
+                                <span class="ui-table__filter-badge inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1 font-semibold text-[11px]">@activeFilters.Count</span>
+                            }
+                        </HaloButton>
+                    }
+                    </div>
+                }
+            </div>
+        </div>
+
+        if (_filtersExpanded && canToggleFilters && activeFilters.Count > 0)
+        {
+            <div class="ui-table__filter-panel">
+                <div id="@_filtersPanelId" class="ui-table__filter-panel-content px-4 py-3">
+                    <div class="flex flex-col gap-3">
+                        <div class="ui-table__filter-panel-header flex flex-wrap items-center gap-2 text-sm font-semibold">
+                            <span class="material-icons text-[18px] ui-table__filter-panel-icon" aria-hidden="true">tune</span>
+                            <span>Active filters</span>
+                            <HaloButton Variant="ButtonVariant.Secondary"
+                                      Size="ButtonSize.ExtraSmall"
+                                      Icon="layers_clear"
+                                      Class="ml-auto flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition"
+                                      OnClick="@ClearAllFiltersAsync"
+                                      AriaLabel="Clear all filters">
+                                <span>Clear all</span>
+                            </HaloButton>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            @foreach (var (column, raw) in activeFilters.OrderBy(tuple => tuple.Column.Title))
+                            {
+                                var label = column.FormatFilterValue(raw);
+                                if (string.IsNullOrWhiteSpace(label))
+                                {
+                                    label = raw;
+                                }
+
+                                <div class="ui-table__filter-chip inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs shadow-sm">
+                                    <span class="ui-table__filter-chip-label font-semibold">@column.Title:</span>
+                                    <span class="ui-table__filter-chip-value font-medium">@label</span>
+                                    <HaloButton Variant="ButtonVariant.Secondary"
+                                              Size="ButtonSize.ExtraSmall"
+                                              Icon="close"
+                                              IconOnly="true"
+                                              Class="ui-table__filter-chip-clear"
+                                              AriaLabel="@($"Clear filter for {column.Title}")"
+                                              OnClick="@(() => ClearFilterAsync(column))" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        var visibleColumns = state.Columns.Where(static column => !column.Hidden).ToList();
+        var hasItems = state.Pagination.TotalItemCount > 0;
+        var isLoading = Loading || (UsesExternalProvider && !_providerInitialized);
+
+        @if (!Expandable || _isExpanded)
+        {
+            <div class="ui-table__desktop-section" id="@_contentId">
+                <table class="ui-table__table" aria-label="@_options.TableAriaLabel">
+                    <thead class="ui-table__head">
+                        <tr>
+                            @if (_options.SelectionMode == TableSelectionMode.Multiple)
+                            {
+                                <th scope="col" class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()">
+                                    <input type="checkbox"
+                                           class="ui-table__selection-input"
+                                           @onchange="ToggleSelectAll"
+                                           checked="@state.AreAllVisibleSelected()"
+                                           aria-label="Select all rows" />
+                                </th>
+                            }
+                            else if (_options.SelectionMode == TableSelectionMode.Single)
+                            {
+                                <th scope="col" class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()"></th>
+                            }
+                            @foreach (var column in visibleColumns)
+                            {
+                                <th scope="col" class="ui-table__head-cell @GetHeaderCellClasses(column)">
+                                    @if (column.Sortable)
+                                    {
+                                        <HaloButton Variant="ButtonVariant.Secondary"
+                                                  Size="ButtonSize.Small"
+                                                  Icon="@GetSortIcon(column)"
+                                                  Class="@GetHeaderButtonClasses(column.Id)"
+                                                  OnClick="@(() => OnHeaderClicked(column))"
+                                                  AriaLabel="@GetSortAriaLabel(column)">
+                                            <span>@column.Title</span>
+                                        </HaloButton>
+                                    }
+                                    else
+                                    {
+                                        <span>@column.Title</span>
+                                    }
+                                </th>
+                            }
+                        </tr>
+                        @if (_options.ShowColumnFilters && visibleColumns.Any(c => c.Filterable))
+                        {
+                            <tr class="ui-table__filter-row">
+                                @if (_options.SelectionMode != TableSelectionMode.None)
+                                {
+                                    <td class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()"></td>
+                                }
+                                @foreach (var column in visibleColumns)
+                                {
+                                    <td class="ui-table__head-cell ui-table__head-cell--filter @GetFilterCellClasses(column)">
+                                        @if (column.Filterable)
+                                        {
+                                            var filterContext = CreateFilterContext(column);
+
+                                            <div class="flex min-w-[7rem] flex-col">
+                                                @if (column.FilterTemplate is not null)
+                                                {
+                                                    @column.FilterTemplate(filterContext)
+                                                }
+                                                else
+                                                {
+                                                    <div class="relative">
+                                                        <span class="material-icons pointer-events-none absolute top-1/2 left-2 -translate-y-1/2 text-[16px] ui-table__filter-input-icon"
+                                                              aria-hidden="true">filter_list</span>
+                                                        <input type="text"
+                                                               value="@filterContext.Value"
+                                                               class="ui-table__filter-input w-full rounded-md pl-8 text-sm shadow-sm focus-visible:outline-none"
+                                                               aria-label="@GetFilterInputAriaLabel(column)"
+                                                               @oninput="args => filterContext.Update(args.Value?.ToString())"
+                                                               placeholder="@(column.FilterPlaceholder ?? "Filter")" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </thead>
+                    <tbody class="ui-table__body">
+                        @if (isLoading)
+                        {
+                            @for (var r = 0; r < LoadingSkeletonRows; r++)
+                            {
+                                <tr class="ui-table__row">
+                                    @if (_options.SelectionMode != TableSelectionMode.None)
+                                    {
+                                        <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()"><HaloSkeleton Width="20px" /></td>
+                                    }
+                                    @foreach (var column in visibleColumns)
+                                    {
+                                        <td class="ui-table__cell @GetBodyCellClasses(column)"><HaloSkeleton /></td>
+                                    }
+                                </tr>
+                            }
+                        }
+
+                        @if (UsesExternalProvider)
+                        {
+                            <Virtualize Context="item"
+                                        ItemsProvider="ProvideItemsAsync"
+                                        @ref="_desktopVirtualize"
+                                        OverscanCount="VirtualizationOverscan">
+                                <ItemContent>
+                                    <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
+                                        @switch (_options.SelectionMode)
+                                        {
+                                            case TableSelectionMode.Multiple:
+                                                <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                    <input type="checkbox"
+                                                           checked="@state.IsSelected(item)"
+                                                           class="ui-table__selection-input"
+                                                           aria-label="@GetRowSelectionAriaLabel(item)"
+                                                           @onchange="() => OnRowSelectionToggled(item)" />
+                                                </td>
+                                                break;
+                                            case TableSelectionMode.Single:
+                                                <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                    <input type="radio"
+                                                           name="@_selectionGroupId"
+                                                           checked="@state.IsSelected(item)"
+                                                           class="ui-table__selection-input"
+                                                           aria-label="@GetRowSelectionAriaLabel(item)"
+                                                           @onchange="() => OnRowSelectionToggled(item)" />
+                                                </td>
+                                                break;
+                                        }
+                                        @foreach (var column in visibleColumns)
+                                        {
+                                            <td class="ui-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
+                                        }
+                                    </tr>
+                                </ItemContent>
+                            </Virtualize>
+
+                            @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
+                            {
+                                <tr>
+                                    <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell text-center">@EmptyMessage</td>
+                                </tr>
+                            }
+                        }
+                        else if (hasItems)
+                        {
+                            <Virtualize Context="item"
+                                        ItemsProvider="ProvideItemsAsync"
+                                        @ref="_desktopVirtualize"
+                                        OverscanCount="VirtualizationOverscan">
+                                <ItemContent>
+                                    <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
+                                        @if (_options.SelectionMode == TableSelectionMode.Multiple)
+                                        {
+                                            <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                <input type="checkbox"
+                                                       checked="@state.IsSelected(item)"
+                                                       class="ui-table__selection-input"
+                                                       aria-label="@GetRowSelectionAriaLabel(item)"
+                                                       @onchange="() => OnRowSelectionToggled(item)" />
+                                            </td>
+                                        }
+                                        else if (_options.SelectionMode == TableSelectionMode.Single)
+                                        {
+                                            <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                <input type="radio"
+                                                       name="@_selectionGroupId"
+                                                       checked="@state.IsSelected(item)"
+                                                       class="ui-table__selection-input"
+                                                       aria-label="@GetRowSelectionAriaLabel(item)"
+                                                       @onchange="() => OnRowSelectionToggled(item)" />
+                                            </td>
+                                        }
+                                        @foreach (var column in visibleColumns)
+                                        {
+                                            <td class="ui-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
+                                        }
+                                    </tr>
+                                </ItemContent>
+                            </Virtualize>
+                        }
+                        else if (!isLoading)
+                        {
+                            <tr>
+                                <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell text-center">@EmptyMessage</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui-table__mobile-section" id="@($"{_contentId}-mobile")">
+                @if (isLoading)
+                {
+                    @for (var r = 0; r < LoadingSkeletonRows; r++)
+                    {
+                        <div class="ui-table__mobile-skeleton rounded-lg p-4 shadow-sm">
+                            <div class="space-y-2">
+                                <HaloSkeleton />
+                                <HaloSkeleton Width="70%" />
+                                <HaloSkeleton Width="45%" />
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (UsesExternalProvider)
+                {
+                    <Virtualize Context="item"
+                                ItemsProvider="ProvideItemsAsync"
+                                @ref="_mobileVirtualize"
+                                OverscanCount="VirtualizationOverscan">
+                        <ItemContent>
+                            <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
+                                <div class="flex flex-col gap-3">
+                                    @foreach (var column in GetMobileColumns(visibleColumns))
+                                    {
+                                        <div class="ui-table__mobile-row">
+                                            <span class="ui-table__mobile-label">@column.Title</span>
+                                            <div class="@GetMobileValueClasses(column)">@column.Template(item)</div>
+                                        </div>
+                                    }
+                                </div>
+                                @if (_options.SelectionMode != TableSelectionMode.None)
+                                {
+                                    <div class="ui-table__mobile-selection-footer mt-3 pt-3">
+                                        <HaloButton Variant="ButtonVariant.Secondary"
+                                                  Text="@(state.IsSelected(item) ? "Selected" : "Select")"
+                                                  OnClick="() => OnRowSelectionToggled(item)" />
+                                    </div>
+                                }
+                            </article>
+                        </ItemContent>
+                    </Virtualize>
+
+                    @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
+                    {
+                        <div class="ui-table__mobile-empty rounded-xl px-4 py-6 text-center text-sm">@EmptyMessage</div>
+                    }
+                }
+                else if (hasItems)
+                {
+                    <Virtualize Context="item"
+                                ItemsProvider="ProvideItemsAsync"
+                                @ref="_mobileVirtualize"
+                                OverscanCount="VirtualizationOverscan">
+                        <ItemContent>
+                            <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
+                                <div class="flex flex-col gap-3">
+                                    @foreach (var column in GetMobileColumns(visibleColumns))
+                                    {
+                                        <div class="ui-table__mobile-row">
+                                            <span class="ui-table__mobile-label">@column.Title</span>
+                                            <div class="@GetMobileValueClasses(column)">@column.Template(item)</div>
+                                        </div>
+                                    }
+                                </div>
+                                @if (_options.SelectionMode != TableSelectionMode.None)
+                                {
+                                    <div class="ui-table__mobile-selection-footer mt-3 pt-3">
+                                        <HaloButton Variant="ButtonVariant.Secondary"
+                                                  Text="@(state.IsSelected(item) ? "Selected" : "Select")"
+                                                  OnClick="() => OnRowSelectionToggled(item)" />
+                                    </div>
+                                }
+                            </article>
+                        </ItemContent>
+                    </Virtualize>
+                }
+                else if (!isLoading)
+                {
+                    <div class="ui-table__mobile-empty rounded-xl px-4 py-6 text-center text-sm">@EmptyMessage</div>
+                }
+            </div>
+
+            @* Pagination controls removed in virtualization mode *@
+        }
+    }
+</div>

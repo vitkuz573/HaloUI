@@ -1,0 +1,55 @@
+@using System.Collections.Generic
+@using HaloUI.Abstractions
+@using HaloUI.Enums
+@using HaloUI.Theme
+@using HaloUI.Theme.Tokens.Component
+
+@inject IDialogService DialogService
+
+@if (_activeRequest is not null)
+{
+    var options = _activeRequest.Options.Normalize();
+    var variant = options.Variant;
+    var sizeTokens = GetSizeTokens(Tokens, options.Size);
+    <div class="@BuildOverlayClass(variant)"
+         data-dialog-open="true"
+         style="@BuildOverlayStyle(Tokens, variant)"
+         @onclick="() => { if (options.CloseOnOverlayClick) Cancel(); }">
+        @if (variant is DialogDrawerOptions drawer && options.ShowDrawerHandle)
+        {
+            <button type="button"
+                    class="@BuildDrawerHandleClass(drawer)"
+                    aria-label="@options.DrawerHandleAriaLabel"
+                    @onclick="Cancel"
+                    @onclick:stopPropagation="true"
+                    style="@BuildDrawerHandleStyle(Tokens, drawer)">
+                <span class="material-icons">@ResolveDrawerHandleIcon(drawer.Placement)</span>
+            </button>
+        }
+
+        <div class="@BuildDialogClass(options, variant)"
+             role="@ResolveAriaRole(options)"
+             aria-modal="true"
+             aria-label="@_activeRequest.Title"
+             aria-labelledby="@_activeRequest.Reference.TitleElementId"
+             aria-describedby="@_activeRequest.Reference.DescriptionElementId"
+             tabindex="-1"
+             @ref="_dialogElement"
+             @onclick:stopPropagation="true"
+             @onkeydown="HandleKeyDown"
+             @onkeydown:stopPropagation="true"
+             style="@BuildDialogStyle(Tokens, sizeTokens, variant)">
+            <CascadingValue Value="options" IsFixed="true">
+                <CascadingValue Value="_activeRequest.Reference" IsFixed="true">
+                    @_activeRequest.Content
+                </CascadingValue>
+            </CascadingValue>
+            @if (_isBusy)
+            {
+                <div class="ui-dialog__busy-overlay">
+                    <span class="material-icons ui-dialog__busy-icon">sync</span>
+                </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,57 @@
+﻿@using Microsoft.Extensions.Logging
+@using HaloUI.Theme
+@using HaloUI.Theme.Tokens.Component
+
+@inject ISnackbarService Snackbar
+@inject ILogger<SnackbarHost> Logger
+
+<div class="ui-snackbar-stack" style="@StackPositionStyle">
+    @foreach (var item in _items)
+    {
+        <div @key="item.Id"
+             class="@BuildContainerClass(item)"
+             role="status"
+             aria-live="polite"
+             aria-label="@GetAccessibleLabel(item)"
+             style="@BuildContainerStyle(item)"
+             @onpointerenter="() => OnSnackbarPointerEnterAsync(item)"
+             @onpointerleave="() => OnSnackbarPointerLeaveAsync(item)">
+            <div class="ui-snackbar__body">
+                <div class="ui-snackbar__header">
+                    <div class="ui-snackbar__title">
+                        <span class="material-icons ui-snackbar__icon">@GetIcon(item.Severity)</span>
+                        <span>@GetDisplayTitle(item)</span>
+                    </div>
+                    <div class="ui-snackbar__actions">
+                        @if (item.Action is not null)
+                        {
+                            <button class="ui-snackbar__action"
+                                    type="button"
+                                    @onclick:stopPropagation="true"
+                                    @onclick="@(() => HandleActionAsync(item))">
+                                @item.Action.Text
+                            </button>
+                        }
+                        <button class="ui-snackbar__dismiss"
+                                type="button"
+                                title="Dismiss"
+                                aria-label="Dismiss notification"
+                                @onclick:stopPropagation="true"
+                                @onclick="@(() => Dismiss(item.Id))">
+                            <span class="material-icons" aria-hidden="true">close</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="ui-snackbar__message">@item.Text</div>
+                @if (item.DurationMs > 0)
+                {
+                    <div class="ui-snackbar__progress">
+                        <div class="@BuildProgressBarClass(item)"
+                             style="@BuildProgressBarStyle(item)"></div>
+                        
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,91 @@
+@using Microsoft.JSInterop
+
+@inject IJSRuntime JsRuntime
+
+<section class="@BuildContainerClass()" id="@Id" @attributes="BuildContainerAttributes()">
+    @if (HeaderContent is not null)
+    {
+        <div class="ui-expandable-panel__header">
+            @HeaderContent
+        </div>
+    }
+    else
+    {
+        <div class="ui-expandable-panel__header">
+            <button type="button"
+                    id="@_headerButtonId"
+                    class="@BuildHeaderButtonClass()"
+                    disabled="@Disabled"
+                    aria-expanded="@_expanded"
+                    aria-controls="@_contentId"
+                    aria-disabled="@(Disabled ? "true" : null)"
+                    @onclick="ToggleAsync">
+                @if (Prefix is not null)
+                {
+                    <span class="ui-expandable-panel__prefix">
+                        @Prefix
+                    </span>
+                }
+                else if (!string.IsNullOrWhiteSpace(Icon))
+                {
+                    <span class="ui-expandable-panel__prefix">
+                        <span class="material-icons ui-expandable-panel__prefix-icon" aria-hidden="true">@Icon</span>
+                    </span>
+                }
+
+                <div class="ui-expandable-panel__header-content">
+                    <div class="ui-expandable-panel__title-row">
+                        @if (!string.IsNullOrWhiteSpace(Title))
+                        {
+                            <span class="ui-expandable-panel__title">@Title</span>
+                        }
+                        @if (Metadata is not null)
+                        {
+                            <span class="ui-expandable-panel__metadata">@Metadata</span>
+                        }
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Subtitle))
+                    {
+                        <span class="ui-expandable-panel__subtitle">@Subtitle</span>
+                    }
+                    else if (Description is not null)
+                    {
+                        <div class="ui-expandable-panel__description">@Description</div>
+                    }
+                </div>
+
+                <span class="@BuildIndicatorClass()" aria-hidden="true">expand_more</span>
+            </button>
+
+            @if (Actions is not null)
+            {
+                <div class="ui-expandable-panel__actions">
+                    @Actions
+                </div>
+            }
+        </div>
+    }
+
+    <div id="@_contentId"
+         class="ui-expandable-panel__content @( _expanded ? "is-expanded" : string.Empty )"
+         role="@GetContentRegionRole()"
+         aria-labelledby="@ResolveContentLabelledBy()"
+         aria-label="@ResolveContentAriaLabel()"
+         aria-describedby="@ResolveContentDescribedBy()"
+         aria-hidden="@((!_expanded).ToString().ToLowerInvariant())"
+         style="@BuildContentStyle()">
+        @if ((_expanded || _hasRenderedBody) && ChildContent is not null)
+        {
+            <div class="ui-expandable-panel__body">
+                @ChildContent
+            </div>
+        }
+
+        @if ((_expanded || _hasRenderedFooter) && Footer is not null)
+        {
+            <div class="ui-expandable-panel__footer">
+                @Footer
+            </div>
+        }
+    </div>
+</section>

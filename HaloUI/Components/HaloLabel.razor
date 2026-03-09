@@ -1,0 +1,36 @@
+@switch (ResolvedElementName)
+{
+    case "label":
+        <label @attributes="MergedAttributes">
+            @RenderLabelContent
+        </label>
+        break;
+    case "legend":
+        <legend @attributes="MergedAttributes">
+            @RenderLabelContent
+        </legend>
+        break;
+    case "div":
+        <div @attributes="MergedAttributes">
+            @RenderLabelContent
+        </div>
+        break;
+    case "p":
+        <p @attributes="MergedAttributes">
+            @RenderLabelContent
+        </p>
+        break;
+    default:
+        <span @attributes="MergedAttributes">
+            @RenderLabelContent
+        </span>
+        break;
+}
+
+@if (HasDescription)
+{
+    <span id="@ResolvedDescriptionId"
+          class="ui-label__description@(Disabled ? " ui-label__description--disabled" : string.Empty)">
+        @RenderDescriptionContent
+    </span>
+}

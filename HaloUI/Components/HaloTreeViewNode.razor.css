@@ -1,0 +1,229 @@
+    .ui-tree__item {
+        position:relative;
+    }
+
+    .ui-tree__branch {
+        display:flex;
+        flex-direction:column;
+        gap:0.4rem;
+    }
+
+    .ui-tree__header {
+        display:flex;
+        align-items:center;
+        gap:0.5rem;
+        min-width:0;
+    }
+
+    .ui-tree__toggle,
+    .ui-tree__toggle-spacer {
+        width:var(--ui-tree-view-toggle-size);
+        height:var(--ui-tree-view-toggle-size);
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        border-radius:var(--ui-tree-view-toggle-border-radius);
+    }
+
+    .ui-tree__toggle {
+        border:var(--ui-tree-view-toggle-border-width) solid var(--ui-tree-view-toggle-border-color);
+        background:var(--ui-tree-view-toggle-background);
+        color:var(--ui-tree-view-toggle-color);
+        transition:var(--ui-tree-view-toggle-transition);
+    }
+
+    .ui-tree__toggle:not(.ui-tree__toggle--disabled):hover {
+        background:var(--ui-tree-view-toggle-hover-background);
+        border-color:var(--ui-tree-view-toggle-hover-border-color);
+        color:var(--ui-tree-view-toggle-hover-color);
+    }
+
+    .ui-tree__toggle--disabled {
+        opacity:var(--ui-tree-view-toggle-disabled-opacity);
+        pointer-events:none;
+    }
+
+    .ui-tree__toggle-icon {
+        width:0.85rem;
+        height:0.85rem;
+        transition:transform 180ms ease;
+    }
+
+    .ui-tree__toggle-icon--expanded {
+        transform:rotate(90deg);
+    }
+
+    .ui-tree__node {
+        position:relative;
+        display:flex;
+        align-items:center;
+        width:100%;
+        min-height:var(--ui-tree-view-node-min-height);
+        gap:var(--ui-tree-view-node-gap);
+        padding:var(--ui-tree-view-node-padding-y) var(--ui-tree-view-node-padding-x);
+        border-radius:var(--ui-tree-view-node-border-radius);
+        border:var(--ui-tree-view-node-border-width) solid var(--ui-tree-view-node-border-color);
+        background:var(--ui-tree-view-node-background);
+        color:var(--ui-tree-view-node-text-color);
+        box-shadow:var(--ui-tree-view-node-shadow);
+        transition:var(--ui-tree-view-node-transition);
+        text-align:left;
+        cursor:pointer;
+        max-width:100%;
+        min-width:0;
+    }
+
+    .ui-tree__node:focus-visible {
+        outline:2px solid var(--ui-color-focus-ring);
+        outline-offset:2px;
+    }
+
+    .ui-tree__node--selected {
+        background:var(--ui-tree-view-node-selected-background);
+        color:var(--ui-tree-view-node-selected-text-color);
+        border-color:var(--ui-tree-view-node-selected-border-color);
+        box-shadow:var(--ui-tree-view-node-selected-shadow);
+        opacity:var(--ui-tree-view-node-selected-opacity);
+    }
+
+    .ui-tree__node--disabled {
+        background:var(--ui-tree-view-node-disabled-background);
+        color:var(--ui-tree-view-node-disabled-text-color);
+        border-color:var(--ui-tree-view-node-disabled-border-color);
+        box-shadow:var(--ui-tree-view-node-disabled-shadow);
+        opacity:var(--ui-tree-view-node-disabled-opacity);
+        cursor:not-allowed;
+        pointer-events:none;
+    }
+
+    .ui-tree__content {
+        display:flex;
+        align-items:center;
+        gap:var(--ui-tree-view-node-gap);
+        flex:1 1 auto;
+        min-width:0;
+    }
+
+    .ui-tree__text {
+        display:flex;
+        flex-direction:column;
+        gap:0.2rem;
+        min-width:0;
+    }
+
+    .ui-tree__label {
+        font-weight:var(--ui-tree-view-label-font-weight);
+        color:var(--ui-tree-view-label-color);
+        font-size:0.95rem;
+        line-height:1.3;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .ui-tree__node--selected .ui-tree__label {
+        color:var(--ui-tree-view-label-selected-color);
+    }
+
+    .ui-tree__node--disabled .ui-tree__label {
+        color:var(--ui-tree-view-label-disabled-color);
+    }
+
+    .ui-tree__description {
+        font-size:var(--ui-tree-view-description-font-size);
+        color:var(--ui-tree-view-description-color);
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .ui-tree__badge {
+        margin-left:auto;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width:1.75rem;
+        height:1.5rem;
+        padding:0 0.45rem;
+        border-radius:9999px;
+        font-size:0.75rem;
+        font-weight:600;
+        background:var(--ui-tree-view-badge-background);
+        color:var(--ui-tree-view-badge-text-color);
+    }
+
+    .ui-tree__node--selected .ui-tree__badge {
+        background:var(--ui-tree-view-badge-selected-background);
+        color:var(--ui-tree-view-badge-selected-text-color);
+    }
+
+    .ui-tree__icon {
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        width:2rem;
+        height:2rem;
+        border-radius:0.75rem;
+        background:var(--ui-tree-view-icon-background);
+        color:var(--ui-tree-view-icon-color);
+        flex-shrink:0;
+        transition:all 160ms ease;
+    }
+
+    .ui-tree__icon--selected {
+        background:var(--ui-tree-view-icon-selected-background);
+        color:var(--ui-tree-view-icon-selected-color);
+    }
+
+    .ui-tree__icon--disabled {
+        background:var(--ui-tree-view-icon-disabled-background);
+        color:var(--ui-tree-view-icon-disabled-color);
+    }
+
+    .ui-tree__group {
+        margin-top:var(--ui-tree-view-group-margin-top);
+        border-left:1px solid var(--ui-tree-view-group-border-color);
+        padding-left:var(--ui-tree-view-group-padding-left);
+        display:flex;
+        flex-direction:column;
+        gap:var(--ui-tree-view-list-gap);
+    }
+
+    .ui-tree__toggle-spacer {
+        opacity:0;
+    }
+
+    @media (max-width:640px), (hover:none) and (pointer:coarse) {
+        .ui-tree__node {
+            min-height:max(var(--ui-tree-view-node-min-height), 2.75rem);
+            gap:max(var(--ui-tree-view-node-gap), 0.625rem);
+        }
+
+        .ui-tree__label,
+        .ui-tree__description {
+            white-space:normal;
+            overflow:visible;
+            text-overflow:clip;
+            overflow-wrap:anywhere;
+        }
+
+        .ui-tree__badge {
+            margin-left:0;
+        }
+    }
+
+    @container (max-width:480px) {
+        .ui-tree__header {
+            align-items:flex-start;
+        }
+
+        .ui-tree__content {
+            align-items:flex-start;
+        }
+
+        .ui-tree__icon {
+            width:1.75rem;
+            height:1.75rem;
+            border-radius:0.625rem;
+        }
+    }

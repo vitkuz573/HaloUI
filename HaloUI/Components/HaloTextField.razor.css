@@ -1,0 +1,176 @@
+.ui-textfield {
+        --ui-textfield-size-height:var(--ui-input-size-md-height);
+        --ui-textfield-size-padding-x:var(--ui-input-size-md-padding-x);
+        --ui-textfield-size-padding-y:var(--ui-input-size-md-padding-y);
+        display:flex;
+        flex-direction:column;
+        gap:0.35rem;
+        min-width:0;
+        width:100%;
+    }
+
+    .ui-textfield--size-sm {
+        --ui-textfield-size-height:var(--ui-input-size-sm-height, var(--ui-input-size-md-height));
+        --ui-textfield-size-padding-x:var(--ui-input-size-sm-padding-x, var(--ui-input-size-md-padding-x));
+        --ui-textfield-size-padding-y:var(--ui-input-size-sm-padding-y, var(--ui-input-size-md-padding-y));
+    }
+
+    .ui-textfield--size-md {
+        --ui-textfield-size-height:var(--ui-input-size-md-height);
+        --ui-textfield-size-padding-x:var(--ui-input-size-md-padding-x);
+        --ui-textfield-size-padding-y:var(--ui-input-size-md-padding-y);
+    }
+
+    .ui-textfield--size-lg {
+        --ui-textfield-size-height:var(--ui-input-size-lg-height, var(--ui-input-size-md-height));
+        --ui-textfield-size-padding-x:var(--ui-input-size-lg-padding-x, var(--ui-input-size-md-padding-x));
+        --ui-textfield-size-padding-y:var(--ui-input-size-lg-padding-y, var(--ui-input-size-md-padding-y));
+    }
+
+    .ui-textfield__container {
+        position:relative;
+        width:100%;
+    }
+
+    .ui-textfield__input {
+        width:100%;
+        max-width:100%;
+        display:block;
+        background:var(--ui-input-default-background);
+        color:var(--ui-input-default-text);
+        border:var(--ui-input-border-width) solid var(--ui-input-default-border);
+        border-radius:var(--ui-input-border-radius);
+        padding:var(--ui-textfield-size-padding-y) var(--ui-textfield-size-padding-x);
+        font-size:var(--ui-input-font-size);
+        font-weight:var(--ui-input-font-weight);
+        font-family:var(--ui-input-font-family, var(--ui-brand-typography-body-font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif));
+        min-height:var(--ui-textfield-size-height);
+        line-height:1.25;
+        transition:var(--ui-input-transition);
+        outline:none;
+        box-shadow:var(--ui-input-default-shadow);
+        appearance:none;
+        box-sizing:border-box;
+    }
+
+    .ui-textfield__input::placeholder {
+        color:var(--ui-input-default-placeholder);
+        opacity:1;
+    }
+
+    .ui-textfield__input:focus-visible {
+        border-color:var(--ui-input-focus-border);
+        box-shadow:var(--ui-input-focus-shadow);
+    }
+
+    .ui-textfield--error .ui-textfield__input {
+        background: var(--ui-input-error-background);
+        color: var(--ui-input-error-text);
+        border-color: var(--ui-input-error-border);
+        box-shadow: var(--ui-input-error-shadow);
+    }
+
+    .ui-textfield--error .ui-textfield__input::placeholder {
+        color: var(--ui-input-error-placeholder);
+    }
+
+    .ui-textfield--error .ui-textfield__input:focus-visible {
+        border-color: var(--ui-input-error-border);
+        box-shadow: var(--ui-input-error-shadow);
+    }
+
+    .ui-textfield--disabled .ui-textfield__input,
+    .ui-textfield__input.is-disabled {
+        background: var(--ui-input-disabled-background);
+        color: var(--ui-input-disabled-text);
+        border-color: var(--ui-input-disabled-border);
+        box-shadow: var(--ui-input-disabled-shadow);
+        cursor:not-allowed;
+    }
+
+    .ui-textfield--disabled .ui-textfield__input::placeholder,
+    .ui-textfield__input.is-disabled::placeholder {
+        color: var(--ui-input-disabled-placeholder);
+    }
+
+    .ui-textfield--readonly .ui-textfield__input,
+    .ui-textfield__input.is-readonly {
+        background: var(--ui-input-disabled-background);
+        color: var(--ui-input-disabled-text);
+        border-color: var(--ui-input-disabled-border);
+        box-shadow: var(--ui-input-disabled-shadow);
+        cursor:default;
+    }
+
+    .ui-textfield--readonly .ui-textfield__input::placeholder,
+    .ui-textfield__input.is-readonly::placeholder {
+        color: var(--ui-input-disabled-placeholder);
+    }
+
+    .ui-textfield--adorned-start .ui-textfield__input,
+    .ui-textfield__input--adorned-start {
+        padding-left:var(--ui-input-adornment-padding);
+    }
+
+    .ui-textfield--adorned-end .ui-textfield__input,
+    .ui-textfield__input--adorned-end {
+        padding-right:var(--ui-input-adornment-padding);
+    }
+
+    .ui-textfield__adornment {
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        color:var(--ui-input-adornment-color);
+        display:inline-flex;
+        align-items:center;
+        pointer-events:auto;
+        z-index:1;
+    }
+
+    .ui-textfield__adornment--start {
+        left:0.75rem;
+    }
+
+    .ui-textfield__adornment--end {
+        right:0.75rem;
+    }
+
+    input.ui-textfield__input[type="search"]::-webkit-search-decoration,
+    input.ui-textfield__input[type="search"]::-webkit-search-cancel-button,
+    input.ui-textfield__input[type="search"]::-webkit-search-results-button,
+    input.ui-textfield__input[type="search"]::-webkit-search-results-decoration {
+        -webkit-appearance:none;
+        display:none;
+    }
+
+    input.ui-textfield__input[type="search"]::-ms-clear,
+    input.ui-textfield__input[type="search"]::-ms-reveal {
+        display:none;
+        width:0;
+        height:0;
+    }
+
+    input.ui-textfield__input[type="password"]::-ms-reveal,
+    input.ui-textfield__input[type="password"]::-ms-clear {
+        display:none;
+        width:0;
+        height:0;
+        pointer-events:none;
+    }
+
+    input.ui-textfield__input[type="password"]::-webkit-textfield-decoration-container,
+    input.ui-textfield__input[type="password"]::-webkit-credentials-auto-fill-button {
+        display:none;
+        pointer-events:none;
+    }
+
+    @media (max-width:640px), (hover:none) and (pointer:coarse) {
+        .ui-textfield__input {
+            min-height:max(var(--ui-textfield-size-height), 2.75rem);
+            font-size:max(var(--ui-input-font-size), 16px);
+            line-height:1.25;
+            padding-top:max(var(--ui-textfield-size-padding-y), 0.625rem);
+            padding-bottom:max(var(--ui-textfield-size-padding-y), 0.625rem);
+        }
+    }

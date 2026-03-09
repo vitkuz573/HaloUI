@@ -1,0 +1,89 @@
+@typeparam TValue
+
+@using Microsoft.JSInterop
+@using HaloUI.Components.Base
+
+@inherits HaloLabellableInputBase<TValue>
+
+@inject IJSRuntime JsRuntime
+
+<div id="@_rootId" class="@BuildWrapperClass()" tabindex="-1" @attributes="BuildWrapperAttributes()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId" For="@InputId" Text="@Label" Variant="@ResolveLabelVariant()" Disabled="@(Disabled)" ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <div class="ui-select__control">
+        @if (UseNativeSelectPresentation)
+        {
+            <select id="@InputId"
+                    class="@BuildNativeSelectClass()"
+                    disabled="@(Disabled || ReadOnly)"
+                    value="@NativeSelectedOptionId"
+                    @onchange="HandleNativeSelectChangedAsync"
+                    @attributes="BuildNativeSelectAttributes()">
+                @if (ShouldRenderNativePlaceholder)
+                {
+                    <option value="" disabled="@IsRequired">@NativePlaceholderText</option>
+                }
+                @foreach (var option in _optionItems)
+                {
+                    <option @key="option.Id" value="@option.Id" disabled="@option.Disabled">@option.Text</option>
+                }
+            </select>
+        }
+        else
+        {
+            <button type="button" id="@InputId" class="@BuildTriggerClass()" disabled="@IsTriggerDisabled" @onclick="() => ToggleDropdownAsync()" @onkeydown="HandleTriggerKeyDown" @attributes="BuildTriggerAttributes()" @ref="_triggerRef">
+                <span class="ui-select__trigger-text">
+                    @if (SelectedOption is { } selected)
+                    {
+                        @selected.Content
+                    }
+                    else if (!string.IsNullOrEmpty(Placeholder))
+                    {
+                        <span class="ui-select__placeholder">@Placeholder</span>
+                    }
+                    else
+                    {
+                        <span class="ui-select__placeholder">Select...</span>
+                    }
+                </span>
+                <span class="material-icons ui-select__chevron" aria-hidden="true">expand_more</span>
+            </button>
+
+            @if (_isOpen)
+            {
+                <div id="@_dropdownId" class="ui-select__dropdown" role="listbox" aria-labelledby="@InputId" style="@BuildDropdownPositionStyle()" tabindex="-1" @onkeydown="HandleDropdownKeyDown">
+                    @if (_optionItems.Count == 0)
+                    {
+                        <div class="ui-select__empty">No options</div>
+                    }
+                    else
+                    {
+                        @foreach (var option in _optionItems)
+                        {
+                            var isSelected = IsOptionSelected(option);
+                            var isHighlighted = option == _highlightedOption;
+                            <button @key="option.Id" type="button" id="@option.ElementId" role="option" class="@BuildOptionClass(isSelected, isHighlighted, option.Disabled)" disabled="@option.Disabled" aria-selected="@(isSelected ? "true" : "false")" @onclick="() => SelectOptionAsync(option)" @onpointerdown="args => MarkPointerInteraction(args, option)" @onmouseenter="() => HandleOptionMouseEnter(option)" @onfocus="() => HandleOptionFocus(option)" @onkeydown="args => HandleOptionKeyDown(args, option)" @onkeydown:stopPropagation="true" @ref="option.ElementRef">
+                                <span class="ui-select__option-label">
+                                    @option.Content
+                                </span>
+                            </button>
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p class="ui-select__description"
+           id="@DescriptionElementId">@Description</p>
+    }
+
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>

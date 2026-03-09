@@ -1,0 +1,18 @@
+{
+  "name": "haloui-accessibility-tests",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "pretest": "playwright install",
+    "test": "playwright test",
+    "test:matrix": "playwright test tests/matrix-render.spec.ts tests/matrix-focus.spec.ts",
+    "test:a11y": "playwright test tests/critical-a11y.spec.ts",
+    "screenshots": "HALOUI_CAPTURE_SCREENSHOTS=1 playwright test tests/visual-gallery.spec.ts --workers=1",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/test": "^1.58.1",
+    "typescript": "^5.9.3"
+  }
+}

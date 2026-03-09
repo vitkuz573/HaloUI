@@ -1,0 +1,36 @@
+<label class="@BuildRootClass()">
+    <input type="checkbox" class="ui-toggle__input" checked="@Checked" disabled="@Disabled" @onchange="OnChangeAsync" @attributes="BuildInputAttributes()" />
+
+    <span class="ui-toggle__track">
+        <span class="ui-toggle__thumb"></span>
+    </span>
+
+    @if (ShouldRenderContent)
+    {
+        <div class="ui-toggle__content">
+            @if (ChildContent is not null)
+            {
+                <div id="@(UseGeneratedLabel ? _generatedLabelId : null)" class="@BuildLabelClass()">
+                    @ChildContent
+                </div>
+
+                @if (HasDescription)
+                {
+                    <span id="@(UseGeneratedDescription ? _generatedDescriptionId : null)" class="@BuildDescriptionClass()">@Description</span>
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(Label))
+                {
+                    <span id="@(UseGeneratedLabel ? _generatedLabelId : null)" class="@BuildLabelClass()">@Label</span>
+                }
+
+                @if (HasDescription)
+                {
+                    <span id="@(UseGeneratedDescription ? _generatedDescriptionId : null)" class="@BuildDescriptionClass()">@Description</span>
+                }
+            }
+        </div>
+    }
+</label>

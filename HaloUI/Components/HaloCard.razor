@@ -1,0 +1,87 @@
+@using System.Linq
+@using System.Text
+@using HaloUI.Components.Base
+@using HaloUI.Theme
+
+@inherits ThemeAwareComponentBase
+
+@{
+    var cardId = $"card-{_instanceId}";
+    var cardClass = BuildCardClass();
+}
+
+<div id="@cardId"
+     class="@cardClass"
+     @onclick="OnClick"
+     @attributes="BuildAttributes()">
+    @if (HasMedia)
+    {
+        <div class="@BuildMediaClass()">
+            @if (MediaContent is not null)
+            {
+                @MediaContent
+            }
+            else if (!string.IsNullOrWhiteSpace(MediaUrl))
+            {
+                <img src="@MediaUrl" alt="@MediaAlt" />
+            }
+        </div>
+    }
+
+    @if (HeaderContent is not null || !string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Subtitle))
+    {
+        <div class="ui-card__header">
+            @if (HeaderContent is not null)
+            {
+                @HeaderContent
+            }
+            else
+            {
+                <div class="ui-card__header-row">
+                    <div class="ui-card__header-text">
+                        @if (!string.IsNullOrWhiteSpace(Title))
+                        {
+                            <span class="ui-card__title">@Title</span>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Subtitle))
+                        {
+                            <span class="ui-card__subtitle">@Subtitle</span>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Icon))
+                    {
+                        <span class="material-icons ui-card__icon" aria-hidden="true">@Icon</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    @if (ChildContent is not null)
+    {
+        <div class="ui-card__body">
+            @ChildContent
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(Value) || !string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="ui-card__body">
+            @if (!string.IsNullOrWhiteSpace(Value))
+            {
+                <p class="ui-card__value">@Value</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(Label))
+            {
+                <p class="ui-card__label">@Label</p>
+            }
+        </div>
+    }
+
+    @if (FooterContent is not null)
+    {
+        <div class="ui-card__footer">
+            @FooterContent
+        </div>
+    }
+</div>

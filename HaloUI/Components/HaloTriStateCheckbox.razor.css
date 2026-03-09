@@ -1,0 +1,50 @@
+    .ui-tri-checkbox {
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        width:1.25rem;
+        height:1.25rem;
+        max-width:100%;
+        position:relative;
+        border-radius:0.25rem;
+        border:1px solid var(--ui-tri-checkbox-border, #d1d5db);
+        background:var(--ui-tri-checkbox-bg, #ffffff);
+        color:transparent;
+        transition:background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .ui-tri-checkbox:focus-visible {
+        outline:2px solid var(--ui-color-focus-ring, #2563eb);
+        outline-offset:2px;
+    }
+
+    .ui-tri-checkbox--all {
+        background:var(--ui-tri-checkbox-active-bg, #2563eb);
+        border-color:var(--ui-tri-checkbox-active-border, #2563eb);
+        color:var(--ui-tri-checkbox-active-color, #ffffff);
+    }
+
+    .ui-tri-checkbox--partial {
+        background:var(--ui-tri-checkbox-partial-bg, #dbeafe);
+        border-color:var(--ui-tri-checkbox-partial-border, #60a5fa);
+        color:var(--ui-tri-checkbox-partial-color, #1d4ed8);
+    }
+
+    .ui-tri-checkbox--none {
+        background:var(--ui-tri-checkbox-bg, #ffffff);
+        border-color:var(--ui-tri-checkbox-border, #d1d5db);
+        color:transparent;
+    }
+
+    .ui-tri-checkbox--disabled {
+        opacity:0.6;
+        pointer-events:none;
+    }
+
+    @media (max-width:640px), (hover:none) and (pointer:coarse) {
+        .ui-tri-checkbox {
+            width:1.5rem;
+            height:1.5rem;
+            border-radius:0.375rem;
+        }
+    }

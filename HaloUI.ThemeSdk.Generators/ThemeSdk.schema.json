@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://remote-master.dev/schemas/themesdk.json",
+  "title": "Theme SDK Configuration",
+  "type": "object",
+  "required": ["segmentMergeRules", "allowedSingleSegments", "stateSets"],
+  "properties": {
+    "segmentMergeRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pattern", "combined"],
+        "properties": {
+          "pattern": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1
+          },
+          "combined": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "allowedSingleSegments": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "stateSets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["manifestPath", "variants", "properties"],
+        "properties": {
+          "manifestPath": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1
+          },
+          "variants": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "states"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "states": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1 },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "manualVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "aliasTarget": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "headSegmentOverride": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,110 @@
+<CascadingValue Value="this" IsFixed="true">
+    @if (ChildContent is not null)
+    {
+        @ChildContent
+    }
+</CascadingValue>
+
+@if (_tabs.Count > 0)
+{
+    <div class="@GetContainerClasses()" @attributes="_mergedAttributes">
+        <div class="@GetTabListClasses()" role="tablist">
+            @for (var i = 0; i < _tabs.Count; i++)
+            {
+                var index = i;
+                var tab = _tabs[index];
+                <button type="button"
+                        id="@tab.TabId"
+                        class="@GetTabButtonClasses(index)"
+                        role="tab"
+                        tabindex="@GetTabTabIndex(index)"
+                        aria-selected="@(IsActive(index) ? "true" : "false")"
+                        aria-controls="@tab.PanelId"
+                        aria-disabled="@(tab.Disabled ? "true" : null)"
+                        title="@tab.Tooltip"
+                        disabled="@tab.Disabled"
+                        @onkeydown="@((args) => HandleTabKeyDownAsync(args, index))"
+                        @ref="tab.TabButtonRef"
+                        @onclick="@(() => ActivateTab(index))">
+                    @if (tab.Indicator != TabIndicatorVariant.None)
+                    {
+                        <span class="@GetNotificationClasses(tab)" aria-hidden="true"></span>
+                    }
+
+                    <span class="ui-tabs__tab-inner">
+                        @if (tab.PrefixContent is not null)
+                        {
+                            <span class="@GetTabIconClasses(true)">
+                                @tab.PrefixContent
+                            </span>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(tab.Icon))
+                        {
+                            <span class="@GetTabIconClasses(false)">
+                                <span class="material-icons" aria-hidden="true">@tab.Icon</span>
+                            </span>
+                        }
+
+                        <span class="ui-tabs__tab-label">
+                            <span class="ui-tabs__tab-title">@tab.Title</span>
+                            @if (!string.IsNullOrWhiteSpace(tab.Description))
+                            {
+                                <span class="ui-tabs__tab-description">@tab.Description</span>
+                            }
+                        </span>
+
+                        @if (tab.BadgeContent is not null || !string.IsNullOrWhiteSpace(tab.BadgeText) || tab.SuffixContent is not null)
+                        {
+                            <span class="ui-tabs__tab-suffix">
+                                @if (tab.BadgeContent is not null)
+                                {
+                                    <span class="ui-tabs__tab-badge">
+                                        @tab.BadgeContent
+                                    </span>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(tab.BadgeText))
+                                {
+                                    <HaloBadge Text="@tab.BadgeText"
+                                             Variant="@tab.BadgeVariant"
+                                             Class="ui-tabs__tab-badge" />
+                                }
+
+                                @if (tab.SuffixContent is not null)
+                                {
+                                    <span class="ui-tabs__tab-suffix-content">
+                                        @tab.SuffixContent
+                                    </span>
+                                }
+                            </span>
+                        }
+                    </span>
+                </button>
+            }
+        </div>
+
+        <div class="@GetPanelContainerClasses()">
+            @if (_activeIndex >= 0 && _activeIndex < _tabs.Count)
+            {
+                var activeTab = _tabs[_activeIndex];
+                <div id="@activeTab.PanelId"
+                     class="@GetPanelClasses(activeTab)"
+                     role="tabpanel"
+                     aria-labelledby="@activeTab.TabId">
+                    @activeTab.ChildContent
+                </div>
+            }
+            else if (EmptyContent is not null)
+            {
+                <div class="@GetEmptyPanelClasses()">
+                    @EmptyContent
+                </div>
+            }
+        </div>
+    </div>
+}
+else if (EmptyContent is not null)
+{
+    <div class="@GetEmptyPanelClasses()" @attributes="AdditionalAttributes">
+        @EmptyContent
+    </div>
+}

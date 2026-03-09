@@ -1,0 +1,83 @@
+@switch (ResolvedElementName)
+{
+    case "p":
+        <p @attributes="MergedAttributes">
+            @RenderTextContent
+        </p>
+        break;
+    case "div":
+        <div @attributes="MergedAttributes">
+            @RenderTextContent
+        </div>
+        break;
+    case "h1":
+        <h1 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h1>
+        break;
+    case "h2":
+        <h2 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h2>
+        break;
+    case "h3":
+        <h3 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h3>
+        break;
+    case "h4":
+        <h4 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h4>
+        break;
+    case "h5":
+        <h5 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h5>
+        break;
+    case "h6":
+        <h6 @attributes="MergedAttributes">
+            @RenderTextContent
+        </h6>
+        break;
+    case "strong":
+        <strong @attributes="MergedAttributes">
+            @RenderTextContent
+        </strong>
+        break;
+    case "em":
+        <em @attributes="MergedAttributes">
+            @RenderTextContent
+        </em>
+        break;
+    case "small":
+        <small @attributes="MergedAttributes">
+            @RenderTextContent
+        </small>
+        break;
+    case "label":
+        <label @attributes="MergedAttributes">
+            @RenderTextContent
+        </label>
+        break;
+    case "code":
+        <code @attributes="MergedAttributes">
+            @RenderTextContent
+        </code>
+        break;
+    case "pre":
+        <pre @attributes="MergedAttributes">
+            @RenderTextContent
+        </pre>
+        break;
+    case "blockquote":
+        <blockquote @attributes="MergedAttributes">
+            @RenderTextContent
+        </blockquote>
+        break;
+    default:
+        <span @attributes="MergedAttributes">
+            @RenderTextContent
+        </span>
+        break;
+}

@@ -1,0 +1,67 @@
+.ui-notice {
+    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-info-subtle, #eff6ff) 100%, transparent);
+    --ui-notice-border-color: var(--ui-color-feedback-info-default, #3b82f6);
+    --ui-notice-icon-color: var(--ui-color-feedback-info-default, #3b82f6);
+    background: var(--ui-notice-background);
+    border: 1px solid var(--ui-notice-border-color);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    color: inherit;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.ui-notice--info {
+    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-info-subtle, #eff6ff) 100%, transparent);
+    --ui-notice-border-color: var(--ui-color-feedback-info-default, #3b82f6);
+    --ui-notice-icon-color: var(--ui-color-feedback-info-default, #3b82f6);
+}
+
+.ui-notice--success {
+    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-success-subtle, #ecfdf3) 100%, transparent);
+    --ui-notice-border-color: var(--ui-color-feedback-success-default, #10b981);
+    --ui-notice-icon-color: var(--ui-color-feedback-success-default, #10b981);
+}
+
+.ui-notice--warning {
+    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-warning-subtle, #fffbeb) 100%, transparent);
+    --ui-notice-border-color: var(--ui-color-feedback-warning-default, #f59e0b);
+    --ui-notice-icon-color: var(--ui-color-feedback-warning-default, #f59e0b);
+}
+
+.ui-notice--danger {
+    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-danger-subtle, #fef2f2) 100%, transparent);
+    --ui-notice-border-color: var(--ui-color-feedback-danger-default, #ef4444);
+    --ui-notice-icon-color: var(--ui-color-feedback-danger-default, #ef4444);
+}
+
+.ui-notice__icon {
+    color: var(--ui-notice-icon-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.ui-notice__content {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+@media (max-width: 640px) {
+    .ui-notice {
+        gap: 0.625rem;
+        padding: 0.875rem;
+    }
+
+    .ui-notice__icon {
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+    }
+}

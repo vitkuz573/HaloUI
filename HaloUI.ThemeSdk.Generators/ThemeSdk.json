@@ -1,0 +1,648 @@
+{
+  "segmentMergeRules": [
+    {
+      "pattern": [
+        "z",
+        "index"
+      ],
+      "combined": "z-index"
+    },
+    {
+      "pattern": [
+        "semi",
+        "bold"
+      ],
+      "combined": "semi-bold"
+    },
+    {
+      "pattern": [
+        "extra",
+        "bold"
+      ],
+      "combined": "extra-bold"
+    },
+    {
+      "pattern": [
+        "extra",
+        "light"
+      ],
+      "combined": "extra-light"
+    },
+    {
+      "pattern": [
+        "screen",
+        "reader"
+      ],
+      "combined": "screen-reader"
+    },
+    {
+      "pattern": [
+        "text",
+        "transform"
+      ],
+      "combined": "text-transform"
+    },
+    {
+      "pattern": [
+        "line",
+        "height"
+      ],
+      "combined": "line-height"
+    },
+    {
+      "pattern": [
+        "focus",
+        "ring"
+      ],
+      "combined": "focus-ring"
+    },
+    {
+      "pattern": [
+        "font",
+        "size"
+      ],
+      "combined": "font-size"
+    },
+    {
+      "pattern": [
+        "icon",
+        "size"
+      ],
+      "combined": "icon-size"
+    },
+    {
+      "pattern": [
+        "padding",
+        "x"
+      ],
+      "combined": "padding-x"
+    },
+    {
+      "pattern": [
+        "padding",
+        "y"
+      ],
+      "combined": "padding-y"
+    },
+    {
+      "pattern": [
+        "empty",
+        "state"
+      ],
+      "combined": "empty-state"
+    },
+    {
+      "pattern": [
+        "font",
+        "weight"
+      ],
+      "combined": "font-weight"
+    }
+  ],
+  "allowedSingleSegments": [
+    "X",
+    "Y",
+    "Xs",
+    "Xxs",
+    "Sm",
+    "Md",
+    "Lg",
+    "Xl",
+    "Xl2",
+    "Xl3",
+    "Xl4",
+    "Xxl",
+    "Xxl2",
+    "Xxl3"
+  ],
+  "stateSets": [
+    {
+      "manifestPath": [
+        "component"
+      ],
+      "variants": [
+        "Primary",
+        "Secondary",
+        "Tertiary",
+        "Danger",
+        "Warning",
+        "Ghost"
+      ],
+      "properties": [
+        {
+          "name": "Background",
+          "states": [
+            "Base",
+            "Hover",
+            "Active",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "Text",
+          "states": [
+            "Base",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "Border",
+          "states": [
+            "Base",
+            "Hover"
+          ]
+        },
+        {
+          "name": "Shadow",
+          "states": [
+            "Base"
+          ]
+        },
+        {
+          "name": "FocusRing",
+          "states": [
+            "Base"
+          ]
+        }
+      ]
+    }
+  ],
+  "manualVariables": [
+    {
+      "name": "--ui-badge-background",
+      "aliasTarget": "--ui-badge-neutral-background"
+    },
+    {
+      "name": "--ui-badge-border",
+      "aliasTarget": "--ui-badge-neutral-border"
+    },
+    {
+      "name": "--ui-badge-text-color",
+      "aliasTarget": "--ui-badge-neutral-text"
+    },
+    {
+      "name": "--ui-button-background",
+      "aliasTarget": "--ui-button-secondary-background"
+    },
+    {
+      "name": "--ui-button-background-active",
+      "aliasTarget": "--ui-button-secondary-background-active"
+    },
+    {
+      "name": "--ui-button-background-disabled",
+      "aliasTarget": "--ui-button-secondary-background-disabled"
+    },
+    {
+      "name": "--ui-button-background-hover",
+      "aliasTarget": "--ui-button-secondary-background-hover"
+    },
+    {
+      "name": "--ui-button-border",
+      "aliasTarget": "--ui-button-secondary-border"
+    },
+    {
+      "name": "--ui-button-border-disabled",
+      "aliasTarget": "--ui-button-secondary-border"
+    },
+    {
+      "name": "--ui-button-border-hover",
+      "aliasTarget": "--ui-button-secondary-border-hover"
+    },
+    {
+      "name": "--ui-button-focus-ring",
+      "aliasTarget": "--ui-button-secondary-focus-ring"
+    },
+    {
+      "name": "--ui-button-font-size",
+      "aliasTarget": "--ui-button-size-md-font-size"
+    },
+    {
+      "name": "--ui-button-gap",
+      "aliasTarget": "--ui-button-size-md-gap"
+    },
+    {
+      "name": "--ui-button-height",
+      "aliasTarget": "--ui-button-size-md-height"
+    },
+    {
+      "name": "--ui-button-icon-size",
+      "aliasTarget": "--ui-button-size-md-icon-size"
+    },
+    {
+      "name": "--ui-button-padding-x",
+      "aliasTarget": "--ui-button-size-md-padding-x"
+    },
+    {
+      "name": "--ui-button-padding-y",
+      "aliasTarget": "--ui-button-size-md-padding-y"
+    },
+    {
+      "name": "--ui-button-shadow",
+      "aliasTarget": "--ui-button-secondary-shadow"
+    },
+    {
+      "name": "--ui-button-text-color",
+      "aliasTarget": "--ui-button-secondary-text"
+    },
+    {
+      "name": "--ui-button-text-disabled",
+      "aliasTarget": "--ui-button-secondary-text-disabled"
+    },
+    {
+      "name": "--ui-expandable-panel-content-expanded-height",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-input-size-lg-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-input-size-md-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-input-size-sm-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-label-color",
+      "aliasTarget": "--ui-label-primary-text"
+    },
+    {
+      "name": "--ui-label-font-size",
+      "aliasTarget": "--ui-label-size-md-font-size"
+    },
+    {
+      "name": "--ui-label-gap",
+      "aliasTarget": "--ui-label-size-md-gap"
+    },
+    {
+      "name": "--ui-label-icon-color",
+      "aliasTarget": "--ui-label-primary-icon"
+    },
+    {
+      "name": "--ui-label-icon-size",
+      "aliasTarget": "--ui-label-size-md-icon-size"
+    },
+    {
+      "name": "--ui-label-indicator-color",
+      "aliasTarget": "--ui-label-primary-indicator"
+    },
+    {
+      "name": "--ui-label-letter-spacing",
+      "aliasTarget": "--ui-label-size-md-letter-spacing"
+    },
+    {
+      "name": "--ui-label-line-height",
+      "aliasTarget": "--ui-label-size-md-line-height"
+    },
+    {
+      "name": "--ui-label-optional-color",
+      "aliasTarget": "--ui-label-indicators-optional-color"
+    },
+    {
+      "name": "--ui-label-optional-weight",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-label-required-color",
+      "aliasTarget": "--ui-label-indicators-required-color"
+    },
+    {
+      "name": "--ui-label-text-transform",
+      "aliasTarget": "--ui-label-size-md-text-transform"
+    },
+    {
+      "name": "--ui-label-weight-bold",
+      "aliasTarget": "--ui-label-weights-bold"
+    },
+    {
+      "name": "--ui-label-weight-medium",
+      "aliasTarget": "--ui-label-weights-medium"
+    },
+    {
+      "name": "--ui-label-weight-regular",
+      "aliasTarget": "--ui-label-weights-regular"
+    },
+    {
+      "name": "--ui-label-weight-semibold",
+      "aliasTarget": "--ui-label-weights-semi-bold"
+    },
+    {
+      "name": "--ui-select-option-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-option-padding-x",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-option-padding-y",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-size-font-size",
+      "aliasTarget": "--ui-select-trigger-size-md-font-size"
+    },
+    {
+      "name": "--ui-select-size-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-size-height",
+      "aliasTarget": "--ui-select-trigger-size-md-height"
+    },
+    {
+      "name": "--ui-select-size-padding-x",
+      "aliasTarget": "--ui-select-trigger-size-md-padding-x"
+    },
+    {
+      "name": "--ui-select-size-padding-y",
+      "aliasTarget": "--ui-select-trigger-size-md-padding-y"
+    },
+    {
+      "name": "--ui-select-transition",
+      "aliasTarget": "--ui-select-trigger-transition"
+    },
+    {
+      "name": "--ui-select-trigger-size-lg-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-trigger-size-md-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-select-trigger-size-sm-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-filter-button-background",
+      "aliasTarget": "--ui-color-interactive-secondary"
+    },
+    {
+      "name": "--ui-table-filter-button-border",
+      "aliasTarget": "--ui-color-interactive-primary"
+    },
+    {
+      "name": "--ui-table-filter-button-focus",
+      "aliasTarget": "--ui-color-border-focus"
+    },
+    {
+      "name": "--ui-table-filter-button-hover",
+      "aliasTarget": "--ui-color-interactive-secondary-hover"
+    },
+    {
+      "name": "--ui-table-filter-button-text",
+      "aliasTarget": "--ui-color-interactive-primary"
+    },
+    {
+      "name": "--ui-table-filter-chip-background",
+      "aliasTarget": "--ui-color-interactive-secondary"
+    },
+    {
+      "name": "--ui-table-filter-chip-border",
+      "aliasTarget": "--ui-color-border-default"
+    },
+    {
+      "name": "--ui-table-filter-chip-icon",
+      "aliasTarget": "--ui-color-text-link"
+    },
+    {
+      "name": "--ui-table-filter-chip-text",
+      "aliasTarget": "--ui-color-text-link"
+    },
+    {
+      "name": "--ui-table-filter-panel-background",
+      "aliasTarget": "--ui-color-surface-subdued"
+    },
+    {
+      "name": "--ui-table-filter-panel-border",
+      "aliasTarget": "--ui-color-border-subtle"
+    },
+    {
+      "name": "--ui-table-filter-panel-text",
+      "aliasTarget": "--ui-color-text-secondary"
+    },
+    {
+      "name": "--ui-table-header-border",
+      "aliasTarget": "--ui-table-header-border-bottom"
+    },
+    {
+      "name": "--ui-table-header-padding-x",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-header-padding-y",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-mobile-card-background",
+      "aliasTarget": "--ui-color-surface-default"
+    },
+    {
+      "name": "--ui-table-mobile-card-border",
+      "aliasTarget": "--ui-color-border-subtle"
+    },
+    {
+      "name": "--ui-table-mobile-card-selected-border",
+      "aliasTarget": "--ui-color-border-focus"
+    },
+    {
+      "name": "--ui-table-mobile-card-selected-shadow",
+      "aliasTarget": "--ui-elevation-floating"
+    },
+    {
+      "name": "--ui-table-mobile-card-shadow",
+      "aliasTarget": "--ui-elevation-raised"
+    },
+    {
+      "name": "--ui-table-mobile-divider",
+      "aliasTarget": "--ui-color-border-subtle"
+    },
+    {
+      "name": "--ui-table-pagination-border-color",
+      "aliasTarget": "--ui-table-pagination-border-top"
+    },
+    {
+      "name": "--ui-table-pagination-control-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-pagination-secondary-text-color",
+      "aliasTarget": "--ui-table-pagination-text-secondary"
+    },
+    {
+      "name": "--ui-table-row-border-color",
+      "aliasTarget": "--ui-table-row-border-bottom"
+    },
+    {
+      "name": "--ui-table-row-hover-background",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-row-hover-transition",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-selection-border-color",
+      "aliasTarget": "--ui-table-selection-border"
+    },
+    {
+      "name": "--ui-table-subtle-text-color",
+      "aliasTarget": "--ui-color-text-secondary"
+    },
+    {
+      "name": "--ui-table-tertiary-text-color",
+      "aliasTarget": "--ui-color-text-tertiary"
+    },
+    {
+      "name": "--ui-table-title-color",
+      "aliasTarget": "--ui-color-text-primary"
+    },
+    {
+      "name": "--ui-table-toolbar-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-toolbar-icon-color",
+      "aliasTarget": "--ui-color-text-tertiary"
+    },
+    {
+      "name": "--ui-text-color",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-font-size",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-font-style",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-font-weight",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-letter-spacing",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-line-clamp",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-line-height",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-text-decoration",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-text-transform",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-text-white-space",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-toggle-thumb-background",
+      "aliasTarget": "--ui-toggle-unchecked-thumb-background"
+    },
+    {
+      "name": "--ui-toggle-thumb-translate",
+      "aliasTarget": "--ui-toggle-thumb-translate-x"
+    },
+    {
+      "name": "--ui-toggle-track-background",
+      "aliasTarget": "--ui-toggle-unchecked-track-background"
+    },
+    {
+      "name": "--ui-table-empty-state-padding-y",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-empty-state-text-color",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-empty-state-icon-size",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-table-empty-state-icon-color",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-padding-x",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-padding-y",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-gap",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-background",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-border-color",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-border-style",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-border-width",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-tab-empty-state-text-color",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-hover-border-color-instance",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-hover-background-instance",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-icon-color-instance",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-icon-hover-color-instance",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-media-border-radius",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-card-media-aspect-ratio",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-slider-progress",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-drawer-handle-bg",
+      "aliasTarget": null
+    },
+    {
+      "name": "--ui-drawer-handle-border",
+      "aliasTarget": null
+    }
+  ]
+}

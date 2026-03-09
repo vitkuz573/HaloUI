@@ -1,0 +1,375 @@
+@page "/"
+
+@rendermode InteractiveServer
+
+@using HaloUI.Abstractions
+@using HaloUI.Components
+@using HaloUI.Components.Table
+@using HaloUI.Enums
+
+@inject DemoDialogState DemoDialogState
+@inject ISnackbarService SnackbarService
+@inject HaloUI.Services.ThemeState ThemeState
+@inject HaloUI.Theme.Sdk.Runtime.IThemeCatalog ThemeCatalog
+
+<main class="halo-demo" data-testid="demo-root" data-theme="@CurrentThemeMode">
+    <header class="demo-hero" data-testid="demo-hero">
+        <div class="demo-hero__content">
+            <p class="demo-hero__eyebrow">HaloUI Demo Host</p>
+            <h1>Design System Control Room</h1>
+            <p>
+                Interactive production-style showcase for every core component.
+                Built for fast visual review, keyboard checks, and deterministic Playwright automation.
+            </p>
+        </div>
+
+        <div class="demo-hero__actions" data-testid="demo-theme-controls">
+            <HaloButton Variant="ButtonVariant.Secondary"
+                        Size="ButtonSize.Small"
+                        StartIcon="light_mode"
+                        OnClick="@(() => SetTheme(LightThemeKey))"
+                        data-testid="theme-light">
+                Light
+            </HaloButton>
+            <HaloButton Variant="ButtonVariant.Secondary"
+                        Size="ButtonSize.Small"
+                        StartIcon="dark_mode"
+                        OnClick="@(() => SetTheme(DarkThemeKey))"
+                        data-testid="theme-dark">
+                Dark
+            </HaloButton>
+            <HaloButton Variant="ButtonVariant.Primary"
+                        Size="ButtonSize.Small"
+                        StartIcon="open_in_new"
+                        OnClick="ShowDialogAsync"
+                        data-testid="hero-open-dialog">
+                Launch dialog
+            </HaloButton>
+            <HaloButton Variant="ButtonVariant.Tertiary"
+                        Size="ButtonSize.Small"
+                        StartIcon="campaign"
+                        OnClick="() => ShowSnackbar(SnackbarSeverity.Info)"
+                        data-testid="hero-show-snackbar">
+                Push snackbar
+            </HaloButton>
+        </div>
+    </header>
+
+    <section class="demo-grid" data-testid="demo-grid">
+        <article id="buttons" class="demo-section" data-testid="demo-section-buttons">
+            <h2>Buttons</h2>
+            <p>Variant scale and action hierarchy.</p>
+            <div class="demo-row">
+                <HaloButton Variant="ButtonVariant.Primary" data-testid="button-primary-action">Primary Action</HaloButton>
+                <HaloButton Variant="ButtonVariant.Secondary" data-testid="button-secondary-action">Secondary Action</HaloButton>
+                <HaloButton Variant="ButtonVariant.Warning" data-testid="button-warning-action">Warning Action</HaloButton>
+            </div>
+        </article>
+
+        <article id="button-density" class="demo-section" data-testid="demo-section-button-density">
+            <h2>Button Density</h2>
+            <p>Compact, medium, and large touch targets.</p>
+            <div class="demo-row">
+                <HaloButton Size="ButtonSize.Small" Variant="ButtonVariant.Secondary">Small</HaloButton>
+                <HaloButton Size="ButtonSize.Medium" Variant="ButtonVariant.Secondary">Medium</HaloButton>
+                <HaloButton Size="ButtonSize.Medium" Variant="ButtonVariant.Secondary">Balanced</HaloButton>
+            </div>
+        </article>
+
+        <article id="text-fields" class="demo-section" data-testid="demo-section-text-fields">
+            <h2>Text Fields</h2>
+            <p>Input labels, descriptions, and disabled states.</p>
+            <div class="demo-stack">
+                <HaloTextField Label="Email"
+                               Placeholder="operator@halo-ui.dev"
+                               Description="Primary notification address."
+                               @bind-Value="_email" />
+                <HaloTextField Label="Disabled"
+                               Description="Locked by policy."
+                               Disabled="true"
+                               @bind-Value="_disabledFieldValue" />
+            </div>
+        </article>
+
+        <article id="password" class="demo-section" data-testid="demo-section-password">
+            <h2>Password</h2>
+            <p>Secure input with reveal control.</p>
+            <div class="demo-stack">
+                <HaloPasswordField Label="Admin password" @bind-Value="_adminPassword" />
+            </div>
+        </article>
+
+        <article id="text-area" class="demo-section" data-testid="demo-section-text-area">
+            <h2>Text Area</h2>
+            <p>Long-form text with helper message.</p>
+            <div class="demo-stack">
+                <HaloTextArea Label="Change summary"
+                              Description="Describe rollback and impact plan."
+                              Placeholder="Summarize the rollout in 2-3 sentences."
+                              Rows="4"
+                              @bind-Value="_changeSummary" />
+            </div>
+        </article>
+
+        <article id="select" class="demo-section" data-testid="demo-section-select">
+            <h2>Select</h2>
+            <p>Custom combobox behavior and option semantics.</p>
+            <div class="demo-stack">
+                <HaloSelect TValue="string"
+                            Label="Region"
+                            Description="Region selection for failover policy."
+                            Placeholder="Select region"
+                            UseViewportPlacement="false"
+                            @bind-Value="_selectedRegion">
+                    <HaloSelectOption Value="@("emea")">EMEA</HaloSelectOption>
+                    <HaloSelectOption Value="@("apac")">APAC</HaloSelectOption>
+                    <HaloSelectOption Value="@("amer")">AMER</HaloSelectOption>
+                </HaloSelect>
+            </div>
+        </article>
+
+        <article id="datetime" class="demo-section" data-testid="demo-section-datetime">
+            <h2>Date Time</h2>
+            <p>Bound datetime-local field with min/max guards.</p>
+            <div class="demo-stack">
+                <HaloDateTime TValue="DateTimeOffset?"
+                              Label="Maintenance window"
+                              Description="UTC-based deployment freeze boundary."
+                              Min="@_maintenanceMin"
+                              Max="@_maintenanceMax"
+                              @bind-Value="_maintenanceWindow" />
+            </div>
+        </article>
+
+        <article id="slider" class="demo-section" data-testid="demo-section-slider">
+            <h2>Slider</h2>
+            <p>Discrete throughput reservation scale.</p>
+            <div class="demo-stack">
+                <div class="slider-header">
+                    <label id="throughput-label" for="throughput-slider">Throughput reserve</label>
+                    <span>@_throughput%</span>
+                </div>
+                <HaloSlider TValue="int"
+                            id="throughput-slider"
+                            Min="0"
+                            Max="100"
+                            Step="5"
+                            AriaLabelledBy="throughput-label"
+                            @bind-Value="_throughput" />
+            </div>
+        </article>
+
+        <article id="toggles" class="demo-section" data-testid="demo-section-toggles">
+            <h2>Toggles</h2>
+            <p>Switches for binary feature controls.</p>
+            <div class="demo-stack">
+                <HaloToggle Label="Enable failover" @bind-Checked="_failoverEnabled" />
+                <HaloToggle Label="Audit-only mode" Size="ToggleSize.Small" @bind-Checked="_auditModeEnabled" />
+            </div>
+        </article>
+
+        <article id="tri-state" class="demo-section" data-testid="demo-section-tri-state">
+            <h2>Tri State</h2>
+            <p>Mixed-state checkbox pattern for partial selection.</p>
+            <div class="demo-row demo-row--align-center">
+                <HaloTriStateCheckbox State="@_triState"
+                                      StateChanged="OnTriStateChanged"
+                                      AriaLabel="Node selection mode" />
+                <span>@TriStateLabel</span>
+            </div>
+        </article>
+
+        <article id="radio-group" class="demo-section" data-testid="demo-section-radio-group">
+            <h2>Radio Group</h2>
+            <p>Segmented and stacked policy options.</p>
+            <div class="demo-stack">
+                <HaloRadioGroup TValue="string"
+                                Segmented="true"
+                                Value="@_remediationMode"
+                                ValueChanged="OnRemediationModeChangedAsync">
+                    <HaloRadioButton TValue="string" Value="@("auto")" Label="Automatic" />
+                    <HaloRadioButton TValue="string" Value="@("review")" Label="Review required" />
+                    <HaloRadioButton TValue="string" Value="@("manual")" Label="Manual" />
+                </HaloRadioGroup>
+            </div>
+        </article>
+
+        <article id="tabs" class="demo-section" data-testid="demo-section-tabs">
+            <h2>Tabs</h2>
+            <p>Keyboard-ready tablist and panel semantics.</p>
+            <div class="demo-stack">
+                <HaloTabs>
+                    <HaloTab Title="Overview" Description="Fleet status" Icon="dashboard">
+                        <p>92% of regions are inside latency SLO this hour.</p>
+                    </HaloTab>
+                    <HaloTab Title="Insights" Description="Anomalies" Icon="monitoring">
+                        <p>Two clusters reported packet jitter over threshold.</p>
+                    </HaloTab>
+                    <HaloTab Title="Actions" Description="Pending" Icon="task">
+                        <p>Three operator approvals are waiting for confirmation.</p>
+                    </HaloTab>
+                </HaloTabs>
+            </div>
+        </article>
+
+        <article id="badges" class="demo-section" data-testid="demo-section-badges">
+            <h2>Badges</h2>
+            <p>Compact status labels with color encoding.</p>
+            <div class="demo-row">
+                <HaloBadge Variant="BadgeVariant.Success" Text="Healthy" />
+                <HaloBadge Variant="BadgeVariant.Warning" Text="Warning" />
+                <HaloBadge Variant="BadgeVariant.Danger" Text="Critical" />
+                <HaloBadge Variant="BadgeVariant.Info" Text="Info" />
+            </div>
+            <HaloButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small">Review states</HaloButton>
+        </article>
+
+        <article id="cards" class="demo-section" data-testid="demo-section-cards">
+            <h2>Cards</h2>
+            <p>Panelized metrics and contextual actions.</p>
+            <div class="demo-cards">
+                <HaloCard Title="Connected hosts"
+                          Subtitle="Past 24 hours"
+                          Value="7,410"
+                          Label="+248"
+                          Variant="CardVariant.Primary"
+                          Icon="dns" />
+                <HaloCard Title="Auto-remediations"
+                          Subtitle="Past hour"
+                          Value="32"
+                          Label="No regressions"
+                          Variant="CardVariant.Success"
+                          Icon="autorenew" />
+            </div>
+            <HaloButton Variant="ButtonVariant.Tertiary" Size="ButtonSize.Small">Open details</HaloButton>
+        </article>
+
+        <article id="notices" class="demo-section" data-testid="demo-section-notices">
+            <h2>Notices</h2>
+            <p>Live-region announcements and inline warnings.</p>
+            <div class="demo-stack">
+                <HaloNotice Variant="NoticeVariant.Info"
+                            AnnounceChanges="true"
+                            AriaLabel="System notice">
+                    <strong>System notice:</strong> Replica synchronization completed successfully.
+                </HaloNotice>
+                <HaloNotice Variant="NoticeVariant.Warning" Icon="warning_amber">
+                    <strong>Heads up:</strong> Scheduled restart begins in 20 minutes.
+                </HaloNotice>
+            </div>
+            <HaloButton Variant="ButtonVariant.Secondary" Size="ButtonSize.Small">Acknowledge</HaloButton>
+        </article>
+
+        <article id="expandable-panel" class="demo-section" data-testid="demo-section-expandable-panel">
+            <h2>Expandable Panel</h2>
+            <p>Progressive disclosure with semantic region metadata.</p>
+            <div class="demo-stack">
+                <HaloExpandablePanel Title="Runbook: network isolation"
+                                     Subtitle="Last updated 6 minutes ago"
+                                     InitiallyExpanded="true"
+                                     Expanded="@_runbookExpanded"
+                                     ExpandedChanged="OnRunbookExpandedChanged"
+                                     Icon="book_online">
+                    <ChildContent>
+                        <ul class="demo-list">
+                            <li>Drain traffic from impacted AZ.</li>
+                            <li>Re-route DNS to standby edge cluster.</li>
+                            <li>Validate packet loss below 0.3%.</li>
+                        </ul>
+                    </ChildContent>
+                    <Footer>
+                        <HaloButton Variant="ButtonVariant.Primary" Size="ButtonSize.Small">Execute runbook</HaloButton>
+                    </Footer>
+                </HaloExpandablePanel>
+            </div>
+        </article>
+
+        <article id="table" class="demo-section demo-section--full" data-testid="demo-section-table">
+            <h2>Table</h2>
+            <p>Dense, structured status data with componentized columns.</p>
+            <div class="demo-stack">
+                <HaloButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small">Refresh data</HaloButton>
+                <div data-testid="device-table">
+                    <HaloTable TItem="DeviceStatusRow"
+                               ItemsProvider="ProvideDeviceRows"
+                               Options="@_tableOptions"
+                               Dense="true"
+                               EmptyMessage="No devices found."
+                               RowKeySelector="static row => row.Id">
+                        <Columns>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Device">
+                                <Template Context="row">
+                                    <div>
+                                        <strong>@row.Name</strong>
+                                        <div class="table-subtitle">@row.Region</div>
+                                    </div>
+                                </Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Status">
+                                <Template Context="row">
+                                    <HaloBadge Variant="@GetStatusVariant(row.Status)" Text="@row.Status" />
+                                </Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Health">
+                                <Template Context="row">@row.Health</Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Last check">
+                                <Template Context="row">@row.LastSeen</Template>
+                            </HaloTableColumn>
+                        </Columns>
+                    </HaloTable>
+                </div>
+            </div>
+        </article>
+
+        <article id="tree-view" class="demo-section" data-testid="demo-section-tree-view">
+            <h2>Tree View</h2>
+            <p>Hierarchical navigation with keyboard traversal.</p>
+            <div class="demo-stack">
+                <HaloButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small">Expand topology</HaloButton>
+                <HaloTreeView TValue="string"
+                              Nodes="_topologyNodes"
+                              AriaLabel="Deployment topology"
+                              SelectedValue="_selectedTopologyNode"
+                              SelectedValueChanged="OnTopologyNodeChanged" />
+            </div>
+        </article>
+
+        <article id="dialog" class="demo-section" data-testid="demo-section-dialog">
+            <h2>Dialog</h2>
+            <p>Modal workflow with escape and focus restoration.</p>
+            <div class="demo-row">
+                <HaloButton Variant="ButtonVariant.Primary"
+                            StartIcon="open_in_new"
+                            OnClick="ShowDialogAsync"
+                            data-testid="button-open-dialog">
+                    Open dialog
+                </HaloButton>
+            </div>
+        </article>
+
+        <article id="snackbar" class="demo-section" data-testid="demo-section-snackbar">
+            <h2>Snackbar</h2>
+            <p>Non-blocking status updates for lightweight confirmations.</p>
+            <div class="demo-row">
+                <HaloButton Variant="ButtonVariant.Secondary"
+                            StartIcon="notifications"
+                            OnClick="() => ShowSnackbar(SnackbarSeverity.Info)"
+                            data-testid="button-show-snackbar">
+                    Show snackbar
+                </HaloButton>
+            </div>
+        </article>
+
+        <article id="skeleton" class="demo-section" data-testid="demo-section-skeleton">
+            <h2>Skeleton</h2>
+            <p>Loading placeholders for progressive rendering.</p>
+            <div class="demo-stack">
+                <HaloSkeleton Height="14px" />
+                <HaloSkeleton Height="14px" Width="70%" />
+                <HaloSkeleton Height="14px" Width="45%" />
+            </div>
+            <HaloButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Small">Replay loading state</HaloButton>
+        </article>
+    </section>
+</main>

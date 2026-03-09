@@ -1,0 +1,27 @@
+@using HaloUI.Components.Base
+@typeparam TValue where TValue : struct, IConvertible
+@inherits HaloLabellableInputBase<TValue>
+
+<div class="@BuildWrapperClass()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId"
+                 For="@InputId"
+                 Text="@Label"
+                 Variant="@ResolvedLabelVariant"
+                 Disabled="@IsSliderDisabled"
+                 ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <input type="range"
+           min="@MinString"
+           max="@MaxString"
+           step="@StepString"
+           value="@CurrentValueAsString"
+           @oninput="HandleSliderInput"
+           @onchange="HandleSliderInput"
+           disabled="@IsSliderDisabled"
+           class="@BuildSliderClass()"
+           style="@BuildSliderStyle()"
+           @attributes="BuildSliderAttributes()" />
+</div>

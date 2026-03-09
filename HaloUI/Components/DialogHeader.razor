@@ -1,0 +1,8 @@
+@using HaloUI.Components.Base
+
+@inherits DialogAccessibilityComponentBase
+
+<div style="@BuildHeaderStyle()">
+    <HaloText Variant="TextVariant.Heading4" Id="@AccessibilityElementId">@Title</HaloText>
+    <HaloButton Variant="ButtonVariant.Secondary" IconOnly="true" Icon="close" OnClick="() => Close(null)" AriaLabel="Close dialog" />
+</div>

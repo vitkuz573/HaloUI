@@ -1,0 +1,125 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  padding: 0 1.5rem 2rem;
+}
+
+.gallery-header {
+  padding: 1.5rem 0;
+}
+
+main {
+  display: grid;
+  gap: 1.5rem;
+}
+
+section {
+  background: #0b1120;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+}
+
+#semantic-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#semantic-table th,
+#semantic-table td {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 0.35rem 0.5rem;
+}
+
+.variant-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.variant-card {
+  border: 1px solid rgba(148,163,184,0.25);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  min-width: 200px;
+}
+
+.variant-swatch {
+  width: 100%;
+  height: 60px;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dialog-preview {
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+  transition: background 150ms ease-in-out;
+}
+
+.dialog-sample {
+  width: min(480px, 100%);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  overflow: hidden;
+  background: #1e293b;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dialog-sample__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dialog-sample__close {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.dialog-sample__body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dialog-sample__footer {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dialog-sample__button {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease-in-out, transform 120ms ease-in-out;
+  background: rgba(15, 23, 42, 0.05);
+  color: inherit;
+}
+
+.dialog-sample__button:hover {
+  transform: translateY(-1px);
+  background: var(--dialog-button-hover, rgba(148, 163, 184, 0.15));
+}
+
+.dialog-sample__button--primary {
+  flex-grow: 1;
+}

@@ -1,0 +1,148 @@
+// Copyright © 2023-2026 Vitaly Kuzyaev. All rights reserved.
+// This file is part of the HaloUI project.
+// Licensed under the GNU Affero General Public License v3.0.
+
+using Microsoft.AspNetCore.Components;
+using HaloUI.Accessibility;
+using HaloUI.Accessibility.Aria;
+using HaloUI.Enums;
+
+namespace HaloUI.Components;
+
+public partial class HaloTriStateCheckbox
+{
+    [Parameter]
+    public TriState State { get; set; }
+
+    [Parameter]
+    public EventCallback<TriState> StateChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnToggle { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? AriaLabelledBy { get; set; }
+
+    [Parameter]
+    public string? AriaDescribedBy { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private async Task HandleToggle()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (OnToggle.HasDelegate)
+        {
+            await OnToggle.InvokeAsync();
+            return;
+        }
+
+        var next = State == TriState.All ? TriState.None : TriState.All;
+        State = next;
+
+        if (StateChanged.HasDelegate)
+        {
+            await StateChanged.InvokeAsync(next);
+        }
+    }
+
+    private AriaCheckedState GetAriaCheckedState()
+    {
+        return State switch
+        {
+            TriState.All => AriaCheckedState.True,
+            TriState.Partial => AriaCheckedState.Mixed,
+            _ => AriaCheckedState.False
+        };
+    }
+
+    private string GetIcon()
+    {
+        return State switch
+        {
+            TriState.All => "check",
+            TriState.Partial => "remove",
+            _ => "check"
+        };
+    }
+
+    private string GetClasses()
+    {
+        var classes = new List<string> { "ui-tri-checkbox" };
+
+        if (Disabled)
+        {
+            classes.Add("ui-tri-checkbox--disabled");
+        }
+
+        switch (State)
+        {
+            case TriState.All:
+                classes.Add("ui-tri-checkbox--all");
+                break;
+            case TriState.Partial:
+                classes.Add("ui-tri-checkbox--partial");
+                break;
+            default:
+                classes.Add("ui-tri-checkbox--none");
+                break;
+        }
+
+        if (!string.IsNullOrWhiteSpace(Class))
+        {
+            classes.Add(Class!);
+        }
+
+        return string.Join(' ', classes);
+    }
+
+    private Dictionary<string, object>? BuildAttributes()
+    {
+        var builder = new AccessibilityAttributesBuilder()
+            .ForComponent(GetType())
+            .WithRole(AriaRole.Checkbox, AriaRoleCompliance.Strict)
+            .WithAttribute(AriaAttributes.Checked, GetAriaCheckedState())
+            .WithAttribute(AriaAttributes.Disabled, Disabled)
+            .WithAttribute(AriaAttributes.Label, AriaLabel)
+            .WithAttribute(AriaAttributes.LabelledBy, SplitIds(AriaLabelledBy))
+            .WithAttribute(AriaAttributes.DescribedBy, SplitIds(AriaDescribedBy))
+            .WithAccessibleNameFromAdditionalAttributes(AdditionalAttributes)
+            .RequireCompliance();
+
+        var attributes = AccessibilityAttributesBuilder.Merge(
+            AdditionalAttributes,
+            builder.Build(),
+            "role",
+            "aria-checked",
+            "aria-disabled",
+            "aria-label",
+            "aria-labelledby",
+            "aria-describedby");
+
+        return attributes.Count > 0 ? attributes : null;
+    }
+
+    private static string[] SplitIds(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return [];
+        }
+
+        return value.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    }
+}

@@ -1,0 +1,28 @@
+@if (Header is not null)
+{
+    @Header
+}
+else if (ShowHeader && !string.IsNullOrWhiteSpace(DialogTitle))
+{
+    <DialogHeader Title="@DialogTitle" />
+}
+
+@if (Body is not null)
+{
+    <DialogBody>
+        @Body
+    </DialogBody>
+}
+else if (ChildContent is not null)
+{
+    <DialogBody>
+        @ChildContent
+    </DialogBody>
+}
+
+@if (Footer is not null)
+{
+    <DialogFooter>
+        @Footer
+    </DialogFooter>
+}

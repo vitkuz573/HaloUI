@@ -1,0 +1,81 @@
+@typeparam TValue
+
+@{
+    var group = Group;
+    var selected = group.IsSelected(Value);
+    var isSegmented = group.IsSegmented;
+}
+
+<button type="button"
+        class="@BuildButtonClasses(selected, isSegmented)"
+        tabindex="@group.GetTabIndex(this)"
+        disabled="@(Disabled ? true : null)"
+        @onclick="OnClick"
+        @onkeydown="HandleKeyDownAsync"
+        @onfocus="HandleFocus"
+        @ref="_buttonRef"
+        @attributes="BuildButtonAttributes(selected)">
+    @if (ChildContent is not null)
+    {
+        @if (isSegmented)
+        {
+            <div class="ui-radio-button__segmented">
+                <div class="ui-radio-button__child">@ChildContent</div>
+                <span class="material-icons ui-radio-button__indicator"
+                      aria-hidden="true">@GetIndicatorIcon(isSegmented, selected)</span>
+            </div>
+        }
+        else
+        {
+            @ChildContent
+        }
+    }
+    else if (isSegmented)
+    {
+        <div class="ui-radio-button__segmented">
+            <div class="ui-radio-button__content ui-radio-button__content--column">
+                @if (!string.IsNullOrWhiteSpace(Icon))
+                {
+                    <span class="material-icons ui-radio-button__icon" aria-hidden="true">@Icon</span>
+                }
+                <span class="ui-radio-button__label">@GetDisplayLabel()</span>
+                @if (!string.IsNullOrWhiteSpace(Description))
+                {
+                    <span class="ui-radio-button__description">@Description</span>
+                }
+                else if (Value is not null && string.IsNullOrWhiteSpace(Label))
+                {
+                    <span class="ui-radio-button__description">@Value</span>
+                }
+            </div>
+            <div class="ui-radio-button__meta">
+                @if (!string.IsNullOrWhiteSpace(Badge))
+                {
+                    <span class="ui-radio-button__badge">@Badge</span>
+                }
+                <span class="material-icons ui-radio-button__indicator" aria-hidden="true">
+                    @GetIndicatorIcon(isSegmented, selected)
+                </span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="ui-radio-button__stack">
+            <span class="material-icons ui-radio-button__indicator" aria-hidden="true">
+                @GetIndicatorIcon(isSegmented, selected)
+            </span>
+            @if (!string.IsNullOrWhiteSpace(Icon))
+            {
+                <span class="material-icons ui-radio-button__icon" aria-hidden="true">@Icon</span>
+            }
+            <div class="ui-radio-button__content">
+                <span class="ui-radio-button__label">@GetDisplayLabel()</span>
+                @if (!string.IsNullOrWhiteSpace(Description))
+                {
+                    <span class="ui-radio-button__description">@Description</span>
+                }
+            </div>
+        </div>
+    }
+</button>

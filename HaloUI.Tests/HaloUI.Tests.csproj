@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bunit" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HaloUI\HaloUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\ThemeSdk\ThemeSdkConfiguration.cs" Link="Shared\ThemeSdkConfiguration.cs" />
+    <Compile Include="..\Shared\ThemeSdk\CssVariableNaming.cs" Link="Shared\CssVariableNaming.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\HaloUI.ThemeSdk.Generators\ThemeSdk.json">
+      <Link>ThemeSdk.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\HaloUI\Theme\Tokens\design-tokens.json">
+      <Link>design-tokens.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

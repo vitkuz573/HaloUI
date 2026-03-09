@@ -1,0 +1,28 @@
+<button type="@(Kind.ToString().ToLowerInvariant())"
+        class="@BuildCssClass()"
+        disabled="@(Disabled || Loading)"
+        form="@Form"
+        @onclick="OnClick"
+        @onclick:stopPropagation="StopClickPropagation"
+        @attributes="BuildButtonAttributes()">
+    @if (Loading)
+    {
+        <span class="material-icons ui-button__icon ui-button__icon--spinner">sync</span>
+
+        @if (!IconOnly)
+        {
+            <span class="@GetLabelClass()">Processing...</span>
+        }
+    }
+    else
+    {
+        @if (!string.IsNullOrWhiteSpace(Icon))
+        {
+            <span class="material-icons ui-button__icon">@Icon</span>
+        }
+        @if (!IconOnly && ChildContent is not null)
+        {
+            <span class="@GetLabelClass()">@ChildContent</span>
+        }
+    }
+</button>

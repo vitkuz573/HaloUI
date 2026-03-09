@@ -1,0 +1,19 @@
+@typeparam TValue
+
+<div class="ui-radio-group @(Segmented ? "ui-radio-group--segmented" : "ui-radio-group--standard") @Class"
+     @attributes="BuildGroupAttributes()">
+    <CascadingValue Value="this">
+        @if (Segmented)
+        {
+            <div class="ui-radio-group__segments @SegmentClass">
+                @ChildContent
+            </div>
+        }
+        else
+        {
+            <div class="ui-radio-group__stack @SegmentClass">
+                @ChildContent
+            </div>
+        }
+    </CascadingValue>
+</div>

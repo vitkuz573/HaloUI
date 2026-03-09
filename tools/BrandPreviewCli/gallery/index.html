@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brand Preview Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="gallery-header">
+    <h1>Brand Preview Gallery</h1>
+    <p>Select a theme to inspect exported tokens.</p>
+    <select id="theme-selector"></select>
+  </header>
+  <main>
+    <section>
+      <h2>Semantic Colors</h2>
+      <table id="semantic-table">
+        <thead><tr><th>Token</th><th>Value</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Button Variants</h2>
+      <div id="button-grid" class="variant-grid"></div>
+    </section>
+    <section>
+      <h2>Dialog Interaction</h2>
+      <div id="dialog-preview" class="dialog-preview"></div>
+    </section>
+    <section>
+      <h2>Select Snapshot</h2>
+      <div id="select-info" class="variant-grid"></div>
+    </section>
+    <section>
+      <h2>Tab Snapshot</h2>
+      <div id="tab-info" class="variant-grid"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

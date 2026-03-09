@@ -1,0 +1,35 @@
+@using HaloUI.Components.Base
+
+@typeparam TValue
+
+@inherits HaloLabellableInputBase<TValue>
+
+<div class="@BuildWrapperClass()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId"
+                 For="@InputId"
+                 Text="@Label"
+                 Variant="@ResolveLabelVariant()"
+                 Disabled="@(Disabled || ReadOnly)"
+                 ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <div class="ui-datetime__container">
+        <input type="datetime-local"
+               class="@BuildInputClass()"
+               value="@CurrentValueAsString"
+               placeholder="@Placeholder"
+               min="@MinAttributeValue"
+               max="@MaxAttributeValue"
+               step="@StepAttributeValue"
+               @oninput="HandleInputAsync"
+               @onchange="HandleChangeAsync"
+               @attributes="BuildInputAttributes()" />
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p class="ui-datetime__description" id="@DescriptionElementId">@Description</p>
+    }
+</div>

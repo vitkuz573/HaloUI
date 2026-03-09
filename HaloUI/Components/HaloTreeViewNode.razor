@@ -1,0 +1,79 @@
+@typeparam TValue
+
+<li role="none" class="ui-tree__item">
+    <div class="ui-tree__branch" style="@GetIndentStyle()">
+        <div class="ui-tree__header">
+            @if (HasChildren)
+            {
+                <span class="@GetToggleButtonClasses()"
+                      role="presentation"
+                      aria-hidden="true"
+                      @onclick="ToggleExpandedAsync"
+                      @onclick:stopPropagation>
+                    <svg class="ui-tree__toggle-icon @(IsExpanded ? "ui-tree__toggle-icon--expanded" : string.Empty)"
+                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M7.293 14.707a1 1 0 001.414 0l4.586-4.586a1 1 0 000-1.414L8.707 4.121A1 1 0 007.293 5.535L11.757 10l-4.464 4.465a1 1 0 000 1.414z" />
+                    </svg>
+                </span>
+            }
+            else
+            {
+                <span class="@GetToggleSpacerClasses()"></span>
+            }
+
+            <button type="button"
+                    id="@GetNodeElementId()"
+                    role="treeitem"
+                    class="@GetNodeClasses()"
+                    tabindex="@Owner.GetNodeTabIndex(Node)"
+                    aria-level="@(_level + 1)"
+                    aria-expanded="@GetAriaExpanded()"
+                    aria-selected="@GetAriaSelected()"
+                    aria-disabled="@GetAriaDisabled()"
+                    disabled="@Node.IsDisabled"
+                    @onclick="SelectNodeAsync"
+                    @onkeydown="HandleNodeKeyDownAsync"
+                    @onfocus="HandleNodeFocus"
+                    @ref="_nodeButtonRef">
+                @if (Owner.GetNodeTemplate() is { } template)
+                {
+                    @template(Node)
+                }
+                else
+                {
+                    <div class="ui-tree__content">
+                        @if (!string.IsNullOrEmpty(Node.Icon))
+                        {
+                            <span class="@GetIconClasses()">
+                                <span class="material-icons" aria-hidden="true">@Node.Icon</span>
+                            </span>
+                        }
+
+                        <div class="ui-tree__text">
+                            <span class="@GetLabelClasses()">@Node.Label</span>
+                            @if (!string.IsNullOrEmpty(Node.Description))
+                            {
+                                <span class="ui-tree__description">@Node.Description</span>
+                            }
+                        </div>
+
+                        @if (Node.BadgeCount is int badge)
+                        {
+                            <span class="@GetBadgeClasses()">@badge</span>
+                        }
+                    </div>
+                }
+            </button>
+        </div>
+    </div>
+
+    @if (HasChildren && IsExpanded)
+    {
+        <ul role="group" class="@GetGroupClasses()">
+            @foreach (var child in Node.Children)
+            {
+                <HaloTreeViewNode TValue="TValue" Node="child" Level="@(_level + 1)" />
+            }
+        </ul>
+    }
+</li>

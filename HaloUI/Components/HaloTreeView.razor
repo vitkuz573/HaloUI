@@ -1,0 +1,23 @@
+@typeparam TValue
+
+<CascadingValue Value="this" IsFixed="true">
+    <div class="@GetContainerClasses()" @attributes="_mergedAttributes">
+        <ul role="tree"
+            class="ui-tree__list"
+            aria-label="@AriaLabel"
+            aria-labelledby="@GetAriaLabelledByValue()"
+            aria-describedby="@GetAriaDescribedByValue()">
+            @if (_normalizedNodes.Count == 0)
+            {
+                <li class="ui-tree__empty">No items available</li>
+            }
+            else
+            {
+                @foreach (var node in _normalizedNodes)
+                {
+                    <HaloTreeViewNode TValue="TValue" Node="node" Level="0" />
+                }
+            }
+        </ul>
+    </div>
+</CascadingValue>
