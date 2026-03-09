@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using HaloUI.Abstractions;
+using HaloUI.Iconography;
 using HaloUI.Services;
 using HaloUI.Theme.Sdk.Runtime;
 using HaloUI.Theme;
@@ -31,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddHaloUIThemeProvider();
         services.AddHaloUIDialogHost();
         services.AddHaloUISnackbarHost();
+        services.TryAddSingleton<IHaloIconResolver>(_ => new PassthroughHaloIconResolver());
         services.TryAddSingleton<IAriaDiagnosticsHub, NoOpAriaDiagnosticsHub>();
 
         return services;
@@ -171,6 +173,44 @@ public static class ServiceCollectionExtensions
 
             return ActivatorUtilities.CreateInstance<AriaDiagnosticsHub>(sp);
         }));
+
+        return services;
+    }
+
+    /// <summary>
+    /// Replaces the active icon resolver.
+    /// </summary>
+    public static IServiceCollection AddHaloUIIconResolver(this IServiceCollection services, IHaloIconResolver resolver)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(resolver);
+
+        services.Replace(ServiceDescriptor.Singleton<IHaloIconResolver>(resolver));
+
+        return services;
+    }
+
+    /// <summary>
+    /// Replaces the active icon resolver with a passthrough ligature resolver.
+    /// </summary>
+    public static IServiceCollection AddHaloUIPassthroughLigatureIcons(this IServiceCollection services, string? providerClass = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.Replace(ServiceDescriptor.Singleton<IHaloIconResolver>(_ => new PassthroughHaloIconResolver(providerClass)));
+
+        return services;
+    }
+
+    /// <summary>
+    /// Replaces the active icon resolver with a manifest-backed resolver.
+    /// </summary>
+    public static IServiceCollection AddHaloUIIconPack(this IServiceCollection services, HaloIconPackManifest manifest, IHaloIconResolver? fallback = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(manifest);
+
+        services.Replace(ServiceDescriptor.Singleton<IHaloIconResolver>(_ => new HaloIconPackResolver(manifest, fallback)));
 
         return services;
     }

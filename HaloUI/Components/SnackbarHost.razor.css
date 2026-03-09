@@ -146,7 +146,7 @@
     outline: none;
 }
 
-.halo-snackbar__dismiss .material-icons {
+.halo-snackbar__dismiss .halo-icon {
     font-size: var(--halo-snackbar-close-button-icon-size);
     line-height: 1;
 }

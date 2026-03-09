@@ -10,6 +10,7 @@ HaloUI is a standalone Blazor component toolkit for building production UI with:
 - Full component set: buttons, inputs, select, tabs, cards, tables, trees, dialogs, snackbars, toggles, skeletons.
 - Token-driven styling and theme-aware rendering.
 - Keyboard and ARIA-first component contracts.
+- Provider-based icon abstraction (`IHaloIconResolver`) with no hard dependency on a specific icon library.
 - Built-in demo host for rapid development and manual QA.
 - Playwright matrix suite (desktop/tablet/mobile x light/dark x component contracts).
 - Scoped axe accessibility suite for critical WCAG checks.
@@ -37,6 +38,31 @@ dotnet build HaloUI.slnx -c Debug
 ```bash
 dotnet run --project HaloUI.DemoHost/HaloUI.DemoHost.csproj --urls http://127.0.0.1:5210
 ```
+
+## Icons
+HaloUI components render icons through `HaloIcon` + `IHaloIconResolver`.
+This lets hosts plug any icon stack (ligature fonts, glyph fonts, SVG path packs, CSS sprite classes).
+
+Quick registration examples:
+
+```csharp
+// Generic ligature resolver (no vendor lock-in):
+services.AddHaloUIPassthroughLigatureIcons("my-icon-font-class");
+```
+
+```csharp
+// Manifest-backed resolver:
+var manifest = HaloIconPackManifest.Parse(File.ReadAllText("icon-pack.json"));
+services.AddHaloUIIconPack(manifest);
+```
+
+Generate full Material icon manifests (all official `.codepoints` styles):
+
+```bash
+./scripts/generate-material-icon-packs.sh
+```
+
+This writes JSON manifests to `HaloUI/Iconography/Packs/Material/`.
 
 ## Accessibility and UI automation
 From `tests/accessibility`:

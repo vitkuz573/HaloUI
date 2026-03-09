@@ -1,7 +1,7 @@
 ﻿<span class="@BuildCssClass()" @attributes="BuildAccessibilityAttributes()">
     @if (!string.IsNullOrWhiteSpace(Icon))
     {
-        <span class="material-icons halo-badge__icon" aria-hidden="true">@Icon</span>
+        <HaloIcon Name="@Icon" Class="halo-badge__icon" Decorative="true" />
     }
     @if (ChildContent is not null)
     {

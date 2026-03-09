@@ -49,7 +49,9 @@ public partial class HaloToggle
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     [Inject]
-    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
+    public IEnumerable<IAriaDiagnosticsHub> AriaDiagnosticsHubs { get; set; } = [];
+
+    private IAriaDiagnosticsHub? AriaDiagnosticsHub => AriaDiagnosticsHubs.FirstOrDefault();
 
     private readonly string _inputId = AccessibilityIdGenerator.Create("halo-toggle");
     private readonly string _generatedLabelId = AccessibilityIdGenerator.Create("halo-toggle-label");

@@ -7,7 +7,7 @@
         @attributes="BuildButtonAttributes()">
     @if (Loading)
     {
-        <span class="material-icons halo-button__icon halo-button__icon--spinner">sync</span>
+        <HaloIcon Name="sync" Class="halo-button__icon halo-button__icon--spinner" Decorative="true" />
 
         @if (!IconOnly)
         {
@@ -18,7 +18,7 @@
     {
         @if (!string.IsNullOrWhiteSpace(Icon))
         {
-            <span class="material-icons halo-button__icon">@Icon</span>
+            <HaloIcon Name="@Icon" Class="halo-button__icon" Decorative="true" />
         }
         @if (!IconOnly && ChildContent is not null)
         {

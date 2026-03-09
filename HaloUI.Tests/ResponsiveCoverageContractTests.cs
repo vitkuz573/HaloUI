@@ -28,6 +28,7 @@ public sealed class ResponsiveCoverageContractTests
         ["HaloDateTime"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloDialog"] = new(ResponsiveCoverageKind.Structural),
         ["HaloExpandablePanel"] = new(ResponsiveCoverageKind.Adaptive),
+        ["HaloIcon"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
         ["HaloLabel"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloLayout"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloNavLink"] = new(ResponsiveCoverageKind.Adaptive),

@@ -1,0 +1,23 @@
+@if (_resolvedIcon is { } icon)
+{
+    if (icon.RenderMode == HaloUI.Iconography.HaloIconRenderMode.SvgPath)
+    {
+        <svg @attributes="BuildAttributes(icon, includeValueAsClass: false)"
+             viewBox="@ResolveViewBox(icon)"
+             focusable="false">
+            <path d="@icon.Value"></path>
+        </svg>
+    }
+    else if (icon.RenderMode == HaloUI.Iconography.HaloIconRenderMode.CssClass)
+    {
+        <span @attributes="BuildAttributes(icon, includeValueAsClass: true)"></span>
+    }
+    else
+    {
+        <span @attributes="BuildAttributes(icon, includeValueAsClass: false)">@icon.Value</span>
+    }
+}
+else if (Fallback is not null)
+{
+    @Fallback
+}

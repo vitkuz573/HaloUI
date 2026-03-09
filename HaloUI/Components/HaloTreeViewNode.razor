@@ -45,7 +45,7 @@
                         @if (!string.IsNullOrEmpty(Node.Icon))
                         {
                             <span class="@GetIconClasses()">
-                                <span class="material-icons" aria-hidden="true">@Node.Icon</span>
+                                <HaloIcon Name="@Node.Icon" Decorative="true" />
                             </span>
                         }
 

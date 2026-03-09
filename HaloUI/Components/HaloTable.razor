@@ -33,7 +33,7 @@
                                 class="@GetToggleButtonClasses()"
                                 @onclick="ToggleExpanded"
                                 @attributes="GetToggleButtonAttributes()">
-                            <span class="material-icons halo-table__toggle-icon" aria-hidden="true">chevron_right</span>
+                            <HaloIcon Name="chevron_right" Class="halo-table__toggle-icon" Decorative="true" />
                             <span class="halo-table__title">@Title</span>
                         </button>
                     }
@@ -63,7 +63,7 @@
                                          AriaLabel="@GetSearchAriaLabel()"
                                          EndAdornment="@ClearSearchAdornment">
                                 <StartAdornment>
-                                    <span class="material-icons halo-table__toolbar-icon" aria-hidden="true">search</span>
+                                    <HaloIcon Name="search" Class="halo-table__toolbar-icon" Decorative="true" />
                                 </StartAdornment>
                             </HaloTextField>
                         </div>
@@ -101,7 +101,7 @@
                 <div id="@_filtersPanelId" class="halo-table__filter-panel-content">
                     <div class="halo-table__filter-panel-stack">
                         <div class="halo-table__filter-panel-header">
-                            <span class="material-icons halo-table__filter-panel-icon" aria-hidden="true">tune</span>
+                            <HaloIcon Name="tune" Class="halo-table__filter-panel-icon" Decorative="true" />
                             <span>Active filters</span>
                             <HaloButton Variant="ButtonVariant.Secondary"
                                       Size="ButtonSize.ExtraSmall"
@@ -206,8 +206,9 @@
                                                 else
                                                 {
                                                     <div class="halo-table__filter-input-wrapper">
-                                                        <span class="material-icons halo-table__filter-input-icon"
-                                                              aria-hidden="true">filter_list</span>
+                                                        <HaloIcon Name="filter_list"
+                                                                  Class="halo-table__filter-input-icon"
+                                                                  Decorative="true" />
                                                         <input type="text"
                                                                value="@filterContext.Value"
                                                                class="halo-table__filter-input"

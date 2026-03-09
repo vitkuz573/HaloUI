@@ -208,8 +208,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "halo-expandable-panel__indicator",
-            "material-icons"
+            "halo-expandable-panel__indicator"
         };
 
         if (_expanded)

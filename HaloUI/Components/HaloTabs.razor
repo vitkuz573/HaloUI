@@ -41,7 +41,7 @@
                         else if (!string.IsNullOrWhiteSpace(tab.Icon))
                         {
                             <span class="@GetTabIconClasses(false)">
-                                <span class="material-icons" aria-hidden="true">@tab.Icon</span>
+                                <HaloIcon Name="@tab.Icon" Decorative="true" />
                             </span>
                         }
 

@@ -32,12 +32,13 @@ public abstract class HaloLabellableInputBase<TValue> : ThemeAwareInputBase<TVal
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public bool Required { get; set; }
-    [Inject] protected IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
+    [Inject] protected IEnumerable<IAriaDiagnosticsHub> AriaDiagnosticsHubs { get; set; } = [];
 
     /// <inheritdoc />
     public string InputId => _inputId;
 
     protected InputDesignTokens InputTokens => ThemeContext?.Theme.Tokens.Component.Get<InputDesignTokens>() ?? new InputDesignTokens();
+    protected IAriaDiagnosticsHub? AriaDiagnosticsHub => AriaDiagnosticsHubs.FirstOrDefault();
 
     protected string? LabelElementId => string.IsNullOrWhiteSpace(Label)
         ? null

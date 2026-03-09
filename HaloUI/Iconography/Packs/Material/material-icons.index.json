@@ -1,0 +1,48 @@
+{
+  "generatedAtUtc": "2026-03-09T08:44:30.4539418+00:00",
+  "sourceRepository": "google/material-design-icons",
+  "sourceDirectory": "font",
+  "renderMode": "Ligature",
+  "packs": [
+    {
+      "packId": "material-icons-regular",
+      "style": "regular",
+      "providerClass": "material-icons",
+      "iconCount": 2234,
+      "sourceFile": "MaterialIcons-Regular.codepoints",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/font/MaterialIcons-Regular.codepoints"
+    },
+    {
+      "packId": "material-icons-outlined",
+      "style": "outlined",
+      "providerClass": "material-icons-outlined",
+      "iconCount": 2195,
+      "sourceFile": "MaterialIconsOutlined-Regular.codepoints",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/font/MaterialIconsOutlined-Regular.codepoints"
+    },
+    {
+      "packId": "material-icons-round",
+      "style": "round",
+      "providerClass": "material-icons-round",
+      "iconCount": 2200,
+      "sourceFile": "MaterialIconsRound-Regular.codepoints",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/font/MaterialIconsRound-Regular.codepoints"
+    },
+    {
+      "packId": "material-icons-sharp",
+      "style": "sharp",
+      "providerClass": "material-icons-sharp",
+      "iconCount": 2200,
+      "sourceFile": "MaterialIconsSharp-Regular.codepoints",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/font/MaterialIconsSharp-Regular.codepoints"
+    },
+    {
+      "packId": "material-icons-twotone",
+      "style": "twotone",
+      "providerClass": "material-icons-two-tone",
+      "iconCount": 2238,
+      "sourceFile": "MaterialIconsTwoTone-Regular.codepoints",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/master/font/MaterialIconsTwoTone-Regular.codepoints"
+    }
+  ]
+}

@@ -476,10 +476,11 @@ public partial class HaloLabel
         }
         else if (!string.IsNullOrWhiteSpace(Icon))
         {
-            builder.OpenElement(4, "span");
-            builder.AddAttribute(5, "class", "material-icons halo-label__icon");
-            builder.AddContent(6, Icon);
-            builder.CloseElement();
+            builder.OpenComponent<HaloIcon>(4);
+            builder.AddAttribute(5, nameof(HaloIcon.Name), Icon);
+            builder.AddAttribute(6, nameof(HaloIcon.Class), "halo-label__icon");
+            builder.AddAttribute(7, nameof(HaloIcon.Decorative), true);
+            builder.CloseComponent();
         }
 
         if (HasTextContent)

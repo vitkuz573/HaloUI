@@ -46,11 +46,11 @@ public partial class HaloTable<TItem>
             builder.AddAttribute(3, "onclick", EventCallback.Factory.Create(this, ClearSearch));
             builder.AddAttribute(4, "aria-label", "Clear search");
             builder.AddAttribute(5, "title", "Clear search");
-            builder.OpenElement(6, "span");
-            builder.AddAttribute(7, "class", "material-icons halo-table__toolbar-icon");
-            builder.AddAttribute(8, "aria-hidden", "true");
-            builder.AddContent(9, "close");
-            builder.CloseElement();
+            builder.OpenComponent<HaloIcon>(6);
+            builder.AddAttribute(7, nameof(HaloIcon.Name), "close");
+            builder.AddAttribute(8, nameof(HaloIcon.Class), "halo-table__toolbar-icon");
+            builder.AddAttribute(9, nameof(HaloIcon.Decorative), true);
+            builder.CloseComponent();
             builder.CloseElement();
         };
 

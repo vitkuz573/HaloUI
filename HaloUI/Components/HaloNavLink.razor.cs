@@ -86,11 +86,11 @@ public sealed partial class HaloNavLink
     {
         if (!string.IsNullOrWhiteSpace(Icon))
         {
-            builder.OpenElement(0, "span");
-            builder.AddAttribute(1, "class", IsDanger ? "material-icons halo-nav-link__icon halo-nav-link__icon--danger" : "material-icons halo-nav-link__icon halo-nav-link__icon--neutral");
-            builder.AddAttribute(2, "aria-hidden", "true");
-            builder.AddContent(3, Icon);
-            builder.CloseElement();
+            builder.OpenComponent<HaloIcon>(0);
+            builder.AddAttribute(1, nameof(HaloIcon.Name), Icon);
+            builder.AddAttribute(2, nameof(HaloIcon.Class), IsDanger ? "halo-nav-link__icon halo-nav-link__icon--danger" : "halo-nav-link__icon halo-nav-link__icon--neutral");
+            builder.AddAttribute(3, nameof(HaloIcon.Decorative), true);
+            builder.CloseComponent();
         }
 
         builder.OpenElement(10, "div");

@@ -34,6 +34,7 @@ public sealed class AccessibilityCoverageContractTests
         ["HaloDateTime"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloDateTimeTests.cs"),
         ["HaloDialog"] = new(ComponentCoverageKind.Structural),
         ["HaloExpandablePanel"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloExpandablePanelTests.cs"),
+        ["HaloIcon"] = new(ComponentCoverageKind.Presentational, "HaloUI.Tests/HaloIconTests.cs"),
         ["HaloLabel"] = new(ComponentCoverageKind.Presentational),
         ["HaloLayout"] = new(ComponentCoverageKind.Structural),
         ["HaloNavLink"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloNavLinkTests.cs"),

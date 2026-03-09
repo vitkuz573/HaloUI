@@ -23,7 +23,7 @@
                     @onclick="Cancel"
                     @onclick:stopPropagation="true"
                     style="@BuildDrawerHandleStyle(Tokens, drawer)">
-                <span class="material-icons">@ResolveDrawerHandleIcon(drawer.Placement)</span>
+                <HaloIcon Name="@ResolveDrawerHandleIcon(drawer.Placement)" Decorative="true" />
             </button>
         }
 
@@ -47,7 +47,7 @@
             @if (_isBusy)
             {
                 <div class="halo-dialog__busy-overlay">
-                    <span class="material-icons halo-dialog__busy-icon">sync</span>
+                    <HaloIcon Name="sync" Class="halo-dialog__busy-icon" Decorative="true" />
                 </div>
             }
         </div>

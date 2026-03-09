@@ -68,7 +68,9 @@ public partial class HaloButton
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     [Inject]
-    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
+    public IEnumerable<IAriaDiagnosticsHub> AriaDiagnosticsHubs { get; set; } = [];
+
+    private IAriaDiagnosticsHub? AriaDiagnosticsHub => AriaDiagnosticsHubs.FirstOrDefault();
 
     protected override bool ShouldRender() => true;
 

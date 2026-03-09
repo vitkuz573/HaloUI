@@ -19,7 +19,7 @@
             <div class="halo-snackbar__body">
                 <div class="halo-snackbar__header">
                     <div class="halo-snackbar__title">
-                        <span class="material-icons halo-snackbar__icon">@GetIcon(item.Severity)</span>
+                        <HaloIcon Name="@GetIcon(item.Severity)" Class="halo-snackbar__icon" Decorative="true" />
                         <span>@GetDisplayTitle(item)</span>
                     </div>
                     <div class="halo-snackbar__actions">
@@ -38,7 +38,7 @@
                                 aria-label="Dismiss notification"
                                 @onclick:stopPropagation="true"
                                 @onclick="@(() => Dismiss(item.Id))">
-                            <span class="material-icons" aria-hidden="true">close</span>
+                            <HaloIcon Name="close" Decorative="true" />
                         </button>
                     </div>
                 </div>

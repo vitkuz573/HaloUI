@@ -21,8 +21,7 @@
         {
             <div class="halo-radio-button__segmented">
                 <div class="halo-radio-button__child">@ChildContent</div>
-                <span class="material-icons halo-radio-button__indicator"
-                      aria-hidden="true">@GetIndicatorIcon(isSegmented, selected)</span>
+                <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
             </div>
         }
         else
@@ -36,7 +35,7 @@
             <div class="halo-radio-button__content halo-radio-button__content--column">
                 @if (!string.IsNullOrWhiteSpace(Icon))
                 {
-                    <span class="material-icons halo-radio-button__icon" aria-hidden="true">@Icon</span>
+                    <HaloIcon Name="@Icon" Class="halo-radio-button__icon" Decorative="true" />
                 }
                 <span class="halo-radio-button__label">@GetDisplayLabel()</span>
                 @if (!string.IsNullOrWhiteSpace(Description))
@@ -53,21 +52,17 @@
                 {
                     <span class="halo-radio-button__badge">@Badge</span>
                 }
-                <span class="material-icons halo-radio-button__indicator" aria-hidden="true">
-                    @GetIndicatorIcon(isSegmented, selected)
-                </span>
+                <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
             </div>
         </div>
     }
     else
     {
         <div class="halo-radio-button__stack">
-            <span class="material-icons halo-radio-button__indicator" aria-hidden="true">
-                @GetIndicatorIcon(isSegmented, selected)
-            </span>
+            <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
             @if (!string.IsNullOrWhiteSpace(Icon))
             {
-                <span class="material-icons halo-radio-button__icon" aria-hidden="true">@Icon</span>
+                <HaloIcon Name="@Icon" Class="halo-radio-button__icon" Decorative="true" />
             }
             <div class="halo-radio-button__content">
                 <span class="halo-radio-button__label">@GetDisplayLabel()</span>

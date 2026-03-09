@@ -262,7 +262,7 @@
         text-align:center;
     }
 
-    .halo-tabs__tab .material-icons {
+    .halo-tabs__tab .halo-icon {
         font-size:calc(var(--halo-tab-icon-size) * 0.65);
         line-height:1;
     }

@@ -11,6 +11,7 @@
   </Folder>
   <Folder Name="/Tools/">
     <Project Path="tools/BrandPreviewCli/BrandPreviewCli.csproj" />
+    <Project Path="tools/HaloUI.IconCatalog.Tool/HaloUI.IconCatalog.Tool.csproj" />
     <Project Path="tools/ThemeSdk.DiffTool/ThemeSdk.DiffTool.csproj" />
     <Project Path="tools/ThemeSdk.SnapshotTool/ThemeSdk.SnapshotTool.csproj" />
   </Folder>

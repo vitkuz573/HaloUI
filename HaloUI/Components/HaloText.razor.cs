@@ -122,10 +122,11 @@ public partial class HaloText
             builder.OpenElement(2, "span");
             builder.AddAttribute(3, "class", "halo-text__prefix");
             builder.AddAttribute(4, "aria-hidden", "true");
-            builder.OpenElement(5, "span");
-            builder.AddAttribute(6, "class", "material-icons halo-text__icon");
-            builder.AddContent(7, StartIcon);
-            builder.CloseElement();
+            builder.OpenComponent<HaloIcon>(5);
+            builder.AddAttribute(6, nameof(HaloIcon.Name), StartIcon);
+            builder.AddAttribute(7, nameof(HaloIcon.Class), "halo-text__icon");
+            builder.AddAttribute(8, nameof(HaloIcon.Decorative), true);
+            builder.CloseComponent();
             builder.CloseElement();
         }
 
@@ -159,10 +160,11 @@ public partial class HaloText
             builder.OpenElement(13, "span");
             builder.AddAttribute(14, "class", "halo-text__suffix");
             builder.AddAttribute(15, "aria-hidden", "true");
-            builder.OpenElement(16, "span");
-            builder.AddAttribute(17, "class", "material-icons halo-text__icon");
-            builder.AddContent(18, EndIcon);
-            builder.CloseElement();
+            builder.OpenComponent<HaloIcon>(16);
+            builder.AddAttribute(17, nameof(HaloIcon.Name), EndIcon);
+            builder.AddAttribute(18, nameof(HaloIcon.Class), "halo-text__icon");
+            builder.AddAttribute(19, nameof(HaloIcon.Decorative), true);
+            builder.CloseComponent();
             builder.CloseElement();
         }
     };

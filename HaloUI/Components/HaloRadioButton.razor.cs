@@ -56,7 +56,9 @@ public partial class HaloRadioButton<TValue>
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     [Inject]
-    public IAriaDiagnosticsHub AriaDiagnosticsHub { get; set; } = default!;
+    public IEnumerable<IAriaDiagnosticsHub> AriaDiagnosticsHubs { get; set; } = [];
+
+    private IAriaDiagnosticsHub? AriaDiagnosticsHub => AriaDiagnosticsHubs.FirstOrDefault();
 
     internal string OptionId => _optionId;
 
