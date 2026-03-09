@@ -46,6 +46,7 @@ public sealed class AccessibilityCoverageContractTests
         ["HaloSelectOption"] = new(ComponentCoverageKind.Structural),
         ["HaloSkeleton"] = new(ComponentCoverageKind.Presentational),
         ["HaloSlider"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloSliderTests.cs"),
+        ["HaloSplitButton"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloSplitButtonTests.cs"),
         ["HaloSparkline"] = new(ComponentCoverageKind.Presentational),
         ["HaloTable"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTableAccessibilityTests.cs"),
         ["HaloTableColumn"] = new(ComponentCoverageKind.Structural),

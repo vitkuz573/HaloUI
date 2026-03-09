@@ -1,0 +1,33 @@
+<div class="@BuildRootClass()"
+     @attributes="BuildRootAttributes()">
+    <button type="@Kind.ToString().ToLowerInvariant()"
+            class="@BuildPrimaryButtonClass()"
+            disabled="@(Disabled || Loading)"
+            form="@Form"
+            @onclick="HandlePrimaryActivatedAsync"
+            @onclick:stopPropagation="StopClickPropagation"
+            @attributes="BuildPrimaryButtonAttributes()">
+        @if (Loading)
+        {
+            <HaloIcon Name="@HaloDefaultIcons.Sync"
+                      Class="halo-split-button__icon halo-split-button__icon--spinner"
+                      Decorative="true" />
+            <span class="halo-split-button__label">Processing...</span>
+        }
+        else if (ChildContent is not null)
+        {
+            <span class="halo-split-button__label">@ChildContent</span>
+        }
+    </button>
+
+    <button type="button"
+            class="@BuildToggleButtonClass()"
+            disabled="@(Disabled || Loading)"
+            @onclick="HandleToggleActivatedAsync"
+            @onclick:stopPropagation="StopClickPropagation"
+            @attributes="BuildToggleButtonAttributes()">
+        <HaloIcon Name="@ToggleIcon"
+                  Class="halo-split-button__icon halo-split-button__icon--toggle"
+                  Decorative="true" />
+    </button>
+</div>

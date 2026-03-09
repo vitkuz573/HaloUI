@@ -1,0 +1,255 @@
+.halo-split-button {
+    display: inline-flex;
+    align-items: stretch;
+    max-width: 100%;
+    min-width: 0;
+    border: 1px solid var(--halo-split-button-border);
+    border-radius: var(--halo-split-button-computed-border-radius, var(--halo-button-border-radius));
+    background: var(--halo-split-button-background);
+    color: var(--halo-split-button-text-color);
+    box-shadow: var(--halo-split-button-shadow);
+    transition: var(--halo-button-transition);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.halo-split-button--full-width {
+    display: flex;
+    width: 100%;
+}
+
+.halo-split-button.is-disabled {
+    border-color: var(--halo-split-button-border-disabled);
+    background: var(--halo-split-button-background-disabled);
+    color: var(--halo-split-button-text-disabled);
+    box-shadow: none;
+}
+
+.halo-split-button__segment {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--halo-split-button-computed-gap, var(--halo-split-button-gap));
+    min-height: var(--halo-split-button-computed-height, var(--halo-split-button-height));
+    font-size: var(--halo-split-button-computed-font-size, var(--halo-split-button-font-size));
+    font-weight: var(--halo-button-font-weight);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+}
+
+.halo-split-button__segment:focus,
+.halo-split-button__segment:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.halo-split-button__segment:not(:disabled):hover {
+    background: var(--halo-split-button-background-hover);
+}
+
+.halo-split-button__segment:not(:disabled):active {
+    background: var(--halo-split-button-background-active);
+}
+
+.halo-split-button__segment.is-disabled,
+.halo-split-button__segment:disabled {
+    cursor: not-allowed;
+}
+
+.halo-split-button__segment--primary {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: var(--halo-split-button-computed-padding-y, var(--halo-split-button-padding-y))
+             var(--halo-split-button-computed-padding-x, var(--halo-split-button-padding-x));
+    justify-content: flex-start;
+}
+
+.halo-split-button__segment--toggle {
+    flex: 0 0 auto;
+    width: calc(var(--halo-split-button-computed-height, var(--halo-split-button-height)) + (var(--halo-split-button-computed-padding-x, var(--halo-split-button-padding-x)) * 0.2));
+    min-width: calc(var(--halo-split-button-computed-height, var(--halo-split-button-height)) + (var(--halo-split-button-computed-padding-x, var(--halo-split-button-padding-x)) * 0.2));
+    padding: 0;
+}
+
+.halo-split-button__segment--toggle::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 18%;
+    bottom: 18%;
+    width: 1px;
+    background: color-mix(in srgb, currentColor 28%, transparent);
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.halo-split-button.is-disabled .halo-split-button__segment--toggle::before {
+    opacity: 0.28;
+}
+
+.halo-split-button__label {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.halo-split-button__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--halo-split-button-computed-icon-size, var(--halo-split-button-icon-size));
+}
+
+.halo-split-button__icon--toggle {
+    transition: transform 150ms ease;
+}
+
+.halo-split-button__segment--expanded .halo-split-button__icon--toggle {
+    transform: rotate(180deg);
+}
+
+.halo-split-button__icon--spinner {
+    animation: halo-split-button-spin 1s linear infinite;
+}
+
+@keyframes halo-split-button-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.halo-split-button--primary {
+    --halo-split-button-background: var(--halo-button-primary-background);
+    --halo-split-button-background-hover: var(--halo-button-primary-background-hover);
+    --halo-split-button-background-active: var(--halo-button-primary-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-primary-background-disabled);
+    --halo-split-button-border: var(--halo-button-primary-border);
+    --halo-split-button-border-disabled: var(--halo-button-primary-border);
+    --halo-split-button-text-color: var(--halo-button-primary-text);
+    --halo-split-button-text-disabled: var(--halo-button-primary-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-primary-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-primary-focus-ring);
+}
+
+.halo-split-button--secondary {
+    --halo-split-button-background: var(--halo-button-secondary-background);
+    --halo-split-button-background-hover: var(--halo-button-secondary-background-hover);
+    --halo-split-button-background-active: var(--halo-button-secondary-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-secondary-background-disabled);
+    --halo-split-button-border: var(--halo-button-secondary-border);
+    --halo-split-button-border-disabled: var(--halo-button-secondary-border);
+    --halo-split-button-text-color: var(--halo-button-secondary-text);
+    --halo-split-button-text-disabled: var(--halo-button-secondary-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-secondary-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-secondary-focus-ring);
+}
+
+.halo-split-button--tertiary {
+    --halo-split-button-background: var(--halo-button-tertiary-background);
+    --halo-split-button-background-hover: var(--halo-button-tertiary-background-hover);
+    --halo-split-button-background-active: var(--halo-button-tertiary-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-tertiary-background-disabled);
+    --halo-split-button-border: var(--halo-button-tertiary-border);
+    --halo-split-button-border-disabled: var(--halo-button-tertiary-border);
+    --halo-split-button-text-color: var(--halo-button-tertiary-text);
+    --halo-split-button-text-disabled: var(--halo-button-tertiary-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-tertiary-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-tertiary-focus-ring);
+}
+
+.halo-split-button--danger {
+    --halo-split-button-background: var(--halo-button-danger-background);
+    --halo-split-button-background-hover: var(--halo-button-danger-background-hover);
+    --halo-split-button-background-active: var(--halo-button-danger-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-danger-background-disabled);
+    --halo-split-button-border: var(--halo-button-danger-border);
+    --halo-split-button-border-disabled: var(--halo-button-danger-border);
+    --halo-split-button-text-color: var(--halo-button-danger-text);
+    --halo-split-button-text-disabled: var(--halo-button-danger-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-danger-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-danger-focus-ring);
+}
+
+.halo-split-button--warning {
+    --halo-split-button-background: var(--halo-button-warning-background);
+    --halo-split-button-background-hover: var(--halo-button-warning-background-hover);
+    --halo-split-button-background-active: var(--halo-button-warning-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-warning-background-disabled);
+    --halo-split-button-border: var(--halo-button-warning-border);
+    --halo-split-button-border-disabled: var(--halo-button-warning-border);
+    --halo-split-button-text-color: var(--halo-button-warning-text);
+    --halo-split-button-text-disabled: var(--halo-button-warning-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-warning-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-warning-focus-ring);
+}
+
+.halo-split-button--ghost {
+    --halo-split-button-background: var(--halo-button-ghost-background);
+    --halo-split-button-background-hover: var(--halo-button-ghost-background-hover);
+    --halo-split-button-background-active: var(--halo-button-ghost-background-active);
+    --halo-split-button-background-disabled: var(--halo-button-ghost-background-disabled);
+    --halo-split-button-border: var(--halo-button-ghost-border);
+    --halo-split-button-border-disabled: var(--halo-button-ghost-border);
+    --halo-split-button-text-color: var(--halo-button-ghost-text);
+    --halo-split-button-text-disabled: var(--halo-button-ghost-text-disabled);
+    --halo-split-button-shadow: var(--halo-button-ghost-shadow);
+    --halo-split-button-focus-ring: var(--halo-button-ghost-focus-ring);
+}
+
+.halo-split-button--size-xs {
+    --halo-split-button-height: var(--halo-button-size-xs-height);
+    --halo-split-button-padding-x: var(--halo-button-size-xs-padding-x);
+    --halo-split-button-padding-y: var(--halo-button-size-xs-padding-y);
+    --halo-split-button-font-size: var(--halo-button-size-xs-font-size);
+    --halo-split-button-icon-size: var(--halo-button-size-xs-icon-size);
+    --halo-split-button-gap: var(--halo-button-size-xs-gap);
+}
+
+.halo-split-button--size-sm {
+    --halo-split-button-height: var(--halo-button-size-sm-height);
+    --halo-split-button-padding-x: var(--halo-button-size-sm-padding-x);
+    --halo-split-button-padding-y: var(--halo-button-size-sm-padding-y);
+    --halo-split-button-font-size: var(--halo-button-size-sm-font-size);
+    --halo-split-button-icon-size: var(--halo-button-size-sm-icon-size);
+    --halo-split-button-gap: var(--halo-button-size-sm-gap);
+}
+
+.halo-split-button--size-md {
+    --halo-split-button-height: var(--halo-button-size-md-height);
+    --halo-split-button-padding-x: var(--halo-button-size-md-padding-x);
+    --halo-split-button-padding-y: var(--halo-button-size-md-padding-y);
+    --halo-split-button-font-size: var(--halo-button-size-md-font-size);
+    --halo-split-button-icon-size: var(--halo-button-size-md-icon-size);
+    --halo-split-button-gap: var(--halo-button-size-md-gap);
+}
+
+.halo-split-button--density-default {
+}
+
+.halo-split-button--density-compact {
+    --halo-split-button-computed-height: calc(var(--halo-split-button-height) * 0.9);
+    --halo-split-button-computed-padding-x: calc(var(--halo-split-button-padding-x) * 0.85);
+    --halo-split-button-computed-padding-y: calc(var(--halo-split-button-padding-y) * 0.8);
+    --halo-split-button-computed-font-size: calc(var(--halo-split-button-font-size) * 0.95);
+    --halo-split-button-computed-icon-size: calc(var(--halo-split-button-icon-size) * 0.9);
+    --halo-split-button-computed-gap: calc(var(--halo-split-button-gap) * 0.85);
+    --halo-split-button-computed-border-radius: calc(var(--halo-button-border-radius) * 0.88);
+}
+
+@media (max-width: 640px), (hover: none) and (pointer: coarse) {
+    .halo-split-button__segment {
+        min-height: max(var(--halo-split-button-computed-height, var(--halo-split-button-height)), 2.75rem);
+    }
+}

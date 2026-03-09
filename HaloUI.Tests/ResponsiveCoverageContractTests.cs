@@ -40,6 +40,7 @@ public sealed class ResponsiveCoverageContractTests
         ["HaloSelectOption"] = new(ResponsiveCoverageKind.Structural),
         ["HaloSkeleton"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
         ["HaloSlider"] = new(ResponsiveCoverageKind.Adaptive),
+        ["HaloSplitButton"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
         ["HaloSparkline"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloTable"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloTableColumn"] = new(ResponsiveCoverageKind.Structural),
