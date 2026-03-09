@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Services;
@@ -21,16 +22,27 @@ namespace HaloUI.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers all HaloUI services (theme state, dialog/snackbar infrastructure, inspectors).
+    /// Registers the HaloUI runtime core (theme state, dialogs, snackbars).
     /// </summary>
-    public static IServiceCollection AddHaloUI(this IServiceCollection services, IConfiguration? configuration = null)
+    public static IServiceCollection AddHaloUICore(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddHaloUIThemeProvider(configuration);
+        services.AddHaloUIThemeProvider();
         services.AddHaloUIDialogHost();
         services.AddHaloUISnackbarHost();
-        services.AddHaloUIDialogInspector();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Registers diagnostics overlays and telemetry hubs (dialog/ARIA inspectors).
+    /// </summary>
+    public static IServiceCollection AddHaloUIDiagnostics(this IServiceCollection services, IConfiguration? configuration = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.AddHaloUIDialogInspector(configuration);
         services.AddHaloUIAriaInspector(configuration);
 
         return services;
@@ -39,7 +51,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Registers theme-related services (ThemeState + cascading context).
     /// </summary>
-    public static IServiceCollection AddHaloUIThemeProvider(this IServiceCollection services, IConfiguration? configuration = null)
+    public static IServiceCollection AddHaloUIThemeProvider(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
 
@@ -137,9 +149,16 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Registers dialog inspector state.
     /// </summary>
-    public static IServiceCollection AddHaloUIDialogInspector(this IServiceCollection services)
+    public static IServiceCollection AddHaloUIDialogInspector(this IServiceCollection services, IConfiguration? configuration = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+
+        services.AddOptions<DialogInspectorOptions>();
+
+        if (configuration is not null)
+        {
+            services.Configure<DialogInspectorOptions>(configuration.GetSection("DialogInspector"));
+        }
 
         services.TryAddSingleton<DialogInspectorState>();
 
@@ -153,23 +172,27 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.AddOptions<AriaInspectorOptions>();
+
         if (configuration is not null)
         {
             var ariaInspectorSection = configuration.GetSection("AriaInspector");
             services.Configure<AriaInspectorOptions>(ariaInspectorSection);
-            var ariaInspectorOptions = ariaInspectorSection.Get<AriaInspectorOptions>()?.Normalize() ?? AriaInspectorOptions.Default;
-
-            if (ariaInspectorOptions.IsEnabled)
-            {
-                services.TryAddSingleton<IAriaDiagnosticsHub, AriaDiagnosticsHub>();
-                services.TryAddSingleton<AriaInspectorState>();
-                
-                return services;
-            }
         }
 
-        services.TryAddSingleton<IAriaDiagnosticsHub, NoOpAriaDiagnosticsHub>();
-        
+        services.TryAddSingleton<AriaInspectorState>();
+        services.TryAddSingleton<IAriaDiagnosticsHub>(sp =>
+        {
+            var options = sp.GetRequiredService<IOptions<AriaInspectorOptions>>().Value.Normalize();
+
+            if (!options.IsEnabled)
+            {
+                return new NoOpAriaDiagnosticsHub();
+            }
+
+            return ActivatorUtilities.CreateInstance<AriaDiagnosticsHub>(sp);
+        });
+
         return services;
     }
 }

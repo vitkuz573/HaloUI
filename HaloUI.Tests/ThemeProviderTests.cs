@@ -18,7 +18,7 @@ public class ThemeProviderTests : BunitContext
     [Fact]
     public void RendersStyleBlockWithCssVariables()
     {
-        Services.AddHaloUI();
+        Services.AddHaloUICore();
 
         var state = Services.GetRequiredService<ThemeState>();
         state.SetTheme("Light", CreateTheme("Light"));
@@ -33,7 +33,7 @@ public class ThemeProviderTests : BunitContext
     [Fact]
     public void UpdatesCssVariablesWhenThemeChanges()
     {
-        Services.AddHaloUI();
+        Services.AddHaloUICore();
 
         var state = Services.GetRequiredService<ThemeState>();
         state.SetTheme("Light", CreateTheme("Light"));
@@ -56,7 +56,7 @@ public class ThemeProviderTests : BunitContext
     [Fact]
     public void HaloButton_DoesNotEmitGeneratedInlineVariables_WhenThemeContextIsAvailable()
     {
-        Services.AddHaloUI();
+        Services.AddHaloUICore();
 
         var state = Services.GetRequiredService<ThemeState>();
         state.SetTheme("Light", CreateTheme("Light"));
@@ -78,7 +78,7 @@ public class ThemeProviderTests : BunitContext
     [Fact]
     public void ThemeProviderUpdatesCardVariablesWhenThemeChanges()
     {
-        Services.AddHaloUI();
+        Services.AddHaloUICore();
 
         var state = Services.GetRequiredService<ThemeState>();
         state.SetTheme("Light", CreateTheme("Light"));

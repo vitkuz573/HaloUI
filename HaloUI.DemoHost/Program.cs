@@ -9,7 +9,8 @@ using HaloUI.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHaloUI(builder.Configuration);
+builder.Services.AddHaloUICore();
+builder.Services.AddHaloUIDiagnostics(builder.Configuration);
 builder.Services.AddScoped<IDialogContextProvider, StaticDialogContextProvider>();
 builder.Services.AddScoped<DemoDialogState>();
 builder.Services.AddRazorComponents()

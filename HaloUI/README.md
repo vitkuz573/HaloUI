@@ -30,7 +30,8 @@ Register the HaloUI services during startup so the theme context, dialog/snackba
 
 ```csharp
 // Program.cs
-services.AddHaloUI(builder.Configuration);
+services.AddHaloUICore();
+services.AddHaloUIDiagnostics(builder.Configuration);
 ```
 
 Then drop a single `<ThemeProvider />` into your layout (no need to wrap the rest of the markup):

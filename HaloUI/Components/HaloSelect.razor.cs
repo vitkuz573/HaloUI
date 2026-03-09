@@ -1115,7 +1115,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private async Task<IJSObjectReference> GetModuleAsync()
     {
-        _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/HaloUI/js/uiSelect.js");
+        _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/HaloUI/js/haloSelect.js");
         return _module;
     }
 

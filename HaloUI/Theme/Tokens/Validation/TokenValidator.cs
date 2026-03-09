@@ -274,10 +274,10 @@ public static partial class TokenValidator
     /// WCAG 1.4.11 — Non-text Contrast (borders, icons, indicators) ≥ 3:1 to adjacent background.
     /// </summary>
     public static ValidationResult ValidateNonTextContrastAA(
-        string uiColor,
+        string elementColor,
         string adjacentBackground,
         string tokenName)
-        => ValidateContrast(uiColor, adjacentBackground, tokenName, 3.0);
+        => ValidateContrast(elementColor, adjacentBackground, tokenName, 3.0);
 
     /// <summary>
     /// WCAG 2.2 AAA — Focus Appearance: contrast ≥ 3:1 + outline width ≥ 2px.

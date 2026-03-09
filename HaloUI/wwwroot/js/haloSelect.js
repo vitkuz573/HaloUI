@@ -216,7 +216,7 @@ function invokeDotNetMethodAsync(dotNetRef, methodName, argument, onDisposed) {
             return;
         }
 
-        console.error(`uiSelect.js: invokeMethodAsync('${methodName}') failed.`, error);
+        console.error(`haloSelect.js: invokeMethodAsync('${methodName}') failed.`, error);
     });
 }
 

@@ -266,11 +266,6 @@ public sealed class AccessibilityCoverageContractTests
     {
         var trimmed = componentName;
 
-        if (trimmed.StartsWith("UI", StringComparison.Ordinal))
-        {
-            trimmed = trimmed[2..];
-        }
-
         if (trimmed.EndsWith("Host", StringComparison.Ordinal))
         {
             trimmed = trimmed[..^4];

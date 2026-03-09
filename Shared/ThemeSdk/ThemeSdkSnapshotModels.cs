@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace HaloUI.ThemeSdk.Internal;
 
 public sealed record ThemeSdkSnapshot(
-    [property: JsonPropertyName("uiKitVersion")] string HaloVersion,
+    [property: JsonPropertyName("haloVersion")] string HaloVersion,
     [property: JsonPropertyName("generatedAt")] DateTimeOffset GeneratedAt,
     [property: JsonPropertyName("entries")] IReadOnlyList<ThemeSdkSnapshotEntry> Entries,
     [property: JsonPropertyName("indexEntries")] IReadOnlyList<ThemeVariableIndexSnapshotEntry> IndexEntries,

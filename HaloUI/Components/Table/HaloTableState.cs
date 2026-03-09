@@ -60,7 +60,7 @@ public sealed class HaloTableState<TItem>
     public TableOptions Options => _options;
 
     /// <summary>
-    /// Gets the current pagination state (exposed for backwards compatibility).
+    /// Gets the current pagination state.
     /// </summary>
     public TablePaginationState Pagination { get; }
 

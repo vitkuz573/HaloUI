@@ -15,7 +15,7 @@ public class HaloContainerTests : BunitContext
     [Fact]
     public void AppliesModifierClassesAndRendersSections()
     {
-        Services.AddHaloUI();
+        Services.AddHaloUICore();
 
         var cut = Render<HaloContainer>(parameters => parameters
             .Add(p => p.Elevated, true)
