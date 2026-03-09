@@ -28,7 +28,7 @@ internal static class CSharpAnalyzerVerifier<TAnalyzer, TCodeFix>
     {
         var test = new Test
         {
-            TestCode = source
+            TestCode = NormalizeLineEndings(source)
         };
 
         test.ExpectedDiagnostics.AddRange(expected);
@@ -39,12 +39,17 @@ internal static class CSharpAnalyzerVerifier<TAnalyzer, TCodeFix>
     {
         var test = new Test
         {
-            TestCode = source,
-            FixedCode = fixedSource
+            TestCode = NormalizeLineEndings(source),
+            FixedCode = NormalizeLineEndings(fixedSource)
         };
 
         test.ExpectedDiagnostics.AddRange(expected);
         await test.RunAsync();
+    }
+
+    private static string NormalizeLineEndings(string value)
+    {
+        return value.ReplaceLineEndings(Environment.NewLine);
     }
 
     private sealed class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier>
