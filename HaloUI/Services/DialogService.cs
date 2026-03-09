@@ -186,7 +186,7 @@ public class DialogService : IDialogService
                     footerBuilder.OpenComponent<HaloButton>(0);
                     footerBuilder.AddAttribute(1, nameof(HaloButton.Variant), button.Variant);
                     footerBuilder.AddAttribute(2, nameof(HaloButton.Size), button.Size);
-                    footerBuilder.AddAttribute(3, nameof(HaloButton.OnClick), EventCallback.Factory.Create(this, () => ResolveFromButton(reference, button)));
+                    footerBuilder.AddAttribute(3, nameof(HaloButton.Activated), EventCallback.Factory.Create(this, () => ResolveFromButton(reference, button)));
 
                     if (button.IsPrimary)
                     {

@@ -25,7 +25,7 @@ public sealed partial class HaloNavLink
 
     [Parameter] public bool Disabled { get; set; }
 
-    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public EventCallback Activated { get; set; }
 
     [Parameter] public string? Class { get; set; }
 

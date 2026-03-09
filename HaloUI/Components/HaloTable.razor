@@ -27,7 +27,7 @@
         <div class="@GetHeaderContainerClasses()">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <div class="flex min-w-0 w-full items-center gap-2 sm:flex-1">
-                    @if (Expandable)
+                    @if (IsCollapsible)
                     {
                         <button type="button"
                                 class="@GetToggleButtonClasses()"
@@ -42,7 +42,7 @@
                         <div class="ui-table__title text-base font-semibold whitespace-nowrap">@Title</div>
                     }
                 </div>
-                @if ((!Expandable || _isExpanded) && _options.ShowToolbar && _state is not null)
+                @if ((!IsCollapsible || _isExpanded) && _options.ShowToolbar && _state is not null)
                 {
                     if (activeFilters.Count == 0 && _filtersExpanded)
                     {
@@ -50,7 +50,7 @@
                     }
 
                     <div class="ui-table__toolbar flex w-full items-center gap-2 sm:ml-auto sm:w-auto sm:justify-end">
-                    @if (ShowSearch)
+                    @if (IsSearchEnabled)
                     {
                         <div class="min-w-0 flex-1 sm:w-64 sm:flex-none">
                             <HaloTextField @bind-value="SearchText"
@@ -81,7 +81,7 @@
                                   Size="ButtonSize.Small"
                                   Icon="filter_alt"
                                   AdditionalAttributes="@GetFilterToggleAttributes()"
-                                  OnClick="@ToggleFilterPanel"
+                                  Activated="@ToggleFilterPanel"
                                   AriaLabel="Toggle filters">
                             <span>@(_filtersExpanded ? "Hide filters" : "Filters")</span>
                             @if (activeFilters.Count > 0)
@@ -107,7 +107,7 @@
                                       Size="ButtonSize.ExtraSmall"
                                       Icon="layers_clear"
                                       Class="ml-auto flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition"
-                                      OnClick="@ClearAllFiltersAsync"
+                                      Activated="@ClearAllFiltersAsync"
                                       AriaLabel="Clear all filters">
                                 <span>Clear all</span>
                             </HaloButton>
@@ -130,7 +130,7 @@
                                               IconOnly="true"
                                               Class="ui-table__filter-chip-clear"
                                               AriaLabel="@($"Clear filter for {column.Title}")"
-                                              OnClick="@(() => ClearFilterAsync(column))" />
+                                              Activated="@(() => ClearFilterAsync(column))" />
                                 </div>
                             }
                         </div>
@@ -141,9 +141,9 @@
 
         var visibleColumns = state.Columns.Where(static column => !column.Hidden).ToList();
         var hasItems = state.Pagination.TotalItemCount > 0;
-        var isLoading = Loading || (UsesExternalProvider && !_providerInitialized);
+        var isLoading = IsLoading || (UsesExternalProvider && !_providerInitialized);
 
-        @if (!Expandable || _isExpanded)
+        @if (!IsCollapsible || _isExpanded)
         {
             <div class="ui-table__desktop-section" id="@_contentId">
                 <table class="ui-table__table" aria-label="@_options.TableAriaLabel">
@@ -172,7 +172,7 @@
                                                   Size="ButtonSize.Small"
                                                   Icon="@GetSortIcon(column)"
                                                   Class="@GetHeaderButtonClasses(column.Id)"
-                                                  OnClick="@(() => OnHeaderClicked(column))"
+                                                  Activated="@(() => OnHeaderClicked(column))"
                                                   AriaLabel="@GetSortAriaLabel(column)">
                                             <span>@column.Title</span>
                                         </HaloButton>
@@ -226,7 +226,7 @@
                     <tbody class="ui-table__body">
                         @if (isLoading)
                         {
-                            @for (var r = 0; r < LoadingSkeletonRows; r++)
+                            @for (var r = 0; r < SkeletonRowCount; r++)
                             {
                                 <tr class="ui-table__row">
                                     @if (_options.SelectionMode != TableSelectionMode.None)
@@ -246,7 +246,7 @@
                             <Virtualize Context="item"
                                         ItemsProvider="ProvideItemsAsync"
                                         @ref="_desktopVirtualize"
-                                        OverscanCount="VirtualizationOverscan">
+                                        OverscanCount="OverscanCount">
                                 <ItemContent>
                                     <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
                                         @switch (_options.SelectionMode)
@@ -291,7 +291,7 @@
                             <Virtualize Context="item"
                                         ItemsProvider="ProvideItemsAsync"
                                         @ref="_desktopVirtualize"
-                                        OverscanCount="VirtualizationOverscan">
+                                        OverscanCount="OverscanCount">
                                 <ItemContent>
                                     <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
                                         @if (_options.SelectionMode == TableSelectionMode.Multiple)
@@ -335,7 +335,7 @@
             <div class="ui-table__mobile-section" id="@($"{_contentId}-mobile")">
                 @if (isLoading)
                 {
-                    @for (var r = 0; r < LoadingSkeletonRows; r++)
+                    @for (var r = 0; r < SkeletonRowCount; r++)
                     {
                         <div class="ui-table__mobile-skeleton rounded-lg p-4 shadow-sm">
                             <div class="space-y-2">
@@ -352,7 +352,7 @@
                     <Virtualize Context="item"
                                 ItemsProvider="ProvideItemsAsync"
                                 @ref="_mobileVirtualize"
-                                OverscanCount="VirtualizationOverscan">
+                                OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
                                 <div class="flex flex-col gap-3">
@@ -368,8 +368,16 @@
                                 {
                                     <div class="ui-table__mobile-selection-footer mt-3 pt-3">
                                         <HaloButton Variant="ButtonVariant.Secondary"
-                                                  Text="@(state.IsSelected(item) ? "Selected" : "Select")"
-                                                  OnClick="() => OnRowSelectionToggled(item)" />
+                                                  Activated="() => OnRowSelectionToggled(item)">
+                                            @if (state.IsSelected(item))
+                                            {
+                                                <span>Selected</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Select</span>
+                                            }
+                                        </HaloButton>
                                     </div>
                                 }
                             </article>
@@ -386,7 +394,7 @@
                     <Virtualize Context="item"
                                 ItemsProvider="ProvideItemsAsync"
                                 @ref="_mobileVirtualize"
-                                OverscanCount="VirtualizationOverscan">
+                                OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
                                 <div class="flex flex-col gap-3">
@@ -402,8 +410,16 @@
                                 {
                                     <div class="ui-table__mobile-selection-footer mt-3 pt-3">
                                         <HaloButton Variant="ButtonVariant.Secondary"
-                                                  Text="@(state.IsSelected(item) ? "Selected" : "Select")"
-                                                  OnClick="() => OnRowSelectionToggled(item)" />
+                                                  Activated="() => OnRowSelectionToggled(item)">
+                                            @if (state.IsSelected(item))
+                                            {
+                                                <span>Selected</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Select</span>
+                                            }
+                                        </HaloButton>
                                     </div>
                                 }
                             </article>

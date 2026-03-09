@@ -59,16 +59,13 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     public RenderFragment? Footer { get; set; }
 
     [Parameter]
-    public bool InitiallyExpanded { get; set; }
+    public bool DefaultExpanded { get; set; }
 
     [Parameter]
-    public bool Expanded { get; set; }
+    public bool IsExpanded { get; set; }
 
     [Parameter]
-    public EventCallback<bool> ExpandedChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<bool> OnToggle { get; set; }
+    public EventCallback<bool> IsExpandedChanged { get; set; }
 
     [Parameter]
     public bool Disabled { get; set; }
@@ -102,13 +99,13 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
     protected override void OnParametersSet()
     {
-        if (ExpandedChanged.HasDelegate)
+        if (IsExpandedChanged.HasDelegate)
         {
-            _expanded = Expanded;
+            _expanded = IsExpanded;
         }
         else if (!_initialized)
         {
-            _expanded = InitiallyExpanded;
+            _expanded = DefaultExpanded;
             _initialized = true;
         }
 
@@ -127,18 +124,13 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
         var next = !_expanded;
 
-        if (ExpandedChanged.HasDelegate)
+        if (IsExpandedChanged.HasDelegate)
         {
-            await ExpandedChanged.InvokeAsync(next);
+            await IsExpandedChanged.InvokeAsync(next);
         }
         else
         {
             _expanded = next;
-        }
-
-        if (OnToggle.HasDelegate)
-        {
-            await OnToggle.InvokeAsync(next);
         }
 
         if (next)

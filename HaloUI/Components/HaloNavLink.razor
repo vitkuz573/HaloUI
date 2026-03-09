@@ -7,7 +7,7 @@
        aria-label="@AriaLabel"
        aria-disabled="@(Disabled ? "true" : null)"
        tabindex="@(Disabled ? "-1" : null)"
-       @onclick="OnClick"
+       @onclick="Activated"
        @onclick:preventDefault="Disabled"
        @attributes="AdditionalAttributes">
         @RenderContent()
@@ -19,7 +19,7 @@ else
             class="@BuildCssClass()"
             disabled="@Disabled"
             aria-label="@AriaLabel"
-            @onclick="OnClick"
+            @onclick="Activated"
             @attributes="AdditionalAttributes">
         @RenderContent()
     </button>

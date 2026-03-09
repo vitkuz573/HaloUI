@@ -27,28 +27,28 @@
             <HaloButton Variant="ButtonVariant.Secondary"
                         Size="ButtonSize.Small"
                         StartIcon="light_mode"
-                        OnClick="@(() => SetTheme(LightThemeKey))"
+                        Activated="@(() => SetTheme(LightThemeKey))"
                         data-testid="theme-light">
                 Light
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Secondary"
                         Size="ButtonSize.Small"
                         StartIcon="dark_mode"
-                        OnClick="@(() => SetTheme(DarkThemeKey))"
+                        Activated="@(() => SetTheme(DarkThemeKey))"
                         data-testid="theme-dark">
                 Dark
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Primary"
                         Size="ButtonSize.Small"
                         StartIcon="open_in_new"
-                        OnClick="ShowDialogAsync"
+                        Activated="ShowDialogAsync"
                         data-testid="hero-open-dialog">
                 Launch dialog
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Tertiary"
                         Size="ButtonSize.Small"
                         StartIcon="campaign"
-                        OnClick="() => ShowSnackbar(SnackbarSeverity.Info)"
+                        Activated="() => ShowSnackbar(SnackbarSeverity.Info)"
                         data-testid="hero-show-snackbar">
                 Push snackbar
             </HaloButton>
@@ -266,9 +266,9 @@
             <div class="demo-stack">
                 <HaloExpandablePanel Title="Runbook: network isolation"
                                      Subtitle="Last updated 6 minutes ago"
-                                     InitiallyExpanded="true"
-                                     Expanded="@_runbookExpanded"
-                                     ExpandedChanged="OnRunbookExpandedChanged"
+                                     DefaultExpanded="true"
+                                     IsExpanded="@_runbookExpanded"
+                                     IsExpandedChanged="OnRunbookExpandedChanged"
                                      Icon="book_online">
                     <ChildContent>
                         <ul class="demo-list">
@@ -293,7 +293,7 @@
                     <HaloTable TItem="DeviceStatusRow"
                                ItemsProvider="ProvideDeviceRows"
                                Options="@_tableOptions"
-                               Dense="true"
+                               IsDense="true"
                                EmptyMessage="No devices found."
                                RowKeySelector="static row => row.Id">
                         <Columns>
@@ -341,7 +341,7 @@
             <div class="demo-row">
                 <HaloButton Variant="ButtonVariant.Primary"
                             StartIcon="open_in_new"
-                            OnClick="ShowDialogAsync"
+                            Activated="ShowDialogAsync"
                             data-testid="button-open-dialog">
                     Open dialog
                 </HaloButton>
@@ -354,7 +354,7 @@
             <div class="demo-row">
                 <HaloButton Variant="ButtonVariant.Secondary"
                             StartIcon="notifications"
-                            OnClick="() => ShowSnackbar(SnackbarSeverity.Info)"
+                            Activated="() => ShowSnackbar(SnackbarSeverity.Info)"
                             data-testid="button-show-snackbar">
                     Show snackbar
                 </HaloButton>

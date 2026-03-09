@@ -2,7 +2,7 @@
         class="@BuildCssClass()"
         disabled="@(Disabled || Loading)"
         form="@Form"
-        @onclick="OnClick"
+        @onclick="Activated"
         @onclick:stopPropagation="StopClickPropagation"
         @attributes="BuildButtonAttributes()">
     @if (Loading)

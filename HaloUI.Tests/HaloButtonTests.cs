@@ -5,6 +5,7 @@
 using Bunit;
 using HaloUI.Components;
 using HaloUI.Enums;
+using Microsoft.AspNetCore.Components;
 using Xunit;
 
 namespace HaloUI.Tests;
@@ -89,6 +90,20 @@ public class HaloButtonTests : BunitContext
 
         Assert.Contains("ui-button--active", button.ClassList);
         Assert.Null(button.GetAttribute("aria-pressed"));
+    }
+
+    [Fact]
+    public void Click_InvokesActivatedCallback()
+    {
+        var clicked = false;
+
+        var cut = Render<HaloButton>(parameters => parameters
+            .Add(p => p.Activated, EventCallback.Factory.Create(this, () => clicked = true))
+            .AddChildContent("Action"));
+
+        cut.Find("button").Click();
+
+        Assert.True(clicked);
     }
 
     private static readonly IReadOnlyDictionary<ButtonVariant, string> VariantClassMap =

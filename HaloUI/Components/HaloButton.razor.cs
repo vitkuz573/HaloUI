@@ -37,7 +37,7 @@ public partial class HaloButton
     public string? Form { get; set; }
     
     [Parameter]
-    public EventCallback OnClick { get; set; }
+    public EventCallback Activated { get; set; }
     
     [Parameter]
     public string? Class { get; set; }

@@ -38,21 +38,21 @@
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
                               Density="ButtonDensity.Compact"
-                              OnClick="TogglePin">
+                              Activated="TogglePin">
                         @(_preferences.IsPinned ? "Unpin" : "Pin")
                     </HaloButton>
 
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Warning"
                               Density="ButtonDensity.Compact"
-                              OnClick="ToggleLogPause">
+                              Activated="ToggleLogPause">
                         @(_preferences.IsLogPaused ? "Resume" : "Pause")
                     </HaloButton>
 
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Danger"
                               Density="ButtonDensity.Compact"
-                              OnClick="DismissAll">
+                              Activated="DismissAll">
                         Dismiss All
                     </HaloButton>
 
@@ -62,7 +62,7 @@
                               Icon="close"
                               IconOnly="true"
                               AriaLabel="Close inspector"
-                              OnClick="Hide" />
+                              Activated="Hide" />
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                               Density="ButtonDensity.Compact"
                               Toggle="true"
                               Active="@(_preferences.ViewMode == InspectorViewMode.Activity)"
-                              OnClick="() => SetViewMode(InspectorViewMode.Activity)">
+                              Activated="() => SetViewMode(InspectorViewMode.Activity)">
                         Activity
                     </HaloButton>
 
@@ -93,7 +93,7 @@
                               Density="ButtonDensity.Compact"
                               Toggle="true"
                               Active="@(_preferences.ViewMode == InspectorViewMode.AccessDenied)"
-                              OnClick="() => SetViewMode(InspectorViewMode.AccessDenied)">
+                              Activated="() => SetViewMode(InspectorViewMode.AccessDenied)">
                         Denials
                     </HaloButton>
                 </div>
@@ -121,7 +121,7 @@
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
                               Density="ButtonDensity.Compact"
-                              OnClick="ClearCurrentFilters"
+                              Activated="ClearCurrentFilters"
                               Disabled="@(!HasCurrentFilters)">
                         Clear
                     </HaloButton>
@@ -135,7 +135,7 @@
                         <HaloButton Size="ButtonSize.ExtraSmall"
                                   Variant="ButtonVariant.Warning"
                                   Density="ButtonDensity.Compact"
-                                  OnClick="() => FlushPendingEvents(force: true)"
+                                  Activated="() => FlushPendingEvents(force: true)"
                                   Disabled="@_preferences.IsLogPaused">
                             Process queued
                         </HaloButton>
@@ -169,7 +169,7 @@
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Danger"
                               Density="ButtonDensity.Compact"
-                              OnClick="ClearCurrentFilters"
+                              Activated="ClearCurrentFilters"
                               Disabled="@(!HasCurrentFilters)">
                         Clear
                     </HaloButton>
@@ -204,7 +204,7 @@
                                         <HaloButton Size="ButtonSize.ExtraSmall"
                                                   Variant="ButtonVariant.Danger"
                                                   Density="ButtonDensity.Compact"
-                                                  OnClick="() => Dismiss(session.Id)">
+                                                  Activated="() => Dismiss(session.Id)">
                                             Dismiss
                                         </HaloButton>
                                     </div>

@@ -34,7 +34,7 @@
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
                               Density="ButtonDensity.Compact"
-                              OnClick="TogglePin">
+                              Activated="TogglePin">
                         @(_preferences.IsPinned ? "Unpin" : "Pin")
                     </HaloButton>
 
@@ -44,7 +44,7 @@
                               Icon="close"
                               IconOnly="true"
                               AriaLabel="Hide inspector"
-                              OnClick="Hide" />
+                              Activated="Hide" />
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                           Density="ButtonDensity.Compact"
                           Toggle="true"
                           Active="@_preferences.ShowOnlyFailures"
-                          OnClick="ToggleOnlyFailures">
+                          Activated="ToggleOnlyFailures">
                     @(_preferences.ShowOnlyFailures ? "All Events" : "Only Failures")
                 </HaloButton>
 
@@ -63,7 +63,7 @@
                           Density="ButtonDensity.Compact"
                           Toggle="true"
                           Active="@(!_preferences.IncludeWarnings)"
-                          OnClick="ToggleWarnings">
+                          Activated="ToggleWarnings">
                     @(_preferences.IncludeWarnings ? "Hide Warnings" : "Show Warnings")
                 </HaloButton>
 
@@ -72,14 +72,14 @@
                           Density="ButtonDensity.Compact"
                           Toggle="true"
                           Active="@_preferences.ShowAttributes"
-                          OnClick="ToggleAttributes">
+                          Activated="ToggleAttributes">
                     @(_preferences.ShowAttributes ? "Hide Attributes" : "Show Attributes")
                 </HaloButton>
 
                 <HaloButton Size="ButtonSize.ExtraSmall"
                           Variant="ButtonVariant.Ghost"
                           Density="ButtonDensity.Compact"
-                          OnClick="ResetFilters">
+                          Activated="ResetFilters">
                     Reset Filters
                 </HaloButton>
             </div>

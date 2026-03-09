@@ -18,7 +18,7 @@ public sealed class HaloTableRenderingTests : BunitContext
 
         var cut = Render<HaloTable<TestRow>>(parameters => parameters
             .Add(p => p.Items, Array.Empty<TestRow>())
-            .Add(p => p.Loading, true)
+            .Add(p => p.IsLoading, true)
             .Add(p => p.EmptyMessage, emptyMessage)
             .Add(p => p.Columns, BuildColumns()));
 

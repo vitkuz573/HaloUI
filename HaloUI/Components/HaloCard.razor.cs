@@ -76,7 +76,7 @@ public partial class HaloCard
     public string? Class { get; set; }
     
     [Parameter]
-    public EventCallback OnClick { get; set; }
+    public EventCallback Activated { get; set; }
     
     [Parameter]
     public string? HoverBorderColor { get; set; }

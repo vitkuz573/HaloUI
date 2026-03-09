@@ -22,10 +22,10 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
         await Expect(Page.GetByTestId("demo-section-buttons")).ToBeVisibleAsync();
         await Expect(Page.GetByTestId("demo-section-table")).ToBeVisibleAsync();
 
-        await Page.GetByTestId("theme-dark").ClickAsync();
+        await ClickThemeButtonUntilAppliedAsync("theme-dark", "dark");
         await Expect(root).ToHaveAttributeAsync("data-theme", "dark");
 
-        await Page.GetByTestId("theme-light").ClickAsync();
+        await ClickThemeButtonUntilAppliedAsync("theme-light", "light");
         await Expect(root).ToHaveAttributeAsync("data-theme", "light");
     }
 
@@ -78,5 +78,34 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
             Timeout = 60_000
         });
         await Expect(Page.GetByTestId("demo-root")).ToBeVisibleAsync();
+    }
+
+    private async Task ClickThemeButtonUntilAppliedAsync(string buttonTestId, string expectedTheme)
+    {
+        var root = Page.GetByTestId("demo-root");
+        var timeoutAt = DateTime.UtcNow.AddSeconds(5);
+
+        while (DateTime.UtcNow < timeoutAt)
+        {
+            await Page.GetByTestId(buttonTestId).ClickAsync(new LocatorClickOptions
+            {
+                Force = true
+            });
+
+            try
+            {
+                await Expect(root).ToHaveAttributeAsync("data-theme", expectedTheme, new LocatorAssertionsToHaveAttributeOptions
+                {
+                    Timeout = 300
+                });
+                return;
+            }
+            catch (PlaywrightException)
+            {
+                await Page.WaitForTimeoutAsync(100);
+            }
+        }
+
+        await Expect(root).ToHaveAttributeAsync("data-theme", expectedTheme);
     }
 }

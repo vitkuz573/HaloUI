@@ -83,7 +83,7 @@ public partial class HaloTable<TItem>
     }
 
     [Parameter] public string Title { get; set; } = string.Empty;
-    [Parameter] public bool ShowSearch { get; set; } = false;
+    [Parameter] public bool IsSearchEnabled { get; set; } = false;
     [Parameter] public RenderFragment? Actions { get; set; }
     [Parameter] public RenderFragment? Columns { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -93,22 +93,22 @@ public partial class HaloTable<TItem>
     [Parameter] public TableItemsProvider<TItem>? ItemsProvider { get; set; }
     [Parameter] public ITableDataProvider<TItem>? DataProvider { get; set; }
     [Parameter] public object? ItemsProviderState { get; set; }
-    [Parameter] public bool Loading { get; set; }
-    [Parameter] public bool Dense { get; set; } = false;
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public bool IsDense { get; set; } = false;
     [Parameter] public string EmptyMessage { get; set; } = "No items found.";
     [Parameter] public Func<TItem, string, bool>? SearchPredicate { get; set; }
     [Parameter] public IEnumerable<Func<TItem, string?>>? SearchFields { get; set; }
-    [Parameter] public int LoadingSkeletonRows { get; set; } = 5;
-    [Parameter] public bool Expandable { get; set; }
-    [Parameter] public bool Expanded { get; set; } = true;
-    [Parameter] public EventCallback<bool> ExpandedChanged { get; set; }
+    [Parameter] public int SkeletonRowCount { get; set; } = 5;
+    [Parameter] public bool IsCollapsible { get; set; }
+    [Parameter] public bool IsExpanded { get; set; } = true;
+    [Parameter] public EventCallback<bool> IsExpandedChanged { get; set; }
     [Parameter] public TableOptions? Options { get; set; }
     [Parameter] public TableSelectionMode? SelectionMode { get; set; }
     [Parameter] public Func<TItem, object?>? RowKeySelector { get; set; }
     [Parameter] public EventCallback<IReadOnlyCollection<TableSortDescriptor>> SortChanged { get; set; }
     [Parameter] public EventCallback<TableSelectionChangedEventArgs<TItem>> SelectionChanged { get; set; }
     [Parameter] public EventCallback<TablePaginationState> PaginationChanged { get; set; }
-    [Parameter] public int VirtualizationOverscan { get; set; } = 3;
+    [Parameter] public int OverscanCount { get; set; } = 3;
 
     protected override void OnParametersSet()
     {
@@ -129,7 +129,7 @@ public partial class HaloTable<TItem>
             _inMemoryProvider.SetItems(Items);
             _providerInitialized = true;
         }
-        else if (Loading)
+        else if (IsLoading)
         {
             _providerInitialized = false;
         }
@@ -154,20 +154,20 @@ public partial class HaloTable<TItem>
 
         _stateInitialized = true;
 
-        if (!Expandable)
+        if (!IsCollapsible)
         {
             _isExpanded = true;
             _isExpandedInitialized = false;
         }
         else
         {
-            if (ExpandedChanged.HasDelegate)
+            if (IsExpandedChanged.HasDelegate)
             {
-                _isExpanded = Expanded;
+                _isExpanded = IsExpanded;
             }
             else if (!_isExpandedInitialized)
             {
-                _isExpanded = Expanded;
+                _isExpanded = IsExpanded;
                 _isExpandedInitialized = true;
             }
         }
@@ -204,7 +204,7 @@ public partial class HaloTable<TItem>
 
     private async Task ToggleExpanded()
     {
-        if (!Expandable)
+        if (!IsCollapsible)
         {
             return;
         }
@@ -212,9 +212,9 @@ public partial class HaloTable<TItem>
         var next = !_isExpanded;
         _isExpanded = next;
 
-        if (ExpandedChanged.HasDelegate)
+        if (IsExpandedChanged.HasDelegate)
         {
-            await ExpandedChanged.InvokeAsync(next);
+            await IsExpandedChanged.InvokeAsync(next);
         }
         else
         {
@@ -233,7 +233,7 @@ public partial class HaloTable<TItem>
     {
         var classes = new List<string> { "ui-table", "overflow-hidden" };
 
-        if (Dense)
+        if (IsDense)
         {
             classes.Add("ui-table--dense");
         }
@@ -245,7 +245,7 @@ public partial class HaloTable<TItem>
     {
         var classes = new List<string> { "ui-table__header" };
 
-        if (Expandable && !_isExpanded)
+        if (IsCollapsible && !_isExpanded)
         {
             classes.Add("is-collapsed");
         }
