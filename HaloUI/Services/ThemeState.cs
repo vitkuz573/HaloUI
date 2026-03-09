@@ -2,7 +2,6 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
-using System;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Runtime;
 using HaloUI.Theme.Tokens;
@@ -94,20 +93,36 @@ public sealed class ThemeState
 
     private void SetBodyThemeAttribute(HaloTheme theme)
     {
-        if (_jsRuntime is null) return;
-        
+        if (_jsRuntime is null)
+        {
+            return;
+        }
+
         var themeValue = theme.Tokens.Scheme == ThemeScheme.Dark ? "dark" : "light";
-                         
-        // Use InvokeAsync in a fire-and-forget manner to avoid blocking, 
-        // as this might be called from synchronous contexts or constructors.
-        // In a real app, careful lifecycle handling is needed.
+
+        _ = SetBodyThemeAttributeAsync(themeValue);
+    }
+
+    private async Task SetBodyThemeAttributeAsync(string themeValue)
+    {
         try
         {
-             _ = _jsRuntime.InvokeVoidAsync("document.body.setAttribute", "data-theme", themeValue);
+            await _jsRuntime!.InvokeVoidAsync("document.body.setAttribute", "data-theme", themeValue);
         }
-        catch (Exception)
+        catch (JSDisconnectedException)
         {
-            // Ignore JS errors during prerendering or if disconnected
+        }
+        catch (TaskCanceledException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+        catch (JSException)
+        {
         }
     }
 

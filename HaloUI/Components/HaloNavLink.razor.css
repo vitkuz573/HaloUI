@@ -1,0 +1,109 @@
+.ui-nav-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid transparent;
+    border-radius: var(--ui-core-border-radius-lg, 0.75rem);
+    background: color-mix(in srgb, var(--ui-color-surface-primary, #ffffff) 78%, transparent);
+    color: var(--ui-color-text-secondary, #334155);
+    text-align: left;
+    text-decoration: none;
+    transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    cursor: pointer;
+}
+
+.ui-nav-link:hover {
+    border-color: color-mix(in srgb, var(--ui-color-interactive-primary, #6366f1) 26%, transparent);
+    background: color-mix(in srgb, var(--ui-color-interactive-primary, #6366f1) 10%, var(--ui-color-surface-primary, #ffffff) 90%);
+}
+
+.ui-nav-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-color-interactive-primary, #6366f1) 42%, transparent);
+}
+
+.ui-nav-link--neutral {
+    color: var(--ui-color-text-secondary, #334155);
+}
+
+.ui-nav-link--danger {
+    color: var(--ui-color-feedback-error, #be123c);
+    background: color-mix(in srgb, var(--ui-color-feedback-error, #be123c) 10%, var(--ui-color-surface-primary, #ffffff) 90%);
+}
+
+.ui-nav-link--danger:hover {
+    border-color: color-mix(in srgb, var(--ui-color-feedback-error, #be123c) 28%, transparent);
+    background: color-mix(in srgb, var(--ui-color-feedback-error, #be123c) 14%, var(--ui-color-surface-primary, #ffffff) 86%);
+}
+
+.ui-nav-link--danger:focus-visible {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-color-feedback-error, #be123c) 45%, transparent);
+}
+
+.ui-nav-link--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.ui-nav-link__icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    margin-top: 0.125rem;
+}
+
+.ui-nav-link__icon--neutral {
+    color: var(--ui-color-interactive-primary, #4f46e5);
+}
+
+.ui-nav-link__icon--danger {
+    color: color-mix(in srgb, var(--ui-color-feedback-error, #be123c) 88%, #ffffff 12%);
+}
+
+.ui-nav-link__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+    text-align: left;
+}
+
+.ui-nav-link__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.ui-nav-link__description {
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--ui-color-text-tertiary, #64748b);
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 640px) {
+    .ui-nav-link {
+        align-items: center;
+        padding: 0.75rem 1rem;
+    }
+
+    .ui-nav-link__icon {
+        font-size: 1.125rem;
+        margin-top: 0;
+    }
+}
+
+@container (max-width: 420px) {
+    .ui-nav-link {
+        gap: 0.625rem;
+        padding: 0.5625rem 0.75rem;
+    }
+
+    .ui-nav-link__title {
+        font-size: 0.8125rem;
+    }
+}

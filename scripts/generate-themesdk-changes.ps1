@@ -21,17 +21,35 @@ function Resolve-PathRelative([string]$relative)
 $snapshotPath = Resolve-PathRelative $SnapshotOutput
 $changeReportPath = Resolve-PathRelative $ChangeReport
 $changeReportDirectory = Split-Path -Parent $changeReportPath
-$baselinePath = Resolve-PathRelative "scripts/baselines/ThemeSdkBaseline.json"
-$summaryPath = Resolve-PathRelative "scripts/ChangesSinceLastRelease.txt"
+$baselinePath = Resolve-PathRelative "artifacts/themesdk/baseline/ThemeSdkBaseline.json"
+$summaryPath = Resolve-PathRelative "artifacts/themesdk/changes/ChangesSinceLastRelease.txt"
+$baselineDirectory = Split-Path -Parent $baselinePath
+
+New-Item -ItemType Directory -Path $changeReportDirectory -Force | Out-Null
+New-Item -ItemType Directory -Path $baselineDirectory -Force | Out-Null
 
 Write-Host "Generating Theme SDK snapshot..."
 dotnet run --project (Resolve-PathRelative "tools/ThemeSdk.SnapshotTool/ThemeSdk.SnapshotTool.csproj") --configuration $Configuration -- --output $snapshotPath
 
 $format = if ($Json) { "json" } else { "text" }
+
+if (-not (Test-Path $baselinePath))
+{
+    if ($UpdateBaseline)
+    {
+        Write-Host "Baseline not found. Creating baseline from current snapshot..."
+        Copy-Item $snapshotPath $baselinePath -Force
+    }
+    else
+    {
+        throw "Theme SDK baseline was not found at '$baselinePath'. Run once with -UpdateBaseline to initialize it."
+    }
+}
+
 Write-Host "Diffing snapshot against baseline..."
 dotnet run --project (Resolve-PathRelative "tools/ThemeSdk.DiffTool/ThemeSdk.DiffTool.csproj") --configuration $Configuration -- --old $baselinePath --new $snapshotPath --output $changeReportPath --format $format
 
-if (-not $Json)
+if ($UpdateSummary -and -not $Json)
 {
     Write-Host "Appending summary at $summaryPath"
     $logContent = Get-Content $changeReportPath -Raw

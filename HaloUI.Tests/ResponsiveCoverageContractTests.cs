@@ -30,7 +30,7 @@ public sealed class ResponsiveCoverageContractTests
         ["HaloExpandablePanel"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloLabel"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloLayout"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloNavLink"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
+        ["HaloNavLink"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloNotice"] = new(ResponsiveCoverageKind.Adaptive),
         ["HaloPasswordField"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
         ["HaloRadioButton"] = new(ResponsiveCoverageKind.Adaptive),

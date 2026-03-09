@@ -23,13 +23,11 @@ Use these files during code review to check color values, button states, and sel
 
 ## CI Integration
 
-`.github/workflows/ci.yml` includes a `brand-preview` job that:
+`appveyor.yml` includes a brand-preview step that:
 1. Runs the CLI with Light/DarkGlass + default brands.
-2. Copies the gallery assets into the artifact and drops the aggregated `themes.json` next to them.
-3. Uploads `brand-previews` artifacts to the workflow.
-4. Adds a run summary + (for PRs) an auto-updated comment that links reviewers directly to the workflow run where the gallery artifact can be downloaded.
+2. Produces `artifacts/brand-previews` as a build artifact.
 
-Reviewers can download the artifact from the GitHub Actions run and either open the Markdown summaries or serve the gallery (`tools/BrandPreviewCli/gallery/`) locally to browse the data visually.
+Reviewers can download artifacts from the AppVeyor build and either open the Markdown summaries or serve the gallery (`tools/BrandPreviewCli/gallery/`) locally to browse the data visually.
 
 ## Gallery Prototype
 - Folder: `tools/BrandPreviewCli/gallery/`

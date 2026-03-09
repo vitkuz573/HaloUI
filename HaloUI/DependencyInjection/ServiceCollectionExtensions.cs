@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Services;
 using HaloUI.Theme.Sdk.Runtime;
@@ -50,6 +51,7 @@ public static class ServiceCollectionExtensions
             var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
             var httpContext = httpContextAccessor.HttpContext;
             var catalog = sp.GetRequiredService<IThemeCatalog>();
+            var jsRuntime = sp.GetService<IJSRuntime>();
 
             var defaultKey = catalog.DefaultThemeKey;
             var themeKey = defaultKey;
@@ -99,7 +101,7 @@ public static class ServiceCollectionExtensions
                 theme = new HaloTheme { Tokens = catalog.CreateThemeSystem(defaultKey) };
             }
 
-            return new ThemeState(catalog, themeKey, theme, hasExplicit);
+            return new ThemeState(catalog, themeKey, theme, hasExplicit, jsRuntime);
         });
 
         services.AddCascadingValue(sp => sp.GetRequiredService<ThemeState>().Context);

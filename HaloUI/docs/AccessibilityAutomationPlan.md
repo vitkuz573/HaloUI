@@ -30,7 +30,7 @@ Phase 3 requires automated coverage for accessibility regressions. This plan out
 ## Rollout Steps
 1. **Spike**: Create Playwright test harness pointing to sample page hosting Halo components (Week 1). _Status_: `HaloUI.DemoHost` Blazor server renders real Halo components; Playwright config spins it up automatically.
 2. **MVP Suite**: Cover Buttons, Inputs, Tabs with axe assertions + screenshots (Week 2–3). _In progress_ (buttons, text fields, select combobox, tabs, and sample dialog coverage implemented).
-3. **CI Job**: Add `accessibility-tests` workflow running Playwright headless on ubuntu-latest; upload axe reports (Week 3). _Status_: `.github/workflows/accessibility.yml` added.
+3. **CI Job**: Add an AppVeyor accessibility step running Playwright headless and uploading axe reports (Week 3). _Status_: pending CI lane wiring in `appveyor.yml`.
 4. **Expand Coverage**: Add dialogs, tables, snackbar; record manual SR expectations (Week 4+). _Snackbar live-region (`tests/accessibility/tests/snackbar.spec.ts`), dialog focus-trap + escape regressions (`tests/accessibility/tests/dialog.spec.ts`), and table semantics (`tests/accessibility/tests/table.spec.ts`) automated; tree/table virtualization scenarios remain._
 5. **Documentation**: Publish runbook in `docs/AccessibilityAutomationPlan.md` (this file) and link from `docs/ContributionGuide.md`.
 

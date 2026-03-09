@@ -143,6 +143,11 @@ public sealed class HaloTableState<TItem>
 
         if (existingIndex >= 0)
         {
+            if (AreEquivalent(_columns[existingIndex], column))
+            {
+                return;
+            }
+
             _columns[existingIndex] = column;
         }
         else
@@ -484,5 +489,18 @@ public sealed class HaloTableState<TItem>
         }
 
         StateChanged?.Invoke();
+    }
+
+    private static bool AreEquivalent(HaloTableColumnDefinition<TItem> current, HaloTableColumnDefinition<TItem> next)
+    {
+        return string.Equals(current.Id, next.Id, StringComparison.OrdinalIgnoreCase)
+               && string.Equals(current.Title, next.Title, StringComparison.Ordinal)
+               && string.Equals(current.HeaderClass, next.HeaderClass, StringComparison.Ordinal)
+               && string.Equals(current.CellClass, next.CellClass, StringComparison.Ordinal)
+               && current.Sortable == next.Sortable
+               && current.Filterable == next.Filterable
+               && string.Equals(current.FilterPlaceholder, next.FilterPlaceholder, StringComparison.Ordinal)
+               && current.Hidden == next.Hidden
+               && current.Priority == next.Priority;
     }
 }

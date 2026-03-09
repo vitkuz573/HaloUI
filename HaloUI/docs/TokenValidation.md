@@ -8,7 +8,7 @@ HaloUI ships automated checks to ensure `design-tokens.json` remains WCAG-compli
 - Investigate failures by inspecting console output or `.trx` logs under `HaloUI.Tests/TestResults/`.
 
 ## 2. CI Enforcement
-- `.github/workflows/ci.yml` includes a dedicated **Token Validation** job that runs on every push/PR.
+- `appveyor.yml` includes a dedicated **Token Validation** step that runs on every build.
 - The job executes the same filtered test suite and uploads `token_validation.trx` as an artifact for review.
 - CI is now blocked when validation errors occur; ensure tokens are updated or tests adjusted accordingly.
 - Failure triage:

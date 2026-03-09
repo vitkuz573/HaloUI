@@ -1,4 +1,4 @@
-<div class="@RootClass" style="@RootStyle" @attributes="AdditionalAttributes">
+<div class="@RootClass" @attributes="AdditionalAttributes">
     @if (BackgroundOverlay is not null)
     {
         <div class="ui-layout__background">
@@ -6,24 +6,23 @@
         </div>
     }
 
-    <div class="ui-layout__shell" style="@ShellStyle">
+    <div class="ui-layout__shell">
         @if (ShouldRenderOverlay)
         {
             <button type="button"
                     class="ui-layout__backdrop"
-                    style="@BackdropStyle"
                     aria-label="@OverlayCloseLabel"
                     @onclick="HandleOverlayCloseAsync"></button>
         }
 
         @if (Navigation is not null)
         {
-            <aside class="@NavigationContainerClass" style="@NavigationStyle" @attributes="NavigationAttributes">
+            <aside class="@NavigationContainerClass" @attributes="NavigationAttributes">
                 @Navigation
             </aside>
         }
 
-        <div class="@MainContainerClass" style="@MainStyle" @attributes="MainAttributes">
+        <div class="@MainContainerClass" @attributes="MainAttributes">
             @if (Header is not null)
             {
                 <header class="@HeaderContainerClass">
@@ -52,7 +51,7 @@
 
         @if (Notification is not null)
         {
-            <aside class="@NotificationContainerClass" style="@NotificationStyle" @attributes="NotificationAttributes">
+            <aside class="@NotificationContainerClass" @attributes="NotificationAttributes">
                 @Notification
             </aside>
         }

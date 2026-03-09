@@ -17,7 +17,7 @@ This document captures the design for multi-brand preview tooling referenced in 
    - Build a lightweight static site (Vite/React or Razor pages) that consumes CLI output and renders:
      - Token tables grouped by semantic/component category.
      - Component mock-ups (buttons, tabs, select, snackbar, etc.) referencing generated CSS variables.
-   - Deploy as part of Storybook or GitHub Pages artifact in CI.
+   - Publish as CI artifact for review.
 
 3. **CI Integration**
    - Add workflow job to run CLI on every token change.
@@ -27,8 +27,8 @@ This document captures the design for multi-brand preview tooling referenced in 
 - [x] CLI spec & prototype (tools/BrandPreviewCli) emitting per-theme JSON + Markdown summaries.
 - [x] Static gallery prototype with brand selector (`tools/BrandPreviewCli/gallery`).
 - [x] Documentation (`docs/BrandPreviewGuide.md`) describing usage and review process.
-- [x] CI job uploading previews for PR review (see `.github/workflows/ci.yml` job `brand-preview`).
-- [x] PR-visible hooks (job summary + sticky PR comment) pointing reviewers directly to the gallery artifact, now showcasing dialog interactions.
+- [x] CI job uploading previews for review (see `appveyor.yml`).
+- [ ] Automated PR commenting is intentionally not wired; reviewers consume AppVeyor artifacts directly.
 
 ## Dependencies & Risks
 - Requires alignment with Design Systems for acceptable preview format.

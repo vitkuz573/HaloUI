@@ -29,6 +29,8 @@ public partial class HaloTable<TItem>
     private object? _lastItemsProviderState;
     private TableItemsProvider<TItem>? _lastItemsProviderDelegate;
     private ITableDataProvider<TItem>? _lastDataProviderInstance;
+    private bool _refreshScheduled;
+    private bool _refreshInProgress;
 
     private HaloTheme CurrentTheme => ThemeContext?.Theme ?? DefaultTheme;
     private DesignTokenSystem TokenSystem => CurrentTheme.Tokens;
@@ -40,12 +42,12 @@ public partial class HaloTable<TItem>
         {
             builder.OpenElement(0, "button");
             builder.AddAttribute(1, "type", "button");
-            builder.AddAttribute(2, "class", "ui-table__clear-search inline-flex h-8 w-8 items-center justify-center rounded-md transition focus-visible:outline-none");
+            builder.AddAttribute(2, "class", "ui-table__clear-search");
             builder.AddAttribute(3, "onclick", EventCallback.Factory.Create(this, ClearSearch));
             builder.AddAttribute(4, "aria-label", "Clear search");
             builder.AddAttribute(5, "title", "Clear search");
             builder.OpenElement(6, "span");
-            builder.AddAttribute(7, "class", "material-icons text-base ui-table__toolbar-icon");
+            builder.AddAttribute(7, "class", "material-icons ui-table__toolbar-icon");
             builder.AddAttribute(8, "aria-hidden", "true");
             builder.AddContent(9, "close");
             builder.CloseElement();
@@ -110,8 +112,10 @@ public partial class HaloTable<TItem>
     [Parameter] public EventCallback<TablePaginationState> PaginationChanged { get; set; }
     [Parameter] public int OverscanCount { get; set; } = 3;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
+        await base.OnParametersSetAsync();
+
         var baseOptions = Options ?? TableOptions.Default;
         _options = baseOptions.Clone();
 
@@ -172,18 +176,7 @@ public partial class HaloTable<TItem>
             }
         }
 
-        _ = RefreshAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (firstRender)
-        {
-            await RefreshAsync();
-            StateHasChanged();
-        }
+        await QueueRefreshAsync();
     }
 
     internal void RegisterColumn(HaloTableColumnDefinition<TItem> column)
@@ -231,7 +224,7 @@ public partial class HaloTable<TItem>
 
     private string GetTableContainerClasses()
     {
-        var classes = new List<string> { "ui-table", "overflow-hidden" };
+        var classes = new List<string> { "ui-table" };
 
         if (IsDense)
         {
@@ -289,13 +282,13 @@ public partial class HaloTable<TItem>
             ["aria-controls"] = _filtersPanelId
         };
 
-    private static string GetSelectionHeaderCellClasses() => "text-left";
+    private static string GetSelectionHeaderCellClasses() => string.Empty;
 
-    private static string GetSelectionCellClasses() => "align-middle";
+    private static string GetSelectionCellClasses() => string.Empty;
 
     private static string GetHeaderCellClasses(HaloTableColumnDefinition<TItem> column)
     {
-        var classes = new List<string> { "text-left", "font-medium" };
+        var classes = new List<string> { "ui-table__column-head" };
         if (!string.IsNullOrWhiteSpace(column.HeaderClass))
         {
             classes.Add(column.HeaderClass);
@@ -306,7 +299,7 @@ public partial class HaloTable<TItem>
 
     private static string GetFilterCellClasses(HaloTableColumnDefinition<TItem> column)
     {
-        var classes = new List<string> { "align-top" };
+        var classes = new List<string> { "ui-table__column-filter" };
         if (!string.IsNullOrWhiteSpace(column.HeaderClass))
         {
             classes.Add(column.HeaderClass);
@@ -329,9 +322,7 @@ public partial class HaloTable<TItem>
     {
         var classes = new List<string>
         {
-            "ui-table__mobile-value",
-            "text-sm",
-            "break-words"
+            "ui-table__mobile-value"
         };
 
         if (!string.IsNullOrWhiteSpace(column.CellClass))
@@ -380,7 +371,7 @@ public partial class HaloTable<TItem>
 
     private string GetHeaderButtonClasses(string columnId)
     {
-        var classes = new List<string> { "ui-table__head-button", "group", "inline-flex", "items-center", "gap-2", "rounded-md", "px-1", "py-1", "text-left" };
+        var classes = new List<string> { "ui-table__head-button" };
         if (_state.GetSortDirection(columnId) is TableSortDirection.Ascending or TableSortDirection.Descending)
         {
             classes.Add("is-active");
@@ -578,6 +569,40 @@ public partial class HaloTable<TItem>
         }
     }
 
+    private Task QueueRefreshAsync()
+    {
+        if (!_stateInitialized)
+        {
+            return Task.CompletedTask;
+        }
+
+        _refreshScheduled = true;
+        if (_refreshInProgress)
+        {
+            return Task.CompletedTask;
+        }
+
+        return ProcessRefreshQueueAsync();
+    }
+
+    private async Task ProcessRefreshQueueAsync()
+    {
+        _refreshInProgress = true;
+
+        try
+        {
+            while (_refreshScheduled)
+            {
+                _refreshScheduled = false;
+                await RefreshAsync();
+            }
+        }
+        finally
+        {
+            _refreshInProgress = false;
+        }
+    }
+
     private async ValueTask<ItemsProviderResult<TItem>> ProvideItemsAsync(ItemsProviderRequest request)
     {
         if (!_stateInitialized)
@@ -613,17 +638,28 @@ public partial class HaloTable<TItem>
     private void HandleStateChanged()
     {
         _providerInitialized = false;
-        _ = RefreshAsync();
+        _ = InvokeAsync(HandleStateChangedAsync);
     }
 
-    private async void HandleSelectionChanged()
+    private async Task HandleStateChangedAsync()
+    {
+        await QueueRefreshAsync();
+        StateHasChanged();
+    }
+
+    private void HandleSelectionChanged()
+    {
+        _ = InvokeAsync(DispatchSelectionChangedAsync);
+    }
+
+    private async Task DispatchSelectionChangedAsync()
     {
         if (SelectionChanged.HasDelegate)
         {
             await SelectionChanged.InvokeAsync(new TableSelectionChangedEventArgs<TItem>(_state.SelectedItems.ToList()));
         }
 
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
     }
 
     private object GetRowKey(TItem item) => _state.GetRowKeyFor(item);

@@ -58,52 +58,20 @@ public sealed partial class HaloNavLink
 
     private string BuildCssClass()
     {
-        var classes = new List<string>
-        {
-            "flex",
-            "items-start",
-            "sm:items-center",
-            "gap-3",
-            "rounded-xl",
-            "border",
-            "border-transparent",
-            "w-full",
-            "min-w-0",
-            "px-3",
-            "sm:px-4",
-            "py-2.5",
-            "sm:py-3",
-            "text-left",
-            "transition-all",
-            "duration-150",
-            "focus-visible:outline-none",
-            "focus-visible:ring-2",
-            "focus-visible:ring-offset-2"
-        };
+        var classes = new List<string> { "ui-nav-link" };
 
         if (IsDanger)
         {
-            classes.Add("bg-rose-50/80");
-            classes.Add("text-rose-700");
-            classes.Add("hover:border-rose-200");
-            classes.Add("hover:bg-rose-100");
-            classes.Add("focus-visible:ring-rose-500");
-            classes.Add("focus-visible:ring-offset-rose-100");
+            classes.Add("ui-nav-link--danger");
         }
         else
         {
-            classes.Add("bg-white/70");
-            classes.Add("text-slate-700");
-            classes.Add("hover:border-indigo-100");
-            classes.Add("hover:bg-indigo-50");
-            classes.Add("focus-visible:ring-indigo-500");
-            classes.Add("focus-visible:ring-offset-indigo-100");
+            classes.Add("ui-nav-link--neutral");
         }
 
         if (Disabled)
         {
-            classes.Add("cursor-not-allowed");
-            classes.Add("opacity-60");
+            classes.Add("ui-nav-link--disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -119,19 +87,19 @@ public sealed partial class HaloNavLink
         if (!string.IsNullOrWhiteSpace(Icon))
         {
             builder.OpenElement(0, "span");
-            builder.AddAttribute(1, "class", $"material-icons text-base sm:text-lg shrink-0 {(IsDanger ? "text-rose-600" : "text-indigo-600")}");
+            builder.AddAttribute(1, "class", IsDanger ? "material-icons ui-nav-link__icon ui-nav-link__icon--danger" : "material-icons ui-nav-link__icon ui-nav-link__icon--neutral");
             builder.AddAttribute(2, "aria-hidden", "true");
             builder.AddContent(3, Icon);
             builder.CloseElement();
         }
 
         builder.OpenElement(10, "div");
-        builder.AddAttribute(11, "class", "flex min-w-0 flex-1 flex-col gap-0.5 text-left");
+        builder.AddAttribute(11, "class", "ui-nav-link__content");
 
         if (!string.IsNullOrWhiteSpace(Title))
         {
             builder.OpenElement(20, "div");
-            builder.AddAttribute(21, "class", "text-sm font-semibold leading-tight break-words");
+            builder.AddAttribute(21, "class", "ui-nav-link__title");
             builder.AddContent(22, Title);
             builder.CloseElement();
         }
@@ -139,7 +107,7 @@ public sealed partial class HaloNavLink
         if (!string.IsNullOrWhiteSpace(Description))
         {
             builder.OpenElement(30, "div");
-            builder.AddAttribute(31, "class", "text-xs text-slate-500 leading-snug break-words");
+            builder.AddAttribute(31, "class", "ui-nav-link__description");
             builder.AddContent(32, Description);
             builder.CloseElement();
         }

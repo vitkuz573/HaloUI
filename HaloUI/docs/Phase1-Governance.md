@@ -31,7 +31,7 @@ _Deliverables_:
 
 _Deliverables_:
 - `docs/ReleasePolicy.md` with rules and communication plan (drafted 2024-05-29).
-- Release notes template (e.g., `.github/RELEASE_TEMPLATE.md` or `docs/releases/ReleaseNotes-template.md`) (drafted).
+- Release notes template (`docs/releases/ReleaseNotes-template.md`) (drafted).
 
 ## 4. Review & Approval Flow
 - **Component proposals**: RFC template, review board, SLA for feedback.
@@ -41,7 +41,7 @@ _Deliverables_:
 
 _Deliverables_:
 - RFC template (`docs/rfc/template.md`) and process README (drafted).
-- Issue/PR templates updated to capture review checkpoints (`.github/ISSUE_TEMPLATE/uikit-work-item.md`, `.github/PULL_REQUEST_TEMPLATE.md`).
+- Work-item templates updated to capture review checkpoints (`docs/rfc/template.md`, `docs/releases/ReleaseNotes-template.md`).
 - Governance board roster with meeting cadence (`docs/GovernanceBoard.md`).
 
 ## 5. Contribution Guidelines
@@ -69,8 +69,8 @@ _Deliverables_:
 - **Documentation automation**: Storybook/Doc generation updates.
 
 - _Deliverables_:
-  - CI checklist integrated into repository; token validation + brand preview jobs added to `.github/workflows/ci.yml`.
-  - Accessibility smoke workflow (`.github/workflows/accessibility.yml`) scaffolding Playwright+axe tests.
+  - CI checklist integrated into repository; token validation + brand preview steps added to `appveyor.yml`.
+  - Accessibility smoke suite scaffolded in `HaloUI.Tests.E2E` (Playwright + axe coverage).
 - Ownership map for pipelines (who maintains what).
 
 ## 8. Change Management & Communication

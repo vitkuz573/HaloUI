@@ -1,0 +1,32 @@
+version: "{build}"
+
+image: Visual Studio 2022
+
+environment:
+  DOTNET_NOLOGO: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+install:
+  - ps: >-
+      $ProgressPreference = 'SilentlyContinue';
+      Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1;
+      .\dotnet-install.ps1 -Version 10.0.103 -InstallDir C:\dotnet;
+      Remove-Item .\dotnet-install.ps1 -Force
+  - set PATH=C:\dotnet;%PATH%
+
+build_script:
+  - dotnet --info
+  - dotnet restore HaloUI.slnx
+  - dotnet build HaloUI.slnx -c Release --no-restore
+
+test_script:
+  - dotnet test HaloUI.slnx -c Release --no-build
+  - dotnet test HaloUI.Tests/HaloUI.Tests.csproj -c Release --no-build --filter FullyQualifiedName~TokenValidationTests --logger "trx;LogFileName=token_validation.trx"
+  - dotnet run --project tools/BrandPreviewCli/BrandPreviewCli.csproj --configuration Release -- --manifest HaloUI/Theme/Tokens/design-tokens.json --themes Light,DarkGlass --brands HaloUI --output artifacts/brand-previews
+
+artifacts:
+  - path: artifacts/brand-previews
+    name: brand-previews
+  - path: HaloUI.Tests/TestResults/**/token_validation.trx
+    name: token-validation-report

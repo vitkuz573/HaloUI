@@ -3,7 +3,6 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Microsoft.AspNetCore.Components;
-using HaloUI.Theme.Tokens.Semantic;
 
 namespace HaloUI.Components;
 
@@ -93,84 +92,11 @@ public partial class HaloLayout
     [Parameter]
     public bool DisableContentPadding { get; set; }
 
-    private SemanticColorTokens ColorTokens => ThemeContext?.Theme.Tokens.Semantic.Color ?? new SemanticColorTokens();
-
-    private string RootClass => JoinClasses("ui-layout", Navigation is not null ? "ui-layout--has-navigation" : null, Class);
-
-    private string RootStyle => CombineStyles(
-        "position:relative",
-        "display:flex",
-        "flex-direction:column",
-        "width:100%",
-        "min-height:0",
-        "flex:1 1 auto",
-        "overflow:hidden",
-        $"background:{ColorTokens.BackgroundPrimary}",
-        $"color:{ColorTokens.TextPrimary}");
-
-    private static string ShellStyle => CombineStyles(
-        "position:relative",
-        "display:flex",
-        "flex-direction:row",
-        "align-items:stretch",
-        "width:100%",
-        "min-height:0",
-        "flex:1 1 auto",
-        "overflow:hidden",
-        "z-index:1");
-
-    private string NavigationStyle => CombineStyles(
-        "position:fixed",
-        "top:0",
-        "bottom:0",
-        "left:0",
-        "display:flex",
-        "flex-direction:column",
-        "width:min(var(--ui-responsive-container-sm, 20rem), calc(100vw - 1rem))",
-        "max-width:100%",
-        "height:100%",
-        "transition:transform 0.25s ease, opacity 0.25s ease",
-        NavigationExpanded ? "transform:translateX(0)" : "transform:translateX(-105%)",
-        NavigationExpanded ? "opacity:1" : "opacity:0",
-        NavigationExpanded ? "pointer-events:auto" : "pointer-events:none",
-        "z-index:1001");
-    
-    private string NotificationStyle => CombineStyles(
-        "position:fixed",
-        "top:0",
-        "bottom:0",
-        "right:0",
-        "display:flex",
-        "flex-direction:column",
-        "width:min(var(--ui-responsive-container-md, 24rem), calc(100vw - 1rem))",
-        "max-width:100%",
-        "height:100%",
-        "transition:transform 0.25s ease, opacity 0.25s ease",
-        NotificationExpanded ? "transform:translateX(0)" : "transform:translateX(105%)",
-        NotificationExpanded ? "opacity:1" : "opacity:0",
-        NotificationExpanded ? "pointer-events:auto" : "pointer-events:none",
-        "z-index:1002");
-
-    private static string BackdropStyle => CombineStyles(
-        "position:fixed",
-        "inset:0",
-        "border:none",
-        "padding:0",
-        "background-color:rgba(15, 23, 42, 0.5)",
-        "z-index:1000",
-        "pointer-events:auto",
-        "backdrop-filter:blur(12px)",
-        "-webkit-backdrop-filter:blur(12px)");
-
-    private static string MainStyle => CombineStyles(
-        "position:relative",
-        "display:flex",
-        "flex-direction:column",
-        "flex:1 1 auto",
-        "min-height:100%",
-        "width:100%",
-        "overflow:hidden",
-        "z-index:10");
+    private string RootClass => JoinClasses(
+        "ui-layout",
+        Navigation is not null ? "ui-layout--has-navigation" : null,
+        Notification is not null ? "ui-layout--has-notification" : null,
+        Class);
 
     private string NavigationContainerClass => JoinClasses("ui-layout__navigation", NavigationExpanded ? "ui-layout__navigation--expanded" : "ui-layout__navigation--collapsed", NavigationClass);
 
@@ -209,10 +135,5 @@ public partial class HaloLayout
     private static string JoinClasses(params string?[] classes)
     {
         return string.Join(' ', classes.Where(static c => !string.IsNullOrWhiteSpace(c)));
-    }
-
-    private static string CombineStyles(params string?[] styles)
-    {
-        return string.Join(';', styles.Where(static s => !string.IsNullOrWhiteSpace(s)));
     }
 }

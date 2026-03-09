@@ -21,6 +21,8 @@ public sealed class HaloNavLinkTests : BunitContext
 
         var anchor = cut.Find("a");
         Assert.Equal("/settings", anchor.GetAttribute("href"));
+        Assert.Contains("ui-nav-link", anchor.ClassList);
+        Assert.Contains("ui-nav-link--neutral", anchor.ClassList);
     }
 
     [Fact]
@@ -31,5 +33,21 @@ public sealed class HaloNavLinkTests : BunitContext
             .Add(p => p.Href, "/settings")));
 
         Assert.Contains("aria-label", ex.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void DangerDisabledButton_RendersExpectedSemanticClasses()
+    {
+        var cut = Render<HaloNavLink>(parameters => parameters
+            .Add(p => p.Title, "Delete profile")
+            .Add(p => p.IsDanger, true)
+            .Add(p => p.Disabled, true));
+
+        var button = cut.Find("button");
+
+        Assert.Contains("ui-nav-link", button.ClassList);
+        Assert.Contains("ui-nav-link--danger", button.ClassList);
+        Assert.Contains("ui-nav-link--disabled", button.ClassList);
+        Assert.True(button.HasAttribute("disabled"));
     }
 }

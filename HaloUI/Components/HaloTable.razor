@@ -25,8 +25,8 @@
         var canToggleFilters = _options.ShowColumnFilters && hasFilterableColumns;
 
         <div class="@GetHeaderContainerClasses()">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <div class="flex min-w-0 w-full items-center gap-2 sm:flex-1">
+            <div class="ui-table__header-layout">
+                <div class="ui-table__header-title-group">
                     @if (IsCollapsible)
                     {
                         <button type="button"
@@ -34,12 +34,12 @@
                                 @onclick="ToggleExpanded"
                                 @attributes="GetToggleButtonAttributes()">
                             <span class="material-icons ui-table__toggle-icon" aria-hidden="true">chevron_right</span>
-                            <span class="ui-table__title text-base font-semibold whitespace-nowrap">@Title</span>
+                            <span class="ui-table__title">@Title</span>
                         </button>
                     }
                     else if (!string.IsNullOrWhiteSpace(Title))
                     {
-                        <div class="ui-table__title text-base font-semibold whitespace-nowrap">@Title</div>
+                        <div class="ui-table__title">@Title</div>
                     }
                 </div>
                 @if ((!IsCollapsible || _isExpanded) && _options.ShowToolbar && _state is not null)
@@ -49,10 +49,10 @@
                         _filtersExpanded = false;
                     }
 
-                    <div class="ui-table__toolbar flex w-full items-center gap-2 sm:ml-auto sm:w-auto sm:justify-end">
+                    <div class="ui-table__toolbar">
                     @if (IsSearchEnabled)
                     {
-                        <div class="min-w-0 flex-1 sm:w-64 sm:flex-none">
+                        <div class="ui-table__search-shell">
                             <HaloTextField @bind-value="SearchText"
                                          Placeholder="Search"
                                          Type="TextFieldType.Search"
@@ -63,14 +63,14 @@
                                          AriaLabel="@GetSearchAriaLabel()"
                                          EndAdornment="@ClearSearchAdornment">
                                 <StartAdornment>
-                                    <span class="material-icons text-lg ui-table__toolbar-icon" aria-hidden="true">search</span>
+                                    <span class="material-icons ui-table__toolbar-icon" aria-hidden="true">search</span>
                                 </StartAdornment>
                             </HaloTextField>
                         </div>
                     }
                     @if (Actions is not null)
                     {
-                        <div class="flex shrink-0 items-center gap-2">
+                        <div class="ui-table__actions">
                             @Actions
                         </div>
                     }
@@ -86,7 +86,7 @@
                             <span>@(_filtersExpanded ? "Hide filters" : "Filters")</span>
                             @if (activeFilters.Count > 0)
                             {
-                                <span class="ui-table__filter-badge inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1 font-semibold text-[11px]">@activeFilters.Count</span>
+                                <span class="ui-table__filter-badge">@activeFilters.Count</span>
                             }
                         </HaloButton>
                     }
@@ -98,21 +98,21 @@
         if (_filtersExpanded && canToggleFilters && activeFilters.Count > 0)
         {
             <div class="ui-table__filter-panel">
-                <div id="@_filtersPanelId" class="ui-table__filter-panel-content px-4 py-3">
-                    <div class="flex flex-col gap-3">
-                        <div class="ui-table__filter-panel-header flex flex-wrap items-center gap-2 text-sm font-semibold">
-                            <span class="material-icons text-[18px] ui-table__filter-panel-icon" aria-hidden="true">tune</span>
+                <div id="@_filtersPanelId" class="ui-table__filter-panel-content">
+                    <div class="ui-table__filter-panel-stack">
+                        <div class="ui-table__filter-panel-header">
+                            <span class="material-icons ui-table__filter-panel-icon" aria-hidden="true">tune</span>
                             <span>Active filters</span>
                             <HaloButton Variant="ButtonVariant.Secondary"
                                       Size="ButtonSize.ExtraSmall"
                                       Icon="layers_clear"
-                                      Class="ml-auto flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition"
+                                      Class="ui-table__filter-clear-all"
                                       Activated="@ClearAllFiltersAsync"
                                       AriaLabel="Clear all filters">
                                 <span>Clear all</span>
                             </HaloButton>
                         </div>
-                        <div class="flex flex-wrap items-center gap-2">
+                        <div class="ui-table__filter-chip-list">
                             @foreach (var (column, raw) in activeFilters.OrderBy(tuple => tuple.Column.Title))
                             {
                                 var label = column.FormatFilterValue(raw);
@@ -121,9 +121,9 @@
                                     label = raw;
                                 }
 
-                                <div class="ui-table__filter-chip inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs shadow-sm">
-                                    <span class="ui-table__filter-chip-label font-semibold">@column.Title:</span>
-                                    <span class="ui-table__filter-chip-value font-medium">@label</span>
+                                <div class="ui-table__filter-chip">
+                                    <span class="ui-table__filter-chip-label">@column.Title:</span>
+                                    <span class="ui-table__filter-chip-value">@label</span>
                                     <HaloButton Variant="ButtonVariant.Secondary"
                                               Size="ButtonSize.ExtraSmall"
                                               Icon="close"
@@ -198,19 +198,19 @@
                                         {
                                             var filterContext = CreateFilterContext(column);
 
-                                            <div class="flex min-w-[7rem] flex-col">
+                                            <div class="ui-table__filter-input-shell">
                                                 @if (column.FilterTemplate is not null)
                                                 {
                                                     @column.FilterTemplate(filterContext)
                                                 }
                                                 else
                                                 {
-                                                    <div class="relative">
-                                                        <span class="material-icons pointer-events-none absolute top-1/2 left-2 -translate-y-1/2 text-[16px] ui-table__filter-input-icon"
+                                                    <div class="ui-table__filter-input-wrapper">
+                                                        <span class="material-icons ui-table__filter-input-icon"
                                                               aria-hidden="true">filter_list</span>
                                                         <input type="text"
                                                                value="@filterContext.Value"
-                                                               class="ui-table__filter-input w-full rounded-md pl-8 text-sm shadow-sm focus-visible:outline-none"
+                                                               class="ui-table__filter-input"
                                                                aria-label="@GetFilterInputAriaLabel(column)"
                                                                @oninput="args => filterContext.Update(args.Value?.ToString())"
                                                                placeholder="@(column.FilterPlaceholder ?? "Filter")" />
@@ -282,7 +282,7 @@
                             @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
                             {
                                 <tr>
-                                    <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell text-center">@EmptyMessage</td>
+                                    <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell">@EmptyMessage</td>
                                 </tr>
                             }
                         }
@@ -326,7 +326,7 @@
                         else if (!isLoading)
                         {
                             <tr>
-                                <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell text-center">@EmptyMessage</td>
+                                <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell">@EmptyMessage</td>
                             </tr>
                         }
                     </tbody>
@@ -337,8 +337,8 @@
                 {
                     @for (var r = 0; r < SkeletonRowCount; r++)
                     {
-                        <div class="ui-table__mobile-skeleton rounded-lg p-4 shadow-sm">
-                            <div class="space-y-2">
+                        <div class="ui-table__mobile-skeleton">
+                            <div class="ui-table__mobile-skeleton-stack">
                                 <HaloSkeleton />
                                 <HaloSkeleton Width="70%" />
                                 <HaloSkeleton Width="45%" />
@@ -355,7 +355,7 @@
                                 OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
-                                <div class="flex flex-col gap-3">
+                                <div class="ui-table__mobile-card-content">
                                     @foreach (var column in GetMobileColumns(visibleColumns))
                                     {
                                         <div class="ui-table__mobile-row">
@@ -366,7 +366,7 @@
                                 </div>
                                 @if (_options.SelectionMode != TableSelectionMode.None)
                                 {
-                                    <div class="ui-table__mobile-selection-footer mt-3 pt-3">
+                                    <div class="ui-table__mobile-selection-footer">
                                         <HaloButton Variant="ButtonVariant.Secondary"
                                                   Activated="() => OnRowSelectionToggled(item)">
                                             @if (state.IsSelected(item))
@@ -386,7 +386,7 @@
 
                     @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
                     {
-                        <div class="ui-table__mobile-empty rounded-xl px-4 py-6 text-center text-sm">@EmptyMessage</div>
+                        <div class="ui-table__mobile-empty">@EmptyMessage</div>
                     }
                 }
                 else if (hasItems)
@@ -397,7 +397,7 @@
                                 OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
-                                <div class="flex flex-col gap-3">
+                                <div class="ui-table__mobile-card-content">
                                     @foreach (var column in GetMobileColumns(visibleColumns))
                                     {
                                         <div class="ui-table__mobile-row">
@@ -408,7 +408,7 @@
                                 </div>
                                 @if (_options.SelectionMode != TableSelectionMode.None)
                                 {
-                                    <div class="ui-table__mobile-selection-footer mt-3 pt-3">
+                                    <div class="ui-table__mobile-selection-footer">
                                         <HaloButton Variant="ButtonVariant.Secondary"
                                                   Activated="() => OnRowSelectionToggled(item)">
                                             @if (state.IsSelected(item))
@@ -428,7 +428,7 @@
                 }
                 else if (!isLoading)
                 {
-                    <div class="ui-table__mobile-empty rounded-xl px-4 py-6 text-center text-sm">@EmptyMessage</div>
+                    <div class="ui-table__mobile-empty">@EmptyMessage</div>
                 }
             </div>
 

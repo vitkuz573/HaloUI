@@ -20,7 +20,7 @@ Defines how we measure the health of the Halo product and report progress to sta
   - Time to resolve token regression alarms.
 
 ## 2. Data Sources
-- GitHub Actions workflows (build/test results, duration).
+- AppVeyor builds (build/test results, duration).
 - Test coverage reports (`dotnet test`, Playwright).
 - Accessibility automation logs (axe/pa11y) + manual audit notes.
 - Telemetry from reference apps (usage/error dashboards).

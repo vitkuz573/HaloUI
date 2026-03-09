@@ -29,6 +29,25 @@ public sealed class HaloTableRenderingTests : BunitContext
         });
     }
 
+    [Fact]
+    public void RendersSemanticClassContract_WithoutUtilityClassTokens()
+    {
+        var rows = new[] { new TestRow("Edge 01") };
+
+        var cut = Render<HaloTable<TestRow>>(parameters => parameters
+            .Add(p => p.Items, rows)
+            .Add(p => p.IsSearchEnabled, true)
+            .Add(p => p.Title, "Devices")
+            .Add(p => p.Columns, BuildColumns()));
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.Contains("ui-table__header-layout", cut.Markup, StringComparison.Ordinal);
+            Assert.Contains("ui-table__search-shell", cut.Markup, StringComparison.Ordinal);
+            Assert.DoesNotContain("sm:", cut.Markup, StringComparison.Ordinal);
+        });
+    }
+
     private static RenderFragment BuildColumns()
     {
         return builder =>

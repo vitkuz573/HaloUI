@@ -2,8 +2,10 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Reflection;
 using HaloUI.ThemeSdk.Internal;
 using HaloUI.Theme.Tokens.Component;
@@ -12,6 +14,8 @@ namespace HaloUI.Theme.Tokens.Generation;
 
 internal static class CssVariableGenerator
 {
+    private static readonly ConcurrentDictionary<Type, IReadOnlyList<PropertyAccessor>> PropertyAccessorCache = new();
+
     public static IReadOnlyDictionary<string, string> Generate(
         DesignTokenSystem system,
         IReadOnlyDictionary<string, string>? overrides = null,
@@ -133,19 +137,17 @@ internal static class CssVariableGenerator
 
     private static void AppendObject(CssVariableSet set, string prefix, object obj)
     {
-        var properties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        
-        foreach (var property in properties)
+        foreach (var accessor in GetPropertyAccessors(obj.GetType()))
         {
-            var value = property.GetValue(obj);
-            
+            var value = accessor.Getter(obj);
+
             if (value is null)
             {
                 continue;
             }
 
-            var key = $"{prefix}-{CssVariableNaming.ToKebabCase(property.Name)}";
-            
+            var key = $"{prefix}-{accessor.VariableName}";
+
             switch (value)
             {
                 case string strValue:
@@ -170,6 +172,29 @@ internal static class CssVariableGenerator
         }
     }
 
+    private static IReadOnlyList<PropertyAccessor> GetPropertyAccessors(Type targetType)
+    {
+        return PropertyAccessorCache.GetOrAdd(targetType, static type =>
+        {
+            return type
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(static property => property.CanRead && property.GetIndexParameters().Length == 0)
+                .Select(CreatePropertyAccessor)
+                .ToArray();
+        });
+    }
+
+    private static PropertyAccessor CreatePropertyAccessor(PropertyInfo property)
+    {
+        var instanceParameter = Expression.Parameter(typeof(object), "instance");
+        var typedInstance = Expression.Convert(instanceParameter, property.DeclaringType!);
+        var propertyAccess = Expression.Property(typedInstance, property);
+        var boxedValue = Expression.Convert(propertyAccess, typeof(object));
+        var getter = Expression.Lambda<Func<object, object?>>(boxedValue, instanceParameter).Compile();
+
+        return new PropertyAccessor(CssVariableNaming.ToKebabCase(property.Name), getter);
+    }
+
     private static string NormalizeVariableName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -179,4 +204,6 @@ internal static class CssVariableGenerator
 
         return name.StartsWith("--", StringComparison.Ordinal) ? name : $"--{name}";
     }
+
+    private sealed record PropertyAccessor(string VariableName, Func<object, object?> Getter);
 }

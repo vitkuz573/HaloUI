@@ -31,9 +31,9 @@ Implement an automated accessibility regression suite leveraging Playwright and 
 4. Capture screenshot + Playwright trace for debugging.
 
 ### CI Workflow
-- Add `.github/workflows/accessibility.yml` with steps:
+- Add an AppVeyor accessibility step with:
   - Checkout repo, install Node dependencies for test app.
-  - Build sample host + run Playwright tests headless on ubuntu-latest.
+  - Build sample host + run Playwright tests headless.
   - Upload axe reports + traces as artifacts.
 - Job required on PRs touching Halo (enforced later via path filters).
 

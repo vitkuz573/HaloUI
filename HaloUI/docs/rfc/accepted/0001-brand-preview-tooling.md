@@ -34,10 +34,10 @@ Introduce a reproducible tooling stack that generates per-brand/theme previews (
      - Contrast callouts (pass/fail badges).
 
 3. **CI Integration**
-   - New workflow job `brand-preview`:
+   - New CI `brand-preview` step:
      1. Run CLI for all supported brands.
      2. Build static gallery.
-     3. Upload artifact for PR review (long term: publish to Pages/Storybook env).
+     3. Upload artifact for review (long term: publish to a static preview environment).
 
 ### Validation Strategy
 - Reuse `TokenValidator` outputs to annotate previews (e.g., highlight borderline contrast).
@@ -69,7 +69,7 @@ Introduce a reproducible tooling stack that generates per-brand/theme previews (
 
 ## 8. Open Questions
 - Should previews include motion tokens/animations?
-- Where to host artifacts long-term (internal portal vs. GitHub Pages)?
+- Where to host artifacts long-term (internal portal vs. static preview host)?
 - Do we need snapshot diff tooling before GA?
 
 ## 9. Appendix
