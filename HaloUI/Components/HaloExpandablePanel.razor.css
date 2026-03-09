@@ -124,7 +124,7 @@
         transition:inherit;
     }
 
-    .halo-expandable-panel__prefix-icon {
+    .halo-expandable-panel ::deep .halo-expandable-panel__prefix-icon {
         font-size:1.25rem;
         line-height:1;
     }
@@ -178,7 +178,7 @@
         gap:var(--halo-expandable-panel-header-actions-gap);
     }
 
-    .halo-expandable-panel__indicator {
+    .halo-expandable-panel ::deep .halo-expandable-panel__indicator {
         flex-shrink:0;
         display:inline-flex;
         align-items:center;
@@ -188,11 +188,11 @@
         transition:var(--halo-expandable-panel-indicator-transition);
     }
 
-    .halo-expandable-panel__indicator.is-expanded {
+    .halo-expandable-panel ::deep .halo-expandable-panel__indicator.is-expanded {
         transform:rotate(180deg);
     }
 
-    .halo-expandable-panel__header-button:hover .halo-expandable-panel__indicator {
+    .halo-expandable-panel__header-button:hover ::deep .halo-expandable-panel__indicator {
         color:var(--halo-expandable-panel-indicator-hover-color);
     }
 

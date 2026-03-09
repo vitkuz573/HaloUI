@@ -65,7 +65,7 @@
         padding:0;
     }
 
-.halo-button__icon {
+.halo-button ::deep .halo-button__icon {
         display:inline-flex;
         align-items:center;
         justify-content:center;
@@ -73,15 +73,15 @@
         color:var(--halo-button-text-color);
     }
 
-.halo-button.is-disabled .halo-button__icon {
+.halo-button.is-disabled ::deep .halo-button__icon {
         color:var(--halo-button-text-disabled);
     }
 
-.halo-button:disabled .halo-button__icon {
+.halo-button:disabled ::deep .halo-button__icon {
         color:var(--halo-button-text-disabled);
     }
 
-    .halo-button__icon--spinner {
+    .halo-button ::deep .halo-button__icon--spinner {
         animation:halo-button-spin 1s linear infinite;
     }
 

@@ -51,7 +51,7 @@
     outline-offset: 2px;
 }
 
-.halo-dialog__drawer-handle .halo-icon {
+.halo-dialog__drawer-handle ::deep .halo-icon {
     font-size: 1.1rem;
 }
 
@@ -79,7 +79,7 @@
     z-index: 3;
 }
 
-.halo-dialog__busy-icon {
+.halo-dialog__busy-overlay ::deep .halo-dialog__busy-icon {
     font-size: 2rem;
     animation: halo-dialog-spin 1s linear infinite;
 }

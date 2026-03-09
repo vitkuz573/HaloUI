@@ -163,7 +163,7 @@
         color:var(--halo-input-error-text);
     }
 
-    .halo-select__chevron {
+    .halo-select ::deep .halo-select__chevron {
         pointer-events:none;
         display:flex;
         align-items:center;
@@ -173,11 +173,11 @@
         transition:var(--halo-select-trigger-transition);
     }
 
-    .halo-select--open .halo-select__chevron {
+    .halo-select--open ::deep .halo-select__chevron {
         transform:rotate(180deg);
     }
 
-    .halo-select--disabled .halo-select__chevron {
+    .halo-select--disabled ::deep .halo-select__chevron {
         color:var(--halo-select-trigger-disabled-text);
     }
 

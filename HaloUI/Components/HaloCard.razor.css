@@ -99,13 +99,13 @@
     overflow-wrap: anywhere;
 }
 
-.halo-card__icon {
+.halo-card ::deep .halo-card__icon {
     font-size: var(--halo-card-header-icon-size);
     color: var(--halo-card-icon-color-instance);
     transition: var(--halo-card-transition);
 }
 
-.halo-card:hover .halo-card__icon {
+.halo-card:hover ::deep .halo-card__icon {
     color: var(--halo-card-icon-hover-color-instance);
 }
 
@@ -148,7 +148,7 @@
         gap: 0.25rem;
     }
 
-    .halo-card__icon {
+    .halo-card ::deep .halo-card__icon {
         align-self: flex-end;
     }
 
@@ -171,7 +171,7 @@
         align-items: flex-start;
     }
 
-    .halo-card__icon {
+    .halo-card ::deep .halo-card__icon {
         align-self: flex-start;
     }
 }

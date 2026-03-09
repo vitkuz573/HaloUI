@@ -17,7 +17,7 @@
         white-space: nowrap;
     }
 
-    .halo-badge__icon {
+    .halo-badge ::deep .halo-badge__icon {
         font-size: var(--halo-badge-icon-size);
         line-height: 1;
     }

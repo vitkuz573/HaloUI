@@ -155,15 +155,15 @@
     color: var(--halo-radio-segmented-badge-text-selected);
 }
 
-.halo-radio-button__indicator,
-.halo-radio-button__icon {
+.halo-radio-button ::deep .halo-radio-button__indicator,
+.halo-radio-button ::deep .halo-radio-button__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
 }
 
-.halo-radio-button__indicator {
+.halo-radio-button ::deep .halo-radio-button__indicator {
     font-size: var(--halo-radio-indicator-size, 1.1rem);
     color: var(--halo-radio-indicator-color);
     flex-shrink: 0;
@@ -171,12 +171,12 @@
     height: var(--halo-radio-indicator-size, 1.1rem);
 }
 
-.halo-radio-button__icon {
+.halo-radio-button ::deep .halo-radio-button__icon {
     font-size: var(--halo-radio-icon-size-standard, 1rem);
     color: var(--halo-radio-icon-color);
 }
 
-.halo-radio-button--segmented .halo-radio-button__icon {
+.halo-radio-button--segmented ::deep .halo-radio-button__icon {
     font-size: var(--halo-radio-icon-size-segmented, 1.1rem);
 }
 

@@ -101,22 +101,22 @@
     text-overflow: ellipsis;
 }
 
-.halo-split-button__icon {
+.halo-split-button__segment ::deep .halo-split-button__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: var(--halo-split-button-computed-icon-size, var(--halo-split-button-icon-size));
 }
 
-.halo-split-button__icon--toggle {
+.halo-split-button__segment ::deep .halo-split-button__icon--toggle {
     transition: transform 150ms ease;
 }
 
-.halo-split-button__segment--expanded .halo-split-button__icon--toggle {
+.halo-split-button__segment--expanded ::deep .halo-split-button__icon--toggle {
     transform: rotate(180deg);
 }
 
-.halo-split-button__icon--spinner {
+.halo-split-button__segment ::deep .halo-split-button__icon--spinner {
     animation: halo-split-button-spin 1s linear infinite;
 }
 

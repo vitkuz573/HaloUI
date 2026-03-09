@@ -47,7 +47,7 @@
         color:var(--halo-text-accent-color);
     }
 
-    .halo-text__icon {
+    .halo-text ::deep .halo-text__icon {
         display:inline-flex;
         align-items:center;
         justify-content:center;

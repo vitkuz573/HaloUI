@@ -72,7 +72,7 @@
         color:inherit;
     }
 
-    .halo-label__icon {
+    .halo-label ::deep .halo-label__icon {
         display:inline-flex;
         align-items:center;
         justify-content:center;

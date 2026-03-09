@@ -76,7 +76,7 @@
     flex-shrink: 0;
 }
 
-.halo-table__toolbar-icon {
+.halo-table ::deep .halo-table__toolbar-icon {
     color: var(--halo-table-toolbar-icon-color);
     font-size: 1.125rem;
 }
@@ -148,7 +148,7 @@
     margin-left: auto;
 }
 
-.halo-table__filter-panel-icon {
+.halo-table ::deep .halo-table__filter-panel-icon {
     color: var(--halo-table-filter-panel-icon-color);
     font-size: 1.125rem;
 }
@@ -275,7 +275,7 @@
     color: var(--halo-table-filter-input-placeholder);
 }
 
-.halo-table__filter-input-icon {
+.halo-table ::deep .halo-table__filter-input-icon {
     position: absolute;
     top: 50%;
     left: 0.5rem;
@@ -340,7 +340,7 @@
     transition: color 160ms ease, background-color 160ms ease;
 }
 
-.halo-table__head-button .halo-button__icon {
+.halo-table__head-button ::deep .halo-button__icon {
     order: 2;
     margin-left: var(--halo-button-gap);
     margin-right: 0;
@@ -356,7 +356,7 @@
     color: var(--halo-table-filter-button-text);
 }
 
-.halo-table__head-button.is-active .halo-button__icon {
+.halo-table__head-button.is-active ::deep .halo-button__icon {
     color: var(--halo-table-filter-button-text);
 }
 
@@ -389,12 +389,12 @@
     outline-offset: 2px;
 }
 
-.halo-table__toggle-icon {
+.halo-table__toggle ::deep .halo-table__toggle-icon {
     transition: transform 160ms ease, color 160ms ease;
     color: var(--halo-table-tertiary-text-color);
 }
 
-.halo-table__toggle--expanded .halo-table__toggle-icon {
+.halo-table__toggle--expanded ::deep .halo-table__toggle-icon {
     transform: rotate(90deg);
 }
 
