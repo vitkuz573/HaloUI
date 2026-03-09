@@ -58,7 +58,7 @@ public class HaloTextTests : BunitContext
     public void PrefixAndSuffixContent_RenderExpectedMarkup()
     {
         var cut = Render<HaloText>(builder => builder
-            .Add(p => p.StartIcon, HaloMaterialIcons.Check)
+            .Add(p => p.StartIcon, Material.Outlined.Check)
             .Add(p => p.SuffixContent, contentBuilder => contentBuilder.AddContent(0, "suffix"))
             .Add(p => p.Text, "Content"));
 

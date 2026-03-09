@@ -36,7 +36,7 @@ public class HaloButtonTests : BunitContext
     {
         var cut = Render<HaloButton>(parameters => parameters
             .Add(p => p.IconOnly, true)
-            .Add(p => p.Icon, HaloMaterialIcons.Add)
+            .Add(p => p.Icon, Material.Outlined.Add)
             .Add(p => p.AriaLabel, "Add device"));
 
         var button = cut.Find("button");

@@ -30,7 +30,7 @@ public static class HaloMaterialIconPack
     /// <summary>
     /// Gets a parsed Material icon pack manifest for the selected style.
     /// </summary>
-    public static HaloIconPackManifest GetManifest(HaloMaterialIconStyle style = HaloMaterialIconStyle.Regular)
+    public static HaloIconPackManifest GetManifest(HaloMaterialIconStyle style = HaloMaterialIconStyle.Outlined)
     {
         if (!CachedManifests.Value.TryGetValue(style, out var manifest))
         {
@@ -43,7 +43,7 @@ public static class HaloMaterialIconPack
     /// <summary>
     /// Creates a manifest-backed icon resolver for the selected style.
     /// </summary>
-    public static IHaloIconResolver CreateResolver(HaloMaterialIconStyle style = HaloMaterialIconStyle.Regular, IHaloIconResolver? fallback = null)
+    public static IHaloIconResolver CreateResolver(HaloMaterialIconStyle style = HaloMaterialIconStyle.Outlined, IHaloIconResolver? fallback = null)
     {
         var manifest = GetManifest(style);
         var effectiveFallback = fallback ?? new PassthroughHaloIconResolver(GetProviderClass(style));
@@ -62,7 +62,7 @@ public static class HaloMaterialIconPack
             HaloMaterialIconStyle.Round => "material-icons-round",
             HaloMaterialIconStyle.Sharp => "material-icons-sharp",
             HaloMaterialIconStyle.TwoTone => "material-icons-two-tone",
-            _ => "material-icons"
+            _ => "material-icons-outlined"
         };
     }
 

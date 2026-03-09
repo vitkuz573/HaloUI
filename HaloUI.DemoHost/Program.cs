@@ -11,7 +11,7 @@ using HaloUI.Iconography.Packs.Material;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHaloUICore();
-builder.Services.AddHaloUIMaterialIconPack(HaloMaterialIconStyle.Regular);
+builder.Services.AddHaloUIMaterialIconPack(HaloMaterialIconStyle.Outlined);
 
 builder.Services.AddHaloUIHttpThemePreferenceStore();
 builder.Services.AddHaloUIDiagnostics(builder.Configuration);

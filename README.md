@@ -53,7 +53,7 @@ services.AddHaloUIPassthroughLigatureIcons("my-icon-font-class");
 
 ```csharp
 // Embedded Material pack resolver:
-services.AddHaloUIMaterialIconPack(HaloMaterialIconStyle.Regular);
+services.AddHaloUIMaterialIconPack(HaloMaterialIconStyle.Outlined);
 ```
 
 Generate full Material icon manifests (all official `.codepoints` styles):

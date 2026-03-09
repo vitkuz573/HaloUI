@@ -39,7 +39,7 @@ public class HaloBadgeTests : BunitContext
     public void IconOnlyBadge_RequiresAccessibleName()
     {
         Assert.Throws<InvalidOperationException>(() => Render<HaloBadge>(parameters => parameters
-            .Add(p => p.Icon, HaloMaterialIcons.CheckCircle)));
+            .Add(p => p.Icon, Material.Outlined.CheckCircle)));
     }
 
     [Fact]

@@ -18,7 +18,7 @@ public static class HaloMaterialIconPackServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddHaloUIMaterialIconPack(
         this IServiceCollection services,
-        HaloMaterialIconStyle style = HaloMaterialIconStyle.Regular,
+        HaloMaterialIconStyle style = HaloMaterialIconStyle.Outlined,
         IHaloIconResolver? fallback = null)
     {
         ArgumentNullException.ThrowIfNull(services);
