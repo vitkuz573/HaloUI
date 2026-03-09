@@ -61,7 +61,7 @@ public partial class HaloDateTime<TValue>
     public TextFieldUpdateBehavior UpdateBehavior { get; set; } = TextFieldUpdateBehavior.OnChange;
     
     [Parameter]
-    public EventCallback<DateTimeOffset?> OnInput { get; set; }
+    public EventCallback<DateTimeOffset?> InputChanged { get; set; }
 
     private string? _descriptionElementId;
    
@@ -118,9 +118,9 @@ public partial class HaloDateTime<TValue>
             CurrentValueAsString = value;
         }
 
-        if (OnInput.HasDelegate)
+        if (InputChanged.HasDelegate)
         {
-            await OnInput.InvokeAsync(ParseInputValue(value));
+            await InputChanged.InvokeAsync(ParseInputValue(value));
         }
     }
 
@@ -130,9 +130,9 @@ public partial class HaloDateTime<TValue>
 
         CurrentValueAsString = value;
 
-        if (UpdateBehavior != TextFieldUpdateBehavior.OnInput && OnInput.HasDelegate)
+        if (UpdateBehavior != TextFieldUpdateBehavior.OnInput && InputChanged.HasDelegate)
         {
-            await OnInput.InvokeAsync(ParseInputValue(value));
+            await InputChanged.InvokeAsync(ParseInputValue(value));
         }
     }
 

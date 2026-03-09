@@ -71,7 +71,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     public bool Disabled { get; set; }
 
     [Parameter]
-    public bool Dense { get; set; }
+    public bool IsDense { get; set; }
 
     [Parameter]
     public bool Elevated { get; set; }
@@ -164,7 +164,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
             classes.Add("ui-expandable-panel--borderless");
         }
 
-        if (Dense)
+        if (IsDense)
         {
             classes.Add("ui-expandable-panel--dense");
         }

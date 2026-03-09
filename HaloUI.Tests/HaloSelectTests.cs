@@ -21,14 +21,14 @@ public class HaloSelectTests : BunitContext
     }
 
     [Fact]
-    public void SelectingOption_RaisesOnChangeWithSelectedValue()
+    public void SelectingOption_RaisesSelectionChangedWithSelectedValue()
     {
         ChangeEventArgs? args = null;
 
         var cut = Render<HaloSelect<TestOption?>>(
             parameters => parameters
                 .Add(p => p.Value, null)
-                .Add(p => p.OnChange, EventCallback.Factory.Create<ChangeEventArgs>(this, eventArgs => args = eventArgs))
+                .Add(p => p.SelectionChanged, EventCallback.Factory.Create<ChangeEventArgs>(this, eventArgs => args = eventArgs))
                 .Add(p => p.UseEnumOptions, true));
 
         OpenDropdown(cut);

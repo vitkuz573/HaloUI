@@ -73,7 +73,7 @@
                                  Placeholder="Search title, principal, id, metadata…"
                                  Value="@_preferences.SearchTerm"
                                  UpdateBehavior="TextFieldUpdateBehavior.OnInput"
-                                 OnInput="HandleSearchInput" />
+                                 InputChanged="HandleSearchInput" />
                 </div>
 
                 <div class="rm-di__view-switch">
@@ -162,7 +162,7 @@
                                      Size="InputFieldSize.Small"
                                      Value="@_preferences.RoleFilter"
                                      UpdateBehavior="TextFieldUpdateBehavior.OnInput"
-                                     OnInput="HandleRoleFilterChanged"
+                                     InputChanged="HandleRoleFilterChanged"
                                      Placeholder="e.g. Administrator" />
                     </div>
 

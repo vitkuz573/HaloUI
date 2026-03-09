@@ -18,7 +18,7 @@ public partial class HaloTriStateCheckbox
     public EventCallback<TriState> StateChanged { get; set; }
 
     [Parameter]
-    public EventCallback OnToggle { get; set; }
+    public EventCallback Toggled { get; set; }
 
     [Parameter]
     public bool Disabled { get; set; }
@@ -45,9 +45,9 @@ public partial class HaloTriStateCheckbox
             return;
         }
 
-        if (OnToggle.HasDelegate)
+        if (Toggled.HasDelegate)
         {
-            await OnToggle.InvokeAsync();
+            await Toggled.InvokeAsync();
             return;
         }
 

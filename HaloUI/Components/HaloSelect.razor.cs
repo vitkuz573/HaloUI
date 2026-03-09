@@ -26,7 +26,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private const double MobileViewportBreakpointPx = 640d;
 
     [Parameter]
-    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    public EventCallback<ChangeEventArgs> SelectionChanged { get; set; }
 
     [Parameter]
     public string? Description { get; set; }
@@ -727,9 +727,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         UpdateCurrentValue(option);
 
-        if (OnChange.HasDelegate)
+        if (SelectionChanged.HasDelegate)
         {
-            await OnChange.InvokeAsync(new ChangeEventArgs
+            await SelectionChanged.InvokeAsync(new ChangeEventArgs
             {
                 Value = option.Value
             });
@@ -761,11 +761,11 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         SyncHighlight();
 
-        if (OnChange.HasDelegate)
+        if (SelectionChanged.HasDelegate)
         {
             object? changedValue = selectedOption is null ? null : selectedOption.Value;
 
-            await OnChange.InvokeAsync(new ChangeEventArgs
+            await SelectionChanged.InvokeAsync(new ChangeEventArgs
             {
                 Value = changedValue
             });

@@ -49,10 +49,10 @@ public partial class HaloLayout
     public string NotificationCloseLabel { get; set; } = "Close notifications";
 
     [Parameter]
-    public EventCallback OnNavigationCloseRequested { get; set; }
+    public EventCallback NavigationCloseRequested { get; set; }
     
     [Parameter]
-    public EventCallback OnNotificationCloseRequested { get; set; }
+    public EventCallback NotificationCloseRequested { get; set; }
 
     [Parameter]
     public string? Class { get; set; }
@@ -195,14 +195,14 @@ public partial class HaloLayout
 
     private async Task HandleOverlayCloseAsync()
     {
-        if (NotificationOverlayEnabled && Notification is not null && NotificationExpanded && OnNotificationCloseRequested.HasDelegate)
+        if (NotificationOverlayEnabled && Notification is not null && NotificationExpanded && NotificationCloseRequested.HasDelegate)
         {
-            await OnNotificationCloseRequested.InvokeAsync();
+            await NotificationCloseRequested.InvokeAsync();
         }
 
-        if (NavigationOverlayEnabled && Navigation is not null && NavigationExpanded && OnNavigationCloseRequested.HasDelegate)
+        if (NavigationOverlayEnabled && Navigation is not null && NavigationExpanded && NavigationCloseRequested.HasDelegate)
         {
-            await OnNavigationCloseRequested.InvokeAsync();
+            await NavigationCloseRequested.InvokeAsync();
         }
     }
 

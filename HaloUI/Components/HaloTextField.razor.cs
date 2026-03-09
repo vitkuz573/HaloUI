@@ -59,7 +59,7 @@ public partial class HaloTextField
     public bool HasError { get; set; }
     
     [Parameter]
-    public EventCallback<string> OnInput { get; set; }
+    public EventCallback<string> InputChanged { get; set; }
 
     private bool IsInvalid => HasError || (EditContext is not null && EditContext.GetValidationMessages(FieldIdentifier).Any());
 
@@ -210,9 +210,9 @@ public partial class HaloTextField
             CurrentValueAsString = value;
         }
 
-        if (OnInput.HasDelegate)
+        if (InputChanged.HasDelegate)
         {
-            await OnInput.InvokeAsync(value);
+            await InputChanged.InvokeAsync(value);
         }
     }
 
@@ -222,9 +222,9 @@ public partial class HaloTextField
 
         CurrentValueAsString = value;
 
-        if (UpdateBehavior != TextFieldUpdateBehavior.OnInput && OnInput.HasDelegate)
+        if (UpdateBehavior != TextFieldUpdateBehavior.OnInput && InputChanged.HasDelegate)
         {
-            await OnInput.InvokeAsync(value);
+            await InputChanged.InvokeAsync(value);
         }
     }
 
