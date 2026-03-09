@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
@@ -28,7 +29,7 @@ public partial class HaloCard
     public string? Subtitle { get; set; }
     
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
     
     [Parameter]
     public string? IconColor { get; set; }

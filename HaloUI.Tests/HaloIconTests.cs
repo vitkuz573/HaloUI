@@ -19,7 +19,7 @@ public sealed class HaloIconTests : BunitContext
         Services.AddSingleton<IHaloIconResolver>(new PassthroughHaloIconResolver("demo-font"));
 
         var cut = Render<HaloIcon>(parameters => parameters
-            .Add(p => p.Name, "check")
+            .Add(p => p.Name, HaloIconToken.Create("check"))
             .Add(p => p.Class, "extra"));
 
         var icon = cut.Find("span");
@@ -34,10 +34,10 @@ public sealed class HaloIconTests : BunitContext
     public void RendersSvgPathIcon_AsSvgElement()
     {
         Services.AddSingleton<IHaloIconResolver>(new TestResolver(
-            HaloIconDefinition.SvgPath("warning", "M1 1h10v10H1z")));
+            HaloIconDefinition.SvgPath(HaloIconToken.Create("warning"), "M1 1h10v10H1z")));
 
         var cut = Render<HaloIcon>(parameters => parameters
-            .Add(p => p.Name, "warning")
+            .Add(p => p.Name, HaloIconToken.Create("warning"))
             .Add(p => p.Decorative, false)
             .Add(p => p.AriaLabel, "Warning"));
 
@@ -53,10 +53,10 @@ public sealed class HaloIconTests : BunitContext
     public void RendersCssClassIcon_AsClassHook()
     {
         Services.AddSingleton<IHaloIconResolver>(new TestResolver(
-            HaloIconDefinition.CssClass("spinner", "sprite-spinner", "spritesheet")));
+            HaloIconDefinition.CssClass(HaloIconToken.Create("spinner"), "sprite-spinner", "spritesheet")));
 
         var cut = Render<HaloIcon>(parameters => parameters
-            .Add(p => p.Name, "spinner"));
+            .Add(p => p.Name, HaloIconToken.Create("spinner")));
 
         var icon = cut.Find("span");
         Assert.Contains("halo-icon", icon.ClassList);
@@ -69,9 +69,9 @@ public sealed class HaloIconTests : BunitContext
     {
         private readonly HaloIconDefinition _icon = icon;
 
-        public bool TryResolve(string iconName, out HaloIconDefinition definition)
+        public bool TryResolve(HaloIconToken iconName, out HaloIconDefinition definition)
         {
-            if (string.Equals(_icon.Name, iconName, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(_icon.Name.Value, iconName.Value, StringComparison.OrdinalIgnoreCase))
             {
                 definition = _icon;
                 return true;

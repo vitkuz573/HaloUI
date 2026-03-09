@@ -7,6 +7,7 @@ using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 
 namespace HaloUI.Components;
@@ -14,7 +15,7 @@ namespace HaloUI.Components;
 public partial class HaloButton
 {
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
     
     [Parameter]
     public ButtonVariant Variant { get; set; } = ButtonVariant.Secondary;

@@ -15,7 +15,7 @@ public partial class HaloIcon
     private HaloIconDefinition? _resolvedIcon;
 
     [Parameter]
-    public string? Name { get; set; }
+    public HaloIconToken? Name { get; set; }
 
     [Parameter]
     public string? Class { get; set; }
@@ -47,14 +47,14 @@ public partial class HaloIcon
 
     private HaloIconDefinition? ResolveIcon()
     {
-        if (string.IsNullOrWhiteSpace(Name))
+        if (Name is not { } iconToken || iconToken.IsEmpty)
         {
             return null;
         }
 
         var resolver = IconResolvers.FirstOrDefault() ?? DefaultResolver;
 
-        if (resolver.TryResolve(Name, out var icon))
+        if (resolver.TryResolve(iconToken, out var icon))
         {
             return icon;
         }
@@ -86,7 +86,7 @@ public partial class HaloIcon
         {
             attributes["role"] = "img";
 
-            var resolvedAriaLabel = !string.IsNullOrWhiteSpace(AriaLabel) ? AriaLabel : icon.Name;
+            var resolvedAriaLabel = !string.IsNullOrWhiteSpace(AriaLabel) ? AriaLabel : icon.Name.Value;
             attributes["aria-label"] = resolvedAriaLabel;
             attributes.Remove("aria-hidden");
         }

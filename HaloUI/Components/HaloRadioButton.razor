@@ -4,6 +4,7 @@
     var group = Group;
     var selected = group.IsSelected(Value);
     var isSegmented = group.IsSegmented;
+    var indicatorIcon = GetIndicatorIcon(isSegmented, selected);
 }
 
 <button type="button"
@@ -21,7 +22,10 @@
         {
             <div class="halo-radio-button__segmented">
                 <div class="halo-radio-button__child">@ChildContent</div>
-                <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
+                @if (indicatorIcon is not null)
+                {
+                    <HaloIcon Name="@indicatorIcon" Class="halo-radio-button__indicator" Decorative="true" />
+                }
             </div>
         }
         else
@@ -33,7 +37,7 @@
     {
         <div class="halo-radio-button__segmented">
             <div class="halo-radio-button__content halo-radio-button__content--column">
-                @if (!string.IsNullOrWhiteSpace(Icon))
+                @if (Icon is not null)
                 {
                     <HaloIcon Name="@Icon" Class="halo-radio-button__icon" Decorative="true" />
                 }
@@ -52,15 +56,21 @@
                 {
                     <span class="halo-radio-button__badge">@Badge</span>
                 }
-                <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
+                @if (indicatorIcon is not null)
+                {
+                    <HaloIcon Name="@indicatorIcon" Class="halo-radio-button__indicator" Decorative="true" />
+                }
             </div>
         </div>
     }
     else
     {
         <div class="halo-radio-button__stack">
-            <HaloIcon Name="@GetIndicatorIcon(isSegmented, selected)" Class="halo-radio-button__indicator" Decorative="true" />
-            @if (!string.IsNullOrWhiteSpace(Icon))
+            @if (indicatorIcon is not null)
+            {
+                <HaloIcon Name="@indicatorIcon" Class="halo-radio-button__indicator" Decorative="true" />
+            }
+            @if (Icon is not null)
             {
                 <HaloIcon Name="@Icon" Class="halo-radio-button__icon" Decorative="true" />
             }

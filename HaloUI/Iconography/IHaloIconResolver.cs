@@ -12,5 +12,5 @@ public interface IHaloIconResolver
     /// <summary>
     /// Tries to resolve an icon by logical name.
     /// </summary>
-    bool TryResolve(string iconName, out HaloIconDefinition definition);
+    bool TryResolve(HaloIconToken iconToken, out HaloIconDefinition definition);
 }

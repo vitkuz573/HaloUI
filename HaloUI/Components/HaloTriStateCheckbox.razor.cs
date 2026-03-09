@@ -7,6 +7,7 @@ using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
@@ -76,13 +77,13 @@ public partial class HaloTriStateCheckbox
         };
     }
 
-    private string GetIcon()
+    private HaloIconToken GetIcon()
     {
         return State switch
         {
-            TriState.All => "check",
-            TriState.Partial => "remove",
-            _ => "check"
+            TriState.All => HaloMaterialIcons.Check,
+            TriState.Partial => HaloMaterialIcons.Remove,
+            _ => HaloMaterialIcons.Check
         };
     }
 

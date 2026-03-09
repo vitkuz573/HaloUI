@@ -5,6 +5,7 @@
 using Bunit;
 using HaloUI.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using Xunit;
 
 namespace HaloUI.Tests;
@@ -57,7 +58,7 @@ public class HaloTextTests : BunitContext
     public void PrefixAndSuffixContent_RenderExpectedMarkup()
     {
         var cut = Render<HaloText>(builder => builder
-            .Add(p => p.StartIcon, "check")
+            .Add(p => p.StartIcon, HaloMaterialIcons.Check)
             .Add(p => p.SuffixContent, contentBuilder => contentBuilder.AddContent(0, "suffix"))
             .Add(p => p.Text, "Content"));
 

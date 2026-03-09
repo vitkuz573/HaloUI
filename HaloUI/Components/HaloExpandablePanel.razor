@@ -26,7 +26,7 @@
                         @Prefix
                     </span>
                 }
-                else if (!string.IsNullOrWhiteSpace(Icon))
+                else if (Icon is not null)
                 {
                     <span class="halo-expandable-panel__prefix">
                         <HaloIcon Name="@Icon" Class="halo-expandable-panel__prefix-icon" Decorative="true" />
@@ -54,7 +54,7 @@
                     }
                 </div>
 
-                <HaloIcon Name="expand_more" Class="@BuildIndicatorClass()" Decorative="true" />
+                <HaloIcon Name="@HaloMaterialIcons.ExpandMore" Class="@BuildIndicatorClass()" Decorative="true" />
             </button>
 
             @if (Actions is not null)

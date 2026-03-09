@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
@@ -15,7 +16,7 @@ public partial class HaloNotice
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public string Icon { get; set; } = "info";
+    public HaloIconToken Icon { get; set; } = HaloMaterialIcons.Info;
 
     [Parameter]
     public NoticeVariant Variant { get; set; } = NoticeVariant.Info;

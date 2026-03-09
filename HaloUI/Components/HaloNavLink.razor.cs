@@ -4,12 +4,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
 public sealed partial class HaloNavLink
 {
-    [Parameter] public string? Icon { get; set; }
+    [Parameter] public HaloIconToken? Icon { get; set; }
 
     [Parameter] public string? Title { get; set; }
 
@@ -84,7 +85,7 @@ public sealed partial class HaloNavLink
 
     private RenderFragment RenderContent() => builder =>
     {
-        if (!string.IsNullOrWhiteSpace(Icon))
+        if (Icon is not null)
         {
             builder.OpenComponent<HaloIcon>(0);
             builder.AddAttribute(1, nameof(HaloIcon.Name), Icon);

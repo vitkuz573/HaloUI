@@ -16,15 +16,15 @@ public sealed class PassthroughHaloIconResolver : IHaloIconResolver
         _providerClass = providerClass;
     }
 
-    public bool TryResolve(string iconName, out HaloIconDefinition definition)
+    public bool TryResolve(HaloIconToken iconToken, out HaloIconDefinition definition)
     {
-        if (string.IsNullOrWhiteSpace(iconName))
+        if (iconToken.IsEmpty)
         {
             definition = default!;
             return false;
         }
 
-        definition = HaloIconDefinition.Ligature(iconName, providerClass: _providerClass);
+        definition = HaloIconDefinition.Ligature(iconToken, providerClass: _providerClass);
         return true;
     }
 }

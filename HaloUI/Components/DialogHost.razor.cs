@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
 
@@ -470,8 +471,8 @@ public partial class DialogHost : IAsyncDisposable
         return $"{anchor}{DrawerHandleBackgroundVariable}:{tokens.Background};{DrawerHandleBorderVariable}:{tokens.BorderColor};";
     }
 
-    private static string ResolveDrawerHandleIcon(DialogDrawerPlacement placement) =>
-        placement == DialogDrawerPlacement.Start ? "chevron_left" : "chevron_right";
+    private static HaloIconToken ResolveDrawerHandleIcon(DialogDrawerPlacement placement) =>
+        placement == DialogDrawerPlacement.Start ? HaloMaterialIcons.ChevronLeft : HaloMaterialIcons.ChevronRight;
 
     private static string BuildDialogStyle(DialogDesignTokens tokens, DialogSizeTokens sizeTokens, DialogVariantOptions variant)
     {

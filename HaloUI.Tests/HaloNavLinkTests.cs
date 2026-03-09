@@ -5,6 +5,7 @@
 using System;
 using Bunit;
 using HaloUI.Components;
+using HaloUI.Iconography;
 using Xunit;
 
 namespace HaloUI.Tests;
@@ -29,7 +30,7 @@ public sealed class HaloNavLinkTests : BunitContext
     public void MissingVisibleTextAndAriaLabel_Throws()
     {
         var ex = Assert.Throws<InvalidOperationException>(() => Render<HaloNavLink>(parameters => parameters
-            .Add(p => p.Icon, "settings")
+            .Add(p => p.Icon, HaloMaterialIcons.Settings)
             .Add(p => p.Href, "/settings")));
 
         Assert.Contains("aria-label", ex.Message, StringComparison.OrdinalIgnoreCase);

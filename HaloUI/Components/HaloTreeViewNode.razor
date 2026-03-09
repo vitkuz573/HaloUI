@@ -42,7 +42,7 @@
                 else
                 {
                     <div class="halo-tree__content">
-                        @if (!string.IsNullOrEmpty(Node.Icon))
+                        @if (Node.Icon is not null)
                         {
                             <span class="@GetIconClasses()">
                                 <HaloIcon Name="@Node.Icon" Decorative="true" />

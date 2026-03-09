@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Components;
 using HaloUI.Accessibility;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
@@ -85,7 +86,7 @@ public partial class HaloLabel
     public string? OptionalIndicatorAriaText { get; set; }
 
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
 
     [Parameter]
     public RenderFragment? PrefixContent { get; set; }
@@ -434,7 +435,7 @@ public partial class HaloLabel
         return overrides;
     }
 
-    private bool HasIcon => !string.IsNullOrWhiteSpace(Icon) || PrefixContent is not null;
+    private bool HasIcon => Icon is not null || PrefixContent is not null;
 
     private bool HasTextContent => !string.IsNullOrWhiteSpace(Text) || ChildContent is not null;
 
@@ -474,7 +475,7 @@ public partial class HaloLabel
             PrefixContent(builder);
             builder.CloseElement();
         }
-        else if (!string.IsNullOrWhiteSpace(Icon))
+        else if (Icon is not null)
         {
             builder.OpenComponent<HaloIcon>(4);
             builder.AddAttribute(5, nameof(HaloIcon.Name), Icon);

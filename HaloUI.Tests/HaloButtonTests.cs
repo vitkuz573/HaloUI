@@ -5,6 +5,7 @@
 using Bunit;
 using HaloUI.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using Microsoft.AspNetCore.Components;
 using Xunit;
 
@@ -35,7 +36,7 @@ public class HaloButtonTests : BunitContext
     {
         var cut = Render<HaloButton>(parameters => parameters
             .Add(p => p.IconOnly, true)
-            .Add(p => p.Icon, "add")
+            .Add(p => p.Icon, HaloMaterialIcons.Add)
             .Add(p => p.AriaLabel, "Add device"));
 
         var button = cut.Find("button");

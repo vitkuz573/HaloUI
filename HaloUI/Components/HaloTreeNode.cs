@@ -2,6 +2,8 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
+using HaloUI.Iconography;
+
 namespace HaloUI.Components;
 
 public class HaloTreeNode<TValue>
@@ -14,7 +16,7 @@ public class HaloTreeNode<TValue>
 
     public TValue? Value { get; set; }
 
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
 
     public int? BadgeCount { get; set; }
 

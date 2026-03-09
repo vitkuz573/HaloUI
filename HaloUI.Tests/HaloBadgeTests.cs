@@ -5,6 +5,7 @@
 using Bunit;
 using HaloUI.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using Xunit;
 
 namespace HaloUI.Tests;
@@ -38,7 +39,7 @@ public class HaloBadgeTests : BunitContext
     public void IconOnlyBadge_RequiresAccessibleName()
     {
         Assert.Throws<InvalidOperationException>(() => Render<HaloBadge>(parameters => parameters
-            .Add(p => p.Icon, "check_circle")));
+            .Add(p => p.Icon, HaloMaterialIcons.CheckCircle)));
     }
 
     [Fact]

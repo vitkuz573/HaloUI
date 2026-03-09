@@ -12,6 +12,7 @@ using HaloUI.Abstractions;
 using HaloUI.Components;
 using HaloUI.Components.Table;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Tokens;
 using Microsoft.AspNetCore.Components;
@@ -56,7 +57,7 @@ public partial class AccessibilitySamples
             Id = "core",
             Label = "Core network",
             Value = "core",
-            Icon = "hub",
+            Icon = HaloMaterialIcons.Hub,
             InitiallyExpanded = true,
             Children =
             {
@@ -65,7 +66,7 @@ public partial class AccessibilitySamples
                     Id = "core-emea",
                     Label = "EMEA cluster",
                     Value = "core-emea",
-                    Icon = "lan",
+                    Icon = HaloMaterialIcons.Lan,
                     InitiallyExpanded = true,
                     Children =
                     {
@@ -74,14 +75,14 @@ public partial class AccessibilitySamples
                             Id = "core-emea-gw-01",
                             Label = "Gateway 01",
                             Value = "core-emea-gw-01",
-                            Icon = "dns"
+                            Icon = HaloMaterialIcons.Dns
                         },
                         new HaloTreeNode<string>
                         {
                             Id = "core-emea-gw-02",
                             Label = "Gateway 02",
                             Value = "core-emea-gw-02",
-                            Icon = "dns"
+                            Icon = HaloMaterialIcons.Dns
                         }
                     }
                 },
@@ -90,7 +91,7 @@ public partial class AccessibilitySamples
                     Id = "core-amer",
                     Label = "AMER cluster",
                     Value = "core-amer",
-                    Icon = "lan",
+                    Icon = HaloMaterialIcons.Lan,
                     Children =
                     {
                         new HaloTreeNode<string>
@@ -98,7 +99,7 @@ public partial class AccessibilitySamples
                             Id = "core-amer-gw-01",
                             Label = "Gateway 01",
                             Value = "core-amer-gw-01",
-                            Icon = "dns"
+                            Icon = HaloMaterialIcons.Dns
                         }
                     }
                 }

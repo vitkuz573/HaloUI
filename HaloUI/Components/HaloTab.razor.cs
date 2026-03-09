@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
@@ -20,7 +21,7 @@ public partial class HaloTab
     public string Title { get; set; } = string.Empty;
 
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
 
     [Parameter]
     public string? Class { get; set; }

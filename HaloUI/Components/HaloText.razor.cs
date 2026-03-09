@@ -5,6 +5,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
@@ -90,13 +91,13 @@ public partial class HaloText
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public string? StartIcon { get; set; }
+    public HaloIconToken? StartIcon { get; set; }
 
     [Parameter]
     public RenderFragment? PrefixContent { get; set; }
 
     [Parameter]
-    public string? EndIcon { get; set; }
+    public HaloIconToken? EndIcon { get; set; }
 
     [Parameter]
     public RenderFragment? SuffixContent { get; set; }
@@ -117,7 +118,7 @@ public partial class HaloText
             PrefixContent(builder);
             builder.CloseElement();
         }
-        else if (!string.IsNullOrWhiteSpace(StartIcon))
+        else if (StartIcon is not null)
         {
             builder.OpenElement(2, "span");
             builder.AddAttribute(3, "class", "halo-text__prefix");
@@ -155,7 +156,7 @@ public partial class HaloText
             SuffixContent(builder);
             builder.CloseElement();
         }
-        else if (!string.IsNullOrWhiteSpace(EndIcon))
+        else if (EndIcon is not null)
         {
             builder.OpenElement(13, "span");
             builder.AddAttribute(14, "class", "halo-text__suffix");

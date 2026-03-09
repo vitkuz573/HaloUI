@@ -12,7 +12,7 @@ public sealed record HaloIconDefinition
     /// <summary>
     /// Gets the logical icon name.
     /// </summary>
-    public required string Name { get; init; }
+    public required HaloIconToken Name { get; init; }
 
     /// <summary>
     /// Gets the rendering mode.
@@ -35,43 +35,52 @@ public sealed record HaloIconDefinition
     /// </summary>
     public string? ViewBox { get; init; }
 
-    public static HaloIconDefinition Ligature(string name, string? ligature = null, string? providerClass = null)
+    public static HaloIconDefinition Ligature(HaloIconToken name, string? ligature = null, string? providerClass = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-
-        var normalized = name.Trim();
+        if (name.IsEmpty)
+        {
+            throw new ArgumentException("Icon token cannot be empty.", nameof(name));
+        }
 
         return new HaloIconDefinition
         {
-            Name = normalized,
+            Name = name,
             RenderMode = HaloIconRenderMode.Ligature,
-            Value = string.IsNullOrWhiteSpace(ligature) ? normalized : ligature.Trim(),
+            Value = string.IsNullOrWhiteSpace(ligature) ? name.Value : ligature.Trim(),
             ProviderClass = providerClass
         };
     }
 
-    public static HaloIconDefinition Glyph(string name, string glyph, string? providerClass = null)
+    public static HaloIconDefinition Glyph(HaloIconToken name, string glyph, string? providerClass = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        if (name.IsEmpty)
+        {
+            throw new ArgumentException("Icon token cannot be empty.", nameof(name));
+        }
+
         ArgumentException.ThrowIfNullOrWhiteSpace(glyph);
 
         return new HaloIconDefinition
         {
-            Name = name.Trim(),
+            Name = name,
             RenderMode = HaloIconRenderMode.Glyph,
             Value = glyph,
             ProviderClass = providerClass
         };
     }
 
-    public static HaloIconDefinition SvgPath(string name, string pathData, string? viewBox = "0 0 24 24", string? providerClass = null)
+    public static HaloIconDefinition SvgPath(HaloIconToken name, string pathData, string? viewBox = "0 0 24 24", string? providerClass = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        if (name.IsEmpty)
+        {
+            throw new ArgumentException("Icon token cannot be empty.", nameof(name));
+        }
+
         ArgumentException.ThrowIfNullOrWhiteSpace(pathData);
 
         return new HaloIconDefinition
         {
-            Name = name.Trim(),
+            Name = name,
             RenderMode = HaloIconRenderMode.SvgPath,
             Value = pathData,
             ViewBox = viewBox,
@@ -79,14 +88,18 @@ public sealed record HaloIconDefinition
         };
     }
 
-    public static HaloIconDefinition CssClass(string name, string cssClass, string? providerClass = null)
+    public static HaloIconDefinition CssClass(HaloIconToken name, string cssClass, string? providerClass = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        if (name.IsEmpty)
+        {
+            throw new ArgumentException("Icon token cannot be empty.", nameof(name));
+        }
+
         ArgumentException.ThrowIfNullOrWhiteSpace(cssClass);
 
         return new HaloIconDefinition
         {
-            Name = name.Trim(),
+            Name = name,
             RenderMode = HaloIconRenderMode.CssClass,
             Value = cssClass.Trim(),
             ProviderClass = providerClass

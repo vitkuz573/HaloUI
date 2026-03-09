@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using HaloUI.Components.Table;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Tokens;
 
@@ -47,7 +48,7 @@ public partial class HaloTable<TItem>
             builder.AddAttribute(4, "aria-label", "Clear search");
             builder.AddAttribute(5, "title", "Clear search");
             builder.OpenComponent<HaloIcon>(6);
-            builder.AddAttribute(7, nameof(HaloIcon.Name), "close");
+            builder.AddAttribute(7, nameof(HaloIcon.Name), HaloMaterialIcons.Close);
             builder.AddAttribute(8, nameof(HaloIcon.Class), "halo-table__toolbar-icon");
             builder.AddAttribute(9, nameof(HaloIcon.Decorative), true);
             builder.CloseComponent();
@@ -377,15 +378,15 @@ public partial class HaloTable<TItem>
         return string.Join(' ', classes);
     }
 
-    private string GetSortIcon(HaloTableColumnDefinition<TItem> column)
+    private HaloIconToken GetSortIcon(HaloTableColumnDefinition<TItem> column)
     {
         var direction = _state.GetSortDirection(column.Id);
 
         return direction switch
         {
-            TableSortDirection.Ascending => "arrow_upward",
-            TableSortDirection.Descending => "arrow_downward",
-            _ => "unfold_more"
+            TableSortDirection.Ascending => HaloMaterialIcons.ArrowUpward,
+            TableSortDirection.Descending => HaloMaterialIcons.ArrowDownward,
+            _ => HaloMaterialIcons.UnfoldMore
         };
     }
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Web;
 using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
@@ -29,7 +30,7 @@ public partial class HaloRadioButton<TValue>
     public string? Description { get; set; }
 
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
 
     [Parameter]
     public string? Badge { get; set; }
@@ -172,14 +173,14 @@ public partial class HaloRadioButton<TValue>
         return Value is not null && !string.IsNullOrWhiteSpace(Value!.ToString());
     }
 
-    private static string GetIndicatorIcon(bool segmented, bool selected)
+    private static HaloIconToken? GetIndicatorIcon(bool segmented, bool selected)
     {
         if (segmented)
         {
-            return selected ? "check" : string.Empty;
+            return selected ? HaloMaterialIcons.Check : null;
         }
 
-        return selected ? "radio_button_checked" : "radio_button_unchecked";
+        return selected ? HaloMaterialIcons.RadioButtonChecked : HaloMaterialIcons.RadioButtonUnchecked;
     }
 
     private string GetDisplayLabel()

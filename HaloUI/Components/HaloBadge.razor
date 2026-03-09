@@ -1,5 +1,5 @@
 ﻿<span class="@BuildCssClass()" @attributes="BuildAccessibilityAttributes()">
-    @if (!string.IsNullOrWhiteSpace(Icon))
+    @if (Icon is not null)
     {
         <HaloIcon Name="@Icon" Class="halo-badge__icon" Decorative="true" />
     }

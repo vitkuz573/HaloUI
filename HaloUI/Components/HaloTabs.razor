@@ -38,7 +38,7 @@
                                 @tab.PrefixContent
                             </span>
                         }
-                        else if (!string.IsNullOrWhiteSpace(tab.Icon))
+                        else if (tab.Icon is not null)
                         {
                             <span class="@GetTabIconClasses(false)">
                                 <HaloIcon Name="@tab.Icon" Decorative="true" />

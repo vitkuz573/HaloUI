@@ -39,17 +39,17 @@ public sealed class HaloIconPackResolverTests
 
         var resolver = new HaloIconPackResolver(manifest);
 
-        Assert.True(resolver.TryResolve("check", out var check));
+        Assert.True(resolver.TryResolve(HaloIconToken.Create("check"), out var check));
         Assert.Equal(HaloIconRenderMode.Ligature, check.RenderMode);
         Assert.Equal("check", check.Value);
         Assert.Equal("test-font", check.ProviderClass);
 
-        Assert.True(resolver.TryResolve("checkmark", out var alias));
-        Assert.Equal("checkmark", alias.Name);
+        Assert.True(resolver.TryResolve(HaloIconToken.Create("checkmark"), out var alias));
+        Assert.Equal("checkmark", alias.Name.Value);
         Assert.Equal("check", alias.Value);
         Assert.Equal(HaloIconRenderMode.Ligature, alias.RenderMode);
 
-        Assert.True(resolver.TryResolve("close", out var close));
+        Assert.True(resolver.TryResolve(HaloIconToken.Create("close"), out var close));
         Assert.Equal(HaloIconRenderMode.CssClass, close.RenderMode);
         Assert.Equal("icon-close", close.Value);
     }
@@ -66,7 +66,7 @@ public sealed class HaloIconPackResolverTests
 
         var resolver = new HaloIconPackResolver(manifest, new PassthroughHaloIconResolver("fallback-font"));
 
-        Assert.True(resolver.TryResolve("sync", out var icon));
+        Assert.True(resolver.TryResolve(HaloIconToken.Create("sync"), out var icon));
         Assert.Equal(HaloIconRenderMode.Ligature, icon.RenderMode);
         Assert.Equal("sync", icon.Value);
         Assert.Equal("fallback-font", icon.ProviderClass);

@@ -20,15 +20,15 @@ public sealed class HaloIconPackResolver : IHaloIconResolver
         _fallback = fallback;
     }
 
-    public bool TryResolve(string iconName, out HaloIconDefinition definition)
+    public bool TryResolve(HaloIconToken iconToken, out HaloIconDefinition definition)
     {
-        if (string.IsNullOrWhiteSpace(iconName))
+        if (iconToken.IsEmpty)
         {
             definition = default!;
             return false;
         }
 
-        if (_definitions.TryGetValue(iconName.Trim(), out var resolved) && resolved is not null)
+        if (_definitions.TryGetValue(iconToken.Value, out var resolved) && resolved is not null)
         {
             definition = resolved;
             return true;
@@ -36,7 +36,7 @@ public sealed class HaloIconPackResolver : IHaloIconResolver
 
         if (_fallback is not null)
         {
-            return _fallback.TryResolve(iconName, out definition);
+            return _fallback.TryResolve(iconToken, out definition);
         }
 
         definition = default!;
@@ -67,8 +67,9 @@ public sealed class HaloIconPackResolver : IHaloIconResolver
             var providerClass = entry.ProviderClass ?? manifest.ProviderClass;
             var value = ResolveValue(entry, renderMode);
             var viewBox = entry.ViewBox ?? manifest.DefaultViewBox;
+            var token = HaloIconToken.Create(iconName);
 
-            map[iconName] = CreateDefinition(iconName, renderMode, value, providerClass, viewBox);
+            map[iconName] = CreateDefinition(token, renderMode, value, providerClass, viewBox);
         }
 
         foreach (var (name, aliasOf) in aliases)
@@ -78,7 +79,7 @@ public sealed class HaloIconPackResolver : IHaloIconResolver
                 throw new InvalidDataException($"Icon alias '{name}' points to unknown icon '{aliasOf}'.");
             }
 
-            map[name] = target with { Name = name };
+            map[name] = target with { Name = HaloIconToken.Create(name) };
         }
 
         return map;
@@ -100,7 +101,7 @@ public sealed class HaloIconPackResolver : IHaloIconResolver
     }
 
     private static HaloIconDefinition CreateDefinition(
-        string name,
+        HaloIconToken name,
         HaloIconRenderMode renderMode,
         string value,
         string? providerClass,

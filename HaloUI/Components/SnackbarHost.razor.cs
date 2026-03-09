@@ -4,6 +4,7 @@
 
 using Microsoft.Extensions.Logging;
 using HaloUI.Abstractions;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
@@ -213,12 +214,12 @@ public partial class SnackbarHost
         }
     }
 
-    private static string GetIcon(SnackbarSeverity severity) => severity switch
+    private static HaloIconToken GetIcon(SnackbarSeverity severity) => severity switch
     {
-        SnackbarSeverity.Success => "check_circle",
-        SnackbarSeverity.Warning => "warning",
-        SnackbarSeverity.Error => "error",
-        _ => "info"
+        SnackbarSeverity.Success => HaloMaterialIcons.CheckCircle,
+        SnackbarSeverity.Warning => HaloMaterialIcons.Warning,
+        SnackbarSeverity.Error => HaloMaterialIcons.Error,
+        _ => HaloMaterialIcons.Info
     };
 
     private static string GetTitle(SnackbarSeverity severity) => severity switch

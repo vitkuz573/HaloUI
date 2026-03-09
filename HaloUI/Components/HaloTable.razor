@@ -33,7 +33,7 @@
                                 class="@GetToggleButtonClasses()"
                                 @onclick="ToggleExpanded"
                                 @attributes="GetToggleButtonAttributes()">
-                            <HaloIcon Name="chevron_right" Class="halo-table__toggle-icon" Decorative="true" />
+                            <HaloIcon Name="@HaloMaterialIcons.ChevronRight" Class="halo-table__toggle-icon" Decorative="true" />
                             <span class="halo-table__title">@Title</span>
                         </button>
                     }
@@ -63,7 +63,7 @@
                                          AriaLabel="@GetSearchAriaLabel()"
                                          EndAdornment="@ClearSearchAdornment">
                                 <StartAdornment>
-                                    <HaloIcon Name="search" Class="halo-table__toolbar-icon" Decorative="true" />
+                                    <HaloIcon Name="@HaloMaterialIcons.Search" Class="halo-table__toolbar-icon" Decorative="true" />
                                 </StartAdornment>
                             </HaloTextField>
                         </div>
@@ -79,7 +79,7 @@
                     {
                         <HaloButton Variant="@GetFilterToggleVariant(activeFilters.Count)"
                                   Size="ButtonSize.Small"
-                                  Icon="filter_alt"
+                                  Icon="@HaloMaterialIcons.FilterAlt"
                                   AdditionalAttributes="@GetFilterToggleAttributes()"
                                   Activated="@ToggleFilterPanel"
                                   AriaLabel="Toggle filters">
@@ -101,11 +101,11 @@
                 <div id="@_filtersPanelId" class="halo-table__filter-panel-content">
                     <div class="halo-table__filter-panel-stack">
                         <div class="halo-table__filter-panel-header">
-                            <HaloIcon Name="tune" Class="halo-table__filter-panel-icon" Decorative="true" />
+                            <HaloIcon Name="@HaloMaterialIcons.Tune" Class="halo-table__filter-panel-icon" Decorative="true" />
                             <span>Active filters</span>
                             <HaloButton Variant="ButtonVariant.Secondary"
                                       Size="ButtonSize.ExtraSmall"
-                                      Icon="layers_clear"
+                                      Icon="@HaloMaterialIcons.LayersClear"
                                       Class="halo-table__filter-clear-all"
                                       Activated="@ClearAllFiltersAsync"
                                       AriaLabel="Clear all filters">
@@ -126,7 +126,7 @@
                                     <span class="halo-table__filter-chip-value">@label</span>
                                     <HaloButton Variant="ButtonVariant.Secondary"
                                               Size="ButtonSize.ExtraSmall"
-                                              Icon="close"
+                                              Icon="@HaloMaterialIcons.Close"
                                               IconOnly="true"
                                               Class="halo-table__filter-chip-clear"
                                               AriaLabel="@($"Clear filter for {column.Title}")"
@@ -206,7 +206,7 @@
                                                 else
                                                 {
                                                     <div class="halo-table__filter-input-wrapper">
-                                                        <HaloIcon Name="filter_list"
+                                                        <HaloIcon Name="@HaloMaterialIcons.FilterList"
                                                                   Class="halo-table__filter-input-icon"
                                                                   Decorative="true" />
                                                         <input type="text"

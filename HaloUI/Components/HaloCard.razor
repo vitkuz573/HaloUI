@@ -49,7 +49,7 @@
                         }
                     </div>
 
-                    @if (!string.IsNullOrWhiteSpace(Icon))
+                    @if (Icon is not null)
                     {
                         <HaloIcon Name="@Icon" Class="halo-card__icon" Decorative="true" />
                     }

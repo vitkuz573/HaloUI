@@ -26,28 +26,28 @@
         <div class="demo-hero__actions" data-testid="demo-theme-controls">
             <HaloButton Variant="ButtonVariant.Secondary"
                         Size="ButtonSize.Small"
-                        StartIcon="light_mode"
+                        StartIcon="@HaloMaterialIcons.LightMode"
                         Activated="@(() => SetTheme(LightThemeKey))"
                         data-testid="theme-light">
                 Light
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Secondary"
                         Size="ButtonSize.Small"
-                        StartIcon="dark_mode"
+                        StartIcon="@HaloMaterialIcons.DarkMode"
                         Activated="@(() => SetTheme(DarkThemeKey))"
                         data-testid="theme-dark">
                 Dark
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Primary"
                         Size="ButtonSize.Small"
-                        StartIcon="open_in_new"
+                        StartIcon="@HaloMaterialIcons.OpenInNew"
                         Activated="ShowDialogAsync"
                         data-testid="hero-open-dialog">
                 Launch dialog
             </HaloButton>
             <HaloButton Variant="ButtonVariant.Tertiary"
                         Size="ButtonSize.Small"
-                        StartIcon="campaign"
+                        StartIcon="@HaloMaterialIcons.Campaign"
                         Activated="() => ShowSnackbar(SnackbarSeverity.Info)"
                         data-testid="hero-show-snackbar">
                 Push snackbar
@@ -199,13 +199,13 @@
             <p>Keyboard-ready tablist and panel semantics.</p>
             <div class="demo-stack">
                 <HaloTabs>
-                    <HaloTab Title="Overview" Description="Fleet status" Icon="dashboard">
+                    <HaloTab Title="Overview" Description="Fleet status" Icon="@HaloMaterialIcons.Dashboard">
                         <p>92% of regions are inside latency SLO this hour.</p>
                     </HaloTab>
-                    <HaloTab Title="Insights" Description="Anomalies" Icon="monitoring">
+                    <HaloTab Title="Insights" Description="Anomalies" Icon="@HaloMaterialIcons.MonitorHeart">
                         <p>Two clusters reported packet jitter over threshold.</p>
                     </HaloTab>
-                    <HaloTab Title="Actions" Description="Pending" Icon="task">
+                    <HaloTab Title="Actions" Description="Pending" Icon="@HaloMaterialIcons.Task">
                         <p>Three operator approvals are waiting for confirmation.</p>
                     </HaloTab>
                 </HaloTabs>
@@ -233,13 +233,13 @@
                           Value="7,410"
                           Label="+248"
                           Variant="CardVariant.Primary"
-                          Icon="dns" />
+                          Icon="@HaloMaterialIcons.Dns" />
                 <HaloCard Title="Auto-remediations"
                           Subtitle="Past hour"
                           Value="32"
                           Label="No regressions"
                           Variant="CardVariant.Success"
-                          Icon="autorenew" />
+                          Icon="@HaloMaterialIcons.Autorenew" />
             </div>
             <HaloButton Variant="ButtonVariant.Tertiary" Size="ButtonSize.Small">Open details</HaloButton>
         </article>
@@ -253,7 +253,7 @@
                             AriaLabel="System notice">
                     <strong>System notice:</strong> Replica synchronization completed successfully.
                 </HaloNotice>
-                <HaloNotice Variant="NoticeVariant.Warning" Icon="warning_amber">
+                <HaloNotice Variant="NoticeVariant.Warning" Icon="@HaloMaterialIcons.WarningAmber">
                     <strong>Heads up:</strong> Scheduled restart begins in 20 minutes.
                 </HaloNotice>
             </div>
@@ -269,7 +269,7 @@
                                      DefaultExpanded="true"
                                      IsExpanded="@_runbookExpanded"
                                      IsExpandedChanged="OnRunbookExpandedChanged"
-                                     Icon="book_online">
+                                     Icon="@HaloMaterialIcons.BookOnline">
                     <ChildContent>
                         <ul class="demo-list">
                             <li>Drain traffic from impacted AZ.</li>
@@ -340,7 +340,7 @@
             <p>Modal workflow with escape and focus restoration.</p>
             <div class="demo-row">
                 <HaloButton Variant="ButtonVariant.Primary"
-                            StartIcon="open_in_new"
+                            StartIcon="@HaloMaterialIcons.OpenInNew"
                             Activated="ShowDialogAsync"
                             data-testid="button-open-dialog">
                     Open dialog
@@ -353,7 +353,7 @@
             <p>Non-blocking status updates for lightweight confirmations.</p>
             <div class="demo-row">
                 <HaloButton Variant="ButtonVariant.Secondary"
-                            StartIcon="notifications"
+                            StartIcon="@HaloMaterialIcons.Notifications"
                             Activated="() => ShowSnackbar(SnackbarSeverity.Info)"
                             data-testid="button-show-snackbar">
                     Show snackbar

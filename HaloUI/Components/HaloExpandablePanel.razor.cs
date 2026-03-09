@@ -5,6 +5,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 
@@ -35,7 +36,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     public RenderFragment? Prefix { get; set; }
 
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
 
     [Parameter]
     public string? AriaLabel { get; set; }

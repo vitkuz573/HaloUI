@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 using HaloUI.Enums;
+using HaloUI.Iconography;
 
 namespace HaloUI.Components;
 
@@ -15,7 +16,7 @@ public partial class HaloBadge
     public string? Text { get; set; }
     
     [Parameter]
-    public string? Icon { get; set; }
+    public HaloIconToken? Icon { get; set; }
     
     [Parameter]
     public BadgeVariant Variant { get; set; } = BadgeVariant.Neutral;
