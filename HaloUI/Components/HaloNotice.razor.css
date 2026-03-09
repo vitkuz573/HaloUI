@@ -1,9 +1,9 @@
-.ui-notice {
-    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-info-subtle, #eff6ff) 100%, transparent);
-    --ui-notice-border-color: var(--ui-color-feedback-info-default, #3b82f6);
-    --ui-notice-icon-color: var(--ui-color-feedback-info-default, #3b82f6);
-    background: var(--ui-notice-background);
-    border: 1px solid var(--ui-notice-border-color);
+.halo-notice {
+    --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-info-subtle, #eff6ff) 100%, transparent);
+    --halo-notice-border-color: var(--halo-color-feedback-info-default, #3b82f6);
+    --halo-notice-icon-color: var(--halo-color-feedback-info-default, #3b82f6);
+    background: var(--halo-notice-background);
+    border: 1px solid var(--halo-notice-border-color);
     border-radius: 0.75rem;
     display: flex;
     align-items: flex-start;
@@ -15,32 +15,32 @@
     min-width: 0;
 }
 
-.ui-notice--info {
-    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-info-subtle, #eff6ff) 100%, transparent);
-    --ui-notice-border-color: var(--ui-color-feedback-info-default, #3b82f6);
-    --ui-notice-icon-color: var(--ui-color-feedback-info-default, #3b82f6);
+.halo-notice--info {
+    --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-info-subtle, #eff6ff) 100%, transparent);
+    --halo-notice-border-color: var(--halo-color-feedback-info-default, #3b82f6);
+    --halo-notice-icon-color: var(--halo-color-feedback-info-default, #3b82f6);
 }
 
-.ui-notice--success {
-    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-success-subtle, #ecfdf3) 100%, transparent);
-    --ui-notice-border-color: var(--ui-color-feedback-success-default, #10b981);
-    --ui-notice-icon-color: var(--ui-color-feedback-success-default, #10b981);
+.halo-notice--success {
+    --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-success-subtle, #ecfdf3) 100%, transparent);
+    --halo-notice-border-color: var(--halo-color-feedback-success-default, #10b981);
+    --halo-notice-icon-color: var(--halo-color-feedback-success-default, #10b981);
 }
 
-.ui-notice--warning {
-    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-warning-subtle, #fffbeb) 100%, transparent);
-    --ui-notice-border-color: var(--ui-color-feedback-warning-default, #f59e0b);
-    --ui-notice-icon-color: var(--ui-color-feedback-warning-default, #f59e0b);
+.halo-notice--warning {
+    --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-warning-subtle, #fffbeb) 100%, transparent);
+    --halo-notice-border-color: var(--halo-color-feedback-warning-default, #f59e0b);
+    --halo-notice-icon-color: var(--halo-color-feedback-warning-default, #f59e0b);
 }
 
-.ui-notice--danger {
-    --ui-notice-background: color-mix(in srgb, var(--ui-color-feedback-danger-subtle, #fef2f2) 100%, transparent);
-    --ui-notice-border-color: var(--ui-color-feedback-danger-default, #ef4444);
-    --ui-notice-icon-color: var(--ui-color-feedback-danger-default, #ef4444);
+.halo-notice--danger {
+    --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-danger-subtle, #fef2f2) 100%, transparent);
+    --halo-notice-border-color: var(--halo-color-feedback-danger-default, #ef4444);
+    --halo-notice-icon-color: var(--halo-color-feedback-danger-default, #ef4444);
 }
 
-.ui-notice__icon {
-    color: var(--ui-notice-icon-color);
+.halo-notice__icon {
+    color: var(--halo-notice-icon-color);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -49,18 +49,18 @@
     flex-shrink: 0;
 }
 
-.ui-notice__content {
+.halo-notice__content {
     min-width: 0;
     flex: 1 1 auto;
 }
 
 @media (max-width: 640px) {
-    .ui-notice {
+    .halo-notice {
         gap: 0.625rem;
         padding: 0.875rem;
     }
 
-    .ui-notice__icon {
+    .halo-notice__icon {
         inline-size: 1.5rem;
         block-size: 1.5rem;
     }

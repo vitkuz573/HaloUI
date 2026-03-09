@@ -24,9 +24,9 @@ public class HaloButtonTests : BunitContext
         var button = cut.Find("button");
         var classes = button.ClassList;
 
-        Assert.Contains("ui-button", classes);
-        Assert.Contains("ui-button--primary", classes);
-        Assert.Contains("ui-button--size-xs", classes);
+        Assert.Contains("halo-button", classes);
+        Assert.Contains("halo-button--primary", classes);
+        Assert.Contains("halo-button--size-xs", classes);
         Assert.Contains("custom-class", classes);
     }
 
@@ -39,7 +39,7 @@ public class HaloButtonTests : BunitContext
             .Add(p => p.AriaLabel, "Add device"));
 
         var button = cut.Find("button");
-        Assert.Contains("ui-button--icon-only", button.ClassList);
+        Assert.Contains("halo-button--icon-only", button.ClassList);
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class HaloButtonTests : BunitContext
             .AddChildContent("Save"));
 
         var button = cut.Find("button");
-        Assert.Contains("ui-button--full-width", button.ClassList);
+        Assert.Contains("halo-button--full-width", button.ClassList);
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class HaloButtonTests : BunitContext
 
         var button = cut.Find("button");
 
-        Assert.Contains("ui-button--density-compact", button.ClassList);
+        Assert.Contains("halo-button--density-compact", button.ClassList);
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class HaloButtonTests : BunitContext
 
         var button = cut.Find("button");
 
-        Assert.Contains("ui-button--active", button.ClassList);
+        Assert.Contains("halo-button--active", button.ClassList);
         Assert.Equal("true", button.GetAttribute("aria-pressed"));
     }
 
@@ -88,7 +88,7 @@ public class HaloButtonTests : BunitContext
 
         var button = cut.Find("button");
 
-        Assert.Contains("ui-button--active", button.ClassList);
+        Assert.Contains("halo-button--active", button.ClassList);
         Assert.Null(button.GetAttribute("aria-pressed"));
     }
 
@@ -109,12 +109,12 @@ public class HaloButtonTests : BunitContext
     private static readonly IReadOnlyDictionary<ButtonVariant, string> VariantClassMap =
         new Dictionary<ButtonVariant, string>
         {
-            [ButtonVariant.Primary] = "ui-button--primary",
-            [ButtonVariant.Secondary] = "ui-button--secondary",
-            [ButtonVariant.Tertiary] = "ui-button--tertiary",
-            [ButtonVariant.Danger] = "ui-button--danger",
-            [ButtonVariant.Warning] = "ui-button--warning",
-            [ButtonVariant.Ghost] = "ui-button--ghost"
+            [ButtonVariant.Primary] = "halo-button--primary",
+            [ButtonVariant.Secondary] = "halo-button--secondary",
+            [ButtonVariant.Tertiary] = "halo-button--tertiary",
+            [ButtonVariant.Danger] = "halo-button--danger",
+            [ButtonVariant.Warning] = "halo-button--warning",
+            [ButtonVariant.Ghost] = "halo-button--ghost"
         };
 
     public static TheoryData<ButtonVariant, string> VariantClassData

@@ -18,7 +18,7 @@ public sealed class HaloNoticeTests : BunitContext
             .Add(p => p.Variant, NoticeVariant.Info)
             .AddChildContent("Informational notice"));
 
-        var notice = cut.Find(".ui-notice");
+        var notice = cut.Find(".halo-notice");
 
         Assert.Null(notice.GetAttribute("role"));
         Assert.Null(notice.GetAttribute("aria-live"));
@@ -32,7 +32,7 @@ public sealed class HaloNoticeTests : BunitContext
             .Add(p => p.AnnounceChanges, true)
             .AddChildContent("Critical notice"));
 
-        var notice = cut.Find(".ui-notice");
+        var notice = cut.Find(".halo-notice");
 
         Assert.Equal("alert", notice.GetAttribute("role"));
         Assert.Equal("assertive", notice.GetAttribute("aria-live"));
@@ -49,7 +49,7 @@ public sealed class HaloNoticeTests : BunitContext
             .Add(p => p.AriaLabel, "System maintenance alert")
             .AddChildContent("Maintenance notice"));
 
-        var notice = cut.Find(".ui-notice");
+        var notice = cut.Find(".halo-notice");
 
         Assert.Equal("status", notice.GetAttribute("role"));
         Assert.Equal("off", notice.GetAttribute("aria-live"));
@@ -63,9 +63,9 @@ public sealed class HaloNoticeTests : BunitContext
             .Add(p => p.Variant, NoticeVariant.Success)
             .AddChildContent("Everything is good"));
 
-        var notice = cut.Find(".ui-notice");
+        var notice = cut.Find(".halo-notice");
 
-        Assert.Contains("ui-notice--success", notice.ClassList);
+        Assert.Contains("halo-notice--success", notice.ClassList);
         Assert.Null(notice.GetAttribute("style"));
     }
 }

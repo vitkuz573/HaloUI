@@ -113,7 +113,7 @@ public partial class HaloTreeViewNode<TValue>
         => Node.IsDisabled ? "true" : "false";
 
     private string GetNodeElementId()
-        => $"ui-tree-node-{Node.Id}";
+        => $"halo-tree-node-{Node.Id}";
 
     private string GetIndentStyle()
     {
@@ -127,16 +127,16 @@ public partial class HaloTreeViewNode<TValue>
 
     private string GetNodeClasses()
     {
-        var classes = new List<string> { "ui-tree__node" };
+        var classes = new List<string> { "halo-tree__node" };
 
         if (IsSelected)
         {
-            classes.Add("ui-tree__node--selected");
+            classes.Add("halo-tree__node--selected");
         }
 
         if (Node.IsDisabled)
         {
-            classes.Add("ui-tree__node--disabled");
+            classes.Add("halo-tree__node--disabled");
         }
 
         return string.Join(' ', classes);
@@ -149,29 +149,29 @@ public partial class HaloTreeViewNode<TValue>
             return GetToggleSpacerClasses();
         }
 
-        var classes = new List<string> { "ui-tree__toggle" };
+        var classes = new List<string> { "halo-tree__toggle" };
 
         if (Node.IsDisabled)
         {
-            classes.Add("ui-tree__toggle--disabled");
+            classes.Add("halo-tree__toggle--disabled");
         }
 
         return string.Join(' ', classes);
     }
 
-    private static string GetToggleSpacerClasses() => "ui-tree__toggle-spacer";
+    private static string GetToggleSpacerClasses() => "halo-tree__toggle-spacer";
 
     private string GetIconClasses()
     {
-        var classes = new List<string> { "ui-tree__icon" };
+        var classes = new List<string> { "halo-tree__icon" };
 
         if (Node.IsDisabled)
         {
-            classes.Add("ui-tree__icon--disabled");
+            classes.Add("halo-tree__icon--disabled");
         }
         else if (IsSelected)
         {
-            classes.Add("ui-tree__icon--selected");
+            classes.Add("halo-tree__icon--selected");
         }
 
         return string.Join(' ', classes);
@@ -179,15 +179,15 @@ public partial class HaloTreeViewNode<TValue>
 
     private string GetLabelClasses()
     {
-        var classes = new List<string> { "ui-tree__label" };
+        var classes = new List<string> { "halo-tree__label" };
 
         if (Node.IsDisabled)
         {
-            classes.Add("ui-tree__label--disabled");
+            classes.Add("halo-tree__label--disabled");
         }
         else if (IsSelected)
         {
-            classes.Add("ui-tree__label--selected");
+            classes.Add("halo-tree__label--selected");
         }
 
         return string.Join(' ', classes);
@@ -195,17 +195,17 @@ public partial class HaloTreeViewNode<TValue>
 
     private string GetBadgeClasses()
     {
-        var classes = new List<string> { "ui-tree__badge" };
+        var classes = new List<string> { "halo-tree__badge" };
 
         if (IsSelected)
         {
-            classes.Add("ui-tree__badge--selected");
+            classes.Add("halo-tree__badge--selected");
         }
 
         return string.Join(' ', classes);
     }
 
-    private static string GetGroupClasses() => "ui-tree__group";
+    private static string GetGroupClasses() => "halo-tree__group";
 
     protected override void Dispose(bool disposing)
     {

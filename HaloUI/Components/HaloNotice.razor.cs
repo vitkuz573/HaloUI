@@ -39,7 +39,7 @@ public partial class HaloNotice
     {
         var classes = new List<string>
         {
-            "ui-notice",
+            "halo-notice",
             GetVariantClass()
         };
 
@@ -48,10 +48,10 @@ public partial class HaloNotice
 
     private string GetVariantClass() => Variant switch
     {
-        NoticeVariant.Warning => "ui-notice--warning",
-        NoticeVariant.Danger => "ui-notice--danger",
-        NoticeVariant.Success => "ui-notice--success",
-        _ => "ui-notice--info"
+        NoticeVariant.Warning => "halo-notice--warning",
+        NoticeVariant.Danger => "halo-notice--danger",
+        NoticeVariant.Success => "halo-notice--success",
+        _ => "halo-notice--info"
     };
 
     private Dictionary<string, object>? BuildNoticeAttributes()

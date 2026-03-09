@@ -21,11 +21,11 @@ public sealed record TypographyTokens
 
 public sealed record FontFamilyTokens
 {
-    public string Sans { get; init; } = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'";
-    public string Serif { get; init; } = "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif";
-    public string Mono { get; init; } = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
-    public string Display { get; init; } = "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    public string Body { get; init; } = "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    public string Sans { get; init; } = "halo-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'";
+    public string Serif { get; init; } = "halo-serif, Georgia, Cambria, 'Times New Roman', Times, serif";
+    public string Mono { get; init; } = "halo-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
+    public string Display { get; init; } = "Inter, halo-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    public string Body { get; init; } = "Inter, halo-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 
     public static FontFamilyTokens Default { get; } = new();
 }

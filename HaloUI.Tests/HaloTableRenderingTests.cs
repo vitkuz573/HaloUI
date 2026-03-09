@@ -42,8 +42,8 @@ public sealed class HaloTableRenderingTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            Assert.Contains("ui-table__header-layout", cut.Markup, StringComparison.Ordinal);
-            Assert.Contains("ui-table__search-shell", cut.Markup, StringComparison.Ordinal);
+            Assert.Contains("halo-table__header-layout", cut.Markup, StringComparison.Ordinal);
+            Assert.Contains("halo-table__search-shell", cut.Markup, StringComparison.Ordinal);
             Assert.DoesNotContain("sm:", cut.Markup, StringComparison.Ordinal);
         });
     }

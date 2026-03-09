@@ -1,8 +1,8 @@
 @typeparam TValue
 
-<li role="none" class="ui-tree__item">
-    <div class="ui-tree__branch" style="@GetIndentStyle()">
-        <div class="ui-tree__header">
+<li role="none" class="halo-tree__item">
+    <div class="halo-tree__branch" style="@GetIndentStyle()">
+        <div class="halo-tree__header">
             @if (HasChildren)
             {
                 <span class="@GetToggleButtonClasses()"
@@ -10,7 +10,7 @@
                       aria-hidden="true"
                       @onclick="ToggleExpandedAsync"
                       @onclick:stopPropagation>
-                    <svg class="ui-tree__toggle-icon @(IsExpanded ? "ui-tree__toggle-icon--expanded" : string.Empty)"
+                    <svg class="halo-tree__toggle-icon @(IsExpanded ? "halo-tree__toggle-icon--expanded" : string.Empty)"
                          viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path d="M7.293 14.707a1 1 0 001.414 0l4.586-4.586a1 1 0 000-1.414L8.707 4.121A1 1 0 007.293 5.535L11.757 10l-4.464 4.465a1 1 0 000 1.414z" />
                     </svg>
@@ -41,7 +41,7 @@
                 }
                 else
                 {
-                    <div class="ui-tree__content">
+                    <div class="halo-tree__content">
                         @if (!string.IsNullOrEmpty(Node.Icon))
                         {
                             <span class="@GetIconClasses()">
@@ -49,11 +49,11 @@
                             </span>
                         }
 
-                        <div class="ui-tree__text">
+                        <div class="halo-tree__text">
                             <span class="@GetLabelClasses()">@Node.Label</span>
                             @if (!string.IsNullOrEmpty(Node.Description))
                             {
-                                <span class="ui-tree__description">@Node.Description</span>
+                                <span class="halo-tree__description">@Node.Description</span>
                             }
                         </div>
 

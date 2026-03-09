@@ -28,13 +28,13 @@ public class ThemeSdkTests
     [Fact]
     public void CssVariables_ProvidesNestedConstants()
     {
-        Assert.Equal("--ui-button-primary-background", ThemeCssVariables.Button.Primary.Background);
+        Assert.Equal("--halo-button-primary-background", ThemeCssVariables.Button.Primary.Background);
     }
 
     [Fact]
     public void CssVariables_CategoriesExposeGroupedVariables()
     {
-        Assert.Contains("--ui-button-primary-background", ThemeCssVariables.Categories["Button"]);
+        Assert.Contains("--halo-button-primary-background", ThemeCssVariables.Categories["Button"]);
     }
 
     [Fact]
@@ -49,7 +49,7 @@ public class ThemeSdkTests
         var markdown = ThemeDocs.CssVariablesMarkdown;
 
         Assert.Contains("## Button", markdown);
-        Assert.Contains("`--ui-button-primary-background`", markdown);
+        Assert.Contains("`--halo-button-primary-background`", markdown);
     }
 
     [Fact]
@@ -57,8 +57,8 @@ public class ThemeSdkTests
     {
         var results = ThemeDocs.Find("primary background");
 
-        Assert.Contains(results, entry => entry.Variable == "--ui-button-primary-background");
-        var result = results.First(entry => entry.Variable == "--ui-button-primary-background");
+        Assert.Contains(results, entry => entry.Variable == "--halo-button-primary-background");
+        var result = results.First(entry => entry.Variable == "--halo-button-primary-background");
         Assert.Equal("ThemeCssVariables.Button.Primary.Background", result.Path);
         Assert.Equal("Button", result.Category);
     }
@@ -66,8 +66,8 @@ public class ThemeSdkTests
     [Fact]
     public void CssVariables_MetadataIncludesCanonicalVariable()
     {
-        Assert.True(ThemeCssVariables.TryGetMetadata("--ui-button-primary-background", out var metadata));
-        Assert.Equal("--ui-button-primary-background", metadata.Variable);
+        Assert.True(ThemeCssVariables.TryGetMetadata("--halo-button-primary-background", out var metadata));
+        Assert.Equal("--halo-button-primary-background", metadata.Variable);
         Assert.Equal("Button", metadata.Category);
         Assert.Contains("Button", metadata.AccessorSegments);
         Assert.Contains("button", metadata.VariableSegments);
@@ -77,65 +77,65 @@ public class ThemeSdkTests
     [Fact]
     public void CssVariables_TryGetMetadataNormalizesInput()
     {
-        Assert.True(ThemeCssVariables.TryGetMetadata("ui-button-primary-background", out var metadata));
-        Assert.Equal("--ui-button-primary-background", metadata.Variable);
+        Assert.True(ThemeCssVariables.TryGetMetadata("halo-button-primary-background", out var metadata));
+        Assert.Equal("--halo-button-primary-background", metadata.Variable);
     }
 
     [Fact]
     public void CssVariables_TryGetAccessorReturnsConstantPath()
     {
-        Assert.True(ThemeCssVariables.TryGetAccessor("--ui-button-primary-background", out var accessor));
+        Assert.True(ThemeCssVariables.TryGetAccessor("--halo-button-primary-background", out var accessor));
         Assert.Equal("ThemeCssVariables.Button.Primary.Background", accessor);
     }
 
     [Fact]
     public void CssVariables_TryGetAccessorNormalizesInput()
     {
-        Assert.True(ThemeCssVariables.TryGetAccessor("ui-button-primary-background", out var accessor));
+        Assert.True(ThemeCssVariables.TryGetAccessor("halo-button-primary-background", out var accessor));
         Assert.Equal("ThemeCssVariables.Button.Primary.Background", accessor);
     }
 
     [Fact]
     public void CssVariables_GetAccessorOrDefaultReturnsNullForUnknown()
     {
-        Assert.Null(ThemeCssVariables.GetAccessorOrDefault("--ui-not-real"));
+        Assert.Null(ThemeCssVariables.GetAccessorOrDefault("--halo-not-real"));
     }
 
     [Fact]
     public void CssVariables_GetAccessorThrowsForUnknown()
     {
-        Assert.Throws<KeyNotFoundException>(() => ThemeCssVariables.GetAccessor("--ui-not-real"));
+        Assert.Throws<KeyNotFoundException>(() => ThemeCssVariables.GetAccessor("--halo-not-real"));
     }
 
     [Fact]
     public void CssVariables_TryResolveAliasFallsBackToCanonical()
     {
-        Assert.True(ThemeCssVariables.TryResolveAlias("--ui-button-primary-background", out var resolved));
-        Assert.Equal("--ui-button-primary-background", resolved);
+        Assert.True(ThemeCssVariables.TryResolveAlias("--halo-button-primary-background", out var resolved));
+        Assert.Equal("--halo-button-primary-background", resolved);
     }
 
     [Fact]
     public void CssVariables_TryResolveAliasReturnsFalseForUnknown()
     {
-        Assert.False(ThemeCssVariables.TryResolveAlias("--ui-not-real", out _));
+        Assert.False(ThemeCssVariables.TryResolveAlias("--halo-not-real", out _));
     }
 
     [Fact]
     public void CssVariables_IsAliasDetectsCanonicalEntry()
     {
-        Assert.False(ThemeCssVariables.IsAlias("--ui-button-primary-background"));
+        Assert.False(ThemeCssVariables.IsAlias("--halo-button-primary-background"));
     }
 
     [Fact]
     public void CssVariables_ResolveAliasThrowsForUnknown()
     {
-        Assert.Throws<KeyNotFoundException>(() => ThemeCssVariables.ResolveAlias("--ui-not-real"));
+        Assert.Throws<KeyNotFoundException>(() => ThemeCssVariables.ResolveAlias("--halo-not-real"));
     }
 
     [Fact]
     public void CssVariables_TryResolveAliasToAccessorFallsBackToConstantPath()
     {
-        Assert.True(ThemeCssVariables.TryResolveAliasToAccessor("--ui-button-primary-background", out var accessor));
+        Assert.True(ThemeCssVariables.TryResolveAliasToAccessor("--halo-button-primary-background", out var accessor));
         Assert.Equal("ThemeCssVariables.Button.Primary.Background", accessor);
     }
 
@@ -147,7 +147,7 @@ public class ThemeSdkTests
         Assert.Equal(JsonValueKind.Array, document.RootElement.ValueKind);
 
         var buttonEntry = document.RootElement.EnumerateArray()
-            .First(element => element.GetProperty("Variable").GetString() == "--ui-button-primary-background");
+            .First(element => element.GetProperty("Variable").GetString() == "--halo-button-primary-background");
 
         Assert.Equal("ThemeCssVariables.Button.Primary.Background", buttonEntry.GetProperty("Accessor").GetString());
         Assert.Contains("Button", buttonEntry.GetProperty("AccessorSegments").EnumerateArray().Select(e => e.GetString()));

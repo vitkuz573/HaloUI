@@ -34,7 +34,7 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
 
     private static readonly LocalizableString NamingTitle = "CSS variable does not follow Theme SDK naming";
     private static readonly LocalizableString NamingMessageFormat = "CSS variable \"{0}\" violates Theme SDK naming rules: {1}";
-    private static readonly LocalizableString NamingDescription = "Theme SDK CSS variables must start with the \"--ui-\" prefix and use lowercase kebab-case segments.";
+    private static readonly LocalizableString NamingDescription = "Theme SDK CSS variables must start with the \"--halo-\" prefix and use lowercase kebab-case segments.";
 
     private static readonly DiagnosticDescriptor NamingRule = new(InvalidNamingDiagnosticId, NamingTitle, NamingMessageFormat, "HaloUI.ThemeSdk", DiagnosticSeverity.Warning, isEnabledByDefault: true, description: NamingDescription);
 
@@ -222,7 +222,7 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
 
     private static bool ShouldSkipLiteralAsCssClass(SyntaxNodeAnalysisContext context, LiteralExpressionSyntax literal)
     {
-        if (!literal.Token.ValueText.StartsWith("ui-", StringComparison.OrdinalIgnoreCase))
+        if (!literal.Token.ValueText.StartsWith("halo-", StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }
@@ -299,7 +299,7 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
     {
         var value = literal.Token.ValueText;
 
-        if (!value.StartsWith("ui-", StringComparison.Ordinal))
+        if (!value.StartsWith("halo-", StringComparison.Ordinal))
         {
             return false;
         }
@@ -807,22 +807,22 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
 
         if (!candidate.StartsWith("--", StringComparison.Ordinal))
         {
-            if (candidate.StartsWith("ui-", StringComparison.Ordinal))
+            if (candidate.StartsWith("halo-", StringComparison.Ordinal))
             {
-                return "add the \"--\" prefix (\"--ui-\")";
+                return "add the \"--\" prefix (\"--halo-\")";
             }
 
-            return "Theme SDK variables must start with the \"--ui-\" prefix";
+            return "Theme SDK variables must start with the \"--halo-\" prefix";
         }
 
-        if (!candidate.StartsWith("--ui-", StringComparison.Ordinal))
+        if (!candidate.StartsWith("--halo-", StringComparison.Ordinal))
         {
-            return "Theme SDK variables must start with the \"--ui-\" prefix";
+            return "Theme SDK variables must start with the \"--halo-\" prefix";
         }
 
         if (candidate.Length <= 6)
         {
-            return "expected segments after \"--ui-\"";
+            return "expected segments after \"--halo-\"";
         }
 
         for (var i = 2; i < candidate.Length; i++)
@@ -953,12 +953,12 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
 
         if (allowMissingPrefix)
         {
-            if (trimmed.StartsWith("ui-", StringComparison.Ordinal))
+            if (trimmed.StartsWith("halo-", StringComparison.Ordinal))
             {
                 return trimmed.Length > 3;
             }
 
-            if (trimmed.StartsWith("-ui-", StringComparison.Ordinal))
+            if (trimmed.StartsWith("-halo-", StringComparison.Ordinal))
             {
                 return trimmed.Length > 4;
             }
@@ -981,12 +981,12 @@ public sealed class CssVariableLiteralAnalyzer : DiagnosticAnalyzer
             return trimmed;
         }
 
-        if (trimmed.StartsWith("ui-", StringComparison.Ordinal))
+        if (trimmed.StartsWith("halo-", StringComparison.Ordinal))
         {
             return "--" + trimmed;
         }
 
-        if (trimmed.StartsWith("-ui-", StringComparison.Ordinal))
+        if (trimmed.StartsWith("-halo-", StringComparison.Ordinal))
         {
             return "--" + trimmed.TrimStart('-');
         }

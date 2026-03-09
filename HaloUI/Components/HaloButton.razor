@@ -7,7 +7,7 @@
         @attributes="BuildButtonAttributes()">
     @if (Loading)
     {
-        <span class="material-icons ui-button__icon ui-button__icon--spinner">sync</span>
+        <span class="material-icons halo-button__icon halo-button__icon--spinner">sync</span>
 
         @if (!IconOnly)
         {
@@ -18,7 +18,7 @@
     {
         @if (!string.IsNullOrWhiteSpace(Icon))
         {
-            <span class="material-icons ui-button__icon">@Icon</span>
+            <span class="material-icons halo-button__icon">@Icon</span>
         }
         @if (!IconOnly && ChildContent is not null)
         {

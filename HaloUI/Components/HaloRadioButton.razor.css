@@ -1,72 +1,72 @@
-.ui-radio-button {
-    --ui-radio-background: var(--ui-radio-unselected-background);
-    --ui-radio-background-hover: var(--ui-radio-unselected-background-hover);
-    --ui-radio-border-color: var(--ui-radio-unselected-border);
-    --ui-radio-text-color: var(--ui-radio-unselected-text);
-    --ui-radio-text-secondary: var(--ui-radio-unselected-text-secondary);
-    --ui-radio-icon-color: var(--ui-radio-unselected-icon);
-    --ui-radio-indicator-color: var(--ui-radio-unselected-indicator);
+.halo-radio-button {
+    --halo-radio-background: var(--halo-radio-unselected-background);
+    --halo-radio-background-hover: var(--halo-radio-unselected-background-hover);
+    --halo-radio-border-color: var(--halo-radio-unselected-border);
+    --halo-radio-text-color: var(--halo-radio-unselected-text);
+    --halo-radio-text-secondary: var(--halo-radio-unselected-text-secondary);
+    --halo-radio-icon-color: var(--halo-radio-unselected-icon);
+    --halo-radio-indicator-color: var(--halo-radio-unselected-indicator);
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    gap: var(--ui-radio-gap, 0.5rem);
+    gap: var(--halo-radio-gap, 0.5rem);
     padding: 0.375rem 0.75rem;
-    border-radius: var(--ui-radio-border-radius);
-    border-width: var(--ui-radio-border-width);
+    border-radius: var(--halo-radio-border-radius);
+    border-width: var(--halo-radio-border-width);
     border-style: solid;
-    background: var(--ui-radio-background);
-    color: var(--ui-radio-text-color);
-    border-color: var(--ui-radio-border-color);
-    font-size: var(--ui-radio-font-size);
-    transition: var(--ui-radio-transition, all 150ms ease);
+    background: var(--halo-radio-background);
+    color: var(--halo-radio-text-color);
+    border-color: var(--halo-radio-border-color);
+    font-size: var(--halo-radio-font-size);
+    transition: var(--halo-radio-transition, all 150ms ease);
     cursor: pointer;
     width: auto;
     max-width: 100%;
     text-align: left;
 }
 
-.ui-radio-button:not(.ui-radio-button--disabled):hover {
-    background: var(--ui-radio-background-hover, var(--ui-radio-background));
+.halo-radio-button:not(.halo-radio-button--disabled):hover {
+    background: var(--halo-radio-background-hover, var(--halo-radio-background));
 }
 
-.ui-radio-button:not(.ui-radio-button--disabled):focus-visible {
-    outline: 2px solid var(--ui-color-focus-ring, #2563eb);
+.halo-radio-button:not(.halo-radio-button--disabled):focus-visible {
+    outline: 2px solid var(--halo-color-focus-ring, #2563eb);
     outline-offset: 2px;
 }
 
-.ui-radio-button--selected {
-    --ui-radio-background: var(--ui-radio-selected-background);
-    --ui-radio-background-hover: var(--ui-radio-selected-background-hover);
-    --ui-radio-border-color: var(--ui-radio-selected-border);
-    --ui-radio-text-color: var(--ui-radio-selected-text);
-    --ui-radio-text-secondary: var(--ui-radio-selected-text-secondary);
-    --ui-radio-icon-color: var(--ui-radio-selected-icon);
-    --ui-radio-indicator-color: var(--ui-radio-selected-indicator);
+.halo-radio-button--selected {
+    --halo-radio-background: var(--halo-radio-selected-background);
+    --halo-radio-background-hover: var(--halo-radio-selected-background-hover);
+    --halo-radio-border-color: var(--halo-radio-selected-border);
+    --halo-radio-text-color: var(--halo-radio-selected-text);
+    --halo-radio-text-secondary: var(--halo-radio-selected-text-secondary);
+    --halo-radio-icon-color: var(--halo-radio-selected-icon);
+    --halo-radio-indicator-color: var(--halo-radio-selected-indicator);
 }
 
-.ui-radio-button--disabled,
-.ui-radio-button[disabled] {
+.halo-radio-button--disabled,
+.halo-radio-button[disabled] {
     cursor: not-allowed;
     opacity: 0.65;
-    --ui-radio-background: var(--ui-radio-disabled-background);
-    --ui-radio-background-hover: var(--ui-radio-disabled-background-hover);
-    --ui-radio-border-color: var(--ui-radio-disabled-border);
-    --ui-radio-text-color: var(--ui-radio-disabled-text);
-    --ui-radio-text-secondary: var(--ui-radio-disabled-text-secondary);
-    --ui-radio-icon-color: var(--ui-radio-disabled-icon);
-    --ui-radio-indicator-color: var(--ui-radio-disabled-indicator);
+    --halo-radio-background: var(--halo-radio-disabled-background);
+    --halo-radio-background-hover: var(--halo-radio-disabled-background-hover);
+    --halo-radio-border-color: var(--halo-radio-disabled-border);
+    --halo-radio-text-color: var(--halo-radio-disabled-text);
+    --halo-radio-text-secondary: var(--halo-radio-disabled-text-secondary);
+    --halo-radio-icon-color: var(--halo-radio-disabled-icon);
+    --halo-radio-indicator-color: var(--halo-radio-disabled-indicator);
 }
 
-.ui-radio-button--segmented {
-    --ui-radio-background: var(--ui-radio-segmented-background-unselected);
-    --ui-radio-background-hover: var(--ui-radio-segmented-background-selected);
-    --ui-radio-border-color: transparent;
-    --ui-radio-text-color: var(--ui-radio-segmented-text-unselected);
-    --ui-radio-text-secondary: var(--ui-radio-segmented-text-secondary-unselected);
-    --ui-radio-icon-color: var(--ui-radio-segmented-icon-unselected);
-    --ui-radio-indicator-color: var(--ui-radio-segmented-icon-unselected);
-    padding: var(--ui-radio-segmented-padding-y) var(--ui-radio-segmented-padding-x);
-    gap: var(--ui-radio-segmented-gap);
+.halo-radio-button--segmented {
+    --halo-radio-background: var(--halo-radio-segmented-background-unselected);
+    --halo-radio-background-hover: var(--halo-radio-segmented-background-selected);
+    --halo-radio-border-color: transparent;
+    --halo-radio-text-color: var(--halo-radio-segmented-text-unselected);
+    --halo-radio-text-secondary: var(--halo-radio-segmented-text-secondary-unselected);
+    --halo-radio-icon-color: var(--halo-radio-segmented-icon-unselected);
+    --halo-radio-indicator-color: var(--halo-radio-segmented-icon-unselected);
+    padding: var(--halo-radio-segmented-padding-y) var(--halo-radio-segmented-padding-x);
+    gap: var(--halo-radio-segmented-gap);
     flex: 1 1 0;
     min-width: 160px;
     border-width: 0;
@@ -75,134 +75,134 @@
     justify-content: space-between;
 }
 
-.ui-radio-button--segmented:not(.ui-radio-button--disabled):hover {
-    --ui-radio-text-color: var(--ui-radio-segmented-text-selected);
-    --ui-radio-text-secondary: var(--ui-radio-segmented-text-secondary-selected);
-    --ui-radio-icon-color: var(--ui-radio-segmented-icon-selected);
-    --ui-radio-indicator-color: var(--ui-radio-segmented-indicator-selected, var(--ui-radio-segmented-icon-selected));
+.halo-radio-button--segmented:not(.halo-radio-button--disabled):hover {
+    --halo-radio-text-color: var(--halo-radio-segmented-text-selected);
+    --halo-radio-text-secondary: var(--halo-radio-segmented-text-secondary-selected);
+    --halo-radio-icon-color: var(--halo-radio-segmented-icon-selected);
+    --halo-radio-indicator-color: var(--halo-radio-segmented-indicator-selected, var(--halo-radio-segmented-icon-selected));
 }
 
-.ui-radio-button--segmented.ui-radio-button--selected {
-    --ui-radio-background: var(--ui-radio-segmented-background-selected);
-    --ui-radio-background-hover: var(--ui-radio-segmented-background-selected);
-    --ui-radio-text-color: var(--ui-radio-segmented-text-selected);
-    --ui-radio-text-secondary: var(--ui-radio-segmented-text-secondary-selected);
-    --ui-radio-icon-color: var(--ui-radio-segmented-icon-selected);
-    --ui-radio-indicator-color: var(--ui-radio-segmented-indicator-selected, var(--ui-radio-segmented-icon-selected));
+.halo-radio-button--segmented.halo-radio-button--selected {
+    --halo-radio-background: var(--halo-radio-segmented-background-selected);
+    --halo-radio-background-hover: var(--halo-radio-segmented-background-selected);
+    --halo-radio-text-color: var(--halo-radio-segmented-text-selected);
+    --halo-radio-text-secondary: var(--halo-radio-segmented-text-secondary-selected);
+    --halo-radio-icon-color: var(--halo-radio-segmented-icon-selected);
+    --halo-radio-indicator-color: var(--halo-radio-segmented-indicator-selected, var(--halo-radio-segmented-icon-selected));
 }
 
-.ui-radio-button__stack,
-.ui-radio-button__content,
-.ui-radio-button__segmented,
-.ui-radio-button__child {
+.halo-radio-button__stack,
+.halo-radio-button__content,
+.halo-radio-button__segmented,
+.halo-radio-button__child {
     display: flex;
     align-items: center;
 }
 
-.ui-radio-button__stack {
-    gap: var(--ui-radio-gap, 0.5rem);
+.halo-radio-button__stack {
+    gap: var(--halo-radio-gap, 0.5rem);
 }
 
-.ui-radio-button__content {
+.halo-radio-button__content {
     flex-direction: column;
     gap: 0.15rem;
 }
 
-.ui-radio-button__content--column {
+.halo-radio-button__content--column {
     flex: 1 1 auto;
     flex-direction: column;
     text-align: left;
     gap: 0.15rem;
 }
 
-.ui-radio-button__segmented {
+.halo-radio-button__segmented {
     width: 100%;
 }
 
-.ui-radio-button__meta {
+.halo-radio-button__meta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.ui-radio-button__label {
+.halo-radio-button__label {
     font-weight: 600;
-    color: var(--ui-radio-text-color);
+    color: var(--halo-radio-text-color);
 }
 
-.ui-radio-button__description {
+.halo-radio-button__description {
     font-size: 0.8rem;
-    color: var(--ui-radio-text-secondary);
+    color: var(--halo-radio-text-secondary);
     overflow-wrap: anywhere;
 }
 
-.ui-radio-button__badge {
+.halo-radio-button__badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--ui-badge-border-radius, 999px);
-    padding: var(--ui-radio-badge-padding-y) var(--ui-radio-badge-padding-x);
-    font-size: var(--ui-radio-badge-font-size);
+    border-radius: var(--halo-badge-border-radius, 999px);
+    padding: var(--halo-radio-badge-padding-y) var(--halo-radio-badge-padding-x);
+    font-size: var(--halo-radio-badge-font-size);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    background: var(--ui-radio-segmented-badge-background-unselected);
-    color: var(--ui-radio-segmented-badge-text-unselected);
+    background: var(--halo-radio-segmented-badge-background-unselected);
+    color: var(--halo-radio-segmented-badge-text-unselected);
 }
 
-.ui-radio-button--selected .ui-radio-button__badge {
-    background: var(--ui-radio-segmented-badge-background-selected);
-    color: var(--ui-radio-segmented-badge-text-selected);
+.halo-radio-button--selected .halo-radio-button__badge {
+    background: var(--halo-radio-segmented-badge-background-selected);
+    color: var(--halo-radio-segmented-badge-text-selected);
 }
 
-.ui-radio-button__indicator,
-.ui-radio-button__icon {
+.halo-radio-button__indicator,
+.halo-radio-button__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
 }
 
-.ui-radio-button__indicator {
-    font-size: var(--ui-radio-indicator-size, 1.1rem);
-    color: var(--ui-radio-indicator-color);
+.halo-radio-button__indicator {
+    font-size: var(--halo-radio-indicator-size, 1.1rem);
+    color: var(--halo-radio-indicator-color);
     flex-shrink: 0;
-    width: var(--ui-radio-indicator-size, 1.1rem);
-    height: var(--ui-radio-indicator-size, 1.1rem);
+    width: var(--halo-radio-indicator-size, 1.1rem);
+    height: var(--halo-radio-indicator-size, 1.1rem);
 }
 
-.ui-radio-button__icon {
-    font-size: var(--ui-radio-icon-size-standard, 1rem);
-    color: var(--ui-radio-icon-color);
+.halo-radio-button__icon {
+    font-size: var(--halo-radio-icon-size-standard, 1rem);
+    color: var(--halo-radio-icon-color);
 }
 
-.ui-radio-button--segmented .ui-radio-button__icon {
-    font-size: var(--ui-radio-icon-size-segmented, 1.1rem);
+.halo-radio-button--segmented .halo-radio-button__icon {
+    font-size: var(--halo-radio-icon-size-segmented, 1.1rem);
 }
 
-.ui-radio-button__child {
+.halo-radio-button__child {
     width: 100%;
     justify-content: space-between;
     gap: 0.75rem;
 }
 
 @media (max-width: 640px), (hover:none) and (pointer:coarse) {
-    .ui-radio-button {
+    .halo-radio-button {
         width: 100%;
-        min-height: max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+        min-height: max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
     }
 
-    .ui-radio-button--segmented {
+    .halo-radio-button--segmented {
         min-width: 0;
-        padding: max(var(--ui-radio-segmented-padding-y), 0.625rem) max(var(--ui-radio-segmented-padding-x), 0.75rem);
+        padding: max(var(--halo-radio-segmented-padding-y), 0.625rem) max(var(--halo-radio-segmented-padding-x), 0.75rem);
     }
 
-    .ui-radio-button__child,
-    .ui-radio-button__meta {
+    .halo-radio-button__child,
+    .halo-radio-button__meta {
         flex-wrap: wrap;
     }
 
-    .ui-radio-button__label {
+    .halo-radio-button__label {
         overflow-wrap: anywhere;
     }
 }

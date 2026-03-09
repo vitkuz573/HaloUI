@@ -24,8 +24,8 @@ const GALLERY_SECTIONS: readonly string[] = [
 ] as const;
 
 const DIALOG_OVERLAY_SELECTOR = '[data-dialog-open="true"]';
-const DIALOG_SURFACE_SELECTOR = '.ui-dialog__modal, .ui-dialog__drawer';
-const SNACKBAR_SELECTOR = '.ui-snackbar';
+const DIALOG_SURFACE_SELECTOR = '.halo-dialog__modal, .halo-dialog__drawer';
+const SNACKBAR_SELECTOR = '.halo-snackbar';
 
 test.describe('HaloUI screenshot gallery', () => {
   test.describe.configure({ mode: 'serial' });

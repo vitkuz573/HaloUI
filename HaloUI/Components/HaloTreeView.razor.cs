@@ -493,7 +493,7 @@ public partial class HaloTreeView<TValue>
 
     private string GetContainerClasses()
     {
-        var classes = new List<string> { "ui-tree" };
+        var classes = new List<string> { "halo-tree" };
 
         if (!string.IsNullOrWhiteSpace(Class))
         {

@@ -23,7 +23,7 @@ internal static class CssVariableGenerator
     {
         var set = new CssVariableSet();
 
-        AppendObject(set, "ui-theme", new
+        AppendObject(set, "halo-theme", new
         {
             Id = system.ThemeId,
             Variant = system.Variant.Name.ToLowerInvariant(),
@@ -31,30 +31,30 @@ internal static class CssVariableGenerator
             IsHighContrast = system.IsHighContrast ? "true" : "false"
         });
 
-        AppendObject(set, "ui-brand-colors", system.Brand.Colors);
-        AppendObject(set, "ui-brand-typography", system.Brand.Typography);
+        AppendObject(set, "halo-brand-colors", system.Brand.Colors);
+        AppendObject(set, "halo-brand-typography", system.Brand.Typography);
 
-        AppendObject(set, "ui-core-color", system.Core.Color);
-        AppendObject(set, "ui-core-spacing", system.Core.Spacing);
-        AppendObject(set, "ui-core-typography", system.Core.Typography);
-        AppendObject(set, "ui-core-border", system.Core.Border);
-        AppendObject(set, "ui-core-shadow", system.Core.Shadow);
-        AppendObject(set, "ui-core-transition", system.Core.Transition);
-        AppendObject(set, "ui-core-size", system.Core.Size);
-        AppendObject(set, "ui-core-z-index", system.Core.ZIndex);
-        AppendObject(set, "ui-core-opacity", system.Core.Opacity);
+        AppendObject(set, "halo-core-color", system.Core.Color);
+        AppendObject(set, "halo-core-spacing", system.Core.Spacing);
+        AppendObject(set, "halo-core-typography", system.Core.Typography);
+        AppendObject(set, "halo-core-border", system.Core.Border);
+        AppendObject(set, "halo-core-shadow", system.Core.Shadow);
+        AppendObject(set, "halo-core-transition", system.Core.Transition);
+        AppendObject(set, "halo-core-size", system.Core.Size);
+        AppendObject(set, "halo-core-z-index", system.Core.ZIndex);
+        AppendObject(set, "halo-core-opacity", system.Core.Opacity);
 
-        AppendObject(set, "ui-responsive-breakpoints", system.Responsive.Breakpoints);
-        AppendObject(set, "ui-responsive-container", system.Responsive.Container);
-        AppendObject(set, "ui-responsive-spacing", system.Responsive.Spacing);
-        AppendObject(set, "ui-responsive-typography", system.Responsive.Typography);
-        AppendObject(set, "ui-responsive-fluid", system.Responsive.Fluid);
+        AppendObject(set, "halo-responsive-breakpoints", system.Responsive.Breakpoints);
+        AppendObject(set, "halo-responsive-container", system.Responsive.Container);
+        AppendObject(set, "halo-responsive-spacing", system.Responsive.Spacing);
+        AppendObject(set, "halo-responsive-typography", system.Responsive.Typography);
+        AppendObject(set, "halo-responsive-fluid", system.Responsive.Fluid);
 
-        AppendObject(set, "ui-color", system.Semantic.Color);
-        AppendObject(set, "ui-spacing", system.Semantic.Spacing);
-        AppendObject(set, "ui-typography", system.Semantic.Typography);
-        AppendObject(set, "ui-size", system.Semantic.Size);
-        AppendObject(set, "ui-elevation", system.Semantic.Elevation);
+        AppendObject(set, "halo-color", system.Semantic.Color);
+        AppendObject(set, "halo-spacing", system.Semantic.Spacing);
+        AppendObject(set, "halo-typography", system.Semantic.Typography);
+        AppendObject(set, "halo-size", system.Semantic.Size);
+        AppendObject(set, "halo-elevation", system.Semantic.Elevation);
 
         foreach (var pair in system.Component.Tokens)
         {
@@ -63,20 +63,20 @@ internal static class CssVariableGenerator
                 continue;
             }
 
-            var prefix = $"ui-{CssVariableNaming.ToKebabCase(pair.Key)}";
+            var prefix = $"halo-{CssVariableNaming.ToKebabCase(pair.Key)}";
             AppendComponent(set, prefix, pair.Value);
         }
 
-        AppendObject(set, "ui-accessibility-focus", system.Accessibility.Focus);
-        AppendObject(set, "ui-accessibility-touch", system.Accessibility.Touch);
-        AppendObject(set, "ui-accessibility-contrast", system.Accessibility.Contrast);
-        AppendObject(set, "ui-accessibility-motion", system.Accessibility.Motion);
-        AppendObject(set, "ui-accessibility-screen-reader", system.Accessibility.ScreenReader);
+        AppendObject(set, "halo-accessibility-focus", system.Accessibility.Focus);
+        AppendObject(set, "halo-accessibility-touch", system.Accessibility.Touch);
+        AppendObject(set, "halo-accessibility-contrast", system.Accessibility.Contrast);
+        AppendObject(set, "halo-accessibility-motion", system.Accessibility.Motion);
+        AppendObject(set, "halo-accessibility-screen-reader", system.Accessibility.ScreenReader);
 
-        AppendObject(set, "ui-motion-duration", system.Motion.Duration);
-        AppendObject(set, "ui-motion-easing", system.Motion.Easing);
-        AppendObject(set, "ui-motion-animation", system.Motion.Animation);
-        AppendObject(set, "ui-motion-interaction", system.Motion.Interaction);
+        AppendObject(set, "halo-motion-duration", system.Motion.Duration);
+        AppendObject(set, "halo-motion-easing", system.Motion.Easing);
+        AppendObject(set, "halo-motion-animation", system.Motion.Animation);
+        AppendObject(set, "halo-motion-interaction", system.Motion.Interaction);
 
         if (overrides is null)
         {

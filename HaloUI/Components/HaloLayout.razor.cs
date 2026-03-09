@@ -93,24 +93,24 @@ public partial class HaloLayout
     public bool DisableContentPadding { get; set; }
 
     private string RootClass => JoinClasses(
-        "ui-layout",
-        Navigation is not null ? "ui-layout--has-navigation" : null,
-        Notification is not null ? "ui-layout--has-notification" : null,
+        "halo-layout",
+        Navigation is not null ? "halo-layout--has-navigation" : null,
+        Notification is not null ? "halo-layout--has-notification" : null,
         Class);
 
-    private string NavigationContainerClass => JoinClasses("ui-layout__navigation", NavigationExpanded ? "ui-layout__navigation--expanded" : "ui-layout__navigation--collapsed", NavigationClass);
+    private string NavigationContainerClass => JoinClasses("halo-layout__navigation", NavigationExpanded ? "halo-layout__navigation--expanded" : "halo-layout__navigation--collapsed", NavigationClass);
 
-    private string NotificationContainerClass => JoinClasses("ui-layout__notification", NotificationExpanded ? "ui-layout__notification--expanded" : "ui-layout__notification--collapsed", NotificationClass);
+    private string NotificationContainerClass => JoinClasses("halo-layout__notification", NotificationExpanded ? "halo-layout__notification--expanded" : "halo-layout__notification--collapsed", NotificationClass);
 
-    private string MainContainerClass => JoinClasses("ui-layout__main", MainClass);
+    private string MainContainerClass => JoinClasses("halo-layout__main", MainClass);
 
-    private string HeaderContainerClass => JoinClasses("ui-layout__header", HeaderClass);
+    private string HeaderContainerClass => JoinClasses("halo-layout__header", HeaderClass);
 
-    private string ToolbarContainerClass => JoinClasses("ui-layout__toolbar", ToolbarClass);
+    private string ToolbarContainerClass => JoinClasses("halo-layout__toolbar", ToolbarClass);
 
-    private string ContentContainerClass => JoinClasses("ui-layout__content", DisableContentPadding ? "ui-layout__content--no-padding" : null, ContentClass);
+    private string ContentContainerClass => JoinClasses("halo-layout__content", DisableContentPadding ? "halo-layout__content--no-padding" : null, ContentClass);
 
-    private string FooterContainerClass => JoinClasses("ui-layout__footer", FooterClass);
+    private string FooterContainerClass => JoinClasses("halo-layout__footer", FooterClass);
 
     private bool ShouldRenderOverlay => (NavigationOverlayEnabled && Navigation is not null && NavigationExpanded)
         || (NotificationOverlayEnabled && Notification is not null && NotificationExpanded);

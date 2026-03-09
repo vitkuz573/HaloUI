@@ -94,7 +94,7 @@ public partial class HaloCard
 
     private string BuildCardClass()
     {
-        var classes = new List<string> { "ui-card", GetVariantClass() };
+        var classes = new List<string> { "halo-card", GetVariantClass() };
 
         if (!string.IsNullOrWhiteSpace(Class))
         {
@@ -178,11 +178,11 @@ public partial class HaloCard
 
     private string BuildMediaClass()
     {
-        var classes = new List<string> { "ui-card__media" };
+        var classes = new List<string> { "halo-card__media" };
 
         if (MediaFullBleed)
         {
-            classes.Add("ui-card__media--full-bleed");
+            classes.Add("halo-card__media--full-bleed");
         }
 
         return string.Join(' ', classes);
@@ -192,11 +192,11 @@ public partial class HaloCard
     {
         return Variant switch
         {
-            CardVariant.Primary => "ui-card--variant-primary",
-            CardVariant.Success => "ui-card--variant-success",
-            CardVariant.Warning => "ui-card--variant-warning",
-            CardVariant.Danger => "ui-card--variant-danger",
-            _ => "ui-card--variant-default"
+            CardVariant.Primary => "halo-card--variant-primary",
+            CardVariant.Success => "halo-card--variant-success",
+            CardVariant.Warning => "halo-card--variant-warning",
+            CardVariant.Danger => "halo-card--variant-danger",
+            _ => "halo-card--variant-default"
         };
     }
 

@@ -30,28 +30,28 @@
 
     @if (HeaderContent is not null || !string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Subtitle))
     {
-        <div class="ui-card__header">
+        <div class="halo-card__header">
             @if (HeaderContent is not null)
             {
                 @HeaderContent
             }
             else
             {
-                <div class="ui-card__header-row">
-                    <div class="ui-card__header-text">
+                <div class="halo-card__header-row">
+                    <div class="halo-card__header-text">
                         @if (!string.IsNullOrWhiteSpace(Title))
                         {
-                            <span class="ui-card__title">@Title</span>
+                            <span class="halo-card__title">@Title</span>
                         }
                         @if (!string.IsNullOrWhiteSpace(Subtitle))
                         {
-                            <span class="ui-card__subtitle">@Subtitle</span>
+                            <span class="halo-card__subtitle">@Subtitle</span>
                         }
                     </div>
 
                     @if (!string.IsNullOrWhiteSpace(Icon))
                     {
-                        <span class="material-icons ui-card__icon" aria-hidden="true">@Icon</span>
+                        <span class="material-icons halo-card__icon" aria-hidden="true">@Icon</span>
                     }
                 </div>
             }
@@ -60,27 +60,27 @@
 
     @if (ChildContent is not null)
     {
-        <div class="ui-card__body">
+        <div class="halo-card__body">
             @ChildContent
         </div>
     }
     else if (!string.IsNullOrWhiteSpace(Value) || !string.IsNullOrWhiteSpace(Label))
     {
-        <div class="ui-card__body">
+        <div class="halo-card__body">
             @if (!string.IsNullOrWhiteSpace(Value))
             {
-                <p class="ui-card__value">@Value</p>
+                <p class="halo-card__value">@Value</p>
             }
             @if (!string.IsNullOrWhiteSpace(Label))
             {
-                <p class="ui-card__label">@Label</p>
+                <p class="halo-card__label">@Label</p>
             }
         </div>
     }
 
     @if (FooterContent is not null)
     {
-        <div class="ui-card__footer">
+        <div class="halo-card__footer">
             @FooterContent
         </div>
     }

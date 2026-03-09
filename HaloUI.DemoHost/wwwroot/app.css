@@ -1,11 +1,11 @@
 :root {
     font-family: "Roboto", "Segoe UI", sans-serif;
-    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--ui-color-interactive-primary, #3b82f6) 22%, transparent), transparent 55%),
-               radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--ui-color-semantic-info, #0ea5e9) 16%, transparent), transparent 40%),
-               var(--ui-color-background-primary, #f6f8fc);
-    --demo-surface: color-mix(in srgb, var(--ui-color-surface-default, #ffffff) 94%, rgba(15, 23, 42, 0.05));
-    --demo-border: color-mix(in srgb, var(--ui-color-interactive-primary, #3b82f6) 20%, rgba(148, 163, 184, 0.3));
-    --demo-muted: color-mix(in srgb, var(--ui-color-text-secondary, #475569) 92%, transparent);
+    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--halo-color-interactive-primary, #3b82f6) 22%, transparent), transparent 55%),
+               radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--halo-color-semantic-info, #0ea5e9) 16%, transparent), transparent 40%),
+               var(--halo-color-background-primary, #f6f8fc);
+    --demo-surface: color-mix(in srgb, var(--halo-color-surface-default, #ffffff) 94%, rgba(15, 23, 42, 0.05));
+    --demo-border: color-mix(in srgb, var(--halo-color-interactive-primary, #3b82f6) 20%, rgba(148, 163, 184, 0.3));
+    --demo-muted: color-mix(in srgb, var(--halo-color-text-secondary, #475569) 92%, transparent);
     --demo-gap: clamp(1rem, 2vw, 1.4rem);
     --demo-radius: 18px;
 }
@@ -13,17 +13,17 @@
 body {
     margin: 0;
     min-height: 100vh;
-    color: var(--ui-color-text-primary, #0f172a);
+    color: var(--halo-color-text-primary, #0f172a);
     background: var(--demo-bg);
 }
 
 body[data-theme="dark"] {
-    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--ui-color-interactive-primary, #60a5fa) 30%, transparent), transparent 60%),
-               radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--ui-color-semantic-info, #38bdf8) 20%, transparent), transparent 44%),
-               var(--ui-color-background-primary, #040816);
-    --demo-surface: color-mix(in srgb, var(--ui-color-surface-default, #0b1325) 92%, rgba(56, 189, 248, 0.1));
-    --demo-border: color-mix(in srgb, var(--ui-color-interactive-primary, #60a5fa) 24%, rgba(148, 163, 184, 0.35));
-    --demo-muted: color-mix(in srgb, var(--ui-color-text-secondary, #cbd5e1) 88%, transparent);
+    --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--halo-color-interactive-primary, #60a5fa) 30%, transparent), transparent 60%),
+               radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--halo-color-semantic-info, #38bdf8) 20%, transparent), transparent 44%),
+               var(--halo-color-background-primary, #040816);
+    --demo-surface: color-mix(in srgb, var(--halo-color-surface-default, #0b1325) 92%, rgba(56, 189, 248, 0.1));
+    --demo-border: color-mix(in srgb, var(--halo-color-interactive-primary, #60a5fa) 24%, rgba(148, 163, 184, 0.35));
+    --demo-muted: color-mix(in srgb, var(--halo-color-text-secondary, #cbd5e1) 88%, transparent);
 }
 
 .halo-demo {

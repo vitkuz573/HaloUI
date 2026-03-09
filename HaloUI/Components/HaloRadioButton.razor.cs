@@ -12,7 +12,7 @@ namespace HaloUI.Components;
 
 public partial class HaloRadioButton<TValue>
 {
-    private readonly string _optionId = $"ui-radio-{Guid.NewGuid():N}";
+    private readonly string _optionId = $"halo-radio-{Guid.NewGuid():N}";
     private ElementReference _buttonRef;
 
     [CascadingParameter]
@@ -82,21 +82,21 @@ public partial class HaloRadioButton<TValue>
 
     private string BuildButtonClasses(bool selected, bool segmented)
     {
-        var classes = new List<string> { "ui-radio-button" };
+        var classes = new List<string> { "halo-radio-button" };
 
         if (segmented)
         {
-            classes.Add("ui-radio-button--segmented");
+            classes.Add("halo-radio-button--segmented");
         }
 
         if (selected)
         {
-            classes.Add("ui-radio-button--selected");
+            classes.Add("halo-radio-button--selected");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-radio-button--disabled");
+            classes.Add("halo-radio-button--disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))

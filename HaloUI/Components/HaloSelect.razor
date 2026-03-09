@@ -13,7 +13,7 @@
         <HaloLabel Id="@LabelElementId" For="@InputId" Text="@Label" Variant="@ResolveLabelVariant()" Disabled="@(Disabled)" ShowRequiredIndicator="@(IsRequired)" />
     }
 
-    <div class="ui-select__control">
+    <div class="halo-select__control">
         @if (UseNativeSelectPresentation)
         {
             <select id="@InputId"
@@ -35,29 +35,29 @@
         else
         {
             <button type="button" id="@InputId" class="@BuildTriggerClass()" disabled="@IsTriggerDisabled" @onclick="() => ToggleDropdownAsync()" @onkeydown="HandleTriggerKeyDown" @attributes="BuildTriggerAttributes()" @ref="_triggerRef">
-                <span class="ui-select__trigger-text">
+                <span class="halo-select__trigger-text">
                     @if (SelectedOption is { } selected)
                     {
                         @selected.Content
                     }
                     else if (!string.IsNullOrEmpty(Placeholder))
                     {
-                        <span class="ui-select__placeholder">@Placeholder</span>
+                        <span class="halo-select__placeholder">@Placeholder</span>
                     }
                     else
                     {
-                        <span class="ui-select__placeholder">Select...</span>
+                        <span class="halo-select__placeholder">Select...</span>
                     }
                 </span>
-                <span class="material-icons ui-select__chevron" aria-hidden="true">expand_more</span>
+                <span class="material-icons halo-select__chevron" aria-hidden="true">expand_more</span>
             </button>
 
             @if (_isOpen)
             {
-                <div id="@_dropdownId" class="ui-select__dropdown" role="listbox" aria-labelledby="@InputId" style="@BuildDropdownPositionStyle()" tabindex="-1" @onkeydown="HandleDropdownKeyDown">
+                <div id="@_dropdownId" class="halo-select__dropdown" role="listbox" aria-labelledby="@InputId" style="@BuildDropdownPositionStyle()" tabindex="-1" @onkeydown="HandleDropdownKeyDown">
                     @if (_optionItems.Count == 0)
                     {
-                        <div class="ui-select__empty">No options</div>
+                        <div class="halo-select__empty">No options</div>
                     }
                     else
                     {
@@ -66,7 +66,7 @@
                             var isSelected = IsOptionSelected(option);
                             var isHighlighted = option == _highlightedOption;
                             <button @key="option.Id" type="button" id="@option.ElementId" role="option" class="@BuildOptionClass(isSelected, isHighlighted, option.Disabled)" disabled="@option.Disabled" aria-selected="@(isSelected ? "true" : "false")" @onclick="() => SelectOptionAsync(option)" @onpointerdown="args => MarkPointerInteraction(args, option)" @onmouseenter="() => HandleOptionMouseEnter(option)" @onfocus="() => HandleOptionFocus(option)" @onkeydown="args => HandleOptionKeyDown(args, option)" @onkeydown:stopPropagation="true" @ref="option.ElementRef">
-                                <span class="ui-select__option-label">
+                                <span class="halo-select__option-label">
                                     @option.Content
                                 </span>
                             </button>
@@ -79,7 +79,7 @@
 
     @if (!string.IsNullOrWhiteSpace(Description))
     {
-        <p class="ui-select__description"
+        <p class="halo-select__description"
            id="@DescriptionElementId">@Description</p>
     }
 

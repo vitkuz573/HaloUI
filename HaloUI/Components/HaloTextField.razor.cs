@@ -93,33 +93,33 @@ public partial class HaloTextField
     {
         var classes = new List<string>
         {
-            "ui-textfield",
+            "halo-textfield",
             GetSizeClass(Size)
         };
 
         if (IsInvalid)
         {
-            classes.Add("ui-textfield--error");
+            classes.Add("halo-textfield--error");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-textfield--disabled");
+            classes.Add("halo-textfield--disabled");
         }
 
         if (ReadOnly)
         {
-            classes.Add("ui-textfield--readonly");
+            classes.Add("halo-textfield--readonly");
         }
 
         if (StartAdornment is not null)
         {
-            classes.Add("ui-textfield--adorned-start");
+            classes.Add("halo-textfield--adorned-start");
         }
 
         if (EndAdornment is not null)
         {
-            classes.Add("ui-textfield--adorned-end");
+            classes.Add("halo-textfield--adorned-end");
         }
 
         return string.Join(' ', classes);
@@ -129,9 +129,9 @@ public partial class HaloTextField
     {
         return size switch
         {
-            InputFieldSize.Small => "ui-textfield--size-sm",
-            InputFieldSize.Large => "ui-textfield--size-lg",
-            _ => "ui-textfield--size-md"
+            InputFieldSize.Small => "halo-textfield--size-sm",
+            InputFieldSize.Large => "halo-textfield--size-lg",
+            _ => "halo-textfield--size-md"
         };
     }
 
@@ -154,7 +154,7 @@ public partial class HaloTextField
     {
         var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "ui-textfield__input"
+            "halo-textfield__input"
         };
 
         if (Disabled)
@@ -174,12 +174,12 @@ public partial class HaloTextField
 
         if (StartAdornment is not null)
         {
-            classes.Add("ui-textfield__input--adorned-start");
+            classes.Add("halo-textfield__input--adorned-start");
         }
 
         if (EndAdornment is not null)
         {
-            classes.Add("ui-textfield__input--adorned-end");
+            classes.Add("halo-textfield__input--adorned-end");
         }
 
         AddClasses(Class);

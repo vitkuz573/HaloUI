@@ -16,12 +16,12 @@ public sealed class CssVariableLiteralAnalyzerTests
 {
     class Component
     {
-        private const string Css = {|HAL001:""--ui-theme-id""|};
+        private const string Css = {|HAL001:""--halo-theme-id""|};
     }
 }
 ";
 
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-theme-id");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-theme-id");
 
         var fixedSource = @$"using HaloUI.Theme.Sdk.Css;
 
@@ -46,12 +46,12 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = {|HAL002:""--ui-theme-ik""|};
+        private const string Css = {|HAL002:""--halo-theme-ik""|};
     }
 }
 ";
 
-        var suggestionAccessor = ThemeVariableTestHelper.GetAccessor("--ui-theme-id");
+        var suggestionAccessor = ThemeVariableTestHelper.GetAccessor("--halo-theme-id");
 
         var fixedSource = @$"using HaloUI.Theme.Sdk.Css;
 
@@ -75,7 +75,7 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = {|HAL003:""ui-theme-id""|};
+        private const string Css = {|HAL003:""halo-theme-id""|};
     }
 }
 ";
@@ -90,7 +90,7 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = {|HAL003:""--ui-Button-Primary""|};
+        private const string Css = {|HAL003:""--halo-Button-Primary""|};
     }
 }
 ";
@@ -101,13 +101,13 @@ namespace Sample
     [Fact]
     public async Task ReportsTreeViewVariables()
     {
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-tree-view-node-background");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-tree-view-node-background");
 
         const string source = @"namespace Sample
 {
     class Component
     {
-        private const string Css = {|HAL001:""--ui-tree-view-node-background""|};
+        private const string Css = {|HAL001:""--halo-tree-view-node-background""|};
     }
 }
 ";
@@ -136,7 +136,7 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = {|HAL001:""var(--ui-button-primary-background, 1rem)""|};
+        private const string Css = {|HAL001:""var(--halo-button-primary-background, 1rem)""|};
     }
 }
 ";
@@ -152,7 +152,7 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = ""--ui-button-primary-background"";
+        private const string Css = ""--halo-button-primary-background"";
     }
 }
 ";
@@ -199,24 +199,24 @@ namespace Sample
 {
     class Component
     {
-        private const string Css = {|#0:""var(--ui-button-primary-background, var(--ui-theme-ik))""|};
+        private const string Css = {|#0:""var(--halo-button-primary-background, var(--halo-theme-ik))""|};
     }
 }
 ";
 
-        var primaryAccessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var primaryAccessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
 
         var primary = CSharpAnalyzerVerifier<CssVariableLiteralAnalyzer, CssVariableLiteralCodeFixProvider>
             .Diagnostic(CssVariableLiteralAnalyzer.DiagnosticId)
             .WithLocation(0)
-            .WithArguments("var(--ui-button-primary-background, var(--ui-theme-ik))", primaryAccessor);
+            .WithArguments("var(--halo-button-primary-background, var(--halo-theme-ik))", primaryAccessor);
 
-        var fallbackAccessor = ThemeVariableTestHelper.GetAccessor("--ui-theme-id");
+        var fallbackAccessor = ThemeVariableTestHelper.GetAccessor("--halo-theme-id");
 
         var fallback = CSharpAnalyzerVerifier<CssVariableLiteralAnalyzer, CssVariableLiteralCodeFixProvider>
             .Diagnostic(CssVariableLiteralAnalyzer.FallbackVariableDiagnosticId)
             .WithLocation(0)
-            .WithArguments("--ui-theme-ik", $"is not recognized. Did you mean {fallbackAccessor}?");
+            .WithArguments("--halo-theme-ik", $"is not recognized. Did you mean {fallbackAccessor}?");
 
         await CSharpAnalyzerVerifier<CssVariableLiteralAnalyzer, CssVariableLiteralCodeFixProvider>
             .VerifyAnalyzerAsync(source, primary, fallback);
@@ -231,17 +231,17 @@ namespace Sample
 {{
     class Component
     {{
-        private const string Css = {{|#0:""var(--ui-button-primary-background, var({aliasVariable}))""|}};
+        private const string Css = {{|#0:""var(--halo-button-primary-background, var({aliasVariable}))""|}};
     }}
 }}
 ";
 
-        var primaryAccessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var primaryAccessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
 
         var primary = CSharpAnalyzerVerifier<CssVariableLiteralAnalyzer, CssVariableLiteralCodeFixProvider>
             .Diagnostic(CssVariableLiteralAnalyzer.DiagnosticId)
             .WithLocation(0)
-            .WithArguments($"var(--ui-button-primary-background, var({aliasVariable}))", primaryAccessor);
+            .WithArguments($"var(--halo-button-primary-background, var({aliasVariable}))", primaryAccessor);
 
         var fallback = CSharpAnalyzerVerifier<CssVariableLiteralAnalyzer, CssVariableLiteralCodeFixProvider>
             .Diagnostic(CssVariableLiteralAnalyzer.FallbackVariableDiagnosticId)

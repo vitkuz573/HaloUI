@@ -58,20 +58,20 @@ public sealed partial class HaloNavLink
 
     private string BuildCssClass()
     {
-        var classes = new List<string> { "ui-nav-link" };
+        var classes = new List<string> { "halo-nav-link" };
 
         if (IsDanger)
         {
-            classes.Add("ui-nav-link--danger");
+            classes.Add("halo-nav-link--danger");
         }
         else
         {
-            classes.Add("ui-nav-link--neutral");
+            classes.Add("halo-nav-link--neutral");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-nav-link--disabled");
+            classes.Add("halo-nav-link--disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -87,19 +87,19 @@ public sealed partial class HaloNavLink
         if (!string.IsNullOrWhiteSpace(Icon))
         {
             builder.OpenElement(0, "span");
-            builder.AddAttribute(1, "class", IsDanger ? "material-icons ui-nav-link__icon ui-nav-link__icon--danger" : "material-icons ui-nav-link__icon ui-nav-link__icon--neutral");
+            builder.AddAttribute(1, "class", IsDanger ? "material-icons halo-nav-link__icon halo-nav-link__icon--danger" : "material-icons halo-nav-link__icon halo-nav-link__icon--neutral");
             builder.AddAttribute(2, "aria-hidden", "true");
             builder.AddContent(3, Icon);
             builder.CloseElement();
         }
 
         builder.OpenElement(10, "div");
-        builder.AddAttribute(11, "class", "ui-nav-link__content");
+        builder.AddAttribute(11, "class", "halo-nav-link__content");
 
         if (!string.IsNullOrWhiteSpace(Title))
         {
             builder.OpenElement(20, "div");
-            builder.AddAttribute(21, "class", "ui-nav-link__title");
+            builder.AddAttribute(21, "class", "halo-nav-link__title");
             builder.AddContent(22, Title);
             builder.CloseElement();
         }
@@ -107,7 +107,7 @@ public sealed partial class HaloNavLink
         if (!string.IsNullOrWhiteSpace(Description))
         {
             builder.OpenElement(30, "div");
-            builder.AddAttribute(31, "class", "ui-nav-link__description");
+            builder.AddAttribute(31, "class", "halo-nav-link__description");
             builder.AddContent(32, Description);
             builder.CloseElement();
         }

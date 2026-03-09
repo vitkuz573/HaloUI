@@ -23,17 +23,17 @@ public class HaloTextFieldTests : BunitContext
             .Add(p => p.StartAdornment, builder => builder.AddContent(0, "search"))
             .Add(p => p.EndAdornment, builder => builder.AddContent(0, "clear")));
 
-        var wrapper = cut.Find("div.ui-textfield");
-        Assert.Contains("ui-textfield", wrapper.ClassList);
-        Assert.Contains("ui-textfield--adorned-start", wrapper.ClassList);
-        Assert.Contains("ui-textfield--adorned-end", wrapper.ClassList);
-        Assert.Contains("ui-textfield--error", wrapper.ClassList);
-        Assert.Contains("ui-textfield--disabled", wrapper.ClassList);
+        var wrapper = cut.Find("div.halo-textfield");
+        Assert.Contains("halo-textfield", wrapper.ClassList);
+        Assert.Contains("halo-textfield--adorned-start", wrapper.ClassList);
+        Assert.Contains("halo-textfield--adorned-end", wrapper.ClassList);
+        Assert.Contains("halo-textfield--error", wrapper.ClassList);
+        Assert.Contains("halo-textfield--disabled", wrapper.ClassList);
 
         var input = cut.Find("input");
-        Assert.Contains("ui-textfield__input", input.ClassList);
-        Assert.Contains("ui-textfield__input--adorned-start", input.ClassList);
-        Assert.Contains("ui-textfield__input--adorned-end", input.ClassList);
+        Assert.Contains("halo-textfield__input", input.ClassList);
+        Assert.Contains("halo-textfield__input--adorned-start", input.ClassList);
+        Assert.Contains("halo-textfield__input--adorned-end", input.ClassList);
         Assert.Contains("is-error", input.ClassList);
         Assert.Contains("is-disabled", input.ClassList);
 
@@ -43,9 +43,9 @@ public class HaloTextFieldTests : BunitContext
         Assert.Equal("true", input.GetAttribute("aria-invalid"));
 
         var label = cut.Find("label");
-        Assert.Contains("ui-label", label.ClassList);
-        Assert.Contains("ui-label--variant-disabled", label.ClassList);
-        Assert.Contains("ui-label--state-disabled", label.ClassList);
+        Assert.Contains("halo-label", label.ClassList);
+        Assert.Contains("halo-label--variant-disabled", label.ClassList);
+        Assert.Contains("halo-label--state-disabled", label.ClassList);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class HaloTextFieldTests : BunitContext
             .Add(p => p.Type, TextFieldType.Text));
 
         var input = cut.Find("input");
-        Assert.Contains("ui-textfield__input", input.ClassList);
+        Assert.Contains("halo-textfield__input", input.ClassList);
         Assert.Contains("is-readonly", input.ClassList);
         Assert.Equal("readonly", input.GetAttribute("readonly"));
         Assert.Equal("true", input.GetAttribute("aria-readonly"));
@@ -74,20 +74,20 @@ public class HaloTextFieldTests : BunitContext
         Assert.Equal("required", input.GetAttribute("required"));
         Assert.Equal("true", input.GetAttribute("aria-required"));
 
-        var indicator = cut.Find(".ui-label__indicator--required");
+        var indicator = cut.Find(".halo-label__indicator--required");
         Assert.NotNull(indicator);
     }
 
     [Theory]
-    [InlineData(InputFieldSize.Small, "ui-textfield--size-sm")]
-    [InlineData(InputFieldSize.Medium, "ui-textfield--size-md")]
-    [InlineData(InputFieldSize.Large, "ui-textfield--size-lg")]
+    [InlineData(InputFieldSize.Small, "halo-textfield--size-sm")]
+    [InlineData(InputFieldSize.Medium, "halo-textfield--size-md")]
+    [InlineData(InputFieldSize.Large, "halo-textfield--size-lg")]
     public void Size_AddsExpectedModifierClass(InputFieldSize size, string expectedClass)
     {
         var cut = Render<HaloTextField>(parameters => parameters
             .Add(p => p.Size, size));
 
-        var wrapper = cut.Find("div.ui-textfield");
+        var wrapper = cut.Find("div.halo-textfield");
         Assert.Contains(expectedClass, wrapper.ClassList);
     }
 }

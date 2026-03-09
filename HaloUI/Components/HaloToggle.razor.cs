@@ -47,9 +47,9 @@ public partial class HaloToggle
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    private readonly string _inputId = AccessibilityIdGenerator.Create("ui-toggle");
-    private readonly string _generatedLabelId = AccessibilityIdGenerator.Create("ui-toggle-label");
-    private readonly string _generatedDescriptionId = AccessibilityIdGenerator.Create("ui-toggle-description");
+    private readonly string _inputId = AccessibilityIdGenerator.Create("halo-toggle");
+    private readonly string _generatedLabelId = AccessibilityIdGenerator.Create("halo-toggle-label");
+    private readonly string _generatedDescriptionId = AccessibilityIdGenerator.Create("halo-toggle-description");
 
     private bool HasVisualLabel => ChildContent is not null || !string.IsNullOrWhiteSpace(Label);
     
@@ -91,18 +91,18 @@ public partial class HaloToggle
     {
         var classes = new List<string>
         {
-            "ui-toggle",
+            "halo-toggle",
             GetSizeClass(Size)
         };
 
         if (Checked)
         {
-            classes.Add("ui-toggle--checked");
+            classes.Add("halo-toggle--checked");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-toggle--disabled");
+            classes.Add("halo-toggle--disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -117,20 +117,20 @@ public partial class HaloToggle
     {
         return size switch
         {
-            ToggleSize.Small => "ui-toggle--size-sm",
-            ToggleSize.Large => "ui-toggle--size-lg",
-            _ => "ui-toggle--size-md"
+            ToggleSize.Small => "halo-toggle--size-sm",
+            ToggleSize.Large => "halo-toggle--size-lg",
+            _ => "halo-toggle--size-md"
         };
     }
 
     private static string BuildLabelClass()
     {
-        return "ui-toggle__label";
+        return "halo-toggle__label";
     }
 
     private static string BuildDescriptionClass()
     {
-        return "ui-toggle__description";
+        return "halo-toggle__description";
     }
 
     private Dictionary<string, object>? BuildInputAttributes()

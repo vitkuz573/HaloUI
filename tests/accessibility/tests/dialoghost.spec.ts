@@ -17,7 +17,7 @@ test.describe('DialogHost demo interactions', () => {
     await trigger.click();
 
     const overlay = page.locator('[data-dialog-open="true"]').first();
-    const surface = page.locator('.ui-dialog__modal, .ui-dialog__drawer').first();
+    const surface = page.locator('.halo-dialog__modal, .halo-dialog__drawer').first();
 
     await expect(overlay).toBeVisible();
     await expect(surface).toBeVisible();

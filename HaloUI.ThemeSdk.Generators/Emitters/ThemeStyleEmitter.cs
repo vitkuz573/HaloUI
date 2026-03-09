@@ -123,7 +123,7 @@ internal static class ThemeStyleEmitter
         foreach (var entry in docEntries)
         {
             var variable = entry.Variable;
-            if (!variable.StartsWith("--ui-", StringComparison.Ordinal))
+            if (!variable.StartsWith("--halo-", StringComparison.Ordinal))
             {
                 continue;
             }
@@ -138,7 +138,7 @@ internal static class ThemeStyleEmitter
                 continue;
             }
 
-            // segments[0] == "ui"
+            // segments[0] == "halo"
             var tail = segments.Skip(1).ToArray();
             if (tail.Length == 0)
             {

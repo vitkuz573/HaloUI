@@ -30,7 +30,7 @@ public sealed class HaloTableAccessibilityTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            var rowSelectionInputs = cut.FindAll("tbody input.ui-table__selection-input");
+            var rowSelectionInputs = cut.FindAll("tbody input.halo-table__selection-input");
             Assert.Equal(2, rowSelectionInputs.Count);
             Assert.Equal("Select row APAC Edge 01", rowSelectionInputs[0].GetAttribute("aria-label"));
             Assert.Equal("Select row EMEA Relay 02", rowSelectionInputs[1].GetAttribute("aria-label"));
@@ -48,7 +48,7 @@ public sealed class HaloTableAccessibilityTests : BunitContext
             .Add(p => p.Columns, BuildColumns(filterable: true))
             .Add(p => p.Options, options));
 
-        var filterInput = cut.Find(".ui-table__filter-input");
+        var filterInput = cut.Find(".halo-table__filter-input");
         Assert.Equal("Filter by Device", filterInput.GetAttribute("aria-label"));
     }
 

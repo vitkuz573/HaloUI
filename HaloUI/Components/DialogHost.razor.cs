@@ -386,14 +386,14 @@ public partial class DialogHost : IAsyncDisposable
 
     private static string BuildOverlayClass(DialogVariantOptions variant)
     {
-        var classes = new List<string> { "ui-dialog-host" };
+        var classes = new List<string> { "halo-dialog-host" };
 
         if (variant is DialogDrawerOptions drawer)
         {
-            classes.Add("ui-dialog-host--drawer");
+            classes.Add("halo-dialog-host--drawer");
             classes.Add(drawer.Placement == DialogDrawerPlacement.Start
-                ? "ui-dialog-host--drawer-start"
-                : "ui-dialog-host--drawer-end");
+                ? "halo-dialog-host--drawer-start"
+                : "halo-dialog-host--drawer-end");
         }
 
         return string.Join(" ", classes);
@@ -426,19 +426,19 @@ public partial class DialogHost : IAsyncDisposable
 
         if (variant is DialogDrawerOptions drawer)
         {
-            classes.Add("ui-dialog__drawer");
+            classes.Add("halo-dialog__drawer");
             classes.Add(drawer.Placement == DialogDrawerPlacement.Start
-                ? "ui-dialog__drawer--start"
-                : "ui-dialog__drawer--end");
+                ? "halo-dialog__drawer--start"
+                : "halo-dialog__drawer--end");
         }
         else
         {
-            classes.Add("ui-dialog__modal");
+            classes.Add("halo-dialog__modal");
         }
 
         if (options.Busy)
         {
-            classes.Add("ui-dialog__busy");
+            classes.Add("halo-dialog__busy");
         }
 
         return string.Join(" ", classes);
@@ -448,10 +448,10 @@ public partial class DialogHost : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "ui-dialog__drawer-handle",
+            "halo-dialog__drawer-handle",
             drawer.Placement == DialogDrawerPlacement.Start
-                ? "ui-dialog__drawer-handle--start"
-                : "ui-dialog__drawer-handle--end"
+                ? "halo-dialog__drawer-handle--start"
+                : "halo-dialog__drawer-handle--end"
         };
 
         return string.Join(" ", classes);

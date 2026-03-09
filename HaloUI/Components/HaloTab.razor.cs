@@ -9,8 +9,8 @@ namespace HaloUI.Components;
 
 public partial class HaloTab
 {
-    private readonly string _tabId = $"ui-tab-{Guid.NewGuid():N}";
-    private readonly string _panelId = $"ui-tab-panel-{Guid.NewGuid():N}";
+    private readonly string _tabId = $"halo-tab-{Guid.NewGuid():N}";
+    private readonly string _panelId = $"halo-tab-panel-{Guid.NewGuid():N}";
     private bool? _lastDisabled;
 
     [CascadingParameter]

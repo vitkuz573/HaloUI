@@ -85,14 +85,14 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     [Parameter]
     public bool UseNativeSelectOnMobile { get; set; } = true;
 
-    private readonly string _selectId = AccessibilityIdGenerator.Create("ui-select");
+    private readonly string _selectId = AccessibilityIdGenerator.Create("halo-select");
     private readonly string _rootId;
     private readonly string _dropdownId;
     private string? _descriptionElementId;
 
     private string? DescriptionElementId => string.IsNullOrWhiteSpace(Description)
         ? null
-        : _descriptionElementId ??= AccessibilityIdGenerator.Create("ui-select-description");
+        : _descriptionElementId ??= AccessibilityIdGenerator.Create("halo-select-description");
 
     private readonly List<OptionItem> _optionItems = [];
     private readonly List<OptionItem> _generatedEnumOptions = [];
@@ -1289,12 +1289,12 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "ui-select",
+            "halo-select",
             Size switch
             {
-                InputFieldSize.Small => "ui-select--size-sm",
-                InputFieldSize.Large => "ui-select--size-lg",
-                _ => "ui-select--size-md"
+                InputFieldSize.Small => "halo-select--size-sm",
+                InputFieldSize.Large => "halo-select--size-lg",
+                _ => "halo-select--size-md"
             }
         };
 
@@ -1305,27 +1305,27 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         if (IsInvalid)
         {
-            classes.Add("ui-select--error");
+            classes.Add("halo-select--error");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-select--disabled");
+            classes.Add("halo-select--disabled");
         }
 
         if (ReadOnly)
         {
-            classes.Add("ui-select--readonly");
+            classes.Add("halo-select--readonly");
         }
 
         if (_isOpen)
         {
-            classes.Add("ui-select--open");
+            classes.Add("halo-select--open");
         }
 
         if (UseNativeSelectPresentation)
         {
-            classes.Add("ui-select--native");
+            classes.Add("halo-select--native");
         }
 
         return string.Join(' ', classes);
@@ -1336,9 +1336,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return AutoThemeStyleBuilder.MergeAttributes(AdditionalAttributes);
     }
 
-    private string BuildTriggerClass() => BuildControlClass("ui-select__trigger");
+    private string BuildTriggerClass() => BuildControlClass("halo-select__trigger");
 
-    private string BuildNativeSelectClass() => BuildControlClass("ui-select__native");
+    private string BuildNativeSelectClass() => BuildControlClass("halo-select__native");
 
     private string BuildControlClass(string baseClass)
     {
@@ -1458,21 +1458,21 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private static string BuildOptionClass(bool isSelected, bool isHighlighted, bool isDisabled)
     {
-        var classes = new List<string> { "ui-select__option" };
+        var classes = new List<string> { "halo-select__option" };
 
         if (isSelected)
         {
-            classes.Add("ui-select__option--selected");
+            classes.Add("halo-select__option--selected");
         }
 
         if (isHighlighted)
         {
-            classes.Add("ui-select__option--highlighted");
+            classes.Add("halo-select__option--highlighted");
         }
 
         if (isDisabled)
         {
-            classes.Add("ui-select__option--disabled");
+            classes.Add("halo-select__option--disabled");
         }
 
         return string.Join(' ', classes);

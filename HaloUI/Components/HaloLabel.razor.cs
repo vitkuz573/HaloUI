@@ -224,7 +224,7 @@ public partial class HaloLabel
             }
         }
 
-        _generatedId ??= AccessibilityIdGenerator.Create("ui-label");
+        _generatedId ??= AccessibilityIdGenerator.Create("halo-label");
         return _generatedId;
     }
 
@@ -240,7 +240,7 @@ public partial class HaloLabel
             return DescriptionId;
         }
 
-        _generatedDescriptionId ??= AccessibilityIdGenerator.Create("ui-label-desc");
+        _generatedDescriptionId ??= AccessibilityIdGenerator.Create("halo-label-desc");
         return _generatedDescriptionId;
     }
 
@@ -335,59 +335,59 @@ public partial class HaloLabel
     {
         var classes = new List<string>
         {
-            "ui-label",
-            $"ui-label--variant-{EffectiveVariant.ToString().ToLowerInvariant()}",
+            "halo-label",
+            $"halo-label--variant-{EffectiveVariant.ToString().ToLowerInvariant()}",
             GetSizeClass(Size),
             GetWeightClass(Weight)
         };
 
         if (Inline)
         {
-            classes.Add("ui-label--inline");
+            classes.Add("halo-label--inline");
         }
         else
         {
-            classes.Add("ui-label--block");
+            classes.Add("halo-label--block");
         }
 
         if (FullWidth && !Inline)
         {
-            classes.Add("ui-label--full-width");
+            classes.Add("halo-label--full-width");
         }
 
         if (!AllowWrap)
         {
-            classes.Add("ui-label--no-wrap");
+            classes.Add("halo-label--no-wrap");
         }
 
         if (VisuallyHidden)
         {
-            classes.Add("ui-label--visually-hidden");
+            classes.Add("halo-label--visually-hidden");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-label--state-disabled");
+            classes.Add("halo-label--state-disabled");
         }
 
         if (RemoveMargin)
         {
-            classes.Add("ui-label--no-margin");
+            classes.Add("halo-label--no-margin");
         }
 
         if (!Uppercase)
         {
-            classes.Add("ui-label--no-transform");
+            classes.Add("halo-label--no-transform");
         }
 
         if (HasIcon)
         {
-            classes.Add("ui-label--has-icon");
+            classes.Add("halo-label--has-icon");
         }
 
         if (HasDescription)
         {
-            classes.Add("ui-label--has-description");
+            classes.Add("halo-label--has-description");
         }
 
         return string.Join(' ', classes);
@@ -397,12 +397,12 @@ public partial class HaloLabel
     {
         return size switch
         {
-            LabelSize.ExtraSmall => "ui-label--size-xs",
-            LabelSize.Small => "ui-label--size-sm",
-            LabelSize.Medium => "ui-label--size-md",
-            LabelSize.Large => "ui-label--size-lg",
-            LabelSize.ExtraLarge => "ui-label--size-xl",
-            _ => "ui-label--size-sm"
+            LabelSize.ExtraSmall => "halo-label--size-xs",
+            LabelSize.Small => "halo-label--size-sm",
+            LabelSize.Medium => "halo-label--size-md",
+            LabelSize.Large => "halo-label--size-lg",
+            LabelSize.ExtraLarge => "halo-label--size-xl",
+            _ => "halo-label--size-sm"
         };
     }
 
@@ -410,11 +410,11 @@ public partial class HaloLabel
     {
         return weight switch
         {
-            LabelWeight.Regular => "ui-label--weight-regular",
-            LabelWeight.Medium => "ui-label--weight-medium",
-            LabelWeight.SemiBold => "ui-label--weight-semibold",
-            LabelWeight.Bold => "ui-label--weight-bold",
-            _ => "ui-label--weight-semibold"
+            LabelWeight.Regular => "halo-label--weight-regular",
+            LabelWeight.Medium => "halo-label--weight-medium",
+            LabelWeight.SemiBold => "halo-label--weight-semibold",
+            LabelWeight.Bold => "halo-label--weight-bold",
+            _ => "halo-label--weight-semibold"
         };
     }
 
@@ -465,19 +465,19 @@ public partial class HaloLabel
     private RenderFragment RenderLabelContent => builder =>
     {
         builder.OpenElement(0, "span");
-        builder.AddAttribute(1, "class", "ui-label__inner");
+        builder.AddAttribute(1, "class", "halo-label__inner");
 
         if (PrefixContent is not null)
         {
             builder.OpenElement(2, "span");
-            builder.AddAttribute(3, "class", "ui-label__icon");
+            builder.AddAttribute(3, "class", "halo-label__icon");
             PrefixContent(builder);
             builder.CloseElement();
         }
         else if (!string.IsNullOrWhiteSpace(Icon))
         {
             builder.OpenElement(4, "span");
-            builder.AddAttribute(5, "class", "material-icons ui-label__icon");
+            builder.AddAttribute(5, "class", "material-icons halo-label__icon");
             builder.AddContent(6, Icon);
             builder.CloseElement();
         }
@@ -485,7 +485,7 @@ public partial class HaloLabel
         if (HasTextContent)
         {
             builder.OpenElement(7, "span");
-            builder.AddAttribute(8, "class", "ui-label__text");
+            builder.AddAttribute(8, "class", "halo-label__text");
 
             if (!string.IsNullOrWhiteSpace(Text))
             {
@@ -503,7 +503,7 @@ public partial class HaloLabel
         if (ShowRequiredIndicator)
         {
             builder.OpenElement(10, "span");
-            builder.AddAttribute(11, "class", "ui-label__indicator ui-label__indicator--required");
+            builder.AddAttribute(11, "class", "halo-label__indicator halo-label__indicator--required");
             builder.AddAttribute(12, "aria-hidden", "true");
             if (!string.IsNullOrWhiteSpace(_indicatorTokens.RequiredColor))
             {
@@ -515,7 +515,7 @@ public partial class HaloLabel
             if (!string.IsNullOrWhiteSpace(RequiredIndicatorAnnouncement))
             {
                 builder.OpenElement(15, "span");
-                builder.AddAttribute(16, "class", "ui-label__sr-only");
+                builder.AddAttribute(16, "class", "halo-label__sr-only");
                 builder.AddContent(17, RequiredIndicatorAnnouncement);
                 builder.CloseElement();
             }
@@ -523,7 +523,7 @@ public partial class HaloLabel
         else if (ShowOptionalIndicator)
         {
             builder.OpenElement(18, "span");
-            builder.AddAttribute(19, "class", "ui-label__indicator ui-label__indicator--optional");
+            builder.AddAttribute(19, "class", "halo-label__indicator halo-label__indicator--optional");
             if (!string.IsNullOrWhiteSpace(_indicatorTokens.OptionalColor))
             {
                 builder.AddAttribute(20, "style", $"color:{_indicatorTokens.OptionalColor}");
@@ -534,7 +534,7 @@ public partial class HaloLabel
             if (!string.IsNullOrWhiteSpace(OptionalIndicatorAnnouncement))
             {
                 builder.OpenElement(22, "span");
-                builder.AddAttribute(23, "class", "ui-label__sr-only");
+                builder.AddAttribute(23, "class", "halo-label__sr-only");
                 builder.AddContent(24, OptionalIndicatorAnnouncement);
                 builder.CloseElement();
             }
@@ -543,7 +543,7 @@ public partial class HaloLabel
         if (SuffixContent is not null)
         {
             builder.OpenElement(25, "span");
-            builder.AddAttribute(26, "class", "ui-label__suffix");
+            builder.AddAttribute(26, "class", "halo-label__suffix");
             SuffixContent(builder);
             builder.CloseElement();
         }

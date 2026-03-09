@@ -55,10 +55,10 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            Assert.Empty(cut.FindAll(".ui-select__dropdown"));
+            Assert.Empty(cut.FindAll(".halo-select__dropdown"));
         });
 
-        var triggerText = cut.Find(".ui-select__trigger-text").TextContent.Trim();
+        var triggerText = cut.Find(".halo-select__trigger-text").TextContent.Trim();
         Assert.Equal("Alpha", triggerText);
     }
 
@@ -100,24 +100,24 @@ public class HaloSelectTests : BunitContext
             .Add(p => p.Required, true)
             .Add(p => p.UseEnumOptions, true));
 
-        var trigger = cut.Find("button.ui-select__trigger");
+        var trigger = cut.Find("button.halo-select__trigger");
         Assert.Equal("true", trigger.GetAttribute("aria-required"));
 
-        var indicator = cut.Find(".ui-label__indicator--required");
+        var indicator = cut.Find(".halo-label__indicator--required");
         Assert.NotNull(indicator);
     }
 
     [Theory]
-    [InlineData(InputFieldSize.Small, "ui-select--size-sm")]
-    [InlineData(InputFieldSize.Medium, "ui-select--size-md")]
-    [InlineData(InputFieldSize.Large, "ui-select--size-lg")]
+    [InlineData(InputFieldSize.Small, "halo-select--size-sm")]
+    [InlineData(InputFieldSize.Medium, "halo-select--size-md")]
+    [InlineData(InputFieldSize.Large, "halo-select--size-lg")]
     public void Size_AddsExpectedWrapperClass(InputFieldSize size, string expectedClass)
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Size, size)
             .Add(p => p.UseEnumOptions, true));
 
-        var wrapper = cut.Find("div.ui-select");
+        var wrapper = cut.Find("div.halo-select");
         Assert.Contains(expectedClass, wrapper.ClassList);
     }
 
@@ -178,8 +178,8 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            Assert.Empty(cut.FindAll(".ui-select__dropdown"));
-            Assert.NotEmpty(cut.FindAll("select.ui-select__native"));
+            Assert.Empty(cut.FindAll(".halo-select__dropdown"));
+            Assert.NotEmpty(cut.FindAll("select.halo-select__native"));
         });
     }
 
@@ -196,8 +196,8 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            Assert.NotEmpty(cut.FindAll("button.ui-select__trigger"));
-            Assert.Empty(cut.FindAll("select.ui-select__native"));
+            Assert.NotEmpty(cut.FindAll("button.halo-select__trigger"));
+            Assert.Empty(cut.FindAll("select.halo-select__native"));
         });
     }
 
@@ -209,11 +209,11 @@ public class HaloSelectTests : BunitContext
             .Add(p => p.UseEnumOptions, true));
 
         OpenDropdown(cut);
-        cut.Find("button.ui-select__trigger").KeyDown(new KeyboardEventArgs { Key = "g" });
+        cut.Find("button.halo-select__trigger").KeyDown(new KeyboardEventArgs { Key = "g" });
 
         cut.WaitForAssertion(() =>
         {
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal("Gamma", highlighted.TextContent.Trim());
         });
     }
@@ -234,7 +234,7 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal("Beta", highlighted.TextContent.Trim());
         });
 
@@ -256,8 +256,8 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            var trigger = cut.Find("button.ui-select__trigger");
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var trigger = cut.Find("button.halo-select__trigger");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal(highlighted.Id, trigger.GetAttribute("aria-activedescendant"));
         });
     }
@@ -271,7 +271,7 @@ public class HaloSelectTests : BunitContext
 
         OpenDropdown(cut);
 
-        var trigger = cut.Find("button.ui-select__trigger");
+        var trigger = cut.Find("button.halo-select__trigger");
         var listbox = cut.Find("div[role='listbox']");
 
         Assert.Equal(trigger.Id, listbox.GetAttribute("aria-labelledby"));
@@ -286,13 +286,13 @@ public class HaloSelectTests : BunitContext
 
         OpenDropdown(cut);
 
-        var trigger = cut.Find("button.ui-select__trigger");
+        var trigger = cut.Find("button.halo-select__trigger");
         trigger.KeyDown(new KeyboardEventArgs { Key = "a" });
         trigger.KeyDown(new KeyboardEventArgs { Key = "a" });
 
         cut.WaitForAssertion(() =>
         {
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal("Apricot", highlighted.TextContent.Trim());
         });
     }
@@ -313,7 +313,7 @@ public class HaloSelectTests : BunitContext
 
         cut.WaitForAssertion(() =>
         {
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal("Alpha", highlighted.TextContent.Trim());
         });
     }
@@ -327,15 +327,15 @@ public class HaloSelectTests : BunitContext
 
         OpenDropdown(cut);
 
-        var trigger = cut.Find("button.ui-select__trigger");
+        var trigger = cut.Find("button.halo-select__trigger");
         trigger.KeyDown(new KeyboardEventArgs { Key = "g" });
 
-        var highlightedAfterFirstKey = cut.Find("button.ui-select__option--highlighted");
+        var highlightedAfterFirstKey = cut.Find("button.halo-select__option--highlighted");
         highlightedAfterFirstKey.KeyDown(new KeyboardEventArgs { Key = "b" });
 
         cut.WaitForAssertion(() =>
         {
-            var highlighted = cut.Find("button.ui-select__option--highlighted");
+            var highlighted = cut.Find("button.halo-select__option--highlighted");
             Assert.Equal("Beta", highlighted.TextContent.Trim());
         });
     }
@@ -349,20 +349,20 @@ public class HaloSelectTests : BunitContext
 
         OpenDropdown(cut);
 
-        var trigger = cut.Find("button.ui-select__trigger");
+        var trigger = cut.Find("button.halo-select__trigger");
         trigger.KeyDown(new KeyboardEventArgs { Key = "Escape" });
 
         cut.WaitForAssertion(() =>
         {
-            var renderedTrigger = cut.Find("button.ui-select__trigger");
-            Assert.Empty(cut.FindAll(".ui-select__dropdown"));
+            var renderedTrigger = cut.Find("button.halo-select__trigger");
+            Assert.Empty(cut.FindAll(".halo-select__dropdown"));
             Assert.Null(renderedTrigger.GetAttribute("aria-activedescendant"));
         });
     }
 
     private static void OpenDropdown<TValue>(IRenderedComponent<HaloSelect<TValue>> cut)
     {
-        cut.Find("button.ui-select__trigger").Click();
+        cut.Find("button.halo-select__trigger").Click();
 
         cut.WaitForAssertion(() =>
         {

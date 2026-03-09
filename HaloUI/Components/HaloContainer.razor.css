@@ -1,10 +1,10 @@
-.ui-container {
-        background: var(--ui-container-background);
-        border: var(--ui-container-border);
-        border-radius: var(--ui-container-border-radius);
-        color: var(--ui-container-text-color);
-        box-shadow: var(--ui-container-shadow);
-        backdrop-filter: blur(var(--ui-container-backdrop-blur));
+.halo-container {
+        background: var(--halo-container-background);
+        border: var(--halo-container-border);
+        border-radius: var(--halo-container-border-radius);
+        color: var(--halo-container-text-color);
+        box-shadow: var(--halo-container-shadow);
+        backdrop-filter: blur(var(--halo-container-backdrop-blur));
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -14,38 +14,38 @@
         container-type: inline-size;
     }
 
-    .ui-container--elevated {
-        box-shadow: var(--ui-container-shadow-elevated);
+    .halo-container--elevated {
+        box-shadow: var(--halo-container-shadow-elevated);
     }
 
-    .ui-container--no-clip {
+    .halo-container--no-clip {
         overflow: visible;
     }
 
-    .ui-container__section {
-        padding: var(--ui-container-header-padding);
+    .halo-container__section {
+        padding: var(--halo-container-header-padding);
         color: inherit;
     }
 
-    .ui-container__section--header {
-        border-bottom: var(--ui-container-divider-border);
+    .halo-container__section--header {
+        border-bottom: var(--halo-container-divider-border);
     }
 
-    .ui-container__section--footer {
-        border-top: var(--ui-container-divider-border);
-        padding: var(--ui-container-footer-padding);
+    .halo-container__section--footer {
+        border-top: var(--halo-container-divider-border);
+        padding: var(--halo-container-footer-padding);
     }
 
-    .ui-container__body {
+    .halo-container__body {
         color: inherit;
     }
 
-    .ui-container--elevated .ui-container__section {
+    .halo-container--elevated .halo-container__section {
         color: inherit;
     }
 
     @container (max-width: 420px) {
-        .ui-container__section {
+        .halo-container__section {
             padding-inline: 0.875rem;
         }
     }

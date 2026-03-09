@@ -1,28 +1,28 @@
-.ui-badge {
+.halo-badge {
         display: inline-flex;
         align-items: center;
-        gap: var(--ui-badge-gap);
+        gap: var(--halo-badge-gap);
         min-width: 0;
         max-width: 100%;
-        padding: var(--ui-badge-padding-y) var(--ui-badge-padding-x);
-        border-radius: var(--ui-badge-border-radius);
-        font-size: var(--ui-badge-font-size);
-        font-weight: var(--ui-badge-font-weight);
-        line-height: var(--ui-badge-line-height);
-        letter-spacing: var(--ui-badge-letter-spacing);
-        text-transform: var(--ui-badge-text-transform);
-        border: 1px solid var(--ui-badge-border);
-        background: var(--ui-badge-background);
-        color: var(--ui-badge-text-color);
+        padding: var(--halo-badge-padding-y) var(--halo-badge-padding-x);
+        border-radius: var(--halo-badge-border-radius);
+        font-size: var(--halo-badge-font-size);
+        font-weight: var(--halo-badge-font-weight);
+        line-height: var(--halo-badge-line-height);
+        letter-spacing: var(--halo-badge-letter-spacing);
+        text-transform: var(--halo-badge-text-transform);
+        border: 1px solid var(--halo-badge-border);
+        background: var(--halo-badge-background);
+        color: var(--halo-badge-text-color);
         white-space: nowrap;
     }
 
-    .ui-badge__icon {
-        font-size: var(--ui-badge-icon-size);
+    .halo-badge__icon {
+        font-size: var(--halo-badge-icon-size);
         line-height: 1;
     }
 
-    .ui-badge__label {
+    .halo-badge__label {
         display: inline-flex;
         align-items: center;
         min-width: 0;
@@ -30,44 +30,44 @@
         text-overflow: ellipsis;
     }
 
-    .ui-badge--neutral {
-        --ui-badge-background: var(--ui-badge-neutral-background);
-        --ui-badge-text-color: var(--ui-badge-neutral-text);
-        --ui-badge-border: var(--ui-badge-neutral-border);
+    .halo-badge--neutral {
+        --halo-badge-background: var(--halo-badge-neutral-background);
+        --halo-badge-text-color: var(--halo-badge-neutral-text);
+        --halo-badge-border: var(--halo-badge-neutral-border);
     }
 
-    .ui-badge--success {
-        --ui-badge-background: var(--ui-badge-success-background);
-        --ui-badge-text-color: var(--ui-badge-success-text);
-        --ui-badge-border: var(--ui-badge-success-border);
+    .halo-badge--success {
+        --halo-badge-background: var(--halo-badge-success-background);
+        --halo-badge-text-color: var(--halo-badge-success-text);
+        --halo-badge-border: var(--halo-badge-success-border);
     }
 
-    .ui-badge--warning {
-        --ui-badge-background: var(--ui-badge-warning-background);
-        --ui-badge-text-color: var(--ui-badge-warning-text);
-        --ui-badge-border: var(--ui-badge-warning-border);
+    .halo-badge--warning {
+        --halo-badge-background: var(--halo-badge-warning-background);
+        --halo-badge-text-color: var(--halo-badge-warning-text);
+        --halo-badge-border: var(--halo-badge-warning-border);
     }
 
-    .ui-badge--danger {
-        --ui-badge-background: var(--ui-badge-danger-background);
-        --ui-badge-text-color: var(--ui-badge-danger-text);
-        --ui-badge-border: var(--ui-badge-danger-border);
+    .halo-badge--danger {
+        --halo-badge-background: var(--halo-badge-danger-background);
+        --halo-badge-text-color: var(--halo-badge-danger-text);
+        --halo-badge-border: var(--halo-badge-danger-border);
     }
 
-    .ui-badge--info {
-        --ui-badge-background: var(--ui-badge-info-background);
-        --ui-badge-text-color: var(--ui-badge-info-text);
-        --ui-badge-border: var(--ui-badge-info-border);
+    .halo-badge--info {
+        --halo-badge-background: var(--halo-badge-info-background);
+        --halo-badge-text-color: var(--halo-badge-info-text);
+        --halo-badge-border: var(--halo-badge-info-border);
     }
 
     @media (max-width: 640px) {
-        .ui-badge {
+        .halo-badge {
             white-space: normal;
             line-height: 1.25;
             text-wrap: balance;
         }
 
-        .ui-badge__label {
+        .halo-badge__label {
             white-space: normal;
             overflow: visible;
             text-overflow: clip;

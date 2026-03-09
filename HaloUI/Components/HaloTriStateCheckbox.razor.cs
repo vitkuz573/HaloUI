@@ -82,23 +82,23 @@ public partial class HaloTriStateCheckbox
 
     private string GetClasses()
     {
-        var classes = new List<string> { "ui-tri-checkbox" };
+        var classes = new List<string> { "halo-tri-checkbox" };
 
         if (Disabled)
         {
-            classes.Add("ui-tri-checkbox--disabled");
+            classes.Add("halo-tri-checkbox--disabled");
         }
 
         switch (State)
         {
             case TriState.All:
-                classes.Add("ui-tri-checkbox--all");
+                classes.Add("halo-tri-checkbox--all");
                 break;
             case TriState.Partial:
-                classes.Add("ui-tri-checkbox--partial");
+                classes.Add("halo-tri-checkbox--partial");
                 break;
             default:
-                classes.Add("ui-tri-checkbox--none");
+                classes.Add("halo-tri-checkbox--none");
                 break;
         }
 

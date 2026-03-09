@@ -67,18 +67,18 @@ public class DesignTokenSystemTests
         var themedButton = themed.Component.Get<ButtonDesignTokens>();
         var textTokens = themed.Component.Get<TextDesignTokens>();
 
-        Assert.Equal(themedButton.Primary.Background, variables["--ui-button-primary-background"]);
-        Assert.Equal(themed.Accessibility.Focus.FocusRingColor, variables["--ui-accessibility-focus-focus-ring-color"]);
-        Assert.Contains("--ui-color-interactive-primary", variables.Keys);
-        Assert.Equal(themed.Core.Spacing.Space4, variables["--ui-core-spacing-space-4"]);
-        Assert.Equal(themed.Responsive.Breakpoints.Lg, variables["--ui-responsive-breakpoints-lg"]);
-        Assert.Equal("Light", variables["--ui-theme-id"]);
-        Assert.Equal("comfortable", variables["--ui-theme-variant"]);
-        Assert.Equal("comfortable", variables["--ui-theme-density"]);
-        Assert.Equal("false", variables["--ui-theme-is-high-contrast"]);
-        Assert.Equal(themed.Accessibility.ScreenReader.SrOnlyWidth, variables["--ui-accessibility-screen-reader-sr-only-width"]);
-        Assert.Equal(textTokens.Gap, variables["--ui-text-gap"]);
-        Assert.Equal(textTokens.IconSize, variables["--ui-text-icon-size"]);
+        Assert.Equal(themedButton.Primary.Background, variables["--halo-button-primary-background"]);
+        Assert.Equal(themed.Accessibility.Focus.FocusRingColor, variables["--halo-accessibility-focus-focus-ring-color"]);
+        Assert.Contains("--halo-color-interactive-primary", variables.Keys);
+        Assert.Equal(themed.Core.Spacing.Space4, variables["--halo-core-spacing-space-4"]);
+        Assert.Equal(themed.Responsive.Breakpoints.Lg, variables["--halo-responsive-breakpoints-lg"]);
+        Assert.Equal("Light", variables["--halo-theme-id"]);
+        Assert.Equal("comfortable", variables["--halo-theme-variant"]);
+        Assert.Equal("comfortable", variables["--halo-theme-density"]);
+        Assert.Equal("false", variables["--halo-theme-is-high-contrast"]);
+        Assert.Equal(themed.Accessibility.ScreenReader.SrOnlyWidth, variables["--halo-accessibility-screen-reader-sr-only-width"]);
+        Assert.Equal(textTokens.Gap, variables["--halo-text-gap"]);
+        Assert.Equal(textTokens.IconSize, variables["--halo-text-icon-size"]);
     }
 
     [Fact]

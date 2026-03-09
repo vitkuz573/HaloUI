@@ -1,104 +1,104 @@
-.ui-button {
+.halo-button {
         display:inline-flex;
         align-items:center;
         justify-content:center;
     max-width:100%;
     min-width:0;
-    gap:var(--ui-button-computed-gap, var(--ui-button-gap));
-    padding:var(--ui-button-computed-padding-y, var(--ui-button-padding-y)) var(--ui-button-computed-padding-x, var(--ui-button-padding-x));
-    min-height:var(--ui-button-computed-height, var(--ui-button-height));
-    border-radius:var(--ui-button-computed-border-radius, var(--ui-button-border-radius));
-    font-weight:var(--ui-button-font-weight);
-    font-size:var(--ui-button-computed-font-size, var(--ui-button-font-size));
-    border:1px solid var(--ui-button-border);
-    background:var(--ui-button-background);
-    color:var(--ui-button-text-color);
-    box-shadow:var(--ui-button-shadow);
-    transition:var(--ui-button-transition);
+    gap:var(--halo-button-computed-gap, var(--halo-button-gap));
+    padding:var(--halo-button-computed-padding-y, var(--halo-button-padding-y)) var(--halo-button-computed-padding-x, var(--halo-button-padding-x));
+    min-height:var(--halo-button-computed-height, var(--halo-button-height));
+    border-radius:var(--halo-button-computed-border-radius, var(--halo-button-border-radius));
+    font-weight:var(--halo-button-font-weight);
+    font-size:var(--halo-button-computed-font-size, var(--halo-button-font-size));
+    border:1px solid var(--halo-button-border);
+    background:var(--halo-button-background);
+    color:var(--halo-button-text-color);
+    box-shadow:var(--halo-button-shadow);
+    transition:var(--halo-button-transition);
         cursor:pointer;
         outline:none;
         white-space:nowrap;
         position:relative;
     }
 
-    .ui-button:not(.is-disabled):hover {
-        background:var(--ui-button-background-hover);
-        border-color:var(--ui-button-border-hover);
+    .halo-button:not(.is-disabled):hover {
+        background:var(--halo-button-background-hover);
+        border-color:var(--halo-button-border-hover);
     }
 
-    .ui-button:not(.is-disabled):active {
-        background:var(--ui-button-background-active);
+    .halo-button:not(.is-disabled):active {
+        background:var(--halo-button-background-active);
     }
 
-    .ui-button.ui-button--active:not(.is-disabled):not(:disabled) {
-        background:var(--ui-button-background-active);
-        border-color:var(--ui-button-border-hover);
+    .halo-button.halo-button--active:not(.is-disabled):not(:disabled) {
+        background:var(--halo-button-background-active);
+        border-color:var(--halo-button-border-hover);
     }
 
-    .ui-button.is-disabled {
+    .halo-button.is-disabled {
         cursor:not-allowed;
         opacity:0.6;
-        background:var(--ui-button-background-disabled);
-        border-color:var(--ui-button-border-disabled);
-        color:var(--ui-button-text-disabled);
+        background:var(--halo-button-background-disabled);
+        border-color:var(--halo-button-border-disabled);
+        color:var(--halo-button-text-disabled);
     }
 
-    .ui-button:disabled {
+    .halo-button:disabled {
         cursor:not-allowed;
         opacity:0.6;
-        background:var(--ui-button-background-disabled);
-        border-color:var(--ui-button-border-disabled);
-        color:var(--ui-button-text-disabled);
+        background:var(--halo-button-background-disabled);
+        border-color:var(--halo-button-border-disabled);
+        color:var(--halo-button-text-disabled);
     }
 
-    .ui-button:focus-visible {
-        outline:var(--ui-button-focus-ring-width) solid var(--ui-button-focus-ring);
-        outline-offset:var(--ui-button-focus-ring-offset);
+    .halo-button:focus-visible {
+        outline:var(--halo-button-focus-ring-width) solid var(--halo-button-focus-ring);
+        outline-offset:var(--halo-button-focus-ring-offset);
     }
 
-    .ui-button--full-width {
+    .halo-button--full-width {
         width:100%;
     }
 
-.ui-button--icon-only {
-        width:var(--ui-button-computed-height, var(--ui-button-height));
+.halo-button--icon-only {
+        width:var(--halo-button-computed-height, var(--halo-button-height));
         padding:0;
     }
 
-.ui-button__icon {
+.halo-button__icon {
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        font-size:var(--ui-button-computed-icon-size, var(--ui-button-icon-size));
-        color:var(--ui-button-text-color);
+        font-size:var(--halo-button-computed-icon-size, var(--halo-button-icon-size));
+        color:var(--halo-button-text-color);
     }
 
-.ui-button.is-disabled .ui-button__icon {
-        color:var(--ui-button-text-disabled);
+.halo-button.is-disabled .halo-button__icon {
+        color:var(--halo-button-text-disabled);
     }
 
-.ui-button:disabled .ui-button__icon {
-        color:var(--ui-button-text-disabled);
+.halo-button:disabled .halo-button__icon {
+        color:var(--halo-button-text-disabled);
     }
 
-    .ui-button__icon--spinner {
-        animation:ui-button-spin 1s linear infinite;
+    .halo-button__icon--spinner {
+        animation:halo-button-spin 1s linear infinite;
     }
 
-    .ui-button__label {
+    .halo-button__label {
         display:inline-flex;
         align-items:center;
         min-width:0;
     }
 
-    .ui-button__label--fill {
+    .halo-button__label--fill {
         flex:1 1 auto;
         text-align:left;
         overflow:hidden;
         text-overflow:ellipsis;
     }
 
-    @@keyframes ui-button-spin {
+    @@keyframes halo-button-spin {
         from {
             transform:rotate(0deg);
         }
@@ -108,160 +108,160 @@
         }
     }
 
-    .ui-button--primary {
-        --ui-button-background:var(--ui-button-primary-background);
-        --ui-button-background-hover:var(--ui-button-primary-background-hover);
-        --ui-button-background-active:var(--ui-button-primary-background-active);
-        --ui-button-background-disabled:var(--ui-button-primary-background-disabled);
-        --ui-button-border:var(--ui-button-primary-border);
-        --ui-button-border-hover:var(--ui-button-primary-border-hover);
-        --ui-button-border-disabled:var(--ui-button-primary-border);
-        --ui-button-text-color:var(--ui-button-primary-text);
-        --ui-button-text-disabled:var(--ui-button-primary-text-disabled);
-        --ui-button-shadow:var(--ui-button-primary-shadow);
-        --ui-button-focus-ring:var(--ui-button-primary-focus-ring);
+    .halo-button--primary {
+        --halo-button-background:var(--halo-button-primary-background);
+        --halo-button-background-hover:var(--halo-button-primary-background-hover);
+        --halo-button-background-active:var(--halo-button-primary-background-active);
+        --halo-button-background-disabled:var(--halo-button-primary-background-disabled);
+        --halo-button-border:var(--halo-button-primary-border);
+        --halo-button-border-hover:var(--halo-button-primary-border-hover);
+        --halo-button-border-disabled:var(--halo-button-primary-border);
+        --halo-button-text-color:var(--halo-button-primary-text);
+        --halo-button-text-disabled:var(--halo-button-primary-text-disabled);
+        --halo-button-shadow:var(--halo-button-primary-shadow);
+        --halo-button-focus-ring:var(--halo-button-primary-focus-ring);
     }
 
-    .ui-button--secondary {
-        --ui-button-background:var(--ui-button-secondary-background);
-        --ui-button-background-hover:var(--ui-button-secondary-background-hover);
-        --ui-button-background-active:var(--ui-button-secondary-background-active);
-        --ui-button-background-disabled:var(--ui-button-secondary-background-disabled);
-        --ui-button-border:var(--ui-button-secondary-border);
-        --ui-button-border-hover:var(--ui-button-secondary-border-hover);
-        --ui-button-border-disabled:var(--ui-button-secondary-border);
-        --ui-button-text-color:var(--ui-button-secondary-text);
-        --ui-button-text-disabled:var(--ui-button-secondary-text-disabled);
-        --ui-button-shadow:var(--ui-button-secondary-shadow);
-        --ui-button-focus-ring:var(--ui-button-secondary-focus-ring);
+    .halo-button--secondary {
+        --halo-button-background:var(--halo-button-secondary-background);
+        --halo-button-background-hover:var(--halo-button-secondary-background-hover);
+        --halo-button-background-active:var(--halo-button-secondary-background-active);
+        --halo-button-background-disabled:var(--halo-button-secondary-background-disabled);
+        --halo-button-border:var(--halo-button-secondary-border);
+        --halo-button-border-hover:var(--halo-button-secondary-border-hover);
+        --halo-button-border-disabled:var(--halo-button-secondary-border);
+        --halo-button-text-color:var(--halo-button-secondary-text);
+        --halo-button-text-disabled:var(--halo-button-secondary-text-disabled);
+        --halo-button-shadow:var(--halo-button-secondary-shadow);
+        --halo-button-focus-ring:var(--halo-button-secondary-focus-ring);
     }
 
-    .ui-button--tertiary {
-        --ui-button-background:var(--ui-button-tertiary-background);
-        --ui-button-background-hover:var(--ui-button-tertiary-background-hover);
-        --ui-button-background-active:var(--ui-button-tertiary-background-active);
-        --ui-button-background-disabled:var(--ui-button-tertiary-background-disabled);
-        --ui-button-border:var(--ui-button-tertiary-border);
-        --ui-button-border-hover:var(--ui-button-tertiary-border-hover);
-        --ui-button-border-disabled:var(--ui-button-tertiary-border);
-        --ui-button-text-color:var(--ui-button-tertiary-text);
-        --ui-button-text-disabled:var(--ui-button-tertiary-text-disabled);
-        --ui-button-shadow:var(--ui-button-tertiary-shadow);
-        --ui-button-focus-ring:var(--ui-button-tertiary-focus-ring);
+    .halo-button--tertiary {
+        --halo-button-background:var(--halo-button-tertiary-background);
+        --halo-button-background-hover:var(--halo-button-tertiary-background-hover);
+        --halo-button-background-active:var(--halo-button-tertiary-background-active);
+        --halo-button-background-disabled:var(--halo-button-tertiary-background-disabled);
+        --halo-button-border:var(--halo-button-tertiary-border);
+        --halo-button-border-hover:var(--halo-button-tertiary-border-hover);
+        --halo-button-border-disabled:var(--halo-button-tertiary-border);
+        --halo-button-text-color:var(--halo-button-tertiary-text);
+        --halo-button-text-disabled:var(--halo-button-tertiary-text-disabled);
+        --halo-button-shadow:var(--halo-button-tertiary-shadow);
+        --halo-button-focus-ring:var(--halo-button-tertiary-focus-ring);
     }
 
-    .ui-button--danger {
-        --ui-button-background:var(--ui-button-danger-background);
-        --ui-button-background-hover:var(--ui-button-danger-background-hover);
-        --ui-button-background-active:var(--ui-button-danger-background-active);
-        --ui-button-background-disabled:var(--ui-button-danger-background-disabled);
-        --ui-button-border:var(--ui-button-danger-border);
-        --ui-button-border-hover:var(--ui-button-danger-border-hover);
-        --ui-button-border-disabled:var(--ui-button-danger-border);
-        --ui-button-text-color:var(--ui-button-danger-text);
-        --ui-button-text-disabled:var(--ui-button-danger-text-disabled);
-        --ui-button-shadow:var(--ui-button-danger-shadow);
-        --ui-button-focus-ring:var(--ui-button-danger-focus-ring);
+    .halo-button--danger {
+        --halo-button-background:var(--halo-button-danger-background);
+        --halo-button-background-hover:var(--halo-button-danger-background-hover);
+        --halo-button-background-active:var(--halo-button-danger-background-active);
+        --halo-button-background-disabled:var(--halo-button-danger-background-disabled);
+        --halo-button-border:var(--halo-button-danger-border);
+        --halo-button-border-hover:var(--halo-button-danger-border-hover);
+        --halo-button-border-disabled:var(--halo-button-danger-border);
+        --halo-button-text-color:var(--halo-button-danger-text);
+        --halo-button-text-disabled:var(--halo-button-danger-text-disabled);
+        --halo-button-shadow:var(--halo-button-danger-shadow);
+        --halo-button-focus-ring:var(--halo-button-danger-focus-ring);
     }
 
-    .ui-button--warning {
-        --ui-button-background:var(--ui-button-warning-background);
-        --ui-button-background-hover:var(--ui-button-warning-background-hover);
-        --ui-button-background-active:var(--ui-button-warning-background-active);
-        --ui-button-background-disabled:var(--ui-button-warning-background-disabled);
-        --ui-button-border:var(--ui-button-warning-border);
-        --ui-button-border-hover:var(--ui-button-warning-border-hover);
-        --ui-button-border-disabled:var(--ui-button-warning-border);
-        --ui-button-text-color:var(--ui-button-warning-text);
-        --ui-button-text-disabled:var(--ui-button-warning-text-disabled);
-        --ui-button-shadow:var(--ui-button-warning-shadow);
-        --ui-button-focus-ring:var(--ui-button-warning-focus-ring);
+    .halo-button--warning {
+        --halo-button-background:var(--halo-button-warning-background);
+        --halo-button-background-hover:var(--halo-button-warning-background-hover);
+        --halo-button-background-active:var(--halo-button-warning-background-active);
+        --halo-button-background-disabled:var(--halo-button-warning-background-disabled);
+        --halo-button-border:var(--halo-button-warning-border);
+        --halo-button-border-hover:var(--halo-button-warning-border-hover);
+        --halo-button-border-disabled:var(--halo-button-warning-border);
+        --halo-button-text-color:var(--halo-button-warning-text);
+        --halo-button-text-disabled:var(--halo-button-warning-text-disabled);
+        --halo-button-shadow:var(--halo-button-warning-shadow);
+        --halo-button-focus-ring:var(--halo-button-warning-focus-ring);
     }
 
-    .ui-button--ghost {
-        --ui-button-background:var(--ui-button-ghost-background);
-        --ui-button-background-hover:var(--ui-button-ghost-background-hover);
-        --ui-button-background-active:var(--ui-button-ghost-background-active);
-        --ui-button-background-disabled:var(--ui-button-ghost-background-disabled);
-        --ui-button-border:var(--ui-button-ghost-border);
-        --ui-button-border-hover:var(--ui-button-ghost-border-hover);
-        --ui-button-border-disabled:var(--ui-button-ghost-border);
-        --ui-button-text-color:var(--ui-button-ghost-text);
-        --ui-button-text-disabled:var(--ui-button-ghost-text-disabled);
-        --ui-button-shadow:var(--ui-button-ghost-shadow);
-        --ui-button-focus-ring:var(--ui-button-ghost-focus-ring);
+    .halo-button--ghost {
+        --halo-button-background:var(--halo-button-ghost-background);
+        --halo-button-background-hover:var(--halo-button-ghost-background-hover);
+        --halo-button-background-active:var(--halo-button-ghost-background-active);
+        --halo-button-background-disabled:var(--halo-button-ghost-background-disabled);
+        --halo-button-border:var(--halo-button-ghost-border);
+        --halo-button-border-hover:var(--halo-button-ghost-border-hover);
+        --halo-button-border-disabled:var(--halo-button-ghost-border);
+        --halo-button-text-color:var(--halo-button-ghost-text);
+        --halo-button-text-disabled:var(--halo-button-ghost-text-disabled);
+        --halo-button-shadow:var(--halo-button-ghost-shadow);
+        --halo-button-focus-ring:var(--halo-button-ghost-focus-ring);
     }
 
-    .ui-button--size-xs {
-        --ui-button-height:var(--ui-button-size-xs-height);
-        --ui-button-padding-x:var(--ui-button-size-xs-padding-x);
-        --ui-button-padding-y:var(--ui-button-size-xs-padding-y);
-        --ui-button-font-size:var(--ui-button-size-xs-font-size);
-        --ui-button-icon-size:var(--ui-button-size-xs-icon-size);
-        --ui-button-gap:var(--ui-button-size-xs-gap);
+    .halo-button--size-xs {
+        --halo-button-height:var(--halo-button-size-xs-height);
+        --halo-button-padding-x:var(--halo-button-size-xs-padding-x);
+        --halo-button-padding-y:var(--halo-button-size-xs-padding-y);
+        --halo-button-font-size:var(--halo-button-size-xs-font-size);
+        --halo-button-icon-size:var(--halo-button-size-xs-icon-size);
+        --halo-button-gap:var(--halo-button-size-xs-gap);
     }
 
-    .ui-button--size-sm {
-        --ui-button-height:var(--ui-button-size-sm-height);
-        --ui-button-padding-x:var(--ui-button-size-sm-padding-x);
-        --ui-button-padding-y:var(--ui-button-size-sm-padding-y);
-        --ui-button-font-size:var(--ui-button-size-sm-font-size);
-        --ui-button-icon-size:var(--ui-button-size-sm-icon-size);
-        --ui-button-gap:var(--ui-button-size-sm-gap);
+    .halo-button--size-sm {
+        --halo-button-height:var(--halo-button-size-sm-height);
+        --halo-button-padding-x:var(--halo-button-size-sm-padding-x);
+        --halo-button-padding-y:var(--halo-button-size-sm-padding-y);
+        --halo-button-font-size:var(--halo-button-size-sm-font-size);
+        --halo-button-icon-size:var(--halo-button-size-sm-icon-size);
+        --halo-button-gap:var(--halo-button-size-sm-gap);
     }
 
-    .ui-button--size-md {
-        --ui-button-height:var(--ui-button-size-md-height);
-        --ui-button-padding-x:var(--ui-button-size-md-padding-x);
-        --ui-button-padding-y:var(--ui-button-size-md-padding-y);
-        --ui-button-font-size:var(--ui-button-size-md-font-size);
-        --ui-button-icon-size:var(--ui-button-size-md-icon-size);
-        --ui-button-gap:var(--ui-button-size-md-gap);
+    .halo-button--size-md {
+        --halo-button-height:var(--halo-button-size-md-height);
+        --halo-button-padding-x:var(--halo-button-size-md-padding-x);
+        --halo-button-padding-y:var(--halo-button-size-md-padding-y);
+        --halo-button-font-size:var(--halo-button-size-md-font-size);
+        --halo-button-icon-size:var(--halo-button-size-md-icon-size);
+        --halo-button-gap:var(--halo-button-size-md-gap);
     }
 
-    .ui-button--size-lg {
-        --ui-button-height:var(--ui-button-size-lg-height);
-        --ui-button-padding-x:var(--ui-button-size-lg-padding-x);
-        --ui-button-padding-y:var(--ui-button-size-lg-padding-y);
-        --ui-button-font-size:var(--ui-button-size-lg-font-size);
-        --ui-button-icon-size:var(--ui-button-size-lg-icon-size);
-        --ui-button-gap:var(--ui-button-size-lg-gap);
+    .halo-button--size-lg {
+        --halo-button-height:var(--halo-button-size-lg-height);
+        --halo-button-padding-x:var(--halo-button-size-lg-padding-x);
+        --halo-button-padding-y:var(--halo-button-size-lg-padding-y);
+        --halo-button-font-size:var(--halo-button-size-lg-font-size);
+        --halo-button-icon-size:var(--halo-button-size-lg-icon-size);
+        --halo-button-gap:var(--halo-button-size-lg-gap);
     }
 
-    .ui-button--size-xl {
-        --ui-button-height:var(--ui-button-size-xl-height);
-        --ui-button-padding-x:var(--ui-button-size-xl-padding-x);
-        --ui-button-padding-y:var(--ui-button-size-xl-padding-y);
-        --ui-button-font-size:var(--ui-button-size-xl-font-size);
-        --ui-button-icon-size:var(--ui-button-size-xl-icon-size);
-        --ui-button-gap:var(--ui-button-size-xl-gap);
+    .halo-button--size-xl {
+        --halo-button-height:var(--halo-button-size-xl-height);
+        --halo-button-padding-x:var(--halo-button-size-xl-padding-x);
+        --halo-button-padding-y:var(--halo-button-size-xl-padding-y);
+        --halo-button-font-size:var(--halo-button-size-xl-font-size);
+        --halo-button-icon-size:var(--halo-button-size-xl-icon-size);
+        --halo-button-gap:var(--halo-button-size-xl-gap);
     }
 
-    .ui-button--density-default {
+    .halo-button--density-default {
     }
 
-    .ui-button--density-compact {
-        --ui-button-computed-height:calc(var(--ui-button-height) * 0.9);
-        --ui-button-computed-padding-x:calc(var(--ui-button-padding-x) * 0.85);
-        --ui-button-computed-padding-y:calc(var(--ui-button-padding-y) * 0.8);
-        --ui-button-computed-font-size:calc(var(--ui-button-font-size) * 0.95);
-        --ui-button-computed-icon-size:calc(var(--ui-button-icon-size) * 0.9);
-        --ui-button-computed-gap:calc(var(--ui-button-gap) * 0.85);
-        --ui-button-computed-border-radius:calc(var(--ui-button-border-radius) * 0.88);
+    .halo-button--density-compact {
+        --halo-button-computed-height:calc(var(--halo-button-height) * 0.9);
+        --halo-button-computed-padding-x:calc(var(--halo-button-padding-x) * 0.85);
+        --halo-button-computed-padding-y:calc(var(--halo-button-padding-y) * 0.8);
+        --halo-button-computed-font-size:calc(var(--halo-button-font-size) * 0.95);
+        --halo-button-computed-icon-size:calc(var(--halo-button-icon-size) * 0.9);
+        --halo-button-computed-gap:calc(var(--halo-button-gap) * 0.85);
+        --halo-button-computed-border-radius:calc(var(--halo-button-border-radius) * 0.88);
     }
 
     @media (max-width:640px), (hover:none) and (pointer:coarse) {
-        .ui-button {
-            min-height:max(var(--ui-button-computed-height, var(--ui-button-height)), 2.75rem);
-            padding-top:max(var(--ui-button-computed-padding-y, var(--ui-button-padding-y)), 0.625rem);
-            padding-bottom:max(var(--ui-button-computed-padding-y, var(--ui-button-padding-y)), 0.625rem);
+        .halo-button {
+            min-height:max(var(--halo-button-computed-height, var(--halo-button-height)), 2.75rem);
+            padding-top:max(var(--halo-button-computed-padding-y, var(--halo-button-padding-y)), 0.625rem);
+            padding-bottom:max(var(--halo-button-computed-padding-y, var(--halo-button-padding-y)), 0.625rem);
         }
 
-        .ui-button:not(.ui-button--icon-only) {
+        .halo-button:not(.halo-button--icon-only) {
             white-space:normal;
         }
 
-        .ui-button__label {
+        .halo-button__label {
             white-space:normal;
             line-height:1.25;
             text-wrap:balance;

@@ -16,7 +16,7 @@ test.describe('SnackbarHost demo interactions', () => {
 
     await trigger.click();
 
-    const snackbar = page.locator('.ui-snackbar').first();
+    const snackbar = page.locator('.halo-snackbar').first();
     await expect(snackbar).toBeVisible();
     await expect(snackbar).toContainText('System notice');
     await expect(snackbar).toContainText('Critical maintenance begins at 02:00 UTC.');

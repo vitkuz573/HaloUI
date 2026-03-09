@@ -292,7 +292,7 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs"
+            "halo-tabs"
         };
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -307,7 +307,7 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__list"
+            "halo-tabs__list"
         };
 
         if (!string.IsNullOrWhiteSpace(TabListClass))
@@ -324,7 +324,7 @@ public partial class HaloTabs
 
         var classes = new List<string>
         {
-            "ui-tabs__tab"
+            "halo-tabs__tab"
         };
 
         if (!string.IsNullOrWhiteSpace(TabButtonClass))
@@ -334,7 +334,7 @@ public partial class HaloTabs
 
         if (IsActive(index))
         {
-            classes.Add("ui-tabs__tab--active");
+            classes.Add("halo-tabs__tab--active");
 
             if (!string.IsNullOrWhiteSpace(ActiveTabButtonClass))
             {
@@ -344,7 +344,7 @@ public partial class HaloTabs
 
         if (tab.Disabled)
         {
-            classes.Add("ui-tabs__tab--disabled");
+            classes.Add("halo-tabs__tab--disabled");
         }
 
         return string.Join(' ', classes);
@@ -354,7 +354,7 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__panels"
+            "halo-tabs__panels"
         };
 
         if (!string.IsNullOrWhiteSpace(PanelContainerClass))
@@ -369,7 +369,7 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__panel"
+            "halo-tabs__panel"
         };
 
         if (!string.IsNullOrWhiteSpace(PanelClass))
@@ -389,7 +389,7 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__empty"
+            "halo-tabs__empty"
         };
 
         if (!string.IsNullOrWhiteSpace(EmptyStateClass))
@@ -449,12 +449,12 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__tab-icon"
+            "halo-tabs__tab-icon"
         };
 
         if (hasCustomContent)
         {
-            classes.Add("ui-tabs__tab-icon--custom");
+            classes.Add("halo-tabs__tab-icon--custom");
         }
 
         return string.Join(' ', classes);
@@ -464,15 +464,15 @@ public partial class HaloTabs
     {
         var classes = new List<string>
         {
-            "ui-tabs__indicator-dot"
+            "halo-tabs__indicator-dot"
         };
 
         var variantClass = tab.Indicator switch
         {
-            TabIndicatorVariant.Success => "ui-tabs__indicator-dot--success",
-            TabIndicatorVariant.Warning => "ui-tabs__indicator-dot--warning",
-            TabIndicatorVariant.Danger => "ui-tabs__indicator-dot--danger",
-            TabIndicatorVariant.Info => "ui-tabs__indicator-dot--info",
+            TabIndicatorVariant.Success => "halo-tabs__indicator-dot--success",
+            TabIndicatorVariant.Warning => "halo-tabs__indicator-dot--warning",
+            TabIndicatorVariant.Danger => "halo-tabs__indicator-dot--danger",
+            TabIndicatorVariant.Info => "halo-tabs__indicator-dot--info",
             _ => null
         };
 

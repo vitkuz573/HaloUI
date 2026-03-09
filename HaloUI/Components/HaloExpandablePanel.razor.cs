@@ -155,23 +155,23 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "ui-expandable-panel",
-            Elevated ? "ui-expandable-panel--elevated" : "ui-expandable-panel--flat"
+            "halo-expandable-panel",
+            Elevated ? "halo-expandable-panel--elevated" : "halo-expandable-panel--flat"
         };
 
         if (!ShowBorder)
         {
-            classes.Add("ui-expandable-panel--borderless");
+            classes.Add("halo-expandable-panel--borderless");
         }
 
         if (IsDense)
         {
-            classes.Add("ui-expandable-panel--dense");
+            classes.Add("halo-expandable-panel--dense");
         }
 
         if (Flush)
         {
-            classes.Add("ui-expandable-panel--flush");
+            classes.Add("halo-expandable-panel--flush");
         }
 
         if (Disabled)
@@ -193,7 +193,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "ui-expandable-panel__header-button"
+            "halo-expandable-panel__header-button"
         };
 
         if (Disabled)
@@ -208,7 +208,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     {
         var classes = new List<string>
         {
-            "ui-expandable-panel__indicator",
+            "halo-expandable-panel__indicator",
             "material-icons"
         };
 

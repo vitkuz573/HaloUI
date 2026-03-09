@@ -1,25 +1,25 @@
-.ui-tabs {
+.halo-tabs {
         display:flex;
         flex-direction:column;
-        gap:var(--ui-tab-container-gap);
-        background:var(--ui-tab-container-background);
-        border:var(--ui-tab-container-border-width) solid var(--ui-tab-container-border-color);
-        border-radius:var(--ui-tab-container-border-radius);
-        box-shadow:var(--ui-tab-container-shadow);
+        gap:var(--halo-tab-container-gap);
+        background:var(--halo-tab-container-background);
+        border:var(--halo-tab-container-border-width) solid var(--halo-tab-container-border-color);
+        border-radius:var(--halo-tab-container-border-radius);
+        box-shadow:var(--halo-tab-container-shadow);
         overflow:hidden;
         max-width:100%;
         min-width:0;
         container-type:inline-size;
     }
 
-    .ui-tabs__list {
+    .halo-tabs__list {
         display:flex;
         flex-wrap:wrap;
         align-items:center;
-        gap:var(--ui-tab-list-gap);
-        background:var(--ui-tab-list-background);
-        padding:var(--ui-tab-list-padding-y) var(--ui-tab-list-padding-x);
-        border-bottom:var(--ui-tab-list-border-bottom-width) solid var(--ui-tab-list-border-bottom-color);
+        gap:var(--halo-tab-list-gap);
+        background:var(--halo-tab-list-background);
+        padding:var(--halo-tab-list-padding-y) var(--halo-tab-list-padding-x);
+        border-bottom:var(--halo-tab-list-border-bottom-width) solid var(--halo-tab-list-border-bottom-color);
         max-width:100%;
         min-width:0;
         overflow-x:auto;
@@ -27,130 +27,130 @@
         -webkit-overflow-scrolling:touch;
     }
 
-    .ui-tabs__tab {
+    .halo-tabs__tab {
         position:relative;
         display:inline-flex;
         align-items:center;
         min-width:0;
-        gap:var(--ui-tab-item-gap);
-        padding:var(--ui-tab-item-padding-y) var(--ui-tab-item-padding-x);
-        font-size:var(--ui-tab-item-font-size);
-        font-weight:var(--ui-tab-item-font-weight);
-        border-radius:var(--ui-tab-item-border-radius);
-        border:var(--ui-tab-item-border-width) solid transparent;
-        transition:var(--ui-tab-item-transition);
+        gap:var(--halo-tab-item-gap);
+        padding:var(--halo-tab-item-padding-y) var(--halo-tab-item-padding-x);
+        font-size:var(--halo-tab-item-font-size);
+        font-weight:var(--halo-tab-item-font-weight);
+        border-radius:var(--halo-tab-item-border-radius);
+        border:var(--halo-tab-item-border-width) solid transparent;
+        transition:var(--halo-tab-item-transition);
         outline:none;
         cursor:pointer;
         justify-content:flex-start;
 
-        --ui-tab-state-background: var(--ui-tab-inactive-background);
-        --ui-tab-state-text-color: var(--ui-tab-inactive-text-color);
-        --ui-tab-state-icon-color: var(--ui-tab-inactive-icon-color);
-        --ui-tab-state-icon-background: var(--ui-tab-inactive-icon-background);
-        --ui-tab-state-icon-border-color: var(--ui-tab-inactive-icon-border-color);
-        --ui-tab-state-badge-background: var(--ui-tab-inactive-badge-background);
-        --ui-tab-state-badge-text: var(--ui-tab-inactive-badge-text);
-        --ui-tab-state-border-color: var(--ui-tab-inactive-border-color);
-        --ui-tab-state-shadow: var(--ui-tab-inactive-shadow);
-        --ui-tab-state-opacity: var(--ui-tab-inactive-opacity);
+        --halo-tab-state-background: var(--halo-tab-inactive-background);
+        --halo-tab-state-text-color: var(--halo-tab-inactive-text-color);
+        --halo-tab-state-icon-color: var(--halo-tab-inactive-icon-color);
+        --halo-tab-state-icon-background: var(--halo-tab-inactive-icon-background);
+        --halo-tab-state-icon-border-color: var(--halo-tab-inactive-icon-border-color);
+        --halo-tab-state-badge-background: var(--halo-tab-inactive-badge-background);
+        --halo-tab-state-badge-text: var(--halo-tab-inactive-badge-text);
+        --halo-tab-state-border-color: var(--halo-tab-inactive-border-color);
+        --halo-tab-state-shadow: var(--halo-tab-inactive-shadow);
+        --halo-tab-state-opacity: var(--halo-tab-inactive-opacity);
 
-        background:var(--ui-tab-state-background);
-        color:var(--ui-tab-state-text-color);
-        border-color:var(--ui-tab-state-border-color);
-        box-shadow:var(--ui-tab-state-shadow);
-        opacity:var(--ui-tab-state-opacity);
+        background:var(--halo-tab-state-background);
+        color:var(--halo-tab-state-text-color);
+        border-color:var(--halo-tab-state-border-color);
+        box-shadow:var(--halo-tab-state-shadow);
+        opacity:var(--halo-tab-state-opacity);
     }
 
-    .ui-tabs__tab:not(.ui-tabs__tab--disabled):not(.ui-tabs__tab--active):hover {
-        --ui-tab-state-background: var(--ui-tab-hover-background);
-        --ui-tab-state-text-color: var(--ui-tab-hover-text-color);
-        --ui-tab-state-icon-color: var(--ui-tab-hover-icon-color);
-        --ui-tab-state-icon-background: var(--ui-tab-hover-icon-background);
-        --ui-tab-state-icon-border-color: var(--ui-tab-hover-icon-border-color);
-        --ui-tab-state-badge-background: var(--ui-tab-hover-badge-background);
-        --ui-tab-state-badge-text: var(--ui-tab-hover-badge-text);
-        --ui-tab-state-border-color: var(--ui-tab-hover-border-color);
-        --ui-tab-state-shadow: var(--ui-tab-hover-shadow);
-        --ui-tab-state-opacity: var(--ui-tab-hover-opacity);
+    .halo-tabs__tab:not(.halo-tabs__tab--disabled):not(.halo-tabs__tab--active):hover {
+        --halo-tab-state-background: var(--halo-tab-hover-background);
+        --halo-tab-state-text-color: var(--halo-tab-hover-text-color);
+        --halo-tab-state-icon-color: var(--halo-tab-hover-icon-color);
+        --halo-tab-state-icon-background: var(--halo-tab-hover-icon-background);
+        --halo-tab-state-icon-border-color: var(--halo-tab-hover-icon-border-color);
+        --halo-tab-state-badge-background: var(--halo-tab-hover-badge-background);
+        --halo-tab-state-badge-text: var(--halo-tab-hover-badge-text);
+        --halo-tab-state-border-color: var(--halo-tab-hover-border-color);
+        --halo-tab-state-shadow: var(--halo-tab-hover-shadow);
+        --halo-tab-state-opacity: var(--halo-tab-hover-opacity);
     }
 
-    .ui-tabs__tab--active {
-        --ui-tab-state-background: var(--ui-tab-active-background);
-        --ui-tab-state-text-color: var(--ui-tab-active-text-color);
-        --ui-tab-state-icon-color: var(--ui-tab-active-icon-color);
-        --ui-tab-state-icon-background: var(--ui-tab-active-icon-background);
-        --ui-tab-state-icon-border-color: var(--ui-tab-active-icon-border-color);
-        --ui-tab-state-badge-background: var(--ui-tab-active-badge-background);
-        --ui-tab-state-badge-text: var(--ui-tab-active-badge-text);
-        --ui-tab-state-border-color: var(--ui-tab-active-border-color);
-        --ui-tab-state-shadow: var(--ui-tab-active-shadow);
-        --ui-tab-state-opacity: var(--ui-tab-active-opacity);
+    .halo-tabs__tab--active {
+        --halo-tab-state-background: var(--halo-tab-active-background);
+        --halo-tab-state-text-color: var(--halo-tab-active-text-color);
+        --halo-tab-state-icon-color: var(--halo-tab-active-icon-color);
+        --halo-tab-state-icon-background: var(--halo-tab-active-icon-background);
+        --halo-tab-state-icon-border-color: var(--halo-tab-active-icon-border-color);
+        --halo-tab-state-badge-background: var(--halo-tab-active-badge-background);
+        --halo-tab-state-badge-text: var(--halo-tab-active-badge-text);
+        --halo-tab-state-border-color: var(--halo-tab-active-border-color);
+        --halo-tab-state-shadow: var(--halo-tab-active-shadow);
+        --halo-tab-state-opacity: var(--halo-tab-active-opacity);
     }
 
-    .ui-tabs__tab--disabled {
-        --ui-tab-state-background: var(--ui-tab-disabled-background);
-        --ui-tab-state-text-color: var(--ui-tab-disabled-text-color);
-        --ui-tab-state-icon-color: var(--ui-tab-disabled-icon-color);
-        --ui-tab-state-icon-background: var(--ui-tab-disabled-icon-background);
-        --ui-tab-state-icon-border-color: var(--ui-tab-disabled-icon-border-color);
-        --ui-tab-state-badge-background: var(--ui-tab-disabled-badge-background);
-        --ui-tab-state-badge-text: var(--ui-tab-disabled-badge-text);
-        --ui-tab-state-border-color: var(--ui-tab-disabled-border-color);
-        --ui-tab-state-shadow: var(--ui-tab-disabled-shadow);
-        --ui-tab-state-opacity: var(--ui-tab-disabled-opacity);
+    .halo-tabs__tab--disabled {
+        --halo-tab-state-background: var(--halo-tab-disabled-background);
+        --halo-tab-state-text-color: var(--halo-tab-disabled-text-color);
+        --halo-tab-state-icon-color: var(--halo-tab-disabled-icon-color);
+        --halo-tab-state-icon-background: var(--halo-tab-disabled-icon-background);
+        --halo-tab-state-icon-border-color: var(--halo-tab-disabled-icon-border-color);
+        --halo-tab-state-badge-background: var(--halo-tab-disabled-badge-background);
+        --halo-tab-state-badge-text: var(--halo-tab-disabled-badge-text);
+        --halo-tab-state-border-color: var(--halo-tab-disabled-border-color);
+        --halo-tab-state-shadow: var(--halo-tab-disabled-shadow);
+        --halo-tab-state-opacity: var(--halo-tab-disabled-opacity);
         cursor:not-allowed;
         pointer-events:none;
     }
 
-    .ui-tabs__tab:focus-visible {
-        outline:2px solid var(--ui-color-focus-ring);
+    .halo-tabs__tab:focus-visible {
+        outline:2px solid var(--halo-color-focus-ring);
         outline-offset:2px;
     }
 
-    .ui-tabs__tab-inner {
+    .halo-tabs__tab-inner {
         display:flex;
         min-width:0;
         flex:1 1 auto;
         align-items:center;
-        gap:var(--ui-tab-item-gap);
+        gap:var(--halo-tab-item-gap);
     }
 
-    .ui-tabs__tab-label {
+    .halo-tabs__tab-label {
         display:flex;
         min-width:0;
         flex-direction:column;
-        gap:var(--ui-tab-label-gap);
+        gap:var(--halo-tab-label-gap);
         text-align:left;
     }
 
-    .ui-tabs__tab-title {
-        font-size:var(--ui-tab-label-title-font-size);
-        font-weight:var(--ui-tab-label-title-font-weight);
+    .halo-tabs__tab-title {
+        font-size:var(--halo-tab-label-title-font-size);
+        font-weight:var(--halo-tab-label-title-font-weight);
         color:inherit;
         overflow:hidden;
         text-overflow:ellipsis;
         white-space:nowrap;
     }
 
-    .ui-tabs__tab-description {
-        font-size:var(--ui-tab-label-description-font-size);
-        font-weight:var(--ui-tab-label-description-font-weight);
-        color:color-mix(in srgb, var(--ui-tab-label-description-color) 20%, var(--ui-tab-state-text-color) 80%);
+    .halo-tabs__tab-description {
+        font-size:var(--halo-tab-label-description-font-size);
+        font-weight:var(--halo-tab-label-description-font-weight);
+        color:color-mix(in srgb, var(--halo-tab-label-description-color) 20%, var(--halo-tab-state-text-color) 80%);
         overflow:hidden;
         text-overflow:ellipsis;
         white-space:nowrap;
     }
 
-    .ui-tabs__tab-suffix {
+    .halo-tabs__tab-suffix {
         margin-left:auto;
         display:inline-flex;
         align-items:center;
-        gap:var(--ui-tab-suffix-gap);
-        color:var(--ui-tab-suffix-color);
-        font-size:var(--ui-tab-suffix-font-size);
+        gap:var(--halo-tab-suffix-gap);
+        color:var(--halo-tab-suffix-color);
+        font-size:var(--halo-tab-suffix-font-size);
     }
 
-    .ui-tabs__tab-suffix-content {
+    .halo-tabs__tab-suffix-content {
         display:inline-flex;
         align-items:center;
         gap:0.25rem;
@@ -158,129 +158,129 @@
         font-size:inherit;
     }
 
-    .ui-tabs__tab-badge {
+    .halo-tabs__tab-badge {
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        min-width:var(--ui-tab-badge-size);
-        height:var(--ui-tab-badge-size);
+        min-width:var(--halo-tab-badge-size);
+        height:var(--halo-tab-badge-size);
         padding:0 0.4rem;
         border-radius:9999px;
-        font-size:var(--ui-tab-badge-font-size);
-        font-weight:var(--ui-tab-badge-font-weight);
-        background:var(--ui-tab-state-badge-background);
-        color:var(--ui-tab-state-badge-text);
+        font-size:var(--halo-tab-badge-font-size);
+        font-weight:var(--halo-tab-badge-font-weight);
+        background:var(--halo-tab-state-badge-background);
+        color:var(--halo-tab-state-badge-text);
     }
 
-    .ui-tabs__tab-icon {
+    .halo-tabs__tab-icon {
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        width:var(--ui-tab-icon-size);
-        height:var(--ui-tab-icon-size);
-        border-radius:var(--ui-tab-icon-border-radius);
-        border:var(--ui-tab-icon-border-width) solid var(--ui-tab-state-icon-border-color);
-        background:var(--ui-tab-state-icon-background);
-        color:var(--ui-tab-state-icon-color);
-        transition:var(--ui-tab-icon-transition);
+        width:var(--halo-tab-icon-size);
+        height:var(--halo-tab-icon-size);
+        border-radius:var(--halo-tab-icon-border-radius);
+        border:var(--halo-tab-icon-border-width) solid var(--halo-tab-state-icon-border-color);
+        background:var(--halo-tab-state-icon-background);
+        color:var(--halo-tab-state-icon-color);
+        transition:var(--halo-tab-icon-transition);
         flex-shrink:0;
     }
 
-    .ui-tabs__tab-icon--custom {
+    .halo-tabs__tab-icon--custom {
         background:transparent;
         border-color:transparent;
         color:inherit;
     }
 
-    .ui-tabs__indicator-dot {
+    .halo-tabs__indicator-dot {
         position:absolute;
         top:0;
         right:0;
-        width:var(--ui-tab-notification-size);
-        height:var(--ui-tab-notification-size);
+        width:var(--halo-tab-notification-size);
+        height:var(--halo-tab-notification-size);
         border-radius:9999px;
-        background:var(--ui-tab-notification-color);
-        box-shadow:var(--ui-tab-notification-shadow);
+        background:var(--halo-tab-notification-color);
+        box-shadow:var(--halo-tab-notification-shadow);
         pointer-events:none;
         transform:translate(
-            calc(-50% + var(--ui-tab-notification-offset-x)),
-            calc(-1 * var(--ui-tab-notification-offset-y))
+            calc(-50% + var(--halo-tab-notification-offset-x)),
+            calc(-1 * var(--halo-tab-notification-offset-y))
         );
     }
 
-    .ui-tabs__indicator-dot--success {
-        --ui-tab-notification-color: var(--ui-color-feedback-success-default);
+    .halo-tabs__indicator-dot--success {
+        --halo-tab-notification-color: var(--halo-color-feedback-success-default);
     }
 
-    .ui-tabs__indicator-dot--warning {
-        --ui-tab-notification-color: var(--ui-color-feedback-warning-default);
+    .halo-tabs__indicator-dot--warning {
+        --halo-tab-notification-color: var(--halo-color-feedback-warning-default);
     }
 
-    .ui-tabs__indicator-dot--danger {
-        --ui-tab-notification-color: var(--ui-color-feedback-danger-default);
+    .halo-tabs__indicator-dot--danger {
+        --halo-tab-notification-color: var(--halo-color-feedback-danger-default);
     }
 
-    .ui-tabs__indicator-dot--info {
-        --ui-tab-notification-color: var(--ui-color-feedback-info-default);
+    .halo-tabs__indicator-dot--info {
+        --halo-tab-notification-color: var(--halo-color-feedback-info-default);
     }
 
-    .ui-tabs__panels {
+    .halo-tabs__panels {
         display:flex;
         flex-direction:column;
-        gap:var(--ui-tab-panel-gap);
-        padding:var(--ui-tab-panel-padding-y) var(--ui-tab-panel-padding-x);
-        background:var(--ui-tab-panel-background);
-        color:var(--ui-tab-panel-text-color);
+        gap:var(--halo-tab-panel-gap);
+        padding:var(--halo-tab-panel-padding-y) var(--halo-tab-panel-padding-x);
+        background:var(--halo-tab-panel-background);
+        color:var(--halo-tab-panel-text-color);
         width:100%;
         max-width:100%;
         min-width:0;
         box-sizing:border-box;
     }
 
-    .ui-tabs__panel {
+    .halo-tabs__panel {
         display:flex;
         flex-direction:column;
         align-items:stretch;
-        gap:var(--ui-tab-panel-gap);
+        gap:var(--halo-tab-panel-gap);
         width:100%;
         min-width:0;
     }
 
-    .ui-tabs__empty {
+    .halo-tabs__empty {
         display:flex;
         flex-direction:column;
         align-items:center;
         justify-content:center;
-        gap:var(--ui-tab-empty-state-gap);
-        padding:var(--ui-tab-empty-state-padding-y) var(--ui-tab-empty-state-padding-x);
-        background:var(--ui-tab-empty-state-background);
-        border-style:var(--ui-tab-empty-state-border-style);
-        border-width:var(--ui-tab-empty-state-border-width);
-        border-color:var(--ui-tab-empty-state-border-color);
-        border-radius:calc(var(--ui-tab-container-border-radius) - 0.5rem);
-        color:var(--ui-tab-empty-state-text-color);
+        gap:var(--halo-tab-empty-state-gap);
+        padding:var(--halo-tab-empty-state-padding-y) var(--halo-tab-empty-state-padding-x);
+        background:var(--halo-tab-empty-state-background);
+        border-style:var(--halo-tab-empty-state-border-style);
+        border-width:var(--halo-tab-empty-state-border-width);
+        border-color:var(--halo-tab-empty-state-border-color);
+        border-radius:calc(var(--halo-tab-container-border-radius) - 0.5rem);
+        color:var(--halo-tab-empty-state-text-color);
         text-align:center;
     }
 
-    .ui-tabs__tab .material-icons {
-        font-size:calc(var(--ui-tab-icon-size) * 0.65);
+    .halo-tabs__tab .material-icons {
+        font-size:calc(var(--halo-tab-icon-size) * 0.65);
         line-height:1;
     }
 
     @media (max-width:640px) {
-        .ui-tabs__list {
+        .halo-tabs__list {
             flex-wrap:nowrap;
-            gap:calc(var(--ui-tab-list-gap) * 0.75);
+            gap:calc(var(--halo-tab-list-gap) * 0.75);
             padding-inline:0.625rem;
         }
 
-        .ui-tabs__tab {
+        .halo-tabs__tab {
             flex:0 0 auto;
             min-width:min(15rem, calc(100vw - 3rem));
-            min-height:max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+            min-height:max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
         }
 
-        .ui-tabs__tab-description {
+        .halo-tabs__tab-description {
             white-space:normal;
             display:-webkit-box;
             -webkit-box-orient:vertical;
@@ -289,18 +289,18 @@
             text-overflow:ellipsis;
         }
 
-        .ui-tabs__panels {
+        .halo-tabs__panels {
             padding-inline:0.875rem;
         }
     }
 
     @container (max-width:520px) {
-        .ui-tabs__list {
+        .halo-tabs__list {
             flex-wrap:wrap;
             overflow-x:visible;
         }
 
-        .ui-tabs__tab {
+        .halo-tabs__tab {
             flex:1 1 100%;
             min-width:0;
         }

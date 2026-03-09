@@ -98,12 +98,12 @@ var theme = new HaloTheme
 };
 ```
 
-Components such as `HaloButton`, `HaloTextField`, `HaloTextArea`, `HaloToggle`, and `HaloBadge` now map their styling to these exported CSS variables. Variant- and state-specific properties are applied through modifier classes (`ui-button--primary`, `ui-textfield--adorned-start`, `ui-toggle--checked`, `ui-badge--info`, etc.), so swapping brands or toggling high-contrast automatically updates hover/focus/disabled states without rebuilding inline styles. To tweak a preset in your host app, override the relevant custom property:
+Components such as `HaloButton`, `HaloTextField`, `HaloTextArea`, `HaloToggle`, and `HaloBadge` now map their styling to these exported CSS variables. Variant- and state-specific properties are applied through modifier classes (`halo-button--primary`, `halo-textfield--adorned-start`, `halo-toggle--checked`, `halo-badge--info`, etc.), so swapping brands or toggling high-contrast automatically updates hover/focus/disabled states without rebuilding inline styles. To tweak a preset in your host app, override the relevant custom property:
 
 ```css
-.ui-button--primary {
-    --ui-button-primary-background-hover: #3b82f6;
-    --ui-button-primary-shadow: none;
+.halo-button--primary {
+    --halo-button-primary-background-hover: #3b82f6;
+    --halo-button-primary-shadow: none;
 }
 ```
 

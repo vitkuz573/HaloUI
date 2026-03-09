@@ -26,8 +26,8 @@ public class ThemeProviderTests : BunitContext
         var cut = Render<ThemeProvider>();
 
         var style = cut.Find("style");
-        Assert.Contains("--ui-button-primary-background", style.InnerHtml);
-        Assert.Contains("--ui-container-background", style.InnerHtml);
+        Assert.Contains("--halo-button-primary-background", style.InnerHtml);
+        Assert.Contains("--halo-container-background", style.InnerHtml);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class ThemeProviderTests : BunitContext
         var cut = Render<ThemeProvider>();
 
         var initialCss = cut.Find("style").InnerHtml;
-        Assert.Contains("--ui-button-secondary-background:#ffffff", initialCss, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--halo-button-secondary-background:#ffffff", initialCss, StringComparison.OrdinalIgnoreCase);
 
         var updated = state.SetTheme("DarkGlass", CreateTheme("DarkGlass"));
         Assert.True(updated);
@@ -49,7 +49,7 @@ public class ThemeProviderTests : BunitContext
         cut.WaitForAssertion(() =>
         {
             var css = cut.Find("style").InnerHtml;
-            Assert.Contains("--ui-button-secondary-background:rgba(37, 56, 94, 0.85)", css, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("--halo-button-secondary-background:rgba(37, 56, 94, 0.85)", css, StringComparison.OrdinalIgnoreCase);
         }, timeout: TimeSpan.FromSeconds(5));
     }
 
@@ -86,7 +86,7 @@ public class ThemeProviderTests : BunitContext
         var provider = Render<ThemeProvider>();
 
         var style = provider.Find("style").InnerHtml;
-        Assert.Contains("--ui-card-default-background:#ffffff", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--halo-card-default-background:#ffffff", style, StringComparison.OrdinalIgnoreCase);
 
         var updated = state.SetTheme("DarkGlass", CreateTheme("DarkGlass"));
         Assert.True(updated);
@@ -94,7 +94,7 @@ public class ThemeProviderTests : BunitContext
         provider.WaitForAssertion(() =>
         {
             var updatedStyle = provider.Find("style").InnerHtml;
-            Assert.Contains("--ui-card-default-background:rgba(255, 255, 255, 0.1)", updatedStyle, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("--halo-card-default-background:rgba(255, 255, 255, 0.1)", updatedStyle, StringComparison.OrdinalIgnoreCase);
         }, timeout: TimeSpan.FromSeconds(5));
     }
 

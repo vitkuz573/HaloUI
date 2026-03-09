@@ -238,13 +238,13 @@ public partial class SnackbarHost
             classes.Add(item.CssClass);
         }
 
-        classes.Add("ui-snackbar");
+        classes.Add("halo-snackbar");
         classes.Add(item.Severity switch
         {
-            SnackbarSeverity.Success => "ui-snackbar--success",
-            SnackbarSeverity.Warning => "ui-snackbar--warning",
-            SnackbarSeverity.Error => "ui-snackbar--error",
-            _ => "ui-snackbar--info"
+            SnackbarSeverity.Success => "halo-snackbar--success",
+            SnackbarSeverity.Warning => "halo-snackbar--warning",
+            SnackbarSeverity.Error => "halo-snackbar--error",
+            _ => "halo-snackbar--info"
         });
 
         if (!string.IsNullOrWhiteSpace(item.CssOverride))
@@ -274,8 +274,8 @@ public partial class SnackbarHost
 
     private static string BuildProgressBarClass(SnackbarItem item)
         => item.IsPaused
-            ? "ui-snackbar__progress-bar ui-snackbar__progress-bar--paused"
-            : "ui-snackbar__progress-bar";
+            ? "halo-snackbar__progress-bar halo-snackbar__progress-bar--paused"
+            : "halo-snackbar__progress-bar";
 
     private string BuildContainerStyle(SnackbarItem item)
     {

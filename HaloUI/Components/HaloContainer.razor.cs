@@ -32,16 +32,16 @@ public partial class HaloContainer
 
     private string BuildWrapperClass()
     {
-        var classes = new List<string> { "ui-container" };
+        var classes = new List<string> { "halo-container" };
 
         if (Elevated)
         {
-            classes.Add("ui-container--elevated");
+            classes.Add("halo-container--elevated");
         }
 
         if (!ClipContent)
         {
-            classes.Add("ui-container--no-clip");
+            classes.Add("halo-container--no-clip");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))

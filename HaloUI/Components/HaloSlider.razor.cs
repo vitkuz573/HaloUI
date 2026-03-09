@@ -86,11 +86,11 @@ public partial class HaloSlider<TValue> where TValue : struct, IConvertible
 
     private string BuildSliderClass()
     {
-        var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "ui-slider" };
+        var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "halo-slider" };
 
         if (IsSliderDisabled)
         {
-            classes.Add("ui-slider--disabled");
+            classes.Add("halo-slider--disabled");
         }
 
         AddClasses(classes, Class);
@@ -131,16 +131,16 @@ public partial class HaloSlider<TValue> where TValue : struct, IConvertible
 
     private string BuildWrapperClass()
     {
-        var classes = new List<string> { "ui-slider__wrapper" };
+        var classes = new List<string> { "halo-slider__wrapper" };
 
         if (IsSliderDisabled)
         {
-            classes.Add("ui-slider__wrapper--disabled");
+            classes.Add("halo-slider__wrapper--disabled");
         }
 
         if (IsInvalid)
         {
-            classes.Add("ui-slider__wrapper--error");
+            classes.Add("halo-slider__wrapper--error");
         }
 
         return string.Join(' ', classes);

@@ -19,9 +19,9 @@
     {
         @if (isSegmented)
         {
-            <div class="ui-radio-button__segmented">
-                <div class="ui-radio-button__child">@ChildContent</div>
-                <span class="material-icons ui-radio-button__indicator"
+            <div class="halo-radio-button__segmented">
+                <div class="halo-radio-button__child">@ChildContent</div>
+                <span class="material-icons halo-radio-button__indicator"
                       aria-hidden="true">@GetIndicatorIcon(isSegmented, selected)</span>
             </div>
         }
@@ -32,28 +32,28 @@
     }
     else if (isSegmented)
     {
-        <div class="ui-radio-button__segmented">
-            <div class="ui-radio-button__content ui-radio-button__content--column">
+        <div class="halo-radio-button__segmented">
+            <div class="halo-radio-button__content halo-radio-button__content--column">
                 @if (!string.IsNullOrWhiteSpace(Icon))
                 {
-                    <span class="material-icons ui-radio-button__icon" aria-hidden="true">@Icon</span>
+                    <span class="material-icons halo-radio-button__icon" aria-hidden="true">@Icon</span>
                 }
-                <span class="ui-radio-button__label">@GetDisplayLabel()</span>
+                <span class="halo-radio-button__label">@GetDisplayLabel()</span>
                 @if (!string.IsNullOrWhiteSpace(Description))
                 {
-                    <span class="ui-radio-button__description">@Description</span>
+                    <span class="halo-radio-button__description">@Description</span>
                 }
                 else if (Value is not null && string.IsNullOrWhiteSpace(Label))
                 {
-                    <span class="ui-radio-button__description">@Value</span>
+                    <span class="halo-radio-button__description">@Value</span>
                 }
             </div>
-            <div class="ui-radio-button__meta">
+            <div class="halo-radio-button__meta">
                 @if (!string.IsNullOrWhiteSpace(Badge))
                 {
-                    <span class="ui-radio-button__badge">@Badge</span>
+                    <span class="halo-radio-button__badge">@Badge</span>
                 }
-                <span class="material-icons ui-radio-button__indicator" aria-hidden="true">
+                <span class="material-icons halo-radio-button__indicator" aria-hidden="true">
                     @GetIndicatorIcon(isSegmented, selected)
                 </span>
             </div>
@@ -61,19 +61,19 @@
     }
     else
     {
-        <div class="ui-radio-button__stack">
-            <span class="material-icons ui-radio-button__indicator" aria-hidden="true">
+        <div class="halo-radio-button__stack">
+            <span class="material-icons halo-radio-button__indicator" aria-hidden="true">
                 @GetIndicatorIcon(isSegmented, selected)
             </span>
             @if (!string.IsNullOrWhiteSpace(Icon))
             {
-                <span class="material-icons ui-radio-button__icon" aria-hidden="true">@Icon</span>
+                <span class="material-icons halo-radio-button__icon" aria-hidden="true">@Icon</span>
             }
-            <div class="ui-radio-button__content">
-                <span class="ui-radio-button__label">@GetDisplayLabel()</span>
+            <div class="halo-radio-button__content">
+                <span class="halo-radio-button__label">@GetDisplayLabel()</span>
                 @if (!string.IsNullOrWhiteSpace(Description))
                 {
-                    <span class="ui-radio-button__description">@Description</span>
+                    <span class="halo-radio-button__description">@Description</span>
                 }
             </div>
         </div>

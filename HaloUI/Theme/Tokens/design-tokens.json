@@ -2659,7 +2659,7 @@
                 }
             },
             "CssVariables": {
-                "--ui-hc-outline": "#000000"
+                "--halo-hc-outline": "#000000"
             }
         }
     }

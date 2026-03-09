@@ -25,16 +25,16 @@ public class HaloContainerTests : BunitContext
             .Add(p => p.Footer, builder => builder.AddContent(0, "Footer")));
 
         var wrapper = cut.Find("div");
-        Assert.Contains("ui-container", wrapper.ClassList);
-        Assert.Contains("ui-container--elevated", wrapper.ClassList);
-        Assert.Contains("ui-container--no-clip", wrapper.ClassList);
+        Assert.Contains("halo-container", wrapper.ClassList);
+        Assert.Contains("halo-container--elevated", wrapper.ClassList);
+        Assert.Contains("halo-container--no-clip", wrapper.ClassList);
 
-        var sections = cut.FindAll(".ui-container__section");
+        var sections = cut.FindAll(".halo-container__section");
         Assert.Equal(2, sections.Count);
-        Assert.Contains("ui-container__section--header", sections[0].ClassList);
-        Assert.Contains("ui-container__section--footer", sections[1].ClassList);
+        Assert.Contains("halo-container__section--header", sections[0].ClassList);
+        Assert.Contains("halo-container__section--footer", sections[1].ClassList);
 
-        var body = cut.Find(".ui-container__body");
+        var body = cut.Find(".halo-container__body");
         Assert.Equal("Body", body.TextContent.Trim());
     }
 }

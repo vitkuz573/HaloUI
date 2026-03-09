@@ -1,4 +1,4 @@
-.ui-textarea {
+.halo-textarea {
         display:flex;
         flex-direction:column;
         gap:0.35rem;
@@ -6,74 +6,74 @@
         width:100%;
     }
 
-    .ui-textarea__input {
+    .halo-textarea__input {
         width:100%;
         max-width:100%;
         min-height:120px;
         resize:vertical;
-        background:var(--ui-input-default-background);
-        color:var(--ui-input-default-text);
-        border:var(--ui-input-border-width) solid var(--ui-input-default-border);
-        border-radius:var(--ui-input-border-radius);
-        padding:var(--ui-input-size-md-padding-y) var(--ui-input-size-md-padding-x);
-        font-size:var(--ui-input-font-size);
-        font-weight:var(--ui-input-font-weight);
-        font-family:var(--ui-input-font-family, var(--ui-brand-typography-body-font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif));
+        background:var(--halo-input-default-background);
+        color:var(--halo-input-default-text);
+        border:var(--halo-input-border-width) solid var(--halo-input-default-border);
+        border-radius:var(--halo-input-border-radius);
+        padding:var(--halo-input-size-md-padding-y) var(--halo-input-size-md-padding-x);
+        font-size:var(--halo-input-font-size);
+        font-weight:var(--halo-input-font-weight);
+        font-family:var(--halo-input-font-family, var(--halo-brand-typography-body-font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif));
         line-height:1.5;
-        transition:var(--ui-input-transition);
+        transition:var(--halo-input-transition);
         outline:none;
-        box-shadow:var(--ui-input-default-shadow);
+        box-shadow:var(--halo-input-default-shadow);
         appearance:none;
         box-sizing:border-box;
     }
 
-    .ui-textarea__input::placeholder {
-        color:var(--ui-input-default-placeholder);
+    .halo-textarea__input::placeholder {
+        color:var(--halo-input-default-placeholder);
         opacity:1;
     }
 
-    .ui-textarea__input:focus-visible {
-        border-color:var(--ui-input-focus-border);
-        box-shadow:var(--ui-input-focus-shadow);
+    .halo-textarea__input:focus-visible {
+        border-color:var(--halo-input-focus-border);
+        box-shadow:var(--halo-input-focus-shadow);
     }
 
-    .ui-textarea--disabled .ui-textarea__input,
-    .ui-textarea__input.is-disabled {
-        background: var(--ui-input-disabled-background);
-        color: var(--ui-input-disabled-text);
-        border-color: var(--ui-input-disabled-border);
-        box-shadow: var(--ui-input-disabled-shadow);
+    .halo-textarea--disabled .halo-textarea__input,
+    .halo-textarea__input.is-disabled {
+        background: var(--halo-input-disabled-background);
+        color: var(--halo-input-disabled-text);
+        border-color: var(--halo-input-disabled-border);
+        box-shadow: var(--halo-input-disabled-shadow);
         cursor:not-allowed;
         opacity:0.65;
     }
 
-    .ui-textarea--disabled .ui-textarea__input::placeholder,
-    .ui-textarea__input.is-disabled::placeholder {
-        color: var(--ui-input-disabled-placeholder);
+    .halo-textarea--disabled .halo-textarea__input::placeholder,
+    .halo-textarea__input.is-disabled::placeholder {
+        color: var(--halo-input-disabled-placeholder);
     }
 
-    .ui-textarea__description {
+    .halo-textarea__description {
         margin:0.375rem 0 0;
-        color:var(--ui-color-text-tertiary);
-        font-size:var(--ui-typography-caption-font-size);
-        line-height:var(--ui-typography-caption-line-height);
-        font-weight:var(--ui-typography-caption-font-weight);
-        letter-spacing:var(--ui-typography-caption-letter-spacing);
+        color:var(--halo-color-text-tertiary);
+        font-size:var(--halo-typography-caption-font-size);
+        line-height:var(--halo-typography-caption-line-height);
+        font-weight:var(--halo-typography-caption-font-weight);
+        letter-spacing:var(--halo-typography-caption-letter-spacing);
     }
 
-    .ui-textarea--error .ui-textarea__description {
-        color:var(--ui-color-feedback-danger-text);
+    .halo-textarea--error .halo-textarea__description {
+        color:var(--halo-color-feedback-danger-text);
     }
 
-    .ui-textarea--disabled .ui-textarea__description {
-        color:var(--ui-input-disabled-text);
+    .halo-textarea--disabled .halo-textarea__description {
+        color:var(--halo-input-disabled-text);
     }
 
     @media (max-width:640px), (hover:none) and (pointer:coarse) {
-        .ui-textarea__input {
+        .halo-textarea__input {
             min-height:max(8rem, 24vh);
-            font-size:max(var(--ui-input-font-size), 16px);
-            padding-top:max(var(--ui-input-size-md-padding-y), 0.625rem);
-            padding-bottom:max(var(--ui-input-size-md-padding-y), 0.625rem);
+            font-size:max(var(--halo-input-font-size), 16px);
+            padding-top:max(var(--halo-input-size-md-padding-y), 0.625rem);
+            padding-bottom:max(var(--halo-input-size-md-padding-y), 0.625rem);
         }
     }

@@ -21,41 +21,41 @@ internal static class ResponsiveFoundationCssBuilder
 
         var builder = new StringBuilder();
 
-        builder.AppendLine(":where([class^=\"ui-\"], [class*=\" ui-\"]) { box-sizing: border-box; min-width: 0; }");
-        builder.AppendLine(":where([class^=\"ui-\"], [class*=\" ui-\"]) :where(img, svg, video, canvas) { max-inline-size: 100%; block-size: auto; }");
-        builder.AppendLine(":where([class^=\"ui-\"], [class*=\" ui-\"]) :where(input, select, textarea, button) { max-inline-size: 100%; }");
-        builder.AppendLine(":where(.ui-layout__header, .ui-layout__toolbar, .ui-layout__content, .ui-container__section, .ui-tabs__panels, .ui-table__mobile-section) { max-inline-size: 100%; }");
-        builder.AppendLine(":where(.ui-text__content, .ui-label__text, .ui-badge__label, .ui-tree__label, .ui-tree__description, .ui-expandable-panel__title, .ui-expandable-panel__subtitle, .ui-expandable-panel__description, .ui-select__trigger-text) { overflow-wrap: anywhere; }");
-        builder.AppendLine($":where(.ui-layout__content) {{ padding-inline: {fluid.FluidContainerPadding}; }}");
-        builder.AppendLine($":where(.ui-table__mobile-section) {{ gap: {spacing.Section.GetValue("xs")}; }}");
+        builder.AppendLine(":where([class^=\"halo-\"], [class*=\" halo-\"]) { box-sizing: border-box; min-width: 0; }");
+        builder.AppendLine(":where([class^=\"halo-\"], [class*=\" halo-\"]) :where(img, svg, video, canvas) { max-inline-size: 100%; block-size: auto; }");
+        builder.AppendLine(":where([class^=\"halo-\"], [class*=\" halo-\"]) :where(input, select, textarea, button) { max-inline-size: 100%; }");
+        builder.AppendLine(":where(.halo-layout__header, .halo-layout__toolbar, .halo-layout__content, .halo-container__section, .halo-tabs__panels, .halo-table__mobile-section) { max-inline-size: 100%; }");
+        builder.AppendLine(":where(.halo-text__content, .halo-label__text, .halo-badge__label, .halo-tree__label, .halo-tree__description, .halo-expandable-panel__title, .halo-expandable-panel__subtitle, .halo-expandable-panel__description, .halo-select__trigger-text) { overflow-wrap: anywhere; }");
+        builder.AppendLine($":where(.halo-layout__content) {{ padding-inline: {fluid.FluidContainerPadding}; }}");
+        builder.AppendLine($":where(.halo-table__mobile-section) {{ gap: {spacing.Section.GetValue("xs")}; }}");
 
         AppendMedia(builder, breakpoints.TouchDevice, """
-            :where(.ui-button, .ui-select__trigger, .ui-select__native, .ui-textfield__input, .ui-textarea__input, .ui-datetime__input, .ui-radio-button, .ui-toggle, .ui-tabs__tab, .ui-expandable-panel__header-button, .ui-tree__node) {
-                min-height: max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+            :where(.halo-button, .halo-select__trigger, .halo-select__native, .halo-textfield__input, .halo-textarea__input, .halo-datetime__input, .halo-radio-button, .halo-toggle, .halo-tabs__tab, .halo-expandable-panel__header-button, .halo-tree__node) {
+                min-height: max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
                 touch-action: manipulation;
             }
 
-            :where(.ui-slider) {
-                min-height: max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+            :where(.halo-slider) {
+                min-height: max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
             }
             """);
 
         AppendMedia(builder, breakpoints.XsOnly, """
-            :where(.ui-layout__header, .ui-layout__toolbar, .ui-layout__content) {
-                padding-inline: var(--ui-responsive-spacing-container-padding-xs, 1rem);
+            :where(.halo-layout__header, .halo-layout__toolbar, .halo-layout__content) {
+                padding-inline: var(--halo-responsive-spacing-container-padding-xs, 1rem);
             }
 
-            :where(.ui-layout__toolbar, .ui-snackbar__header, .ui-expandable-panel__title-row, .ui-table__toolbar) {
+            :where(.halo-layout__toolbar, .halo-snackbar__header, .halo-expandable-panel__title-row, .halo-table__toolbar) {
                 flex-wrap: wrap;
             }
 
-            :where(.ui-badge) {
+            :where(.halo-badge) {
                 white-space: normal;
             }
             """);
 
         AppendMedia(builder, breakpoints.ReducedMotion, """
-            :where(.ui-button, .ui-radio-button, .ui-select__dropdown, .ui-expandable-panel__content, .ui-snackbar, .ui-dialog__drawer, .ui-dialog__drawer-handle, .ui-toggle__track, .ui-toggle__thumb) {
+            :where(.halo-button, .halo-radio-button, .halo-select__dropdown, .halo-expandable-panel__content, .halo-snackbar, .halo-dialog__drawer, .halo-dialog__drawer-handle, .halo-toggle__track, .halo-toggle__thumb) {
                 transition-duration: 1ms !important;
                 animation-duration: 1ms !important;
                 animation-iteration-count: 1 !important;

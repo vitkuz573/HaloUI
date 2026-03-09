@@ -1,18 +1,18 @@
-.ui-slider__wrapper {
+.halo-slider__wrapper {
         display:flex;
         flex-direction:column;
-        gap:var(--ui-input-label-gap, var(--ui-label-description-spacing));
+        gap:var(--halo-input-label-gap, var(--halo-label-description-spacing));
         min-width:0;
         width:100%;
     }
 
-    .ui-slider {
+    .halo-slider {
         -webkit-appearance: none;
         appearance: none;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
-        height: var(--ui-slider-thumb-size);
+        height: var(--halo-slider-thumb-size);
         padding: 0;
         background: transparent;
         border: none;
@@ -21,120 +21,120 @@
         position: relative;
     }
 
-    .ui-slider::before {
+    .halo-slider::before {
         content: "";
         position: absolute;
-        left: calc(var(--ui-slider-thumb-size) / 2);
-        width: calc(100% - var(--ui-slider-thumb-size));
-        top: calc((var(--ui-slider-thumb-size) - var(--ui-slider-track-height)) / 2);
-        height: var(--ui-slider-track-height);
-        border-radius: var(--ui-slider-track-border-radius);
+        left: calc(var(--halo-slider-thumb-size) / 2);
+        width: calc(100% - var(--halo-slider-thumb-size));
+        top: calc((var(--halo-slider-thumb-size) - var(--halo-slider-track-height)) / 2);
+        height: var(--halo-slider-track-height);
+        border-radius: var(--halo-slider-track-border-radius);
         background: linear-gradient(
             to right,
-            var(--ui-slider-track-fill-color) var(--ui-slider-progress, 0%),
-            var(--ui-slider-track-background) var(--ui-slider-progress, 0%)
+            var(--halo-slider-track-fill-color) var(--halo-slider-progress, 0%),
+            var(--halo-slider-track-background) var(--halo-slider-progress, 0%)
         );
         pointer-events: none;
         z-index: 0;
     }
 
-    .ui-slider:focus-visible {
-        box-shadow: var(--ui-slider-focus-ring);
+    .halo-slider:focus-visible {
+        box-shadow: var(--halo-slider-focus-ring);
     }
 
-    .ui-slider:disabled {
+    .halo-slider:disabled {
         cursor: not-allowed;
         opacity: 0.7;
     }
 
-    .ui-slider::-webkit-slider-runnable-track {
-        height: var(--ui-slider-track-height);
-        border-radius: var(--ui-slider-track-border-radius);
+    .halo-slider::-webkit-slider-runnable-track {
+        height: var(--halo-slider-track-height);
+        border-radius: var(--halo-slider-track-border-radius);
         background: transparent;
     }
 
-    .ui-slider::-webkit-slider-thumb {
+    .halo-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: var(--ui-slider-thumb-size);
-        height: var(--ui-slider-thumb-size);
-        background: var(--ui-slider-thumb-background);
-        border: var(--ui-slider-thumb-border);
+        width: var(--halo-slider-thumb-size);
+        height: var(--halo-slider-thumb-size);
+        background: var(--halo-slider-thumb-background);
+        border: var(--halo-slider-thumb-border);
         border-radius: 9999px;
-        box-shadow: var(--ui-slider-thumb-shadow);
-        transition: var(--ui-slider-thumb-transition);
-        margin-top: calc(-1 * (var(--ui-slider-thumb-size) - var(--ui-slider-track-height)) / 2);
+        box-shadow: var(--halo-slider-thumb-shadow);
+        transition: var(--halo-slider-thumb-transition);
+        margin-top: calc(-1 * (var(--halo-slider-thumb-size) - var(--halo-slider-track-height)) / 2);
         position: relative;
         z-index: 1;
     }
 
-    .ui-slider:active::-webkit-slider-thumb {
-        transform: scale(var(--ui-slider-thumb-active-scale));
+    .halo-slider:active::-webkit-slider-thumb {
+        transform: scale(var(--halo-slider-thumb-active-scale));
     }
 
-    .ui-slider::-moz-range-track {
-        height: var(--ui-slider-track-height);
-        border-radius: var(--ui-slider-track-border-radius);
-        background: var(--ui-slider-track-background);
+    .halo-slider::-moz-range-track {
+        height: var(--halo-slider-track-height);
+        border-radius: var(--halo-slider-track-border-radius);
+        background: var(--halo-slider-track-background);
     }
 
-    .ui-slider::-moz-range-progress {
-        height: var(--ui-slider-track-height);
-        border-radius: var(--ui-slider-track-border-radius);
-        background: var(--ui-slider-track-fill-color);
+    .halo-slider::-moz-range-progress {
+        height: var(--halo-slider-track-height);
+        border-radius: var(--halo-slider-track-border-radius);
+        background: var(--halo-slider-track-fill-color);
     }
 
-    .ui-slider::-moz-range-thumb {
-        width: var(--ui-slider-thumb-size);
-        height: var(--ui-slider-thumb-size);
-        background: var(--ui-slider-thumb-background);
-        border: var(--ui-slider-thumb-border);
+    .halo-slider::-moz-range-thumb {
+        width: var(--halo-slider-thumb-size);
+        height: var(--halo-slider-thumb-size);
+        background: var(--halo-slider-thumb-background);
+        border: var(--halo-slider-thumb-border);
         border-radius: 9999px;
-        box-shadow: var(--ui-slider-thumb-shadow);
-        transition: var(--ui-slider-thumb-transition);
+        box-shadow: var(--halo-slider-thumb-shadow);
+        transition: var(--halo-slider-thumb-transition);
     }
 
-    .ui-slider:active::-moz-range-thumb {
-        transform: scale(var(--ui-slider-thumb-active-scale));
+    .halo-slider:active::-moz-range-thumb {
+        transform: scale(var(--halo-slider-thumb-active-scale));
     }
 
-    .ui-slider::-ms-track {
-        height: var(--ui-slider-track-height);
-        border-radius: var(--ui-slider-track-border-radius);
+    .halo-slider::-ms-track {
+        height: var(--halo-slider-track-height);
+        border-radius: var(--halo-slider-track-border-radius);
         background: transparent;
         border-color: transparent;
         color: transparent;
     }
 
-    .ui-slider::-ms-fill-lower {
-        background: var(--ui-slider-track-fill-color);
-        border-radius: var(--ui-slider-track-border-radius);
+    .halo-slider::-ms-fill-lower {
+        background: var(--halo-slider-track-fill-color);
+        border-radius: var(--halo-slider-track-border-radius);
     }
 
-    .ui-slider::-ms-fill-upper {
-        background: var(--ui-slider-track-background);
-        border-radius: var(--ui-slider-track-border-radius);
+    .halo-slider::-ms-fill-upper {
+        background: var(--halo-slider-track-background);
+        border-radius: var(--halo-slider-track-border-radius);
     }
 
-    .ui-slider::-ms-thumb {
-        width: var(--ui-slider-thumb-size);
-        height: var(--ui-slider-thumb-size);
-        background: var(--ui-slider-thumb-background);
-        border: var(--ui-slider-thumb-border);
+    .halo-slider::-ms-thumb {
+        width: var(--halo-slider-thumb-size);
+        height: var(--halo-slider-thumb-size);
+        background: var(--halo-slider-thumb-background);
+        border: var(--halo-slider-thumb-border);
         border-radius: 9999px;
-        box-shadow: var(--ui-slider-thumb-shadow);
-        transition: var(--ui-slider-thumb-transition);
+        box-shadow: var(--halo-slider-thumb-shadow);
+        transition: var(--halo-slider-thumb-transition);
     }
 
-    .ui-slider:active::-ms-thumb {
-        transform: scale(var(--ui-slider-thumb-active-scale));
+    .halo-slider:active::-ms-thumb {
+        transform: scale(var(--halo-slider-thumb-active-scale));
     }
 
     @media (max-width:640px), (hover:none) and (pointer:coarse) {
-        .ui-slider {
-            --ui-slider-thumb-size: max(var(--ui-slider-thumb-size), 1.625rem);
-            --ui-slider-track-height: max(var(--ui-slider-track-height), 0.375rem);
-            min-height: max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+        .halo-slider {
+            --halo-slider-thumb-size: max(var(--halo-slider-thumb-size), 1.625rem);
+            --halo-slider-track-height: max(var(--halo-slider-track-height), 0.375rem);
+            min-height: max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
             padding-block: 0.35rem;
         }
     }

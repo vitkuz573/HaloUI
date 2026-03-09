@@ -27,7 +27,7 @@ class Component
     [Fact]
     public async Task ReportsAccessorWithValueSuffixAndOffersFix()
     {
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
 
         var source = $@"using HaloUI.Theme.Sdk.Css;
 
@@ -52,7 +52,7 @@ class Component
     [Fact]
     public async Task ReportsAccessorWithTypoAndOffersClosestGeneratedAccessorFix()
     {
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
         var typoAccessor = accessor[..^1];
 
         var source = $@"using HaloUI.Theme.Sdk.Css;
@@ -78,7 +78,7 @@ class Component
     [Fact]
     public async Task DoesNotReportForValidAccessor()
     {
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
 
         var source = $@"using HaloUI.Theme.Sdk.Css;
 
@@ -95,7 +95,7 @@ class Component
     [Fact]
     public async Task SkipsAnalysisInsideThemeSdkNamespace()
     {
-        var accessor = ThemeVariableTestHelper.GetAccessor("--ui-button-primary-background");
+        var accessor = ThemeVariableTestHelper.GetAccessor("--halo-button-primary-background");
 
         var source = $@"namespace HaloUI.Theme.Sdk.Generated
 {{

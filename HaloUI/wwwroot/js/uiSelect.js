@@ -103,7 +103,7 @@ export function measureTrigger(triggerElement) {
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     const container = findFixedContainingBlock(triggerElement);
-    const isInDialog = !!triggerElement.closest('.ui-dialog__modal, .ui-dialog__drawer');
+    const isInDialog = !!triggerElement.closest('.halo-dialog__modal, .halo-dialog__drawer');
 
     if (container) {
         const containerRect = container.getBoundingClientRect();

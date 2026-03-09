@@ -25,21 +25,21 @@
         var canToggleFilters = _options.ShowColumnFilters && hasFilterableColumns;
 
         <div class="@GetHeaderContainerClasses()">
-            <div class="ui-table__header-layout">
-                <div class="ui-table__header-title-group">
+            <div class="halo-table__header-layout">
+                <div class="halo-table__header-title-group">
                     @if (IsCollapsible)
                     {
                         <button type="button"
                                 class="@GetToggleButtonClasses()"
                                 @onclick="ToggleExpanded"
                                 @attributes="GetToggleButtonAttributes()">
-                            <span class="material-icons ui-table__toggle-icon" aria-hidden="true">chevron_right</span>
-                            <span class="ui-table__title">@Title</span>
+                            <span class="material-icons halo-table__toggle-icon" aria-hidden="true">chevron_right</span>
+                            <span class="halo-table__title">@Title</span>
                         </button>
                     }
                     else if (!string.IsNullOrWhiteSpace(Title))
                     {
-                        <div class="ui-table__title">@Title</div>
+                        <div class="halo-table__title">@Title</div>
                     }
                 </div>
                 @if ((!IsCollapsible || _isExpanded) && _options.ShowToolbar && _state is not null)
@@ -49,10 +49,10 @@
                         _filtersExpanded = false;
                     }
 
-                    <div class="ui-table__toolbar">
+                    <div class="halo-table__toolbar">
                     @if (IsSearchEnabled)
                     {
-                        <div class="ui-table__search-shell">
+                        <div class="halo-table__search-shell">
                             <HaloTextField @bind-value="SearchText"
                                          Placeholder="Search"
                                          Type="TextFieldType.Search"
@@ -63,14 +63,14 @@
                                          AriaLabel="@GetSearchAriaLabel()"
                                          EndAdornment="@ClearSearchAdornment">
                                 <StartAdornment>
-                                    <span class="material-icons ui-table__toolbar-icon" aria-hidden="true">search</span>
+                                    <span class="material-icons halo-table__toolbar-icon" aria-hidden="true">search</span>
                                 </StartAdornment>
                             </HaloTextField>
                         </div>
                     }
                     @if (Actions is not null)
                     {
-                        <div class="ui-table__actions">
+                        <div class="halo-table__actions">
                             @Actions
                         </div>
                     }
@@ -86,7 +86,7 @@
                             <span>@(_filtersExpanded ? "Hide filters" : "Filters")</span>
                             @if (activeFilters.Count > 0)
                             {
-                                <span class="ui-table__filter-badge">@activeFilters.Count</span>
+                                <span class="halo-table__filter-badge">@activeFilters.Count</span>
                             }
                         </HaloButton>
                     }
@@ -97,22 +97,22 @@
 
         if (_filtersExpanded && canToggleFilters && activeFilters.Count > 0)
         {
-            <div class="ui-table__filter-panel">
-                <div id="@_filtersPanelId" class="ui-table__filter-panel-content">
-                    <div class="ui-table__filter-panel-stack">
-                        <div class="ui-table__filter-panel-header">
-                            <span class="material-icons ui-table__filter-panel-icon" aria-hidden="true">tune</span>
+            <div class="halo-table__filter-panel">
+                <div id="@_filtersPanelId" class="halo-table__filter-panel-content">
+                    <div class="halo-table__filter-panel-stack">
+                        <div class="halo-table__filter-panel-header">
+                            <span class="material-icons halo-table__filter-panel-icon" aria-hidden="true">tune</span>
                             <span>Active filters</span>
                             <HaloButton Variant="ButtonVariant.Secondary"
                                       Size="ButtonSize.ExtraSmall"
                                       Icon="layers_clear"
-                                      Class="ui-table__filter-clear-all"
+                                      Class="halo-table__filter-clear-all"
                                       Activated="@ClearAllFiltersAsync"
                                       AriaLabel="Clear all filters">
                                 <span>Clear all</span>
                             </HaloButton>
                         </div>
-                        <div class="ui-table__filter-chip-list">
+                        <div class="halo-table__filter-chip-list">
                             @foreach (var (column, raw) in activeFilters.OrderBy(tuple => tuple.Column.Title))
                             {
                                 var label = column.FormatFilterValue(raw);
@@ -121,14 +121,14 @@
                                     label = raw;
                                 }
 
-                                <div class="ui-table__filter-chip">
-                                    <span class="ui-table__filter-chip-label">@column.Title:</span>
-                                    <span class="ui-table__filter-chip-value">@label</span>
+                                <div class="halo-table__filter-chip">
+                                    <span class="halo-table__filter-chip-label">@column.Title:</span>
+                                    <span class="halo-table__filter-chip-value">@label</span>
                                     <HaloButton Variant="ButtonVariant.Secondary"
                                               Size="ButtonSize.ExtraSmall"
                                               Icon="close"
                                               IconOnly="true"
-                                              Class="ui-table__filter-chip-clear"
+                                              Class="halo-table__filter-chip-clear"
                                               AriaLabel="@($"Clear filter for {column.Title}")"
                                               Activated="@(() => ClearFilterAsync(column))" />
                                 </div>
@@ -145,15 +145,15 @@
 
         @if (!IsCollapsible || _isExpanded)
         {
-            <div class="ui-table__desktop-section" id="@_contentId">
-                <table class="ui-table__table" aria-label="@_options.TableAriaLabel">
-                    <thead class="ui-table__head">
+            <div class="halo-table__desktop-section" id="@_contentId">
+                <table class="halo-table__table" aria-label="@_options.TableAriaLabel">
+                    <thead class="halo-table__head">
                         <tr>
                             @if (_options.SelectionMode == TableSelectionMode.Multiple)
                             {
-                                <th scope="col" class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()">
+                                <th scope="col" class="halo-table__head-cell halo-table__head-cell--selection @GetSelectionHeaderCellClasses()">
                                     <input type="checkbox"
-                                           class="ui-table__selection-input"
+                                           class="halo-table__selection-input"
                                            @onchange="ToggleSelectAll"
                                            checked="@state.AreAllVisibleSelected()"
                                            aria-label="Select all rows" />
@@ -161,11 +161,11 @@
                             }
                             else if (_options.SelectionMode == TableSelectionMode.Single)
                             {
-                                <th scope="col" class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()"></th>
+                                <th scope="col" class="halo-table__head-cell halo-table__head-cell--selection @GetSelectionHeaderCellClasses()"></th>
                             }
                             @foreach (var column in visibleColumns)
                             {
-                                <th scope="col" class="ui-table__head-cell @GetHeaderCellClasses(column)">
+                                <th scope="col" class="halo-table__head-cell @GetHeaderCellClasses(column)">
                                     @if (column.Sortable)
                                     {
                                         <HaloButton Variant="ButtonVariant.Secondary"
@@ -186,31 +186,31 @@
                         </tr>
                         @if (_options.ShowColumnFilters && visibleColumns.Any(c => c.Filterable))
                         {
-                            <tr class="ui-table__filter-row">
+                            <tr class="halo-table__filter-row">
                                 @if (_options.SelectionMode != TableSelectionMode.None)
                                 {
-                                    <td class="ui-table__head-cell ui-table__head-cell--selection @GetSelectionHeaderCellClasses()"></td>
+                                    <td class="halo-table__head-cell halo-table__head-cell--selection @GetSelectionHeaderCellClasses()"></td>
                                 }
                                 @foreach (var column in visibleColumns)
                                 {
-                                    <td class="ui-table__head-cell ui-table__head-cell--filter @GetFilterCellClasses(column)">
+                                    <td class="halo-table__head-cell halo-table__head-cell--filter @GetFilterCellClasses(column)">
                                         @if (column.Filterable)
                                         {
                                             var filterContext = CreateFilterContext(column);
 
-                                            <div class="ui-table__filter-input-shell">
+                                            <div class="halo-table__filter-input-shell">
                                                 @if (column.FilterTemplate is not null)
                                                 {
                                                     @column.FilterTemplate(filterContext)
                                                 }
                                                 else
                                                 {
-                                                    <div class="ui-table__filter-input-wrapper">
-                                                        <span class="material-icons ui-table__filter-input-icon"
+                                                    <div class="halo-table__filter-input-wrapper">
+                                                        <span class="material-icons halo-table__filter-input-icon"
                                                               aria-hidden="true">filter_list</span>
                                                         <input type="text"
                                                                value="@filterContext.Value"
-                                                               class="ui-table__filter-input"
+                                                               class="halo-table__filter-input"
                                                                aria-label="@GetFilterInputAriaLabel(column)"
                                                                @oninput="args => filterContext.Update(args.Value?.ToString())"
                                                                placeholder="@(column.FilterPlaceholder ?? "Filter")" />
@@ -223,19 +223,19 @@
                             </tr>
                         }
                     </thead>
-                    <tbody class="ui-table__body">
+                    <tbody class="halo-table__body">
                         @if (isLoading)
                         {
                             @for (var r = 0; r < SkeletonRowCount; r++)
                             {
-                                <tr class="ui-table__row">
+                                <tr class="halo-table__row">
                                     @if (_options.SelectionMode != TableSelectionMode.None)
                                     {
-                                        <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()"><HaloSkeleton Width="20px" /></td>
+                                        <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()"><HaloSkeleton Width="20px" /></td>
                                     }
                                     @foreach (var column in visibleColumns)
                                     {
-                                        <td class="ui-table__cell @GetBodyCellClasses(column)"><HaloSkeleton /></td>
+                                        <td class="halo-table__cell @GetBodyCellClasses(column)"><HaloSkeleton /></td>
                                     }
                                 </tr>
                             }
@@ -248,24 +248,24 @@
                                         @ref="_desktopVirtualize"
                                         OverscanCount="OverscanCount">
                                 <ItemContent>
-                                    <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
+                                    <tr class="halo-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
                                         @switch (_options.SelectionMode)
                                         {
                                             case TableSelectionMode.Multiple:
-                                                <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
                                                     <input type="checkbox"
                                                            checked="@state.IsSelected(item)"
-                                                           class="ui-table__selection-input"
+                                                           class="halo-table__selection-input"
                                                            aria-label="@GetRowSelectionAriaLabel(item)"
                                                            @onchange="() => OnRowSelectionToggled(item)" />
                                                 </td>
                                                 break;
                                             case TableSelectionMode.Single:
-                                                <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                                <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
                                                     <input type="radio"
                                                            name="@_selectionGroupId"
                                                            checked="@state.IsSelected(item)"
-                                                           class="ui-table__selection-input"
+                                                           class="halo-table__selection-input"
                                                            aria-label="@GetRowSelectionAriaLabel(item)"
                                                            @onchange="() => OnRowSelectionToggled(item)" />
                                                 </td>
@@ -273,7 +273,7 @@
                                         }
                                         @foreach (var column in visibleColumns)
                                         {
-                                            <td class="ui-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
+                                            <td class="halo-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
                                         }
                                     </tr>
                                 </ItemContent>
@@ -282,7 +282,7 @@
                             @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
                             {
                                 <tr>
-                                    <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell">@EmptyMessage</td>
+                                    <td colspan="@GetDesktopColumnCount(visibleColumns)" class="halo-table__cell halo-table__empty-cell">@EmptyMessage</td>
                                 </tr>
                             }
                         }
@@ -293,31 +293,31 @@
                                         @ref="_desktopVirtualize"
                                         OverscanCount="OverscanCount">
                                 <ItemContent>
-                                    <tr class="ui-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
+                                    <tr class="halo-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
                                         @if (_options.SelectionMode == TableSelectionMode.Multiple)
                                         {
-                                            <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                            <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
                                                 <input type="checkbox"
                                                        checked="@state.IsSelected(item)"
-                                                       class="ui-table__selection-input"
+                                                       class="halo-table__selection-input"
                                                        aria-label="@GetRowSelectionAriaLabel(item)"
                                                        @onchange="() => OnRowSelectionToggled(item)" />
                                             </td>
                                         }
                                         else if (_options.SelectionMode == TableSelectionMode.Single)
                                         {
-                                            <td class="ui-table__cell ui-table__cell--selection @GetSelectionCellClasses()">
+                                            <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
                                                 <input type="radio"
                                                        name="@_selectionGroupId"
                                                        checked="@state.IsSelected(item)"
-                                                       class="ui-table__selection-input"
+                                                       class="halo-table__selection-input"
                                                        aria-label="@GetRowSelectionAriaLabel(item)"
                                                        @onchange="() => OnRowSelectionToggled(item)" />
                                             </td>
                                         }
                                         @foreach (var column in visibleColumns)
                                         {
-                                            <td class="ui-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
+                                            <td class="halo-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
                                         }
                                     </tr>
                                 </ItemContent>
@@ -326,19 +326,19 @@
                         else if (!isLoading)
                         {
                             <tr>
-                                <td colspan="@GetDesktopColumnCount(visibleColumns)" class="ui-table__cell ui-table__empty-cell">@EmptyMessage</td>
+                                <td colspan="@GetDesktopColumnCount(visibleColumns)" class="halo-table__cell halo-table__empty-cell">@EmptyMessage</td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            <div class="ui-table__mobile-section" id="@($"{_contentId}-mobile")">
+            <div class="halo-table__mobile-section" id="@($"{_contentId}-mobile")">
                 @if (isLoading)
                 {
                     @for (var r = 0; r < SkeletonRowCount; r++)
                     {
-                        <div class="ui-table__mobile-skeleton">
-                            <div class="ui-table__mobile-skeleton-stack">
+                        <div class="halo-table__mobile-skeleton">
+                            <div class="halo-table__mobile-skeleton-stack">
                                 <HaloSkeleton />
                                 <HaloSkeleton Width="70%" />
                                 <HaloSkeleton Width="45%" />
@@ -355,18 +355,18 @@
                                 OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
-                                <div class="ui-table__mobile-card-content">
+                                <div class="halo-table__mobile-card-content">
                                     @foreach (var column in GetMobileColumns(visibleColumns))
                                     {
-                                        <div class="ui-table__mobile-row">
-                                            <span class="ui-table__mobile-label">@column.Title</span>
+                                        <div class="halo-table__mobile-row">
+                                            <span class="halo-table__mobile-label">@column.Title</span>
                                             <div class="@GetMobileValueClasses(column)">@column.Template(item)</div>
                                         </div>
                                     }
                                 </div>
                                 @if (_options.SelectionMode != TableSelectionMode.None)
                                 {
-                                    <div class="ui-table__mobile-selection-footer">
+                                    <div class="halo-table__mobile-selection-footer">
                                         <HaloButton Variant="ButtonVariant.Secondary"
                                                   Activated="() => OnRowSelectionToggled(item)">
                                             @if (state.IsSelected(item))
@@ -386,7 +386,7 @@
 
                     @if (!isLoading && _providerInitialized && _state?.Pagination.TotalItemCount == 0)
                     {
-                        <div class="ui-table__mobile-empty">@EmptyMessage</div>
+                        <div class="halo-table__mobile-empty">@EmptyMessage</div>
                     }
                 }
                 else if (hasItems)
@@ -397,18 +397,18 @@
                                 OverscanCount="OverscanCount">
                         <ItemContent>
                             <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
-                                <div class="ui-table__mobile-card-content">
+                                <div class="halo-table__mobile-card-content">
                                     @foreach (var column in GetMobileColumns(visibleColumns))
                                     {
-                                        <div class="ui-table__mobile-row">
-                                            <span class="ui-table__mobile-label">@column.Title</span>
+                                        <div class="halo-table__mobile-row">
+                                            <span class="halo-table__mobile-label">@column.Title</span>
                                             <div class="@GetMobileValueClasses(column)">@column.Template(item)</div>
                                         </div>
                                     }
                                 </div>
                                 @if (_options.SelectionMode != TableSelectionMode.None)
                                 {
-                                    <div class="ui-table__mobile-selection-footer">
+                                    <div class="halo-table__mobile-selection-footer">
                                         <HaloButton Variant="ButtonVariant.Secondary"
                                                   Activated="() => OnRowSelectionToggled(item)">
                                             @if (state.IsSelected(item))
@@ -428,7 +428,7 @@
                 }
                 else if (!isLoading)
                 {
-                    <div class="ui-table__mobile-empty">@EmptyMessage</div>
+                    <div class="halo-table__mobile-empty">@EmptyMessage</div>
                 }
             </div>
 

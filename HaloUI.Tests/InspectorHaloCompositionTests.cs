@@ -32,8 +32,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<DialogInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-di__search .ui-textfield"));
-        Assert.Equal(3, cut.FindAll(".rm-di__filters .ui-toggle").Count);
+        Assert.NotEmpty(cut.FindAll(".rm-di__search .halo-textfield"));
+        Assert.Equal(3, cut.FindAll(".rm-di__filters .halo-toggle").Count);
     }
 
     [Fact]
@@ -49,8 +49,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<DialogInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .ui-select"));
-        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .ui-textfield"));
+        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .halo-select"));
+        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .halo-textfield"));
     }
 
     [Fact]
@@ -65,8 +65,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<AriaInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .ui-textfield"));
-        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .ui-select"));
+        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .halo-textfield"));
+        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .halo-select"));
     }
 
     private sealed class FakeDialogDiagnosticsHub : IDialogDiagnosticsHub

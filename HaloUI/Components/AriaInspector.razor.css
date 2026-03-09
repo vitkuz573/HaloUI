@@ -9,10 +9,10 @@
     flex-direction: column;
     overflow: hidden;
     border-radius: 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 78%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 94%, transparent);
-    color: var(--ui-text-primary, var(--ui-color-text-primary, #0f172a));
-    box-shadow: 0 1.7rem 3.8rem color-mix(in srgb, var(--ui-color-text-primary, #0f172a) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 78%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 94%, transparent);
+    color: var(--halo-text-primary, var(--halo-color-text-primary, #0f172a));
+    box-shadow: 0 1.7rem 3.8rem color-mix(in srgb, var(--halo-color-text-primary, #0f172a) 18%, transparent);
     backdrop-filter: blur(14px);
 }
 
@@ -21,8 +21,8 @@
     flex-direction: column;
     gap: 0.72rem;
     padding: 0.88rem 1rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 72%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 82%, var(--ui-color-feedback-info-subtle, #eff6ff) 18%);
+    border-bottom: 1px solid color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 72%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 82%, var(--halo-color-feedback-info-subtle, #eff6ff) 18%);
 }
 
 .rm-ai__top {
@@ -47,7 +47,7 @@
 
 .rm-ai__status {
     font-size: 0.72rem;
-    color: var(--ui-color-text-tertiary, #64748b);
+    color: var(--halo-color-text-tertiary, #64748b);
 }
 
 .rm-ai__badges {
@@ -70,15 +70,15 @@
 }
 
 .rm-ai-badge--pinned {
-    color: var(--ui-color-feedback-info-default, #3b82f6);
-    border-color: color-mix(in srgb, var(--ui-color-feedback-info-default, #3b82f6) 48%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-info-subtle, #eff6ff) 75%, transparent);
+    color: var(--halo-color-feedback-info-default, #3b82f6);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-info-default, #3b82f6) 48%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-info-subtle, #eff6ff) 75%, transparent);
 }
 
 .rm-ai-badge--filters {
-    color: var(--ui-color-feedback-success-default, #10b981);
-    border-color: color-mix(in srgb, var(--ui-color-feedback-success-default, #10b981) 50%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-success-subtle, #ecfdf3) 75%, transparent);
+    color: var(--halo-color-feedback-success-default, #10b981);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-success-default, #10b981) 50%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-success-subtle, #ecfdf3) 75%, transparent);
 }
 
 .rm-ai__actions {
@@ -88,17 +88,17 @@
     gap: 0.42rem;
 }
 
-.rm-ai__actions .ui-button,
-.rm-ai__toggles .ui-button {
-    --ui-button-size-xs-height: 1.8rem;
-    --ui-button-size-xs-padding-x: 0.5rem;
-    --ui-button-size-xs-padding-y: 0.2rem;
-    --ui-button-size-xs-font-size: 0.66rem;
+.rm-ai__actions .halo-button,
+.rm-ai__toggles .halo-button {
+    --halo-button-size-xs-height: 1.8rem;
+    --halo-button-size-xs-padding-x: 0.5rem;
+    --halo-button-size-xs-padding-y: 0.2rem;
+    --halo-button-size-xs-font-size: 0.66rem;
 }
 
-.rm-ai__actions .ui-button.ui-button--icon-only {
-    --ui-button-size-xs-padding-x: 0.35rem;
-    --ui-button-size-xs-padding-y: 0.15rem;
+.rm-ai__actions .halo-button.halo-button--icon-only {
+    --halo-button-size-xs-padding-x: 0.35rem;
+    --halo-button-size-xs-padding-y: 0.15rem;
 }
 
 .rm-ai__toggles {
@@ -114,11 +114,11 @@
     gap: 0.45rem;
 }
 
-.rm-ai__search-row .ui-textfield {
+.rm-ai__search-row .halo-textfield {
     min-inline-size: 0;
 }
 
-.rm-ai__search-row .ui-select {
+.rm-ai__search-row .halo-select {
     min-inline-size: 0;
     max-inline-size: 100%;
 }
@@ -151,23 +151,23 @@
     gap: 0.55rem;
     padding: 0.8rem;
     border-radius: 0.78rem;
-    border: 1px solid color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 80%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 80%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 92%, transparent);
 }
 
 .rm-ai-entry--error {
-    border-color: color-mix(in srgb, var(--ui-color-feedback-danger-default, #ef4444) 55%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-danger-subtle, #fef2f2) 72%, var(--ui-card-default-background, #ffffff) 28%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-danger-default, #ef4444) 55%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-danger-subtle, #fef2f2) 72%, var(--halo-card-default-background, #ffffff) 28%);
 }
 
 .rm-ai-entry--warning {
-    border-color: color-mix(in srgb, var(--ui-color-feedback-warning-default, #f59e0b) 55%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-warning-subtle, #fffbeb) 72%, var(--ui-card-default-background, #ffffff) 28%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-warning-default, #f59e0b) 55%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-warning-subtle, #fffbeb) 72%, var(--halo-card-default-background, #ffffff) 28%);
 }
 
 .rm-ai-entry--ok {
-    border-color: color-mix(in srgb, var(--ui-color-feedback-success-default, #10b981) 48%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-success-subtle, #ecfdf3) 66%, var(--ui-card-default-background, #ffffff) 34%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-success-default, #10b981) 48%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-success-subtle, #ecfdf3) 66%, var(--halo-card-default-background, #ffffff) 34%);
 }
 
 .rm-ai-entry__header {
@@ -191,7 +191,7 @@
 
 .rm-ai-entry__compliance {
     font-size: 0.68rem;
-    color: var(--ui-color-text-tertiary, #64748b);
+    color: var(--halo-color-text-tertiary, #64748b);
 }
 
 .rm-ai-entry__chips {
@@ -222,27 +222,27 @@
 }
 
 .rm-ai-pill--error {
-    color: color-mix(in srgb, var(--ui-color-feedback-danger-default, #ef4444) 86%, var(--ui-text-primary, #0f172a) 14%);
-    border-color: color-mix(in srgb, var(--ui-color-feedback-danger-default, #ef4444) 52%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-danger-subtle, #fef2f2) 82%, transparent);
+    color: color-mix(in srgb, var(--halo-color-feedback-danger-default, #ef4444) 86%, var(--halo-text-primary, #0f172a) 14%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-danger-default, #ef4444) 52%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-danger-subtle, #fef2f2) 82%, transparent);
 }
 
 .rm-ai-pill--warning {
-    color: color-mix(in srgb, var(--ui-color-feedback-warning-default, #f59e0b) 86%, var(--ui-text-primary, #0f172a) 14%);
-    border-color: color-mix(in srgb, var(--ui-color-feedback-warning-default, #f59e0b) 52%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-warning-subtle, #fffbeb) 82%, transparent);
+    color: color-mix(in srgb, var(--halo-color-feedback-warning-default, #f59e0b) 86%, var(--halo-text-primary, #0f172a) 14%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-warning-default, #f59e0b) 52%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-warning-subtle, #fffbeb) 82%, transparent);
 }
 
 .rm-ai-pill--ok {
-    color: color-mix(in srgb, var(--ui-color-feedback-success-default, #10b981) 86%, var(--ui-text-primary, #0f172a) 14%);
-    border-color: color-mix(in srgb, var(--ui-color-feedback-success-default, #10b981) 50%, transparent);
-    background: color-mix(in srgb, var(--ui-color-feedback-success-subtle, #ecfdf3) 82%, transparent);
+    color: color-mix(in srgb, var(--halo-color-feedback-success-default, #10b981) 86%, var(--halo-text-primary, #0f172a) 14%);
+    border-color: color-mix(in srgb, var(--halo-color-feedback-success-default, #10b981) 50%, transparent);
+    background: color-mix(in srgb, var(--halo-color-feedback-success-subtle, #ecfdf3) 82%, transparent);
 }
 
 .rm-ai-chip {
-    color: var(--ui-color-text-tertiary, #64748b);
-    border-color: color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 70%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 86%, transparent);
+    color: var(--halo-color-text-tertiary, #64748b);
+    border-color: color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 70%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 86%, transparent);
 }
 
 .rm-ai-entry__stamp {
@@ -251,7 +251,7 @@
     align-items: flex-end;
     gap: 0.2rem;
     font-size: 0.63rem;
-    color: var(--ui-color-text-tertiary, #64748b);
+    color: var(--halo-color-text-tertiary, #64748b);
     white-space: nowrap;
 }
 
@@ -267,23 +267,23 @@
 }
 
 .rm-ai-note--danger {
-    color: color-mix(in srgb, var(--ui-color-feedback-danger-default, #ef4444) 84%, var(--ui-text-primary, #0f172a) 16%);
+    color: color-mix(in srgb, var(--halo-color-feedback-danger-default, #ef4444) 84%, var(--halo-text-primary, #0f172a) 16%);
 }
 
 .rm-ai-note--error {
-    color: color-mix(in srgb, var(--ui-color-feedback-danger-default, #ef4444) 76%, var(--ui-text-primary, #0f172a) 24%);
+    color: color-mix(in srgb, var(--halo-color-feedback-danger-default, #ef4444) 76%, var(--halo-text-primary, #0f172a) 24%);
 }
 
 .rm-ai-note--warning {
-    color: color-mix(in srgb, var(--ui-color-feedback-warning-default, #f59e0b) 82%, var(--ui-text-primary, #0f172a) 18%);
+    color: color-mix(in srgb, var(--halo-color-feedback-warning-default, #f59e0b) 82%, var(--halo-text-primary, #0f172a) 18%);
 }
 
 .rm-ai-attrs {
     margin: 0;
     padding: 0.55rem;
     border-radius: 0.62rem;
-    border: 1px solid color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 74%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 90%, transparent);
+    border: 1px solid color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 74%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 90%, transparent);
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.25rem 0.54rem;
@@ -292,7 +292,7 @@
 
 .rm-ai-attrs dt {
     font-weight: 700;
-    color: var(--ui-color-text-tertiary, #64748b);
+    color: var(--halo-color-text-tertiary, #64748b);
 }
 
 .rm-ai-attrs dd {
@@ -303,9 +303,9 @@
 .rm-ai-state {
     padding: 1rem;
     border-radius: 0.75rem;
-    border: 1px dashed color-mix(in srgb, var(--ui-card-default-border, #cbd5e1) 80%, transparent);
-    background: color-mix(in srgb, var(--ui-card-default-background, #ffffff) 88%, transparent);
-    color: var(--ui-color-text-tertiary, #64748b);
+    border: 1px dashed color-mix(in srgb, var(--halo-card-default-border, #cbd5e1) 80%, transparent);
+    background: color-mix(in srgb, var(--halo-card-default-background, #ffffff) 88%, transparent);
+    color: var(--halo-color-text-tertiary, #64748b);
     text-align: center;
     font-size: 0.77rem;
 }
@@ -336,7 +336,7 @@
         justify-content: flex-start;
     }
 
-    .rm-ai__search-row .ui-select {
+    .rm-ai__search-row .halo-select {
         min-inline-size: 0;
     }
 

@@ -19,7 +19,7 @@ public sealed class HaloTriStateCheckboxTests : BunitContext
             .Add(p => p.State, TriState.Partial)
             .Add(p => p.AriaLabel, "Toggle claim permission"));
 
-        var button = cut.Find("button.ui-tri-checkbox");
+        var button = cut.Find("button.halo-tri-checkbox");
         Assert.Equal("checkbox", button.GetAttribute("role"));
         Assert.Equal("mixed", button.GetAttribute("aria-checked"));
         Assert.Equal("Toggle claim permission", button.GetAttribute("aria-label"));
@@ -43,7 +43,7 @@ public sealed class HaloTriStateCheckboxTests : BunitContext
             .Add(p => p.AriaLabelledBy, "permission-label")
             .Add(p => p.AriaDescribedBy, "permission-help"));
 
-        var button = cut.Find("button.ui-tri-checkbox");
+        var button = cut.Find("button.halo-tri-checkbox");
         Assert.Equal("permission-label", button.GetAttribute("aria-labelledby"));
         Assert.Equal("permission-help", button.GetAttribute("aria-describedby"));
     }

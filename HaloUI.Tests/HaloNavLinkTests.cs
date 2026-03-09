@@ -21,8 +21,8 @@ public sealed class HaloNavLinkTests : BunitContext
 
         var anchor = cut.Find("a");
         Assert.Equal("/settings", anchor.GetAttribute("href"));
-        Assert.Contains("ui-nav-link", anchor.ClassList);
-        Assert.Contains("ui-nav-link--neutral", anchor.ClassList);
+        Assert.Contains("halo-nav-link", anchor.ClassList);
+        Assert.Contains("halo-nav-link--neutral", anchor.ClassList);
     }
 
     [Fact]
@@ -45,9 +45,9 @@ public sealed class HaloNavLinkTests : BunitContext
 
         var button = cut.Find("button");
 
-        Assert.Contains("ui-nav-link", button.ClassList);
-        Assert.Contains("ui-nav-link--danger", button.ClassList);
-        Assert.Contains("ui-nav-link--disabled", button.ClassList);
+        Assert.Contains("halo-nav-link", button.ClassList);
+        Assert.Contains("halo-nav-link--danger", button.ClassList);
+        Assert.Contains("halo-nav-link--disabled", button.ClassList);
         Assert.True(button.HasAttribute("disabled"));
     }
 }

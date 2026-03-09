@@ -67,7 +67,7 @@ public partial class HaloDateTime<TValue>
    
     private string? DescriptionElementId => string.IsNullOrWhiteSpace(Description)
         ? null
-        : _descriptionElementId ??= AccessibilityIdGenerator.Create("ui-datetime-description");
+        : _descriptionElementId ??= AccessibilityIdGenerator.Create("halo-datetime-description");
 
     private bool IsInvalid => HasError || (EditContext?.GetValidationMessages(FieldIdentifier).Any() ?? false);
     
@@ -153,21 +153,21 @@ public partial class HaloDateTime<TValue>
 
     private string BuildWrapperClass()
     {
-        var classes = new List<string> { "ui-datetime" };
+        var classes = new List<string> { "halo-datetime" };
 
         if (IsInvalid)
         {
-            classes.Add("ui-datetime--error");
+            classes.Add("halo-datetime--error");
         }
 
         if (Disabled)
         {
-            classes.Add("ui-datetime--disabled");
+            classes.Add("halo-datetime--disabled");
         }
 
         if (ReadOnly)
         {
-            classes.Add("ui-datetime--readonly");
+            classes.Add("halo-datetime--readonly");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -182,7 +182,7 @@ public partial class HaloDateTime<TValue>
     {
         var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "ui-datetime__input"
+            "halo-datetime__input"
         };
 
         if (Disabled)

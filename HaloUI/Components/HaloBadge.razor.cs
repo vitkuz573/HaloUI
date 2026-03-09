@@ -69,7 +69,7 @@ public partial class HaloBadge
     {
         var classes = new List<string>
         {
-            "ui-badge",
+            "halo-badge",
             GetVariantClass(Variant)
         };
 
@@ -85,11 +85,11 @@ public partial class HaloBadge
     {
         return variant switch
         {
-            BadgeVariant.Success => "ui-badge--success",
-            BadgeVariant.Warning => "ui-badge--warning",
-            BadgeVariant.Danger => "ui-badge--danger",
-            BadgeVariant.Info => "ui-badge--info",
-            _ => "ui-badge--neutral"
+            BadgeVariant.Success => "halo-badge--success",
+            BadgeVariant.Warning => "halo-badge--warning",
+            BadgeVariant.Danger => "halo-badge--danger",
+            BadgeVariant.Info => "halo-badge--info",
+            _ => "halo-badge--neutral"
         };
     }
 

@@ -18,7 +18,7 @@ namespace HaloUI.Components.Base;
 /// <typeparam name="TValue">The value type.</typeparam>
 public abstract class HaloLabellableInputBase<TValue> : ThemeAwareInputBase<TValue>, ILabellableInput
 {
-    private readonly string _generatedId = AccessibilityIdGenerator.Create("ui-input");
+    private readonly string _generatedId = AccessibilityIdGenerator.Create("halo-input");
     private readonly Expression<Func<TValue>> _standaloneExpression;
     private string _inputId = string.Empty;
     private string? _labelElementId;
@@ -40,7 +40,7 @@ public abstract class HaloLabellableInputBase<TValue> : ThemeAwareInputBase<TVal
 
     protected string? LabelElementId => string.IsNullOrWhiteSpace(Label)
         ? null
-        : _labelElementId ??= AccessibilityIdGenerator.Create("ui-label");
+        : _labelElementId ??= AccessibilityIdGenerator.Create("halo-label");
 
     public async override Task SetParametersAsync(ParameterView parameters)
     {

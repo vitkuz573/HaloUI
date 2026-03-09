@@ -89,7 +89,7 @@ public partial class HaloButton
     {
         var classBuilder = new List<string>
         {
-            "ui-button",
+            "halo-button",
             GetVariantClass(Variant),
             GetSizeClass(Size),
             GetDensityClass(Density)
@@ -97,12 +97,12 @@ public partial class HaloButton
 
         if (IconOnly)
         {
-            classBuilder.Add("ui-button--icon-only");
+            classBuilder.Add("halo-button--icon-only");
         }
 
         if (FullWidth)
         {
-            classBuilder.Add("ui-button--full-width");
+            classBuilder.Add("halo-button--full-width");
         }
 
         if (Loading)
@@ -117,7 +117,7 @@ public partial class HaloButton
 
         if (Active)
         {
-            classBuilder.Add("ui-button--active");
+            classBuilder.Add("halo-button--active");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -132,13 +132,13 @@ public partial class HaloButton
     {
         return variant switch
         {
-            ButtonVariant.Primary => "ui-button--primary",
-            ButtonVariant.Secondary => "ui-button--secondary",
-            ButtonVariant.Tertiary => "ui-button--tertiary",
-            ButtonVariant.Danger => "ui-button--danger",
-            ButtonVariant.Warning => "ui-button--warning",
-            ButtonVariant.Ghost => "ui-button--ghost",
-            _ => "ui-button--secondary"
+            ButtonVariant.Primary => "halo-button--primary",
+            ButtonVariant.Secondary => "halo-button--secondary",
+            ButtonVariant.Tertiary => "halo-button--tertiary",
+            ButtonVariant.Danger => "halo-button--danger",
+            ButtonVariant.Warning => "halo-button--warning",
+            ButtonVariant.Ghost => "halo-button--ghost",
+            _ => "halo-button--secondary"
         };
     }
 
@@ -146,10 +146,10 @@ public partial class HaloButton
     {
         return size switch
         {
-            ButtonSize.ExtraSmall => "ui-button--size-xs",
-            ButtonSize.Small => "ui-button--size-sm",
-            ButtonSize.Medium => "ui-button--size-md",
-            _ => "ui-button--size-sm"
+            ButtonSize.ExtraSmall => "halo-button--size-xs",
+            ButtonSize.Small => "halo-button--size-sm",
+            ButtonSize.Medium => "halo-button--size-md",
+            _ => "halo-button--size-sm"
         };
     }
 
@@ -157,14 +157,14 @@ public partial class HaloButton
     {
         return density switch
         {
-            ButtonDensity.Compact => "ui-button--density-compact",
-            _ => "ui-button--density-default"
+            ButtonDensity.Compact => "halo-button--density-compact",
+            _ => "halo-button--density-default"
         };
     }
 
     private string GetLabelClass()
     {
-        return FullWidth ? "ui-button__label ui-button__label--fill" : "ui-button__label";
+        return FullWidth ? "halo-button__label halo-button__label--fill" : "halo-button__label";
     }
 
     private Dictionary<string, object>? BuildButtonAttributes()

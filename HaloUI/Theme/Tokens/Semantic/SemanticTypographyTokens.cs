@@ -175,7 +175,7 @@ public sealed record SemanticTypographyTokens
         LineHeight = "1.5rem",
         FontWeight = "400",
         LetterSpacing = "0em",
-        FontFamily = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+        FontFamily = "halo-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
     };
 
     public static SemanticTypographyTokens Default { get; } = new();

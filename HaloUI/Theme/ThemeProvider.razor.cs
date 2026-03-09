@@ -15,8 +15,8 @@ public partial class ThemeProvider
 
     protected override void OnInitialized()
     {
-        _styleElementId = $"ui-theme-{Guid.NewGuid():N}";
-        _responsiveStyleElementId = $"ui-responsive-theme-{Guid.NewGuid():N}";
+        _styleElementId = $"halo-theme-{Guid.NewGuid():N}";
+        _responsiveStyleElementId = $"halo-responsive-theme-{Guid.NewGuid():N}";
         ThemeState.Context.ThemeChanged += HandleThemeChanged;
         var currentTokens = ThemeState.CurrentTheme.Tokens;
         _cssVariables = CssVariableGenerator.ToCss(currentTokens.CssVariables);

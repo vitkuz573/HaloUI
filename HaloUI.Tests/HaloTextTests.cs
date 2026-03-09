@@ -20,10 +20,10 @@ public class HaloTextTests : BunitContext
         var element = FindRootElement(cut);
         var style = element.GetAttribute("style") ?? string.Empty;
 
-        Assert.Contains("ui-text", element.ClassList);
-        Assert.Contains("ui-text--display-inline", element.ClassList);
-        Assert.Contains("--ui-text-font-size:1rem", style, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("--ui-text-font-weight:400", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("halo-text", element.ClassList);
+        Assert.Contains("halo-text--display-inline", element.ClassList);
+        Assert.Contains("--halo-text-font-size:1rem", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--halo-text-font-weight:400", style, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -36,8 +36,8 @@ public class HaloTextTests : BunitContext
         var element = cut.Find("h3");
         var style = element.GetAttribute("style") ?? string.Empty;
 
-        Assert.Contains("ui-text--display-block", element.ClassList);
-        Assert.Contains("--ui-text-font-size:1.5rem", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("halo-text--display-block", element.ClassList);
+        Assert.Contains("--halo-text-font-size:1.5rem", style, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class HaloTextTests : BunitContext
         var element = FindRootElement(cut);
         var style = element.GetAttribute("style") ?? string.Empty;
 
-        Assert.Contains("--ui-text-color:#9f1239", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--halo-text-color:#9f1239", style, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -61,8 +61,8 @@ public class HaloTextTests : BunitContext
             .Add(p => p.SuffixContent, contentBuilder => contentBuilder.AddContent(0, "suffix"))
             .Add(p => p.Text, "Content"));
 
-        Assert.NotNull(cut.Find(".ui-text__prefix"));
-        Assert.NotNull(cut.Find(".ui-text__suffix"));
+        Assert.NotNull(cut.Find(".halo-text__prefix"));
+        Assert.NotNull(cut.Find(".halo-text__suffix"));
     }
 
     [Fact]
@@ -75,8 +75,8 @@ public class HaloTextTests : BunitContext
         var element = FindRootElement(cut);
         var style = element.GetAttribute("style") ?? string.Empty;
 
-        Assert.Contains("ui-text--line-clamp", element.ClassList);
-        Assert.Contains("--ui-text-line-clamp:3", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("halo-text--line-clamp", element.ClassList);
+        Assert.Contains("--halo-text-line-clamp:3", style, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public class HaloTextTests : BunitContext
 
         var style = FindRootElement(cut).GetAttribute("style") ?? string.Empty;
 
-        Assert.Contains("--ui-text-font-weight:700", style, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--halo-text-font-weight:700", style, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

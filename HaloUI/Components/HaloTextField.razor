@@ -8,10 +8,10 @@
         <HaloLabel Id="@LabelElementId" For="@InputId" Text="@Label" Variant="@ResolveLabelVariant()" Disabled="@(Disabled || ReadOnly)" ShowRequiredIndicator="@(IsRequired)" />
     }
 
-    <div class="ui-textfield__container">
+    <div class="halo-textfield__container">
         @if (StartAdornment is not null)
         {
-            <div class="ui-textfield__adornment ui-textfield__adornment--start">
+            <div class="halo-textfield__adornment halo-textfield__adornment--start">
                 @StartAdornment
             </div>
         }
@@ -20,7 +20,7 @@
 
         @if (EndAdornment is not null)
         {
-            <div class="ui-textfield__adornment ui-textfield__adornment--end">
+            <div class="halo-textfield__adornment halo-textfield__adornment--end">
                 @EndAdornment
             </div>
         }

@@ -19,8 +19,8 @@ public class HaloBadgeTests : BunitContext
             .Add(p => p.Text, "Informational"));
 
         var badge = cut.Find("span");
-        Assert.Contains("ui-badge", badge.ClassList);
-        Assert.Contains("ui-badge--info", badge.ClassList);
+        Assert.Contains("halo-badge", badge.ClassList);
+        Assert.Contains("halo-badge--info", badge.ClassList);
     }
 
     [Fact]
@@ -49,7 +49,7 @@ public class HaloBadgeTests : BunitContext
             .Add(p => p.AnnounceChanges, true)
             .Add(p => p.AriaLive, "assertive"));
 
-        var badge = cut.Find("span.ui-badge");
+        var badge = cut.Find("span.halo-badge");
         Assert.Equal("status", badge.GetAttribute("role"));
         Assert.Equal("assertive", badge.GetAttribute("aria-live"));
     }

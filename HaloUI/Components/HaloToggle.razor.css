@@ -1,54 +1,54 @@
-.ui-toggle {
-    --ui-toggle-size-track-width: var(--ui-toggle-track-width);
-    --ui-toggle-size-track-height: var(--ui-toggle-track-height);
-    --ui-toggle-size-thumb-cap: var(--ui-toggle-thumb-size);
-    --ui-toggle-size-track-border-width: var(--ui-toggle-track-border-width, 1px);
-    --ui-toggle-size-thumb-size: min(
-        var(--ui-toggle-size-thumb-cap),
-        calc(var(--ui-toggle-size-track-height) - (var(--ui-toggle-size-track-border-width) * 2) - 2px)
+.halo-toggle {
+    --halo-toggle-size-track-width: var(--halo-toggle-track-width);
+    --halo-toggle-size-track-height: var(--halo-toggle-track-height);
+    --halo-toggle-size-thumb-cap: var(--halo-toggle-thumb-size);
+    --halo-toggle-size-track-border-width: var(--halo-toggle-track-border-width, 1px);
+    --halo-toggle-size-thumb-size: min(
+        var(--halo-toggle-size-thumb-cap),
+        calc(var(--halo-toggle-size-track-height) - (var(--halo-toggle-size-track-border-width) * 2) - 2px)
     );
-    --ui-toggle-size-thumb-offset: calc((var(--ui-toggle-size-track-height) - var(--ui-toggle-size-thumb-size)) / 2);
-    --ui-toggle-size-thumb-translate-x: calc(
-        var(--ui-toggle-size-track-width) - var(--ui-toggle-size-thumb-size) - (var(--ui-toggle-size-thumb-offset) * 2)
+    --halo-toggle-size-thumb-offset: calc((var(--halo-toggle-size-track-height) - var(--halo-toggle-size-thumb-size)) / 2);
+    --halo-toggle-size-thumb-translate-x: calc(
+        var(--halo-toggle-size-track-width) - var(--halo-toggle-size-thumb-size) - (var(--halo-toggle-size-thumb-offset) * 2)
     );
-    --ui-toggle-size-label-font-size: var(--ui-toggle-label-font-size);
+    --halo-toggle-size-label-font-size: var(--halo-toggle-label-font-size);
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: var(--ui-toggle-label-gap);
+    gap: var(--halo-toggle-label-gap);
     max-width: 100%;
     min-width: 0;
     cursor: pointer;
     user-select: none;
 }
 
-.ui-toggle--size-sm {
-    --ui-toggle-size-track-width: calc(var(--ui-toggle-track-width) * 0.82);
-    --ui-toggle-size-track-height: calc(var(--ui-toggle-track-height) * 0.82);
-    --ui-toggle-size-thumb-cap: calc(var(--ui-toggle-thumb-size) * 0.74);
-    --ui-toggle-size-label-font-size: calc(var(--ui-toggle-label-font-size) * 0.92);
+.halo-toggle--size-sm {
+    --halo-toggle-size-track-width: calc(var(--halo-toggle-track-width) * 0.82);
+    --halo-toggle-size-track-height: calc(var(--halo-toggle-track-height) * 0.82);
+    --halo-toggle-size-thumb-cap: calc(var(--halo-toggle-thumb-size) * 0.74);
+    --halo-toggle-size-label-font-size: calc(var(--halo-toggle-label-font-size) * 0.92);
 }
 
-.ui-toggle--size-md {
-    --ui-toggle-size-track-width: var(--ui-toggle-track-width);
-    --ui-toggle-size-track-height: var(--ui-toggle-track-height);
-    --ui-toggle-size-thumb-cap: var(--ui-toggle-thumb-size);
-    --ui-toggle-size-label-font-size: var(--ui-toggle-label-font-size);
+.halo-toggle--size-md {
+    --halo-toggle-size-track-width: var(--halo-toggle-track-width);
+    --halo-toggle-size-track-height: var(--halo-toggle-track-height);
+    --halo-toggle-size-thumb-cap: var(--halo-toggle-thumb-size);
+    --halo-toggle-size-label-font-size: var(--halo-toggle-label-font-size);
 }
 
-.ui-toggle--size-lg {
-    --ui-toggle-size-track-width: calc(var(--ui-toggle-track-width) * 1.1);
-    --ui-toggle-size-track-height: calc(var(--ui-toggle-track-height) * 1.1);
-    --ui-toggle-size-thumb-cap: calc(var(--ui-toggle-thumb-size) * 1.05);
-    --ui-toggle-size-label-font-size: calc(var(--ui-toggle-label-font-size) * 1.08);
+.halo-toggle--size-lg {
+    --halo-toggle-size-track-width: calc(var(--halo-toggle-track-width) * 1.1);
+    --halo-toggle-size-track-height: calc(var(--halo-toggle-track-height) * 1.1);
+    --halo-toggle-size-thumb-cap: calc(var(--halo-toggle-thumb-size) * 1.05);
+    --halo-toggle-size-label-font-size: calc(var(--halo-toggle-label-font-size) * 1.08);
 }
 
-.ui-toggle--disabled {
+.halo-toggle--disabled {
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-.ui-toggle__input {
+.halo-toggle__input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -60,24 +60,24 @@
     border-width: 0;
 }
 
-.ui-toggle__track {
+.halo-toggle__track {
     position: relative;
     display: block;
     box-sizing: border-box;
     flex-shrink: 0;
-    width: var(--ui-toggle-size-track-width);
-    height: var(--ui-toggle-size-track-height);
-    --ui-toggle-track-background: var(--ui-toggle-unchecked-track-background);
-    --ui-toggle-thumb-background: var(--ui-toggle-unchecked-thumb-background);
-    --ui-toggle-track-border-color: var(--ui-toggle-unchecked-track-border);
-    --ui-toggle-thumb-translate: 0;
-    background: var(--ui-toggle-track-background);
-    border-radius: max(var(--ui-toggle-track-border-radius), calc(var(--ui-toggle-size-track-height) / 2));
-    transition: var(--ui-toggle-track-transition);
-    border: var(--ui-toggle-size-track-border-width) solid var(--ui-toggle-track-border-color, rgba(15, 23, 42, 0.12));
+    width: var(--halo-toggle-size-track-width);
+    height: var(--halo-toggle-size-track-height);
+    --halo-toggle-track-background: var(--halo-toggle-unchecked-track-background);
+    --halo-toggle-thumb-background: var(--halo-toggle-unchecked-thumb-background);
+    --halo-toggle-track-border-color: var(--halo-toggle-unchecked-track-border);
+    --halo-toggle-thumb-translate: 0;
+    background: var(--halo-toggle-track-background);
+    border-radius: max(var(--halo-toggle-track-border-radius), calc(var(--halo-toggle-size-track-height) / 2));
+    transition: var(--halo-toggle-track-transition);
+    border: var(--halo-toggle-size-track-border-width) solid var(--halo-toggle-track-border-color, rgba(15, 23, 42, 0.12));
 }
 
-.ui-toggle__track::after {
+.halo-toggle__track::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -87,75 +87,75 @@
     pointer-events: none;
 }
 
-.ui-toggle__thumb {
+.halo-toggle__thumb {
     position: absolute;
     top: 50%;
-    left: var(--ui-toggle-size-thumb-offset);
-    width: var(--ui-toggle-size-thumb-size);
-    height: var(--ui-toggle-size-thumb-size);
+    left: var(--halo-toggle-size-thumb-offset);
+    width: var(--halo-toggle-size-thumb-size);
+    height: var(--halo-toggle-size-thumb-size);
     border-radius: 50%;
-    background: var(--ui-toggle-thumb-background);
-    box-shadow: var(--ui-toggle-thumb-shadow);
-    transition: var(--ui-toggle-thumb-transition);
-    transform: translate3d(var(--ui-toggle-thumb-translate), -50%, 0);
+    background: var(--halo-toggle-thumb-background);
+    box-shadow: var(--halo-toggle-thumb-shadow);
+    transition: var(--halo-toggle-thumb-transition);
+    transform: translate3d(var(--halo-toggle-thumb-translate), -50%, 0);
 }
 
-.ui-toggle--checked .ui-toggle__track {
-    --ui-toggle-track-background: var(--ui-toggle-checked-track-background);
-    --ui-toggle-thumb-background: var(--ui-toggle-checked-thumb-background);
-    --ui-toggle-thumb-translate: var(--ui-toggle-size-thumb-translate-x);
-    --ui-toggle-track-border-color: var(--ui-toggle-checked-track-border);
+.halo-toggle--checked .halo-toggle__track {
+    --halo-toggle-track-background: var(--halo-toggle-checked-track-background);
+    --halo-toggle-thumb-background: var(--halo-toggle-checked-thumb-background);
+    --halo-toggle-thumb-translate: var(--halo-toggle-size-thumb-translate-x);
+    --halo-toggle-track-border-color: var(--halo-toggle-checked-track-border);
 }
 
-.ui-toggle--disabled .ui-toggle__track {
-    --ui-toggle-track-background: var(--ui-toggle-disabled-track-background);
-    --ui-toggle-thumb-background: var(--ui-toggle-disabled-thumb-background);
-    --ui-toggle-track-border-color: var(--ui-toggle-disabled-track-border);
+.halo-toggle--disabled .halo-toggle__track {
+    --halo-toggle-track-background: var(--halo-toggle-disabled-track-background);
+    --halo-toggle-thumb-background: var(--halo-toggle-disabled-thumb-background);
+    --halo-toggle-track-border-color: var(--halo-toggle-disabled-track-border);
 }
 
-.ui-toggle:focus-within .ui-toggle__track {
-    box-shadow: var(--ui-input-focus-ring);
+.halo-toggle:focus-within .halo-toggle__track {
+    box-shadow: var(--halo-input-focus-ring);
 }
 
-.ui-toggle__content {
+.halo-toggle__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: var(--ui-toggle-content-gap);
-    margin-left: var(--ui-toggle-label-gap);
+    gap: var(--halo-toggle-content-gap);
+    margin-left: var(--halo-toggle-label-gap);
 }
 
-.ui-toggle__label {
-    font-size: var(--ui-toggle-size-label-font-size);
-    font-weight: var(--ui-toggle-label-font-weight);
-    color: var(--ui-toggle-label-color);
+.halo-toggle__label {
+    font-size: var(--halo-toggle-size-label-font-size);
+    font-weight: var(--halo-toggle-label-font-weight);
+    color: var(--halo-toggle-label-color);
     line-height: 1.35;
 }
 
-.ui-toggle__description {
-    font-size: var(--ui-toggle-description-font-size);
-    color: var(--ui-toggle-description-color);
+.halo-toggle__description {
+    font-size: var(--halo-toggle-description-font-size);
+    color: var(--halo-toggle-description-color);
     line-height: 1.25;
 }
 
-.ui-toggle--disabled .ui-toggle__label,
-.ui-toggle--disabled .ui-toggle__description {
-    color: var(--ui-input-disabled-text);
+.halo-toggle--disabled .halo-toggle__label,
+.halo-toggle--disabled .halo-toggle__description {
+    color: var(--halo-input-disabled-text);
 }
 
 @media (max-width: 640px), (hover:none) and (pointer:coarse) {
-    .ui-toggle {
+    .halo-toggle {
         align-items: flex-start;
-        min-height: max(2.75rem, var(--ui-accessibility-touch-minimum-size, 44px));
+        min-height: max(2.75rem, var(--halo-accessibility-touch-minimum-size, 44px));
     }
 
-    .ui-toggle__content {
+    .halo-toggle__content {
         min-width: 0;
     }
 
-    .ui-toggle__label,
-    .ui-toggle__description {
+    .halo-toggle__label,
+    .halo-toggle__description {
         overflow-wrap: anywhere;
     }
 }

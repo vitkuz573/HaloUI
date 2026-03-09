@@ -22,8 +22,8 @@ public sealed class HaloLayoutRenderingTests : BunitContext
             .Add(p => p.ChildContent, BuildFragment("Content")));
 
         Assert.Empty(cut.FindAll("[style]"));
-        Assert.NotNull(cut.Find(".ui-layout__navigation"));
-        Assert.NotNull(cut.Find(".ui-layout__notification"));
+        Assert.NotNull(cut.Find(".halo-layout__navigation"));
+        Assert.NotNull(cut.Find(".halo-layout__notification"));
     }
 
     private static RenderFragment BuildFragment(string value) => builder => builder.AddContent(0, value);

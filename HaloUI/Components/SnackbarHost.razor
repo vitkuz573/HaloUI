@@ -5,7 +5,7 @@
 @inject ISnackbarService Snackbar
 @inject ILogger<SnackbarHost> Logger
 
-<div class="ui-snackbar-stack" style="@StackPositionStyle">
+<div class="halo-snackbar-stack" style="@StackPositionStyle">
     @foreach (var item in _items)
     {
         <div @key="item.Id"
@@ -16,23 +16,23 @@
              style="@BuildContainerStyle(item)"
              @onpointerenter="() => OnSnackbarPointerEnterAsync(item)"
              @onpointerleave="() => OnSnackbarPointerLeaveAsync(item)">
-            <div class="ui-snackbar__body">
-                <div class="ui-snackbar__header">
-                    <div class="ui-snackbar__title">
-                        <span class="material-icons ui-snackbar__icon">@GetIcon(item.Severity)</span>
+            <div class="halo-snackbar__body">
+                <div class="halo-snackbar__header">
+                    <div class="halo-snackbar__title">
+                        <span class="material-icons halo-snackbar__icon">@GetIcon(item.Severity)</span>
                         <span>@GetDisplayTitle(item)</span>
                     </div>
-                    <div class="ui-snackbar__actions">
+                    <div class="halo-snackbar__actions">
                         @if (item.Action is not null)
                         {
-                            <button class="ui-snackbar__action"
+                            <button class="halo-snackbar__action"
                                     type="button"
                                     @onclick:stopPropagation="true"
                                     @onclick="@(() => HandleActionAsync(item))">
                                 @item.Action.Text
                             </button>
                         }
-                        <button class="ui-snackbar__dismiss"
+                        <button class="halo-snackbar__dismiss"
                                 type="button"
                                 title="Dismiss"
                                 aria-label="Dismiss notification"
@@ -42,10 +42,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="ui-snackbar__message">@item.Text</div>
+                <div class="halo-snackbar__message">@item.Text</div>
                 @if (item.DurationMs > 0)
                 {
-                    <div class="ui-snackbar__progress">
+                    <div class="halo-snackbar__progress">
                         <div class="@BuildProgressBarClass(item)"
                              style="@BuildProgressBarStyle(item)"></div>
                         

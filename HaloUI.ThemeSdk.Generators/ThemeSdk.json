@@ -169,479 +169,479 @@
   ],
   "manualVariables": [
     {
-      "name": "--ui-badge-background",
-      "aliasTarget": "--ui-badge-neutral-background"
+      "name": "--halo-badge-background",
+      "aliasTarget": "--halo-badge-neutral-background"
     },
     {
-      "name": "--ui-badge-border",
-      "aliasTarget": "--ui-badge-neutral-border"
+      "name": "--halo-badge-border",
+      "aliasTarget": "--halo-badge-neutral-border"
     },
     {
-      "name": "--ui-badge-text-color",
-      "aliasTarget": "--ui-badge-neutral-text"
+      "name": "--halo-badge-text-color",
+      "aliasTarget": "--halo-badge-neutral-text"
     },
     {
-      "name": "--ui-button-background",
-      "aliasTarget": "--ui-button-secondary-background"
+      "name": "--halo-button-background",
+      "aliasTarget": "--halo-button-secondary-background"
     },
     {
-      "name": "--ui-button-background-active",
-      "aliasTarget": "--ui-button-secondary-background-active"
+      "name": "--halo-button-background-active",
+      "aliasTarget": "--halo-button-secondary-background-active"
     },
     {
-      "name": "--ui-button-background-disabled",
-      "aliasTarget": "--ui-button-secondary-background-disabled"
+      "name": "--halo-button-background-disabled",
+      "aliasTarget": "--halo-button-secondary-background-disabled"
     },
     {
-      "name": "--ui-button-background-hover",
-      "aliasTarget": "--ui-button-secondary-background-hover"
+      "name": "--halo-button-background-hover",
+      "aliasTarget": "--halo-button-secondary-background-hover"
     },
     {
-      "name": "--ui-button-border",
-      "aliasTarget": "--ui-button-secondary-border"
+      "name": "--halo-button-border",
+      "aliasTarget": "--halo-button-secondary-border"
     },
     {
-      "name": "--ui-button-border-disabled",
-      "aliasTarget": "--ui-button-secondary-border"
+      "name": "--halo-button-border-disabled",
+      "aliasTarget": "--halo-button-secondary-border"
     },
     {
-      "name": "--ui-button-border-hover",
-      "aliasTarget": "--ui-button-secondary-border-hover"
+      "name": "--halo-button-border-hover",
+      "aliasTarget": "--halo-button-secondary-border-hover"
     },
     {
-      "name": "--ui-button-focus-ring",
-      "aliasTarget": "--ui-button-secondary-focus-ring"
+      "name": "--halo-button-focus-ring",
+      "aliasTarget": "--halo-button-secondary-focus-ring"
     },
     {
-      "name": "--ui-button-font-size",
-      "aliasTarget": "--ui-button-size-md-font-size"
+      "name": "--halo-button-font-size",
+      "aliasTarget": "--halo-button-size-md-font-size"
     },
     {
-      "name": "--ui-button-gap",
-      "aliasTarget": "--ui-button-size-md-gap"
+      "name": "--halo-button-gap",
+      "aliasTarget": "--halo-button-size-md-gap"
     },
     {
-      "name": "--ui-button-height",
-      "aliasTarget": "--ui-button-size-md-height"
+      "name": "--halo-button-height",
+      "aliasTarget": "--halo-button-size-md-height"
     },
     {
-      "name": "--ui-button-icon-size",
-      "aliasTarget": "--ui-button-size-md-icon-size"
+      "name": "--halo-button-icon-size",
+      "aliasTarget": "--halo-button-size-md-icon-size"
     },
     {
-      "name": "--ui-button-padding-x",
-      "aliasTarget": "--ui-button-size-md-padding-x"
+      "name": "--halo-button-padding-x",
+      "aliasTarget": "--halo-button-size-md-padding-x"
     },
     {
-      "name": "--ui-button-padding-y",
-      "aliasTarget": "--ui-button-size-md-padding-y"
+      "name": "--halo-button-padding-y",
+      "aliasTarget": "--halo-button-size-md-padding-y"
     },
     {
-      "name": "--ui-button-shadow",
-      "aliasTarget": "--ui-button-secondary-shadow"
+      "name": "--halo-button-shadow",
+      "aliasTarget": "--halo-button-secondary-shadow"
     },
     {
-      "name": "--ui-button-text-color",
-      "aliasTarget": "--ui-button-secondary-text"
+      "name": "--halo-button-text-color",
+      "aliasTarget": "--halo-button-secondary-text"
     },
     {
-      "name": "--ui-button-text-disabled",
-      "aliasTarget": "--ui-button-secondary-text-disabled"
+      "name": "--halo-button-text-disabled",
+      "aliasTarget": "--halo-button-secondary-text-disabled"
     },
     {
-      "name": "--ui-expandable-panel-content-expanded-height",
+      "name": "--halo-expandable-panel-content-expanded-height",
       "aliasTarget": null
     },
     {
-      "name": "--ui-input-size-lg-gap",
+      "name": "--halo-input-size-lg-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-input-size-md-gap",
+      "name": "--halo-input-size-md-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-input-size-sm-gap",
+      "name": "--halo-input-size-sm-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-label-color",
-      "aliasTarget": "--ui-label-primary-text"
+      "name": "--halo-label-color",
+      "aliasTarget": "--halo-label-primary-text"
     },
     {
-      "name": "--ui-label-font-size",
-      "aliasTarget": "--ui-label-size-md-font-size"
+      "name": "--halo-label-font-size",
+      "aliasTarget": "--halo-label-size-md-font-size"
     },
     {
-      "name": "--ui-label-gap",
-      "aliasTarget": "--ui-label-size-md-gap"
+      "name": "--halo-label-gap",
+      "aliasTarget": "--halo-label-size-md-gap"
     },
     {
-      "name": "--ui-label-icon-color",
-      "aliasTarget": "--ui-label-primary-icon"
+      "name": "--halo-label-icon-color",
+      "aliasTarget": "--halo-label-primary-icon"
     },
     {
-      "name": "--ui-label-icon-size",
-      "aliasTarget": "--ui-label-size-md-icon-size"
+      "name": "--halo-label-icon-size",
+      "aliasTarget": "--halo-label-size-md-icon-size"
     },
     {
-      "name": "--ui-label-indicator-color",
-      "aliasTarget": "--ui-label-primary-indicator"
+      "name": "--halo-label-indicator-color",
+      "aliasTarget": "--halo-label-primary-indicator"
     },
     {
-      "name": "--ui-label-letter-spacing",
-      "aliasTarget": "--ui-label-size-md-letter-spacing"
+      "name": "--halo-label-letter-spacing",
+      "aliasTarget": "--halo-label-size-md-letter-spacing"
     },
     {
-      "name": "--ui-label-line-height",
-      "aliasTarget": "--ui-label-size-md-line-height"
+      "name": "--halo-label-line-height",
+      "aliasTarget": "--halo-label-size-md-line-height"
     },
     {
-      "name": "--ui-label-optional-color",
-      "aliasTarget": "--ui-label-indicators-optional-color"
+      "name": "--halo-label-optional-color",
+      "aliasTarget": "--halo-label-indicators-optional-color"
     },
     {
-      "name": "--ui-label-optional-weight",
+      "name": "--halo-label-optional-weight",
       "aliasTarget": null
     },
     {
-      "name": "--ui-label-required-color",
-      "aliasTarget": "--ui-label-indicators-required-color"
+      "name": "--halo-label-required-color",
+      "aliasTarget": "--halo-label-indicators-required-color"
     },
     {
-      "name": "--ui-label-text-transform",
-      "aliasTarget": "--ui-label-size-md-text-transform"
+      "name": "--halo-label-text-transform",
+      "aliasTarget": "--halo-label-size-md-text-transform"
     },
     {
-      "name": "--ui-label-weight-bold",
-      "aliasTarget": "--ui-label-weights-bold"
+      "name": "--halo-label-weight-bold",
+      "aliasTarget": "--halo-label-weights-bold"
     },
     {
-      "name": "--ui-label-weight-medium",
-      "aliasTarget": "--ui-label-weights-medium"
+      "name": "--halo-label-weight-medium",
+      "aliasTarget": "--halo-label-weights-medium"
     },
     {
-      "name": "--ui-label-weight-regular",
-      "aliasTarget": "--ui-label-weights-regular"
+      "name": "--halo-label-weight-regular",
+      "aliasTarget": "--halo-label-weights-regular"
     },
     {
-      "name": "--ui-label-weight-semibold",
-      "aliasTarget": "--ui-label-weights-semi-bold"
+      "name": "--halo-label-weight-semibold",
+      "aliasTarget": "--halo-label-weights-semi-bold"
     },
     {
-      "name": "--ui-select-option-gap",
+      "name": "--halo-select-option-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-option-padding-x",
+      "name": "--halo-select-option-padding-x",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-option-padding-y",
+      "name": "--halo-select-option-padding-y",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-size-font-size",
-      "aliasTarget": "--ui-select-trigger-size-md-font-size"
+      "name": "--halo-select-size-font-size",
+      "aliasTarget": "--halo-select-trigger-size-md-font-size"
     },
     {
-      "name": "--ui-select-size-gap",
+      "name": "--halo-select-size-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-size-height",
-      "aliasTarget": "--ui-select-trigger-size-md-height"
+      "name": "--halo-select-size-height",
+      "aliasTarget": "--halo-select-trigger-size-md-height"
     },
     {
-      "name": "--ui-select-size-padding-x",
-      "aliasTarget": "--ui-select-trigger-size-md-padding-x"
+      "name": "--halo-select-size-padding-x",
+      "aliasTarget": "--halo-select-trigger-size-md-padding-x"
     },
     {
-      "name": "--ui-select-size-padding-y",
-      "aliasTarget": "--ui-select-trigger-size-md-padding-y"
+      "name": "--halo-select-size-padding-y",
+      "aliasTarget": "--halo-select-trigger-size-md-padding-y"
     },
     {
-      "name": "--ui-select-transition",
-      "aliasTarget": "--ui-select-trigger-transition"
+      "name": "--halo-select-transition",
+      "aliasTarget": "--halo-select-trigger-transition"
     },
     {
-      "name": "--ui-select-trigger-size-lg-gap",
+      "name": "--halo-select-trigger-size-lg-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-trigger-size-md-gap",
+      "name": "--halo-select-trigger-size-md-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-select-trigger-size-sm-gap",
+      "name": "--halo-select-trigger-size-sm-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-filter-button-background",
-      "aliasTarget": "--ui-color-interactive-secondary"
+      "name": "--halo-table-filter-button-background",
+      "aliasTarget": "--halo-color-interactive-secondary"
     },
     {
-      "name": "--ui-table-filter-button-border",
-      "aliasTarget": "--ui-color-interactive-primary"
+      "name": "--halo-table-filter-button-border",
+      "aliasTarget": "--halo-color-interactive-primary"
     },
     {
-      "name": "--ui-table-filter-button-focus",
-      "aliasTarget": "--ui-color-border-focus"
+      "name": "--halo-table-filter-button-focus",
+      "aliasTarget": "--halo-color-border-focus"
     },
     {
-      "name": "--ui-table-filter-button-hover",
-      "aliasTarget": "--ui-color-interactive-secondary-hover"
+      "name": "--halo-table-filter-button-hover",
+      "aliasTarget": "--halo-color-interactive-secondary-hover"
     },
     {
-      "name": "--ui-table-filter-button-text",
-      "aliasTarget": "--ui-color-interactive-primary"
+      "name": "--halo-table-filter-button-text",
+      "aliasTarget": "--halo-color-interactive-primary"
     },
     {
-      "name": "--ui-table-filter-chip-background",
-      "aliasTarget": "--ui-color-interactive-secondary"
+      "name": "--halo-table-filter-chip-background",
+      "aliasTarget": "--halo-color-interactive-secondary"
     },
     {
-      "name": "--ui-table-filter-chip-border",
-      "aliasTarget": "--ui-color-border-default"
+      "name": "--halo-table-filter-chip-border",
+      "aliasTarget": "--halo-color-border-default"
     },
     {
-      "name": "--ui-table-filter-chip-icon",
-      "aliasTarget": "--ui-color-text-link"
+      "name": "--halo-table-filter-chip-icon",
+      "aliasTarget": "--halo-color-text-link"
     },
     {
-      "name": "--ui-table-filter-chip-text",
-      "aliasTarget": "--ui-color-text-link"
+      "name": "--halo-table-filter-chip-text",
+      "aliasTarget": "--halo-color-text-link"
     },
     {
-      "name": "--ui-table-filter-panel-background",
-      "aliasTarget": "--ui-color-surface-subdued"
+      "name": "--halo-table-filter-panel-background",
+      "aliasTarget": "--halo-color-surface-subdued"
     },
     {
-      "name": "--ui-table-filter-panel-border",
-      "aliasTarget": "--ui-color-border-subtle"
+      "name": "--halo-table-filter-panel-border",
+      "aliasTarget": "--halo-color-border-subtle"
     },
     {
-      "name": "--ui-table-filter-panel-text",
-      "aliasTarget": "--ui-color-text-secondary"
+      "name": "--halo-table-filter-panel-text",
+      "aliasTarget": "--halo-color-text-secondary"
     },
     {
-      "name": "--ui-table-header-border",
-      "aliasTarget": "--ui-table-header-border-bottom"
+      "name": "--halo-table-header-border",
+      "aliasTarget": "--halo-table-header-border-bottom"
     },
     {
-      "name": "--ui-table-header-padding-x",
+      "name": "--halo-table-header-padding-x",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-header-padding-y",
+      "name": "--halo-table-header-padding-y",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-mobile-card-background",
-      "aliasTarget": "--ui-color-surface-default"
+      "name": "--halo-table-mobile-card-background",
+      "aliasTarget": "--halo-color-surface-default"
     },
     {
-      "name": "--ui-table-mobile-card-border",
-      "aliasTarget": "--ui-color-border-subtle"
+      "name": "--halo-table-mobile-card-border",
+      "aliasTarget": "--halo-color-border-subtle"
     },
     {
-      "name": "--ui-table-mobile-card-selected-border",
-      "aliasTarget": "--ui-color-border-focus"
+      "name": "--halo-table-mobile-card-selected-border",
+      "aliasTarget": "--halo-color-border-focus"
     },
     {
-      "name": "--ui-table-mobile-card-selected-shadow",
-      "aliasTarget": "--ui-elevation-floating"
+      "name": "--halo-table-mobile-card-selected-shadow",
+      "aliasTarget": "--halo-elevation-floating"
     },
     {
-      "name": "--ui-table-mobile-card-shadow",
-      "aliasTarget": "--ui-elevation-raised"
+      "name": "--halo-table-mobile-card-shadow",
+      "aliasTarget": "--halo-elevation-raised"
     },
     {
-      "name": "--ui-table-mobile-divider",
-      "aliasTarget": "--ui-color-border-subtle"
+      "name": "--halo-table-mobile-divider",
+      "aliasTarget": "--halo-color-border-subtle"
     },
     {
-      "name": "--ui-table-pagination-border-color",
-      "aliasTarget": "--ui-table-pagination-border-top"
+      "name": "--halo-table-pagination-border-color",
+      "aliasTarget": "--halo-table-pagination-border-top"
     },
     {
-      "name": "--ui-table-pagination-control-gap",
+      "name": "--halo-table-pagination-control-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-pagination-secondary-text-color",
-      "aliasTarget": "--ui-table-pagination-text-secondary"
+      "name": "--halo-table-pagination-secondary-text-color",
+      "aliasTarget": "--halo-table-pagination-text-secondary"
     },
     {
-      "name": "--ui-table-row-border-color",
-      "aliasTarget": "--ui-table-row-border-bottom"
+      "name": "--halo-table-row-border-color",
+      "aliasTarget": "--halo-table-row-border-bottom"
     },
     {
-      "name": "--ui-table-row-hover-background",
+      "name": "--halo-table-row-hover-background",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-row-hover-transition",
+      "name": "--halo-table-row-hover-transition",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-selection-border-color",
-      "aliasTarget": "--ui-table-selection-border"
+      "name": "--halo-table-selection-border-color",
+      "aliasTarget": "--halo-table-selection-border"
     },
     {
-      "name": "--ui-table-subtle-text-color",
-      "aliasTarget": "--ui-color-text-secondary"
+      "name": "--halo-table-subtle-text-color",
+      "aliasTarget": "--halo-color-text-secondary"
     },
     {
-      "name": "--ui-table-tertiary-text-color",
-      "aliasTarget": "--ui-color-text-tertiary"
+      "name": "--halo-table-tertiary-text-color",
+      "aliasTarget": "--halo-color-text-tertiary"
     },
     {
-      "name": "--ui-table-title-color",
-      "aliasTarget": "--ui-color-text-primary"
+      "name": "--halo-table-title-color",
+      "aliasTarget": "--halo-color-text-primary"
     },
     {
-      "name": "--ui-table-toolbar-gap",
+      "name": "--halo-table-toolbar-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-toolbar-icon-color",
-      "aliasTarget": "--ui-color-text-tertiary"
+      "name": "--halo-table-toolbar-icon-color",
+      "aliasTarget": "--halo-color-text-tertiary"
     },
     {
-      "name": "--ui-text-color",
+      "name": "--halo-text-color",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-font-size",
+      "name": "--halo-text-font-size",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-font-style",
+      "name": "--halo-text-font-style",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-font-weight",
+      "name": "--halo-text-font-weight",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-letter-spacing",
+      "name": "--halo-text-letter-spacing",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-line-clamp",
+      "name": "--halo-text-line-clamp",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-line-height",
+      "name": "--halo-text-line-height",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-text-decoration",
+      "name": "--halo-text-text-decoration",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-text-transform",
+      "name": "--halo-text-text-transform",
       "aliasTarget": null
     },
     {
-      "name": "--ui-text-white-space",
+      "name": "--halo-text-white-space",
       "aliasTarget": null
     },
     {
-      "name": "--ui-toggle-thumb-background",
-      "aliasTarget": "--ui-toggle-unchecked-thumb-background"
+      "name": "--halo-toggle-thumb-background",
+      "aliasTarget": "--halo-toggle-unchecked-thumb-background"
     },
     {
-      "name": "--ui-toggle-thumb-translate",
-      "aliasTarget": "--ui-toggle-thumb-translate-x"
+      "name": "--halo-toggle-thumb-translate",
+      "aliasTarget": "--halo-toggle-thumb-translate-x"
     },
     {
-      "name": "--ui-toggle-track-background",
-      "aliasTarget": "--ui-toggle-unchecked-track-background"
+      "name": "--halo-toggle-track-background",
+      "aliasTarget": "--halo-toggle-unchecked-track-background"
     },
     {
-      "name": "--ui-table-empty-state-padding-y",
+      "name": "--halo-table-empty-state-padding-y",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-empty-state-text-color",
+      "name": "--halo-table-empty-state-text-color",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-empty-state-icon-size",
+      "name": "--halo-table-empty-state-icon-size",
       "aliasTarget": null
     },
     {
-      "name": "--ui-table-empty-state-icon-color",
+      "name": "--halo-table-empty-state-icon-color",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-padding-x",
+      "name": "--halo-tab-empty-state-padding-x",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-padding-y",
+      "name": "--halo-tab-empty-state-padding-y",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-gap",
+      "name": "--halo-tab-empty-state-gap",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-background",
+      "name": "--halo-tab-empty-state-background",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-border-color",
+      "name": "--halo-tab-empty-state-border-color",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-border-style",
+      "name": "--halo-tab-empty-state-border-style",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-border-width",
+      "name": "--halo-tab-empty-state-border-width",
       "aliasTarget": null
     },
     {
-      "name": "--ui-tab-empty-state-text-color",
+      "name": "--halo-tab-empty-state-text-color",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-hover-border-color-instance",
+      "name": "--halo-card-hover-border-color-instance",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-hover-background-instance",
+      "name": "--halo-card-hover-background-instance",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-icon-color-instance",
+      "name": "--halo-card-icon-color-instance",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-icon-hover-color-instance",
+      "name": "--halo-card-icon-hover-color-instance",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-media-border-radius",
+      "name": "--halo-card-media-border-radius",
       "aliasTarget": null
     },
     {
-      "name": "--ui-card-media-aspect-ratio",
+      "name": "--halo-card-media-aspect-ratio",
       "aliasTarget": null
     },
     {
-      "name": "--ui-slider-progress",
+      "name": "--halo-slider-progress",
       "aliasTarget": null
     },
     {
-      "name": "--ui-drawer-handle-bg",
+      "name": "--halo-drawer-handle-bg",
       "aliasTarget": null
     },
     {
-      "name": "--ui-drawer-handle-border",
+      "name": "--halo-drawer-handle-border",
       "aliasTarget": null
     }
   ]

@@ -42,7 +42,7 @@ public partial class HaloTextArea
 
     private string? DescriptionElementId => string.IsNullOrWhiteSpace(Description)
         ? null
-        : _descriptionElementId ??= AccessibilityIdGenerator.Create("ui-textarea-description");
+        : _descriptionElementId ??= AccessibilityIdGenerator.Create("halo-textarea-description");
 
     protected override bool TryParseValueFromString(string? value, out string result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
@@ -54,11 +54,11 @@ public partial class HaloTextArea
 
     private string BuildWrapperClass()
     {
-        var classes = new List<string> { "ui-textarea" };
+        var classes = new List<string> { "halo-textarea" };
 
         if (Disabled)
         {
-            classes.Add("ui-textarea--disabled");
+            classes.Add("halo-textarea--disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -76,7 +76,7 @@ public partial class HaloTextArea
 
     private string BuildInputClass()
     {
-        var classes = new List<string> { "ui-textarea__input" };
+        var classes = new List<string> { "halo-textarea__input" };
 
         if (Disabled)
         {

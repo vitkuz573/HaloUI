@@ -31,7 +31,7 @@
                         <span class="@GetNotificationClasses(tab)" aria-hidden="true"></span>
                     }
 
-                    <span class="ui-tabs__tab-inner">
+                    <span class="halo-tabs__tab-inner">
                         @if (tab.PrefixContent is not null)
                         {
                             <span class="@GetTabIconClasses(true)">
@@ -45,20 +45,20 @@
                             </span>
                         }
 
-                        <span class="ui-tabs__tab-label">
-                            <span class="ui-tabs__tab-title">@tab.Title</span>
+                        <span class="halo-tabs__tab-label">
+                            <span class="halo-tabs__tab-title">@tab.Title</span>
                             @if (!string.IsNullOrWhiteSpace(tab.Description))
                             {
-                                <span class="ui-tabs__tab-description">@tab.Description</span>
+                                <span class="halo-tabs__tab-description">@tab.Description</span>
                             }
                         </span>
 
                         @if (tab.BadgeContent is not null || !string.IsNullOrWhiteSpace(tab.BadgeText) || tab.SuffixContent is not null)
                         {
-                            <span class="ui-tabs__tab-suffix">
+                            <span class="halo-tabs__tab-suffix">
                                 @if (tab.BadgeContent is not null)
                                 {
-                                    <span class="ui-tabs__tab-badge">
+                                    <span class="halo-tabs__tab-badge">
                                         @tab.BadgeContent
                                     </span>
                                 }
@@ -66,12 +66,12 @@
                                 {
                                     <HaloBadge Text="@tab.BadgeText"
                                              Variant="@tab.BadgeVariant"
-                                             Class="ui-tabs__tab-badge" />
+                                             Class="halo-tabs__tab-badge" />
                                 }
 
                                 @if (tab.SuffixContent is not null)
                                 {
-                                    <span class="ui-tabs__tab-suffix-content">
+                                    <span class="halo-tabs__tab-suffix-content">
                                         @tab.SuffixContent
                                     </span>
                                 }

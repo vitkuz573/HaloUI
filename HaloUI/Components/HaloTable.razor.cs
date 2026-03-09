@@ -42,12 +42,12 @@ public partial class HaloTable<TItem>
         {
             builder.OpenElement(0, "button");
             builder.AddAttribute(1, "type", "button");
-            builder.AddAttribute(2, "class", "ui-table__clear-search");
+            builder.AddAttribute(2, "class", "halo-table__clear-search");
             builder.AddAttribute(3, "onclick", EventCallback.Factory.Create(this, ClearSearch));
             builder.AddAttribute(4, "aria-label", "Clear search");
             builder.AddAttribute(5, "title", "Clear search");
             builder.OpenElement(6, "span");
-            builder.AddAttribute(7, "class", "material-icons ui-table__toolbar-icon");
+            builder.AddAttribute(7, "class", "material-icons halo-table__toolbar-icon");
             builder.AddAttribute(8, "aria-hidden", "true");
             builder.AddContent(9, "close");
             builder.CloseElement();
@@ -224,11 +224,11 @@ public partial class HaloTable<TItem>
 
     private string GetTableContainerClasses()
     {
-        var classes = new List<string> { "ui-table" };
+        var classes = new List<string> { "halo-table" };
 
         if (IsDense)
         {
-            classes.Add("ui-table--dense");
+            classes.Add("halo-table--dense");
         }
 
         return string.Join(' ', classes);
@@ -236,7 +236,7 @@ public partial class HaloTable<TItem>
 
     private string GetHeaderContainerClasses()
     {
-        var classes = new List<string> { "ui-table__header" };
+        var classes = new List<string> { "halo-table__header" };
 
         if (IsCollapsible && !_isExpanded)
         {
@@ -248,7 +248,7 @@ public partial class HaloTable<TItem>
 
     private string GetToggleButtonClasses()
     {
-        return _isExpanded ? "ui-table__toggle ui-table__toggle--expanded" : "ui-table__toggle";
+        return _isExpanded ? "halo-table__toggle halo-table__toggle--expanded" : "halo-table__toggle";
     }
 
     private IReadOnlyDictionary<string, object> GetToggleButtonAttributes()
@@ -288,7 +288,7 @@ public partial class HaloTable<TItem>
 
     private static string GetHeaderCellClasses(HaloTableColumnDefinition<TItem> column)
     {
-        var classes = new List<string> { "ui-table__column-head" };
+        var classes = new List<string> { "halo-table__column-head" };
         if (!string.IsNullOrWhiteSpace(column.HeaderClass))
         {
             classes.Add(column.HeaderClass);
@@ -299,7 +299,7 @@ public partial class HaloTable<TItem>
 
     private static string GetFilterCellClasses(HaloTableColumnDefinition<TItem> column)
     {
-        var classes = new List<string> { "ui-table__column-filter" };
+        var classes = new List<string> { "halo-table__column-filter" };
         if (!string.IsNullOrWhiteSpace(column.HeaderClass))
         {
             classes.Add(column.HeaderClass);
@@ -322,7 +322,7 @@ public partial class HaloTable<TItem>
     {
         var classes = new List<string>
         {
-            "ui-table__mobile-value"
+            "halo-table__mobile-value"
         };
 
         if (!string.IsNullOrWhiteSpace(column.CellClass))
@@ -345,7 +345,7 @@ public partial class HaloTable<TItem>
 
     private string GetMobileCardClass(TItem item)
     {
-        var classes = new List<string> { "ui-table__mobile-card" };
+        var classes = new List<string> { "halo-table__mobile-card" };
         if (_state.IsSelected(item) && _options.SelectionMode != TableSelectionMode.None)
         {
             classes.Add("is-selected");
@@ -371,7 +371,7 @@ public partial class HaloTable<TItem>
 
     private string GetHeaderButtonClasses(string columnId)
     {
-        var classes = new List<string> { "ui-table__head-button" };
+        var classes = new List<string> { "halo-table__head-button" };
         if (_state.GetSortDirection(columnId) is TableSortDirection.Ascending or TableSortDirection.Descending)
         {
             classes.Add("is-active");

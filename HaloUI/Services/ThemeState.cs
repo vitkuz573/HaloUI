@@ -14,7 +14,7 @@ namespace HaloUI.Services;
 /// </summary>
 public sealed class ThemeState
 {
-    public const string CookieName = "ui-theme";
+    public const string CookieName = "halo-theme";
 
     private readonly HaloThemeContext _context;
     private readonly IJSRuntime? _jsRuntime;

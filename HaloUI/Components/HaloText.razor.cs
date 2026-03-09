@@ -21,7 +21,7 @@ public partial class HaloText
     private TypographyStyle _variantStyle = new();
     private string _resolvedElementName = "span";
     private TextDisplay _resolvedDisplay = TextDisplay.Inline;
-    private string _resolvedClassName = "ui-text";
+    private string _resolvedClassName = "halo-text";
     private string _style = string.Empty;
     private bool _applyTruncate;
     private bool _applyLineClamp;
@@ -113,17 +113,17 @@ public partial class HaloText
         if (PrefixContent is not null)
         {
             builder.OpenElement(0, "span");
-            builder.AddAttribute(1, "class", "ui-text__prefix");
+            builder.AddAttribute(1, "class", "halo-text__prefix");
             PrefixContent(builder);
             builder.CloseElement();
         }
         else if (!string.IsNullOrWhiteSpace(StartIcon))
         {
             builder.OpenElement(2, "span");
-            builder.AddAttribute(3, "class", "ui-text__prefix");
+            builder.AddAttribute(3, "class", "halo-text__prefix");
             builder.AddAttribute(4, "aria-hidden", "true");
             builder.OpenElement(5, "span");
-            builder.AddAttribute(6, "class", "material-icons ui-text__icon");
+            builder.AddAttribute(6, "class", "material-icons halo-text__icon");
             builder.AddContent(7, StartIcon);
             builder.CloseElement();
             builder.CloseElement();
@@ -132,7 +132,7 @@ public partial class HaloText
         if (HasTextContent)
         {
             builder.OpenElement(8, "span");
-            builder.AddAttribute(9, "class", "ui-text__content");
+            builder.AddAttribute(9, "class", "halo-text__content");
 
             if (!string.IsNullOrWhiteSpace(Text))
             {
@@ -150,17 +150,17 @@ public partial class HaloText
         if (SuffixContent is not null)
         {
             builder.OpenElement(11, "span");
-            builder.AddAttribute(12, "class", "ui-text__suffix");
+            builder.AddAttribute(12, "class", "halo-text__suffix");
             SuffixContent(builder);
             builder.CloseElement();
         }
         else if (!string.IsNullOrWhiteSpace(EndIcon))
         {
             builder.OpenElement(13, "span");
-            builder.AddAttribute(14, "class", "ui-text__suffix");
+            builder.AddAttribute(14, "class", "halo-text__suffix");
             builder.AddAttribute(15, "aria-hidden", "true");
             builder.OpenElement(16, "span");
-            builder.AddAttribute(17, "class", "material-icons ui-text__icon");
+            builder.AddAttribute(17, "class", "material-icons halo-text__icon");
             builder.AddContent(18, EndIcon);
             builder.CloseElement();
             builder.CloseElement();
@@ -367,7 +367,7 @@ public partial class HaloText
     {
         var classes = new List<string>
         {
-            "ui-text",
+            "halo-text",
             GetDisplayClass(_resolvedDisplay)
         };
 
@@ -380,22 +380,22 @@ public partial class HaloText
 
         if (NoWrap)
         {
-            classes.Add("ui-text--nowrap");
+            classes.Add("halo-text--nowrap");
         }
 
         if (_applyTruncate)
         {
-            classes.Add("ui-text--truncate");
+            classes.Add("halo-text--truncate");
         }
 
         if (_applyLineClamp)
         {
-            classes.Add("ui-text--line-clamp");
+            classes.Add("halo-text--line-clamp");
         }
 
         if (PreserveWhitespace)
         {
-            classes.Add("ui-text--preserve");
+            classes.Add("halo-text--preserve");
         }
 
         if (Variant == TextVariant.Code
@@ -403,7 +403,7 @@ public partial class HaloText
             || Element == TextElement.Preformatted
             || string.Equals(_resolvedElementName, "code", StringComparison.Ordinal))
         {
-            classes.Add("ui-text--code");
+            classes.Add("halo-text--code");
         }
 
         if (!string.IsNullOrWhiteSpace(Class))
@@ -568,11 +568,11 @@ public partial class HaloText
     {
         return display switch
         {
-            TextDisplay.Block => "ui-text--display-block",
-            TextDisplay.Flex => "ui-text--display-flex",
-            TextDisplay.InlineBlock => "ui-text--display-inline-block",
-            TextDisplay.Inline => "ui-text--display-inline",
-            _ => "ui-text--display-inline"
+            TextDisplay.Block => "halo-text--display-block",
+            TextDisplay.Flex => "halo-text--display-flex",
+            TextDisplay.InlineBlock => "halo-text--display-inline-block",
+            TextDisplay.Inline => "halo-text--display-inline",
+            _ => "halo-text--display-inline"
         };
     }
 
@@ -580,10 +580,10 @@ public partial class HaloText
     {
         return align switch
         {
-            TextAlign.Start => "ui-text--align-start",
-            TextAlign.Center => "ui-text--align-center",
-            TextAlign.End => "ui-text--align-end",
-            TextAlign.Justify => "ui-text--align-justify",
+            TextAlign.Start => "halo-text--align-start",
+            TextAlign.Center => "halo-text--align-center",
+            TextAlign.End => "halo-text--align-end",
+            TextAlign.Justify => "halo-text--align-justify",
             _ => null
         };
     }

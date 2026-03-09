@@ -35,11 +35,9 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
         await Page.GotoAsync(BuildUrl("/"), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
         await WaitForInteractiveUiAsync();
 
-        var dialogSection = Page.GetByTestId("demo-section-dialog");
-        await dialogSection.ScrollIntoViewIfNeededAsync();
-        await dialogSection.GetByTestId("button-open-dialog").ClickAsync();
+        await Page.GetByTestId("demo-section-dialog").GetByTestId("button-open-dialog").ClickAsync();
         var overlay = Page.Locator("[data-dialog-open='true']").First;
-        var dialogSurface = Page.Locator(".ui-dialog__modal, .ui-dialog__drawer").First;
+        var dialogSurface = Page.Locator(".halo-dialog__modal, .halo-dialog__drawer").First;
 
         await Expect(overlay).ToBeVisibleAsync();
         await Expect(dialogSurface).ToBeVisibleAsync();
@@ -47,10 +45,8 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
         await Page.Keyboard.PressAsync("Escape");
         await Expect(overlay).ToBeHiddenAsync();
 
-        var snackbarSection = Page.GetByTestId("demo-section-snackbar");
-        await snackbarSection.ScrollIntoViewIfNeededAsync();
-        await snackbarSection.GetByTestId("button-show-snackbar").ClickAsync();
-        var snackbar = Page.Locator(".ui-snackbar").First;
+        await Page.GetByTestId("demo-section-snackbar").GetByTestId("button-show-snackbar").ClickAsync();
+        var snackbar = Page.Locator(".halo-snackbar").First;
 
         await Expect(snackbar).ToBeVisibleAsync();
         await Expect(snackbar).ToContainTextAsync("System notice");

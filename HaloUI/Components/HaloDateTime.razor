@@ -15,7 +15,7 @@
                  ShowRequiredIndicator="@(IsRequired)" />
     }
 
-    <div class="ui-datetime__container">
+    <div class="halo-datetime__container">
         <input type="datetime-local"
                class="@BuildInputClass()"
                value="@CurrentValueAsString"
@@ -30,6 +30,6 @@
 
     @if (!string.IsNullOrWhiteSpace(Description))
     {
-        <p class="ui-datetime__description" id="@DescriptionElementId">@Description</p>
+        <p class="halo-datetime__description" id="@DescriptionElementId">@Description</p>
     }
 </div>

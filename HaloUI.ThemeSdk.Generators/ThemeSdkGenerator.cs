@@ -21,49 +21,49 @@ public sealed class ThemeSdkGenerator : IIncrementalGenerator
 
     private static readonly string[] ThemeMetadataVariables =
     [
-        "--ui-theme-id",
-        "--ui-theme-variant",
-        "--ui-theme-density",
-        "--ui-theme-is-high-contrast"
+        "--halo-theme-id",
+        "--halo-theme-variant",
+        "--halo-theme-density",
+        "--halo-theme-is-high-contrast"
     ];
 
     private static readonly ImmutableArray<(string Prefix, string TypeName)> GenerationTargets =
     [
-        ("ui-brand-colors", "HaloUI.Theme.Tokens.Brand.BrandColors"),
-        ("ui-brand-typography", "HaloUI.Theme.Tokens.Brand.BrandTypography"),
-        ("ui-brand-visual-style", "HaloUI.Theme.Tokens.Brand.BrandVisualStyle"),
-        ("ui-brand-logo", "HaloUI.Theme.Tokens.Brand.BrandLogo"),
-        ("ui-brand-logo-dimensions", "HaloUI.Theme.Tokens.Brand.LogoDimensions"),
-        ("ui-brand-logo-constraints", "HaloUI.Theme.Tokens.Brand.LogoConstraints"),
-        ("ui-brand-voice", "HaloUI.Theme.Tokens.Brand.BrandVoice"),
-        ("ui-core-color", "HaloUI.Theme.Tokens.Core.ColorTokens"),
-        ("ui-core-spacing", "HaloUI.Theme.Tokens.Core.SpacingTokens"),
-        ("ui-core-typography", "HaloUI.Theme.Tokens.Core.TypographyTokens"),
-        ("ui-core-border", "HaloUI.Theme.Tokens.Core.BorderTokens"),
-        ("ui-core-shadow", "HaloUI.Theme.Tokens.Core.ShadowTokens"),
-        ("ui-core-transition", "HaloUI.Theme.Tokens.Core.TransitionTokens"),
-        ("ui-core-size", "HaloUI.Theme.Tokens.Core.SizeTokens"),
-        ("ui-core-z-index", "HaloUI.Theme.Tokens.Core.ZIndexTokens"),
-        ("ui-core-opacity", "HaloUI.Theme.Tokens.Core.OpacityTokens"),
-        ("ui-responsive-breakpoints", "HaloUI.Theme.Tokens.Responsive.Breakpoints"),
-        ("ui-responsive-container", "HaloUI.Theme.Tokens.Responsive.ContainerSizes"),
-        ("ui-responsive-spacing", "HaloUI.Theme.Tokens.Responsive.ResponsiveSpacing"),
-        ("ui-responsive-typography", "HaloUI.Theme.Tokens.Responsive.ResponsiveTypography"),
-        ("ui-responsive-fluid", "HaloUI.Theme.Tokens.Responsive.FluidScale"),
-        ("ui-color", "HaloUI.Theme.Tokens.Semantic.SemanticColorTokens"),
-        ("ui-spacing", "HaloUI.Theme.Tokens.Semantic.SemanticSpacingTokens"),
-        ("ui-typography", "HaloUI.Theme.Tokens.Semantic.SemanticTypographyTokens"),
-        ("ui-size", "HaloUI.Theme.Tokens.Semantic.SemanticSizeTokens"),
-        ("ui-elevation", "HaloUI.Theme.Tokens.Semantic.SemanticElevationTokens"),
-        ("ui-accessibility-focus", "HaloUI.Theme.Tokens.Accessibility.FocusIndicators"),
-        ("ui-accessibility-touch", "HaloUI.Theme.Tokens.Accessibility.TouchTargets"),
-        ("ui-accessibility-contrast", "HaloUI.Theme.Tokens.Accessibility.ContrastRatios"),
-        ("ui-accessibility-motion", "HaloUI.Theme.Tokens.Accessibility.ReducedMotion"),
-        ("ui-accessibility-screen-reader", "HaloUI.Theme.Tokens.Accessibility.ScreenReaderTokens"),
-        ("ui-motion-duration", "HaloUI.Theme.Tokens.Motion.DurationScale"),
-        ("ui-motion-easing", "HaloUI.Theme.Tokens.Motion.EasingCurves"),
-        ("ui-motion-animation", "HaloUI.Theme.Tokens.Motion.AnimationPresets"),
-        ("ui-motion-interaction", "HaloUI.Theme.Tokens.Motion.InteractionMotion"),
+        ("halo-brand-colors", "HaloUI.Theme.Tokens.Brand.BrandColors"),
+        ("halo-brand-typography", "HaloUI.Theme.Tokens.Brand.BrandTypography"),
+        ("halo-brand-visual-style", "HaloUI.Theme.Tokens.Brand.BrandVisualStyle"),
+        ("halo-brand-logo", "HaloUI.Theme.Tokens.Brand.BrandLogo"),
+        ("halo-brand-logo-dimensions", "HaloUI.Theme.Tokens.Brand.LogoDimensions"),
+        ("halo-brand-logo-constraints", "HaloUI.Theme.Tokens.Brand.LogoConstraints"),
+        ("halo-brand-voice", "HaloUI.Theme.Tokens.Brand.BrandVoice"),
+        ("halo-core-color", "HaloUI.Theme.Tokens.Core.ColorTokens"),
+        ("halo-core-spacing", "HaloUI.Theme.Tokens.Core.SpacingTokens"),
+        ("halo-core-typography", "HaloUI.Theme.Tokens.Core.TypographyTokens"),
+        ("halo-core-border", "HaloUI.Theme.Tokens.Core.BorderTokens"),
+        ("halo-core-shadow", "HaloUI.Theme.Tokens.Core.ShadowTokens"),
+        ("halo-core-transition", "HaloUI.Theme.Tokens.Core.TransitionTokens"),
+        ("halo-core-size", "HaloUI.Theme.Tokens.Core.SizeTokens"),
+        ("halo-core-z-index", "HaloUI.Theme.Tokens.Core.ZIndexTokens"),
+        ("halo-core-opacity", "HaloUI.Theme.Tokens.Core.OpacityTokens"),
+        ("halo-responsive-breakpoints", "HaloUI.Theme.Tokens.Responsive.Breakpoints"),
+        ("halo-responsive-container", "HaloUI.Theme.Tokens.Responsive.ContainerSizes"),
+        ("halo-responsive-spacing", "HaloUI.Theme.Tokens.Responsive.ResponsiveSpacing"),
+        ("halo-responsive-typography", "HaloUI.Theme.Tokens.Responsive.ResponsiveTypography"),
+        ("halo-responsive-fluid", "HaloUI.Theme.Tokens.Responsive.FluidScale"),
+        ("halo-color", "HaloUI.Theme.Tokens.Semantic.SemanticColorTokens"),
+        ("halo-spacing", "HaloUI.Theme.Tokens.Semantic.SemanticSpacingTokens"),
+        ("halo-typography", "HaloUI.Theme.Tokens.Semantic.SemanticTypographyTokens"),
+        ("halo-size", "HaloUI.Theme.Tokens.Semantic.SemanticSizeTokens"),
+        ("halo-elevation", "HaloUI.Theme.Tokens.Semantic.SemanticElevationTokens"),
+        ("halo-accessibility-focus", "HaloUI.Theme.Tokens.Accessibility.FocusIndicators"),
+        ("halo-accessibility-touch", "HaloUI.Theme.Tokens.Accessibility.TouchTargets"),
+        ("halo-accessibility-contrast", "HaloUI.Theme.Tokens.Accessibility.ContrastRatios"),
+        ("halo-accessibility-motion", "HaloUI.Theme.Tokens.Accessibility.ReducedMotion"),
+        ("halo-accessibility-screen-reader", "HaloUI.Theme.Tokens.Accessibility.ScreenReaderTokens"),
+        ("halo-motion-duration", "HaloUI.Theme.Tokens.Motion.DurationScale"),
+        ("halo-motion-easing", "HaloUI.Theme.Tokens.Motion.EasingCurves"),
+        ("halo-motion-animation", "HaloUI.Theme.Tokens.Motion.AnimationPresets"),
+        ("halo-motion-interaction", "HaloUI.Theme.Tokens.Motion.InteractionMotion"),
     ];
 
     private const string LeafFallbackIdentifier = "Literal";
@@ -1768,7 +1768,7 @@ public sealed class ThemeSdkGenerator : IIncrementalGenerator
         foreach (var entry in entries)
         {
             var segments = SplitVariableName(entry.Name);
-            var startIndex = segments.Length > 0 && string.Equals(segments[0], "ui", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+            var startIndex = segments.Length > 0 && string.Equals(segments[0], "halo", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
 
             var trimmedLength = segments.Length - startIndex;
             var trimmed = trimmedLength > 0 ? new string[trimmedLength] : Array.Empty<string>();
@@ -1913,9 +1913,9 @@ public sealed class ThemeSdkGenerator : IIncrementalGenerator
             }
 
             var trimmed = name.Substring(0, name.Length - "DesignTokens".Length);
-            var prefix = "ui-" + CssVariableNaming.ToKebabCase(trimmed);
+            var prefix = "halo-" + CssVariableNaming.ToKebabCase(trimmed);
             var prefixSegments = prefix.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-            var headOverride = prefixSegments.Length > 1 && string.Equals(prefixSegments[0], "ui", StringComparison.Ordinal)
+            var headOverride = prefixSegments.Length > 1 && string.Equals(prefixSegments[0], "halo", StringComparison.Ordinal)
                 ? prefixSegments.Length - 1
                 : 0;
 

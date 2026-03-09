@@ -1,16 +1,16 @@
 <div class="@RootClass" @attributes="AdditionalAttributes">
     @if (BackgroundOverlay is not null)
     {
-        <div class="ui-layout__background">
+        <div class="halo-layout__background">
             @BackgroundOverlay
         </div>
     }
 
-    <div class="ui-layout__shell">
+    <div class="halo-layout__shell">
         @if (ShouldRenderOverlay)
         {
             <button type="button"
-                    class="ui-layout__backdrop"
+                    class="halo-layout__backdrop"
                     aria-label="@OverlayCloseLabel"
                     @onclick="HandleOverlayCloseAsync"></button>
         }
