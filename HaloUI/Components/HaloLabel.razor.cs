@@ -86,7 +86,7 @@ public partial class HaloLabel
     public string? OptionalIndicatorAriaText { get; set; }
 
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
 
     [Parameter]
     public RenderFragment? PrefixContent { get; set; }

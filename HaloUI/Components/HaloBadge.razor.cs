@@ -16,7 +16,7 @@ public partial class HaloBadge
     public string? Text { get; set; }
     
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
     
     [Parameter]
     public BadgeVariant Variant { get; set; } = BadgeVariant.Neutral;

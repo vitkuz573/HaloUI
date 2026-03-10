@@ -21,7 +21,7 @@ public partial class HaloTab
     public string Title { get; set; } = string.Empty;
 
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
 
     [Parameter]
     public string? Class { get; set; }

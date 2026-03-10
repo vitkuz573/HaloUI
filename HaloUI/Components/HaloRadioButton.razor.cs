@@ -30,7 +30,7 @@ public partial class HaloRadioButton<TValue>
     public string? Description { get; set; }
 
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
 
     [Parameter]
     public string? Badge { get; set; }

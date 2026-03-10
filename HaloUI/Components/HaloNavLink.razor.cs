@@ -10,7 +10,7 @@ namespace HaloUI.Components;
 
 public sealed partial class HaloNavLink
 {
-    [Parameter] public HaloIconToken? Icon { get; set; }
+    [Parameter] public IHaloIconReference? Icon { get; set; }
 
     [Parameter] public string? Title { get; set; }
 

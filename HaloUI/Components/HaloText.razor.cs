@@ -91,13 +91,13 @@ public partial class HaloText
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public HaloIconToken? StartIcon { get; set; }
+    public IHaloIconReference? StartIcon { get; set; }
 
     [Parameter]
     public RenderFragment? PrefixContent { get; set; }
 
     [Parameter]
-    public HaloIconToken? EndIcon { get; set; }
+    public IHaloIconReference? EndIcon { get; set; }
 
     [Parameter]
     public RenderFragment? SuffixContent { get; set; }

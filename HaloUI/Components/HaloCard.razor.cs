@@ -29,7 +29,7 @@ public partial class HaloCard
     public string? Subtitle { get; set; }
     
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
     
     [Parameter]
     public string? IconColor { get; set; }

@@ -15,7 +15,7 @@ public partial class HaloIcon
     private HaloIconDefinition? _resolvedIcon;
 
     [Parameter]
-    public HaloIconToken? Name { get; set; }
+    public IHaloIconReference? Name { get; set; }
 
     [Parameter]
     public string? Class { get; set; }
@@ -47,7 +47,14 @@ public partial class HaloIcon
 
     private HaloIconDefinition? ResolveIcon()
     {
-        if (Name is not { } iconToken || iconToken.IsEmpty)
+        if (Name is not { } iconReference)
+        {
+            return null;
+        }
+
+        var iconToken = iconReference.ToIconToken();
+
+        if (iconToken.IsEmpty)
         {
             return null;
         }

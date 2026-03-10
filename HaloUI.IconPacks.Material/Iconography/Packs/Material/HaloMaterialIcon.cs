@@ -11,6 +11,7 @@ namespace HaloUI.Icons;
 /// Strongly-typed Material icon token bound to a concrete Material style.
 /// </summary>
 public readonly record struct HaloMaterialIcon
+    : IHaloIconReference
 {
     private HaloMaterialIcon(HaloIconToken token, HaloMaterialIconStyle style)
     {
@@ -67,6 +68,12 @@ public readonly record struct HaloMaterialIcon
     public static implicit operator HaloIconToken(HaloMaterialIcon icon)
     {
         return icon.Token;
+    }
+
+    /// <inheritdoc />
+    public HaloIconToken ToIconToken()
+    {
+        return Token;
     }
 
     public override string ToString()

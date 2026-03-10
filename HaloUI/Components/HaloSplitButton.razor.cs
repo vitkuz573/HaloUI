@@ -44,7 +44,7 @@ public partial class HaloSplitButton
     public string? Form { get; set; }
 
     [Parameter]
-    public HaloIconToken ToggleIcon { get; set; } = HaloDefaultIcons.ExpandMore;
+    public IHaloIconReference ToggleIcon { get; set; } = HaloDefaultIcons.ExpandMore;
 
     [Parameter]
     public string? AriaLabel { get; set; }

@@ -15,7 +15,7 @@ namespace HaloUI.Components;
 public partial class HaloButton
 {
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
     
     [Parameter]
     public ButtonVariant Variant { get; set; } = ButtonVariant.Secondary;

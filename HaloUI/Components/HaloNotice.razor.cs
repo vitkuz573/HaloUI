@@ -16,7 +16,7 @@ public partial class HaloNotice
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public HaloIconToken Icon { get; set; } = HaloDefaultIcons.Info;
+    public IHaloIconReference Icon { get; set; } = HaloDefaultIcons.Info;
 
     [Parameter]
     public NoticeVariant Variant { get; set; } = NoticeVariant.Info;

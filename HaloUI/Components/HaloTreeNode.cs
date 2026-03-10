@@ -16,7 +16,7 @@ public class HaloTreeNode<TValue>
 
     public TValue? Value { get; set; }
 
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
 
     public int? BadgeCount { get; set; }
 

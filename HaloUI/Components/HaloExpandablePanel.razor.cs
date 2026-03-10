@@ -36,7 +36,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     public RenderFragment? Prefix { get; set; }
 
     [Parameter]
-    public HaloIconToken? Icon { get; set; }
+    public IHaloIconReference? Icon { get; set; }
 
     [Parameter]
     public string? AriaLabel { get; set; }

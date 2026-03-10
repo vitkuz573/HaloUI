@@ -8,6 +8,7 @@ namespace HaloUI.Iconography;
 /// Strongly-typed icon token used across HaloUI components and icon resolvers.
 /// </summary>
 public readonly record struct HaloIconToken
+    : IHaloIconReference
 {
     private readonly string? _value;
 
@@ -48,6 +49,12 @@ public readonly record struct HaloIconToken
 
         token = new HaloIconToken(value.Trim());
         return true;
+    }
+
+    /// <inheritdoc />
+    public HaloIconToken ToIconToken()
+    {
+        return this;
     }
 
     public override string ToString() => Value;

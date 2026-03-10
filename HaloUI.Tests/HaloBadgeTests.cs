@@ -6,6 +6,7 @@ using Bunit;
 using HaloUI.Components;
 using HaloUI.Enums;
 using HaloUI.Iconography;
+using Microsoft.AspNetCore.Components;
 using Xunit;
 
 namespace HaloUI.Tests;
@@ -53,5 +54,21 @@ public class HaloBadgeTests : BunitContext
         var badge = cut.Find("span.halo-badge");
         Assert.Equal("status", badge.GetAttribute("role"));
         Assert.Equal("assertive", badge.GetAttribute("aria-live"));
+    }
+
+    [Fact]
+    public void AcceptsMaterialIcon_WhenProvidedViaRenderTreeBuilderAttribute()
+    {
+        var fragment = new RenderFragment(builder =>
+        {
+            builder.OpenComponent<HaloBadge>(0);
+            builder.AddAttribute(1, nameof(HaloBadge.Icon), Material.Outlined.CheckCircle);
+            builder.AddAttribute(2, nameof(HaloBadge.Text), "Ready");
+            builder.CloseComponent();
+        });
+
+        var cut = Render(fragment);
+        var icon = cut.Find(".halo-badge .halo-icon");
+        Assert.Contains("check_circle", icon.InnerHtml, StringComparison.Ordinal);
     }
 }
