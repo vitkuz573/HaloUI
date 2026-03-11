@@ -82,6 +82,8 @@ public class DialogService : IDialogService
         EnsureCapacity(title);
 
         var reference = new DialogReference();
+        DialogParameters resolvedParameters = parameters ?? new DialogParameters<TComponent>();
+        reference.BindParameters(resolvedParameters);
         var resolvedReference = await ShowInternal(title, Content, reference, resolvedOptions, metadata);
        
         return resolvedReference;
@@ -90,11 +92,10 @@ public class DialogService : IDialogService
         {
             builder.OpenComponent<TComponent>(0);
 
-            if (parameters is not null)
-            {
-                var attributes = new List<KeyValuePair<string, object>>(parameters.Count);
-                attributes.AddRange(parameters.Select(parameter => new KeyValuePair<string, object>(parameter.Key, parameter.Value!)));
+            var attributes = reference.SnapshotParameters();
 
+            if (attributes.Count > 0)
+            {
                 builder.AddMultipleAttributes(1, attributes);
             }
 

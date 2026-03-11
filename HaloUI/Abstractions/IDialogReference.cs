@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HaloUI.Accessibility;
 
@@ -28,6 +29,8 @@ public interface IDialogReference
 
     event Action<bool>? BusyChanged;
 
+    event Action? RenderRequested;
+
     void Close(DialogResult result);
 
     void CloseSuccess(object? value = null);
@@ -37,4 +40,10 @@ public interface IDialogReference
     void RegisterAccessibilityElement(DialogAccessibilityRole role, string elementId);
 
     void SetBusy(bool busy);
+
+    void RequestRender();
+
+    bool TrySetParameter(string parameterName, object? value);
+
+    bool TrySetParameters(IReadOnlyDictionary<string, object?> parameters);
 }

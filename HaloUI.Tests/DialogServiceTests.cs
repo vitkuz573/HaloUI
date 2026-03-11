@@ -337,6 +337,11 @@ public class DialogServiceTests
 
     private sealed class TestComponent : ComponentBase
     {
+        [Parameter]
+        public string? StringValue { get; set; }
+
+        [Parameter]
+        public int NumberValue { get; set; }
     }
 
     [Fact]
@@ -460,5 +465,54 @@ public class DialogServiceTests
 
         Assert.True(busyObserved);
         Assert.False(reference.IsBusy);
+    }
+
+    [Fact]
+    public async Task ShowAsync_ComponentDialogReference_AllowsRuntimeParameterUpdates()
+    {
+        var service = DialogServiceFactory.Create();
+        service.OnShow += _ => Task.CompletedTask;
+
+        var parameters = new DialogParameters<TestComponent>();
+        parameters.Add(component => component.StringValue, "alpha");
+
+        var reference = await service.ShowAsync<TestComponent>("Component Parameters", parameters);
+        var renderRequestedCount = 0;
+        reference.RenderRequested += () => renderRequestedCount++;
+
+        Assert.True(reference.TrySetParameter(nameof(TestComponent.StringValue), "beta"));
+        Assert.Equal(1, renderRequestedCount);
+
+        Assert.True(reference.TrySetParameter(nameof(TestComponent.StringValue), "beta"));
+        Assert.Equal(1, renderRequestedCount);
+
+        Assert.True(reference.TrySetParameters(new Dictionary<string, object?>
+        {
+            [nameof(TestComponent.NumberValue)] = 42,
+            [nameof(TestComponent.StringValue)] = "gamma"
+        }));
+        Assert.Equal(2, renderRequestedCount);
+
+        reference.Cancel();
+        await reference.Result.WaitAsync(TimeSpan.FromSeconds(1));
+    }
+
+    [Fact]
+    public async Task ShowAsync_RenderFragmentDialogReference_DoesNotAllowParameterUpdates()
+    {
+        var service = DialogServiceFactory.Create();
+        service.OnShow += _ => Task.CompletedTask;
+        RenderFragment body = builder => builder.AddContent(0, "Static dialog");
+
+        var reference = await service.ShowAsync("Static", body, buttons => buttons.AddPrimary("OK"));
+
+        Assert.False(reference.TrySetParameter("AnyParameter", "value"));
+        Assert.False(reference.TrySetParameters(new Dictionary<string, object?>
+        {
+            ["One"] = 1
+        }));
+
+        reference.Cancel();
+        await reference.Result.WaitAsync(TimeSpan.FromSeconds(1));
     }
 }

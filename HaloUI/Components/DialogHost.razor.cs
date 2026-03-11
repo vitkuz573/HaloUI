@@ -229,6 +229,7 @@ public partial class DialogHost : IAsyncDisposable
             _subscribedReference = reference;
             reference.AccessibilityMetadataChanged += HandleReferenceMetadataChanged;
             reference.BusyChanged += HandleBusyChanged;
+            reference.RenderRequested += HandleReferenceRenderRequested;
             _isBusy = reference.IsBusy || _activeRequest.Options.Busy;
         }
     }
@@ -375,7 +376,13 @@ public partial class DialogHost : IAsyncDisposable
 
         _subscribedReference.AccessibilityMetadataChanged -= HandleReferenceMetadataChanged;
         _subscribedReference.BusyChanged -= HandleBusyChanged;
+        _subscribedReference.RenderRequested -= HandleReferenceRenderRequested;
         _subscribedReference = null;
+    }
+
+    private void HandleReferenceRenderRequested()
+    {
+        _ = InvokeAsync(StateHasChanged);
     }
 
     private DialogDesignTokens Tokens => ThemeContext?.Theme.Tokens.Component.Get<DialogDesignTokens>() ?? new DialogDesignTokens();
