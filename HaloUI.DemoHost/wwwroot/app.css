@@ -17,7 +17,7 @@ body {
     background: var(--demo-bg);
 }
 
-body[data-theme="dark"] {
+.halo-demo[data-theme="dark"] {
     --demo-bg: radial-gradient(circle at 20% -10%, color-mix(in srgb, var(--halo-color-interactive-primary, #60a5fa) 30%, transparent), transparent 60%),
                radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--halo-color-semantic-info, #38bdf8) 20%, transparent), transparent 44%),
                var(--halo-color-background-primary, #040816);

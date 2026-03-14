@@ -18,7 +18,6 @@ public class InspectorHaloCompositionTests : BunitContext
     public InspectorHaloCompositionTests()
     {
         JSInterop.Mode = JSRuntimeMode.Loose;
-        Services.AddSingleton<ISelectRuntime, NoOpSelectRuntime>();
     }
 
     [Fact]

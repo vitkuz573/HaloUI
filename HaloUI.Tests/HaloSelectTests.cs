@@ -7,8 +7,6 @@ using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
-using HaloUI.Abstractions;
 using HaloUI.Components;
 using HaloUI.Components.Select;
 using HaloUI.Enums;
@@ -21,7 +19,6 @@ public class HaloSelectTests : BunitContext
     public HaloSelectTests()
     {
         JSInterop.Mode = JSRuntimeMode.Loose;
-        Services.AddSingleton<ISelectRuntime, NoOpSelectRuntime>();
     }
 
     [Fact]
@@ -169,38 +166,17 @@ public class HaloSelectTests : BunitContext
     }
 
     [Fact]
-    public async Task HandleViewportModeChanged_WhenSwitchingToNative_ClosesCustomDropdown()
+    public void NativePresentation_RendersNativeSelectOnly()
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Value, TestOption.Alpha)
             .Add(p => p.EnumBehavior, EnumOptions<TestOption?>())
-            .Add(p => p.Behavior, SelectBehavior(useNativeSelectOnMobile: true)));
-
-        OpenDropdown(cut);
-        await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(true));
+            .Add(p => p.Behavior, SelectBehavior(presentation: HaloSelectPresentation.Native)));
 
         cut.WaitForAssertion(() =>
         {
-            Assert.Empty(cut.FindAll(".halo-select__dropdown"));
             Assert.NotEmpty(cut.FindAll("select.halo-select__native"));
-        });
-    }
-
-    [Fact]
-    public async Task HandleViewportModeChanged_WhenSwitchingBackToCustom_RendersTriggerButton()
-    {
-        var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
-            .Add(p => p.Value, TestOption.Alpha)
-            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>())
-            .Add(p => p.Behavior, SelectBehavior(useNativeSelectOnMobile: true)));
-
-        await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(true));
-        await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(false));
-
-        cut.WaitForAssertion(() =>
-        {
-            Assert.NotEmpty(cut.FindAll("button.halo-select__trigger"));
-            Assert.Empty(cut.FindAll("select.halo-select__native"));
+            Assert.Empty(cut.FindAll("button.halo-select__trigger"));
         });
     }
 
@@ -391,12 +367,16 @@ public class HaloSelectTests : BunitContext
         };
     }
 
-    private static HaloSelectBehaviorOptions SelectBehavior(bool useViewportPlacement = false, bool useNativeSelectOnMobile = true)
+    private static HaloSelectBehaviorOptions SelectBehavior(
+        HaloSelectPresentation presentation = HaloSelectPresentation.Custom,
+        bool openUpward = false,
+        double? maxDropdownHeightPx = null)
     {
         return new HaloSelectBehaviorOptions
         {
-            UseViewportPlacement = useViewportPlacement,
-            UseNativeSelectOnMobile = useNativeSelectOnMobile
+            Presentation = presentation,
+            OpenUpward = openUpward,
+            MaxDropdownHeightPx = maxDropdownHeightPx
         };
     }
 

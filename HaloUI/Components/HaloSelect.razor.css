@@ -42,6 +42,17 @@
         width:100%;
     }
 
+    .halo-select__backdrop {
+        position:fixed;
+        inset:0;
+        border:none;
+        background:transparent;
+        margin:0;
+        padding:0;
+        z-index:calc(var(--halo-select-dropdown-z-index) - 1);
+        cursor:default;
+    }
+
     .halo-select__trigger {
         display:flex;
         align-items:center;

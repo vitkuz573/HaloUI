@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Components.Internal;
@@ -22,9 +21,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 {
     private static readonly TimeSpan TypeaheadResetInterval = TimeSpan.FromMilliseconds(850);
     private const double DefaultDropdownMaxHeightPx = 16d * 16d;
-    private const double DropdownViewportPaddingPx = 8d;
     private const double DropdownGapPx = 12d;
-    private const double MobileViewportBreakpointPx = 640d;
 
     [Parameter]
     public EventCallback<ChangeEventArgs> SelectionChanged { get; set; }
@@ -68,9 +65,6 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     [Parameter]
     public HaloSelectEnumBehavior<TValue> EnumBehavior { get; set; } = HaloSelectEnumBehavior<TValue>.Disabled;
 
-    [Inject]
-    private ISelectRuntime SelectRuntime { get; set; } = default!;
-
     private readonly string _selectId = AccessibilityIdGenerator.Create("halo-select");
     private readonly string _rootId;
     private readonly string _dropdownId;
@@ -84,28 +78,21 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private readonly List<OptionItem> _generatedEnumOptions = [];
     private OptionItem? _highlightedOption;
     private bool _isOpen;
-    private SelectTriggerMeasurement? _dropdownRect;
     private bool _dropdownOpensUpward;
     private double? _dropdownMaxHeightPx;
-    private bool _forceViewportPlacement;
-    private bool _effectiveViewportPlacement;
     private string _typeaheadBuffer = string.Empty;
     private DateTimeOffset? _lastTypeaheadAt;
     private bool _pointerInteractionMode;
-    private bool _preferMobileDropdownLayout;
-    private bool _useNativeSelectPresentation;
     private ElementReference _triggerRef;
-    private DotNetObjectReference<HaloSelect<TValue>>? _dotNetRef;
     private OptionItem? _pendingFocusOption;
     private bool _pendingFocusPreventScroll;
-    private bool _viewportObserverRegistered;
 
     private bool IsInvalid => HasError || (EditContext?.GetValidationMessages(FieldIdentifier).Any() ?? false);
     private bool IsTriggerDisabled => Disabled;
     private bool IsInteractive => !(Disabled || ReadOnly);
     private HaloSelectBehaviorOptions EffectiveBehavior => Behavior ?? HaloSelectBehaviorOptions.Default;
     private HaloSelectEnumBehavior<TValue> EffectiveEnumBehavior => EnumBehavior ?? HaloSelectEnumBehavior<TValue>.Disabled;
-    private bool UseNativeSelectPresentation => EffectiveBehavior.UseNativeSelectOnMobile && _useNativeSelectPresentation;
+    private bool UseNativeSelectPresentation => EffectiveBehavior.Presentation == HaloSelectPresentation.Native;
     private string NativeSelectedOptionId => SelectedOption?.Id ?? string.Empty;
     private bool ShouldRenderNativePlaceholder => !string.IsNullOrWhiteSpace(Placeholder);
     private string NativePlaceholderText => Placeholder ?? "Select...";
@@ -329,6 +316,16 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        if (UseNativeSelectPresentation && _isOpen)
+        {
+            _isOpen = false;
+            _typeaheadBuffer = string.Empty;
+            _lastTypeaheadAt = null;
+            _pendingFocusOption = null;
+            _pendingFocusPreventScroll = false;
+            _pointerInteractionMode = false;
+        }
 
         EnsureEnumOptions();
 
@@ -597,38 +594,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return;
         }
 
-        _dropdownRect = null;
-        _dropdownOpensUpward = false;
-        _dropdownMaxHeightPx = EffectiveBehavior.UseViewportPlacement ? null : DefaultDropdownMaxHeightPx;
-        _forceViewportPlacement = false;
-        _effectiveViewportPlacement = EffectiveBehavior.UseViewportPlacement;
-        _preferMobileDropdownLayout = false;
-
-        if (_triggerRef.Context is not null)
-        {
-            var initialMeasurement = await SelectRuntime.MeasureTriggerAsync(_triggerRef);
-            
-            if (initialMeasurement.HasValue)
-            {
-                var measurement = initialMeasurement.Value;
-                var isMobileViewport = measurement.ViewportWidth <= MobileViewportBreakpointPx;
-                _forceViewportPlacement = measurement.IsInDialog || isMobileViewport;
-                _preferMobileDropdownLayout = isMobileViewport;
-                _effectiveViewportPlacement = EffectiveBehavior.UseViewportPlacement || _forceViewportPlacement;
-
-                if (_effectiveViewportPlacement)
-                {
-                    _dropdownRect = measurement;
-                    _dropdownMaxHeightPx = null;
-                    CalculateDropdownPlacement(measurement);
-                }
-                else
-                {
-                    _dropdownRect = null;
-                    _dropdownMaxHeightPx = DefaultDropdownMaxHeightPx;
-                }
-            }
-        }
+        _dropdownOpensUpward = EffectiveBehavior.OpenUpward;
+        _dropdownMaxHeightPx = EffectiveBehavior.MaxDropdownHeightPx;
 
         _isOpen = true;
 
@@ -640,25 +607,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             SyncHighlight();
         }
 
-        await RegisterOutsideClickAsync();
-
         if (_highlightedOption is null)
         {
             _highlightedOption = _optionItems.FirstOrDefault(static option => !option.Disabled);
-        }
-
-        await Task.Yield();
-
-        if (_effectiveViewportPlacement && _triggerRef.Context is not null)
-        {
-            var measured = await SelectRuntime.MeasureTriggerAsync(_triggerRef);
-            
-            if (measured.HasValue)
-            {
-                _dropdownRect = measured.Value;
-                _preferMobileDropdownLayout = measured.Value.ViewportWidth <= MobileViewportBreakpointPx;
-                CalculateDropdownPlacement(measured.Value);
-            }
         }
 
         if (focusHighlightedOption && _highlightedOption is not null)
@@ -677,19 +628,13 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         }
 
         _isOpen = false;
-        _dropdownRect = null;
-        _dropdownOpensUpward = false;
+        _dropdownOpensUpward = EffectiveBehavior.OpenUpward;
         _dropdownMaxHeightPx = null;
-        _forceViewportPlacement = false;
-        _effectiveViewportPlacement = false;
-        _preferMobileDropdownLayout = false;
         _typeaheadBuffer = string.Empty;
         _lastTypeaheadAt = null;
         _pendingFocusOption = null;
         _pendingFocusPreventScroll = false;
         _pointerInteractionMode = false;
-        
-        await UnregisterOutsideClickAsync();
 
         if (focusTrigger)
         {
@@ -1094,60 +1039,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return ValueTask.CompletedTask;
     }
 
-    private async Task RegisterOutsideClickAsync()
-    {
-        try
-        {
-            _dotNetRef ??= DotNetObjectReference.Create(this);
-            await SelectRuntime.RegisterOutsideClickAsync(_rootId, _dotNetRef);
-        }
-        catch (JSDisconnectedException)
-        {
-            // Ignore during shutdown.
-        }
-    }
-
-    private async Task UnregisterOutsideClickAsync()
-    {
-        try
-        {
-            await SelectRuntime.UnregisterOutsideClickAsync(_rootId);
-        }
-        catch (JSDisconnectedException)
-        {
-        }
-    }
-
-    [JSInvokable("HandleOutsideClick")]
-    public async Task HandleOutsideClickAsync()
-    {
-        await CloseDropdownAsync();
-    }
-
-    [JSInvokable("HandleViewportModeChanged")]
-    public Task HandleViewportModeChangedAsync(bool useNativeSelect)
-    {
-        return InvokeAsync(async () =>
-        {
-            if (!EffectiveBehavior.UseNativeSelectOnMobile)
-            {
-                await ApplyViewportModeAsync(useNativeSelect: false);
-                return;
-            }
-
-            await ApplyViewportModeAsync(useNativeSelect);
-        });
-    }
-
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            await ResolveNativeSelectPresentationAsync();
-        }
-
-        await EnsureViewportObserverAsync();
-
         if (!UseNativeSelectPresentation && _pendingFocusOption is { ElementRef.Context: not null } option)
         {
             var preventScroll = _pendingFocusPreventScroll;
@@ -1166,89 +1059,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task ResolveNativeSelectPresentationAsync()
+    private Task HandleBackdropClickAsync()
     {
-        if (!EffectiveBehavior.UseNativeSelectOnMobile)
-        {
-            await ApplyViewportModeAsync(useNativeSelect: false);
-
-            return;
-        }
-
-        try
-        {
-            var useNativeSelect = await SelectRuntime.ShouldUseNativeSelectAsync(MobileViewportBreakpointPx);
-            await ApplyViewportModeAsync(useNativeSelect);
-        }
-        catch (JSDisconnectedException)
-        {
-            // Ignore during shutdown.
-        }
-    }
-
-    private async Task ApplyViewportModeAsync(bool useNativeSelect)
-    {
-        if (_useNativeSelectPresentation == useNativeSelect)
-        {
-            return;
-        }
-
-        _useNativeSelectPresentation = useNativeSelect;
-
-        if (useNativeSelect && _isOpen)
-        {
-            await CloseDropdownAsync();
-            return;
-        }
-
-        StateHasChanged();
-    }
-
-    private async Task EnsureViewportObserverAsync()
-    {
-        if (!EffectiveBehavior.UseNativeSelectOnMobile)
-        {
-            await UnregisterViewportObserverAsync();
-            return;
-        }
-
-        if (_viewportObserverRegistered)
-        {
-            return;
-        }
-
-        try
-        {
-            _dotNetRef ??= DotNetObjectReference.Create(this);
-            await SelectRuntime.RegisterViewportObserverAsync(_rootId, MobileViewportBreakpointPx, _dotNetRef);
-            _viewportObserverRegistered = true;
-        }
-        catch (JSDisconnectedException)
-        {
-            // Ignore during shutdown.
-        }
-    }
-
-    private async Task UnregisterViewportObserverAsync()
-    {
-        if (!_viewportObserverRegistered)
-        {
-            _viewportObserverRegistered = false;
-            return;
-        }
-
-        try
-        {
-            await SelectRuntime.UnregisterViewportObserverAsync(_rootId);
-        }
-        catch (JSDisconnectedException)
-        {
-            // Ignore during shutdown.
-        }
-        finally
-        {
-            _viewportObserverRegistered = false;
-        }
+        return CloseDropdownAsync();
     }
 
     private string BuildWrapperClass()
@@ -1334,92 +1147,23 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             computedMaxHeight = DefaultDropdownMaxHeightPx;
         }
 
-        if (_dropdownRect is { } rect)
+        items.Add("position:absolute");
+        items.Add("left:0");
+        items.Add("right:0");
+
+        if (_dropdownOpensUpward)
         {
-            items.Add("position:fixed");
-
-            if (_preferMobileDropdownLayout)
-            {
-                items.Add(FormattableString.Invariant($"left:{DropdownViewportPaddingPx}px"));
-                items.Add(FormattableString.Invariant($"right:{DropdownViewportPaddingPx}px"));
-                items.Add("min-width:0");
-                items.Add("width:auto");
-            }
-            else
-            {
-                var left = Math.Max(DropdownViewportPaddingPx, rect.Left);
-
-                if (left + rect.Width > rect.ViewportWidth - DropdownViewportPaddingPx)
-                {
-                    left = Math.Max(DropdownViewportPaddingPx, rect.ViewportWidth - rect.Width - DropdownViewportPaddingPx);
-                }
-
-                items.Add(FormattableString.Invariant($"left:{left}px"));
-                items.Add("right:auto");
-                items.Add(FormattableString.Invariant($"min-width:{rect.Width}px"));
-            }
-
-            if (_dropdownOpensUpward)
-            {
-                var anchorTop = rect.Top - DropdownGapPx;
-                items.Add(FormattableString.Invariant($"top:{anchorTop}px"));
-                items.Add("transform:translateY(-100%)");
-            }
-            else
-            {
-                var top = rect.Bottom + DropdownGapPx;
-                items.Add(FormattableString.Invariant($"top:{top}px"));
-                items.Add("transform:none");
-            }
+            items.Add("top:auto");
+            items.Add(FormattableString.Invariant($"bottom:calc(100% + {DropdownGapPx}px)"));
         }
         else
         {
-            items.Add("position:absolute");
-            items.Add("left:0");
-            items.Add("right:0");
-
-            if (_dropdownOpensUpward)
-            {
-                items.Add("top:auto");
-                items.Add(FormattableString.Invariant($"bottom:calc(100% + {DropdownGapPx}px)"));
-            }
-            else
-            {
-                items.Add(FormattableString.Invariant($"top:calc(100% + {DropdownGapPx}px)"));
-            }
+            items.Add(FormattableString.Invariant($"top:calc(100% + {DropdownGapPx}px)"));
         }
 
         items.Add(FormattableString.Invariant($"max-height:{computedMaxHeight}px"));
 
         return string.Join(';', items);
-    }
-
-    private void CalculateDropdownPlacement(SelectTriggerMeasurement rect)
-    {
-        var maxPreferredHeight = _preferMobileDropdownLayout
-            ? Math.Min(rect.ViewportHeight * 0.6d, 22d * 16d)
-            : DefaultDropdownMaxHeightPx;
-        var usableBelow = Math.Max(0, rect.ViewportHeight - rect.Bottom - DropdownGapPx - DropdownViewportPaddingPx);
-        var usableAbove = Math.Max(0, rect.Top - DropdownGapPx - DropdownViewportPaddingPx);
-
-        if (usableBelow <= 0 && usableAbove <= 0)
-        {
-            _dropdownOpensUpward = false;
-            _dropdownMaxHeightPx = maxPreferredHeight;
-
-            return;
-        }
-
-        if (usableBelow >= usableAbove)
-        {
-            _dropdownOpensUpward = false;
-            _dropdownMaxHeightPx = Math.Max(0, Math.Min(maxPreferredHeight, usableBelow));
-        }
-        else
-        {
-            _dropdownOpensUpward = true;
-            _dropdownMaxHeightPx = Math.Max(0, Math.Min(maxPreferredHeight, usableAbove));
-        }
     }
 
     private static string BuildOptionClass(bool isSelected, bool isHighlighted, bool isDisabled)
@@ -1459,14 +1203,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return LabelVariant.Primary;
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        await UnregisterOutsideClickAsync();
-        await UnregisterViewportObserverAsync();
-
-        _viewportObserverRegistered = false;
-        _dotNetRef?.Dispose();
-    }
+    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
 
     private sealed class OptionItem
     {

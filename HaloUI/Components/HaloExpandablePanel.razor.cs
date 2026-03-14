@@ -4,10 +4,8 @@
 
 using System.Text;
 using Microsoft.AspNetCore.Components;
-using HaloUI.Abstractions;
 using HaloUI.Iconography;
 using HaloUI.Theme;
-using HaloUI.Theme.Sdk.Css;
 
 namespace HaloUI.Components;
 
@@ -15,7 +13,6 @@ public partial class HaloExpandablePanel
 {
     private readonly string _contentId = $"halo-exp-panel-{Guid.NewGuid():N}";
     private readonly string _headerButtonId = $"halo-exp-panel-header-{Guid.NewGuid():N}";
-    private static readonly string ContentHeightVar = ThemeCssVariables.Expandable.Panel.Content.Expanded.Height;
 
     [Parameter]
     public string? Id { get; set; }
@@ -89,15 +86,10 @@ public partial class HaloExpandablePanel
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    [Inject]
-    private IElementMeasurementRuntime ElementMeasurementRuntime { get; set; } = default!;
-
     private bool _expanded;
     private bool _initialized;
     private bool _hasRenderedBody;
     private bool _hasRenderedFooter;
-    private double? _contentHeight;
-    private bool _isMeasuringContent;
 
     protected override void OnParametersSet()
     {
@@ -138,18 +130,6 @@ public partial class HaloExpandablePanel
         if (next)
         {
             FlagRenderedSections();
-        }
-        else
-        {
-            _contentHeight = null;
-        }
-    }
-
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (_expanded)
-        {
-            await EnsureContentHeightAsync(force: true);
         }
     }
 
@@ -267,59 +247,6 @@ public partial class HaloExpandablePanel
         return !string.IsNullOrWhiteSpace(labelledBy) || !string.IsNullOrWhiteSpace(ariaLabel)
             ? "region"
             : null;
-    }
-
-    private string? BuildContentStyle()
-    {
-        if (!_expanded)
-        {
-            return null;
-        }
-
-        if (_contentHeight is null)
-        {
-            return null;
-        }
-
-        return $"{ContentHeightVar}:{_contentHeight.Value}px";
-    }
-
-    private async Task EnsureContentHeightAsync(bool force = false)
-    {
-        if (!force && _contentHeight is not null)
-        {
-            return;
-        }
-
-        if (_isMeasuringContent)
-        {
-            return;
-        }
-
-        _isMeasuringContent = true;
-
-        try
-        {
-            var height = await MeasureContentHeightAsync();
-
-            if (height > 0)
-            {
-                _contentHeight = height;
-                StateHasChanged();
-            }
-        }
-        catch (InvalidOperationException)
-        {
-        }
-        finally
-        {
-            _isMeasuringContent = false;
-        }
-    }
-
-    private Task<double> MeasureContentHeightAsync()
-    {
-        return ElementMeasurementRuntime.MeasureElementHeightAsync(_contentId).AsTask();
     }
 
     private void FlagRenderedSections()

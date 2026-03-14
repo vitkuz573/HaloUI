@@ -15,14 +15,35 @@ public sealed record HaloSelectBehaviorOptions
     public static HaloSelectBehaviorOptions Default { get; } = new();
 
     /// <summary>
-    /// Enables viewport-aware dropdown placement.
+    /// Controls whether the component renders a custom dropdown or a native <c>&lt;select&gt;</c>.
     /// </summary>
-    public bool UseViewportPlacement { get; init; }
+    public HaloSelectPresentation Presentation { get; init; } = HaloSelectPresentation.Custom;
 
     /// <summary>
-    /// Enables native select rendering on compact/mobile viewports.
+    /// Opens the custom dropdown above the trigger instead of below.
     /// </summary>
-    public bool UseNativeSelectOnMobile { get; init; } = true;
+    public bool OpenUpward { get; init; }
+
+    /// <summary>
+    /// Optional max dropdown height in pixels for custom presentation.
+    /// </summary>
+    public double? MaxDropdownHeightPx { get; init; }
+}
+
+/// <summary>
+/// Select rendering mode.
+/// </summary>
+public enum HaloSelectPresentation
+{
+    /// <summary>
+    /// Renders HaloUI custom select trigger and listbox.
+    /// </summary>
+    Custom = 0,
+
+    /// <summary>
+    /// Renders native browser <c>&lt;select&gt;</c>.
+    /// </summary>
+    Native = 1
 }
 
 /// <summary>

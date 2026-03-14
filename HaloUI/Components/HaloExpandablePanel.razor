@@ -68,20 +68,21 @@
          aria-labelledby="@ResolveContentLabelledBy()"
          aria-label="@ResolveContentAriaLabel()"
          aria-describedby="@ResolveContentDescribedBy()"
-         aria-hidden="@((!_expanded).ToString().ToLowerInvariant())"
-         style="@BuildContentStyle()">
-        @if ((_expanded || _hasRenderedBody) && ChildContent is not null)
-        {
-            <div class="halo-expandable-panel__body">
-                @ChildContent
-            </div>
-        }
+         aria-hidden="@((!_expanded).ToString().ToLowerInvariant())">
+        <div class="halo-expandable-panel__content-inner">
+            @if ((_expanded || _hasRenderedBody) && ChildContent is not null)
+            {
+                <div class="halo-expandable-panel__body">
+                    @ChildContent
+                </div>
+            }
 
-        @if ((_expanded || _hasRenderedFooter) && Footer is not null)
-        {
-            <div class="halo-expandable-panel__footer">
-                @Footer
-            </div>
-        }
+            @if ((_expanded || _hasRenderedFooter) && Footer is not null)
+            {
+                <div class="halo-expandable-panel__footer">
+                    @Footer
+                </div>
+            }
+        </div>
     </div>
 </section>

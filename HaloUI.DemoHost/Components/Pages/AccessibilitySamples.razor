@@ -120,7 +120,7 @@
                             Label="Region"
                             Description="Region selection for failover policy."
                             Placeholder="Select region"
-                            Behavior="@(new HaloSelectBehaviorOptions { UseViewportPlacement = false, UseNativeSelectOnMobile = true })"
+                            Behavior="@(new HaloSelectBehaviorOptions { Presentation = HaloSelectPresentation.Custom })"
                             @bind-Value="_selectedRegion">
                     <HaloSelectOption Value="@("emea")">EMEA</HaloSelectOption>
                     <HaloSelectOption Value="@("apac")">APAC</HaloSelectOption>

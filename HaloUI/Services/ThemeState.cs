@@ -2,12 +2,10 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
-using HaloUI.Abstractions;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Runtime;
 using HaloUI.Theme.Tokens;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
 
 namespace HaloUI.Services;
 
@@ -19,13 +17,11 @@ public sealed class ThemeState
     public const string CookieName = "halo-theme";
 
     private readonly HaloThemeContext _context;
-    private readonly IThemeDomRuntime _themeDomRuntime;
-    private readonly ILogger<ThemeState>? _logger;
     private string _currentThemeKey;
     private bool _hasExplicitTheme;
 
-    public ThemeState(IThemeCatalog catalog, IThemeDomRuntime themeDomRuntime, ILogger<ThemeState>? logger = null)
-        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, themeDomRuntime, logger)
+    public ThemeState(IThemeCatalog catalog, ILogger<ThemeState>? logger = null)
+        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, logger)
     {
     }
 
@@ -34,9 +30,8 @@ public sealed class ThemeState
         string themeKey,
         HaloTheme theme,
         bool hasExplicitTheme,
-        IThemeDomRuntime themeDomRuntime,
         ILogger<ThemeState>? logger = null)
-        : this(themeKey, theme, hasExplicitTheme, themeDomRuntime, logger)
+        : this(themeKey, theme, hasExplicitTheme, logger)
     {
         ArgumentNullException.ThrowIfNull(catalog);
     }
@@ -45,20 +40,15 @@ public sealed class ThemeState
         string themeKey,
         HaloTheme theme,
         bool hasExplicitTheme,
-        IThemeDomRuntime themeDomRuntime,
         ILogger<ThemeState>? logger = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(themeKey);
         ArgumentNullException.ThrowIfNull(theme);
-        ArgumentNullException.ThrowIfNull(themeDomRuntime);
 
         _context = new HaloThemeContext(theme);
         _currentThemeKey = themeKey;
         _hasExplicitTheme = hasExplicitTheme;
-        _themeDomRuntime = themeDomRuntime;
-        _logger = logger;
-        
-        SetBodyThemeAttribute(theme);
+        _ = logger;
     }
 
     /// <summary>
@@ -101,45 +91,8 @@ public sealed class ThemeState
         }
 
         _hasExplicitTheme = true;
-        
-        SetBodyThemeAttribute(theme);
 
         return updated;
-    }
-
-    private void SetBodyThemeAttribute(HaloTheme theme)
-    {
-        var themeValue = theme.Tokens.Scheme == ThemeScheme.Dark ? "dark" : "light";
-
-        _ = SetBodyThemeAttributeAsync(themeValue);
-    }
-
-    private async Task SetBodyThemeAttributeAsync(string themeValue)
-    {
-        try
-        {
-            await _themeDomRuntime.SetBodyThemeAttributeAsync(themeValue);
-        }
-        catch (JSDisconnectedException)
-        {
-            _logger?.LogDebug("Skipping body theme attribute update because JS runtime disconnected.");
-        }
-        catch (TaskCanceledException)
-        {
-            _logger?.LogDebug("Skipping body theme attribute update because JS invocation was canceled.");
-        }
-        catch (ObjectDisposedException)
-        {
-            _logger?.LogDebug("Skipping body theme attribute update because JS runtime was disposed.");
-        }
-        catch (InvalidOperationException ex)
-        {
-            _logger?.LogDebug(ex, "Skipping body theme attribute update due to invalid operation state.");
-        }
-        catch (JSException ex)
-        {
-            _logger?.LogDebug(ex, "Skipping body theme attribute update due to JS exception.");
-        }
     }
 
     private static string GetDefaultThemeKey(IThemeCatalog catalog, out HaloTheme theme)

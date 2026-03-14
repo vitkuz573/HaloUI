@@ -382,8 +382,6 @@ type interface HaloUI.Abstractions.IDialogService
   method System.Threading.Tasks.Task<HaloUI.Abstractions.IDialogReference> ShowAsync(System.String title, Microsoft.AspNetCore.Components.RenderFragment body, System.Collections.Generic.IEnumerable<HaloUI.Abstractions.DialogButton> buttons, HaloUI.Abstractions.DialogOptions options = default, System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> metadata = default)
   method System.Threading.Tasks.Task<HaloUI.Abstractions.IDialogReference> ShowAsync<TComponent>(System.String title, HaloUI.Abstractions.DialogParameters<TComponent> parameters = default, HaloUI.Abstractions.DialogOptions options = default, System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> metadata = default)
   property System.Collections.Generic.IReadOnlyCollection<HaloUI.Abstractions.DialogSessionSnapshot> ActiveDialogs {get;}
-type interface HaloUI.Abstractions.IElementMeasurementRuntime : System.IAsyncDisposable
-  method System.Threading.Tasks.ValueTask<System.Double> MeasureElementHeightAsync(System.String elementId, System.Threading.CancellationToken cancellationToken = default)
 type interface HaloUI.Abstractions.ILabellable
   property System.String Label {get;set;}
 type interface HaloUI.Abstractions.ILabellableInput : HaloUI.Abstractions.ILabellable
@@ -394,21 +392,12 @@ type interface HaloUI.Abstractions.IOverlayRuntime : System.IAsyncDisposable
   method System.Threading.Tasks.ValueTask UnlockBodyScrollAsync(System.Threading.CancellationToken cancellationToken = default)
   method System.Threading.Tasks.ValueTask<System.Boolean> FocusElementByIdAsync(System.String id, System.Threading.CancellationToken cancellationToken = default)
   method System.Threading.Tasks.ValueTask<System.String> TrapFocusAsync(Microsoft.AspNetCore.Components.ElementReference container, System.Threading.CancellationToken cancellationToken = default)
-type interface HaloUI.Abstractions.ISelectRuntime
-  method System.Threading.Tasks.ValueTask RegisterOutsideClickAsync(System.String rootId, System.Object dotNetReference, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask RegisterViewportObserverAsync(System.String rootId, System.Double maxWidth, System.Object dotNetReference, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask UnregisterOutsideClickAsync(System.String rootId, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask UnregisterViewportObserverAsync(System.String rootId, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask<System.Boolean> ShouldUseNativeSelectAsync(System.Double maxWidth, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask<System.Nullable<HaloUI.Components.Select.SelectTriggerMeasurement>> MeasureTriggerAsync(Microsoft.AspNetCore.Components.ElementReference triggerElement, System.Threading.CancellationToken cancellationToken = default)
 type interface HaloUI.Abstractions.ISnackbarService
   event System.Action<HaloUI.Abstractions.SnackbarEnqueued> OnEnqueued
   event System.Action<HaloUI.Abstractions.SnackbarHandle> OnDismissRequested
   method HaloUI.Abstractions.SnackbarHandle Enqueue(HaloUI.Abstractions.SnackbarRequest request)
   method System.Boolean Dismiss(HaloUI.Abstractions.SnackbarHandle handle)
   method System.Int32 DismissAll()
-type interface HaloUI.Abstractions.IThemeDomRuntime : System.IAsyncDisposable
-  method System.Threading.Tasks.ValueTask SetBodyThemeAttributeAsync(System.String themeValue, System.Threading.CancellationToken cancellationToken = default)
 type interface HaloUI.Abstractions.IThemePreferenceStore
   method HaloUI.Abstractions.ThemePreferenceResolution Resolve(System.String defaultThemeKey)
 type class HaloUI.Abstractions.SnackbarAction : System.IEquatable<HaloUI.Abstractions.SnackbarAction>
@@ -1102,8 +1091,6 @@ type class HaloUI.Components.HaloSelectOption<TValue> : HaloUI.Components.Base.T
   property TValue Value {get;set;}
 type class HaloUI.Components.HaloSelect<TValue> : HaloUI.Components.Base.HaloLabellableInputBase<TValue>, HaloUI.Abstractions.ILabellable, HaloUI.Abstractions.ILabellableInput, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IAsyncDisposable, System.IDisposable
   ctor()
-  method System.Threading.Tasks.Task HandleOutsideClickAsync()
-  method System.Threading.Tasks.Task HandleViewportModeChangedAsync(System.Boolean useNativeSelect)
   method System.Threading.Tasks.ValueTask DisposeAsync()
   property HaloUI.Components.Select.HaloSelectBehaviorOptions Behavior {get;set;}
   property HaloUI.Components.Select.HaloSelectEnumBehavior<TValue> EnumBehavior {get;set;}
@@ -1372,8 +1359,9 @@ type class HaloUI.Components.Select.HaloSelectBehaviorOptions : System.IEquatabl
   method System.Int32 GetHashCode()
   method System.String ToString()
   property HaloUI.Components.Select.HaloSelectBehaviorOptions Default {get;}
-  property System.Boolean UseNativeSelectOnMobile {get;set;}
-  property System.Boolean UseViewportPlacement {get;set;}
+  property HaloUI.Components.Select.HaloSelectPresentation Presentation {get;set;}
+  property System.Boolean OpenUpward {get;set;}
+  property System.Nullable<System.Double> MaxDropdownHeightPx {get;set;}
 type class HaloUI.Components.Select.HaloSelectEnumBehavior<TValue> : System.IEquatable<HaloUI.Components.Select.HaloSelectEnumBehavior<TValue>>
   ctor()
   method System.Boolean Equals(HaloUI.Components.Select.HaloSelectEnumBehavior<TValue> other)
@@ -1387,22 +1375,9 @@ type class HaloUI.Components.Select.HaloSelectEnumBehavior<TValue> : System.IEqu
   property System.Func<TValue, System.Boolean> Filter {get;set;}
   property System.Func<TValue, System.String> TextSelector {get;set;}
   property System.String NullOptionText {get;set;}
-type struct HaloUI.Components.Select.SelectTriggerMeasurement : System.IEquatable<HaloUI.Components.Select.SelectTriggerMeasurement>
-  ctor(System.Double Width, System.Double Height, System.Double Top, System.Double Bottom, System.Double Left, System.Double Right, System.Double ViewportWidth, System.Double ViewportHeight, System.Boolean IsInDialog)
-  method System.Boolean Equals(HaloUI.Components.Select.SelectTriggerMeasurement other)
-  method System.Boolean Equals(System.Object obj)
-  method System.Int32 GetHashCode()
-  method System.String ToString()
-  method System.Void Deconstruct(out System.Double Width, out System.Double Height, out System.Double Top, out System.Double Bottom, out System.Double Left, out System.Double Right, out System.Double ViewportWidth, out System.Double ViewportHeight, out System.Boolean IsInDialog)
-  property System.Boolean IsInDialog {get;set;}
-  property System.Double Bottom {get;set;}
-  property System.Double Height {get;set;}
-  property System.Double Left {get;set;}
-  property System.Double Right {get;set;}
-  property System.Double Top {get;set;}
-  property System.Double ViewportHeight {get;set;}
-  property System.Double ViewportWidth {get;set;}
-  property System.Double Width {get;set;}
+type enum HaloUI.Components.Select.HaloSelectPresentation : System.IComparable, System.IConvertible, System.IFormattable, System.ISpanFormattable
+  field HaloUI.Components.Select.HaloSelectPresentation Custom
+  field HaloUI.Components.Select.HaloSelectPresentation Native
 type class HaloUI.Components.SnackbarHost : HaloUI.Components.Base.ThemeAwareComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
 type class HaloUI.Components.Table.HaloTableColumnDefinition<TItem>
@@ -2032,9 +2007,6 @@ type class HaloUI.Services.DialogService : HaloUI.Abstractions.IDialogService
   method System.Threading.Tasks.Task<HaloUI.Abstractions.IDialogReference> ShowAsync(System.String title, Microsoft.AspNetCore.Components.RenderFragment body, System.Collections.Generic.IEnumerable<HaloUI.Abstractions.DialogButton> buttons, HaloUI.Abstractions.DialogOptions options = default, System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> metadata = default)
   method System.Threading.Tasks.Task<HaloUI.Abstractions.IDialogReference> ShowAsync<TComponent>(System.String title, HaloUI.Abstractions.DialogParameters<TComponent> parameters = default, HaloUI.Abstractions.DialogOptions options = default, System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> metadata = default)
   property System.Collections.Generic.IReadOnlyCollection<HaloUI.Abstractions.DialogSessionSnapshot> ActiveDialogs {get;}
-type class HaloUI.Services.ElementMeasurementRuntime : HaloUI.Services.JsModuleRuntimeBase, HaloUI.Abstractions.IElementMeasurementRuntime, System.IAsyncDisposable, System.IDisposable
-  ctor(Microsoft.JSInterop.IJSRuntime jsRuntime)
-  method System.Threading.Tasks.ValueTask<System.Double> MeasureElementHeightAsync(System.String elementId, System.Threading.CancellationToken cancellationToken = default)
 type enum HaloUI.Services.InspectorViewMode : System.IComparable, System.IConvertible, System.IFormattable, System.ISpanFormattable
   field HaloUI.Services.InspectorViewMode AccessDenied
   field HaloUI.Services.InspectorViewMode Activity
@@ -2053,14 +2025,6 @@ type class HaloUI.Services.OverlayRuntime : HaloUI.Services.JsModuleRuntimeBase,
   method System.Threading.Tasks.ValueTask UnlockBodyScrollAsync(System.Threading.CancellationToken cancellationToken = default)
   method System.Threading.Tasks.ValueTask<System.Boolean> FocusElementByIdAsync(System.String id, System.Threading.CancellationToken cancellationToken = default)
   method System.Threading.Tasks.ValueTask<System.String> TrapFocusAsync(Microsoft.AspNetCore.Components.ElementReference container, System.Threading.CancellationToken cancellationToken = default)
-type class HaloUI.Services.SelectRuntime : HaloUI.Services.JsModuleRuntimeBase, HaloUI.Abstractions.ISelectRuntime, System.IAsyncDisposable, System.IDisposable
-  ctor(Microsoft.JSInterop.IJSRuntime jsRuntime)
-  method System.Threading.Tasks.ValueTask RegisterOutsideClickAsync(System.String rootId, System.Object dotNetReference, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask RegisterViewportObserverAsync(System.String rootId, System.Double maxWidth, System.Object dotNetReference, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask UnregisterOutsideClickAsync(System.String rootId, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask UnregisterViewportObserverAsync(System.String rootId, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask<System.Boolean> ShouldUseNativeSelectAsync(System.Double maxWidth, System.Threading.CancellationToken cancellationToken = default)
-  method System.Threading.Tasks.ValueTask<System.Nullable<HaloUI.Components.Select.SelectTriggerMeasurement>> MeasureTriggerAsync(Microsoft.AspNetCore.Components.ElementReference triggerElement, System.Threading.CancellationToken cancellationToken = default)
 type class HaloUI.Services.SnackbarService : HaloUI.Abstractions.ISnackbarService
   ctor()
   event System.Action<HaloUI.Abstractions.SnackbarEnqueued> OnEnqueued
@@ -2068,13 +2032,10 @@ type class HaloUI.Services.SnackbarService : HaloUI.Abstractions.ISnackbarServic
   method HaloUI.Abstractions.SnackbarHandle Enqueue(HaloUI.Abstractions.SnackbarRequest request)
   method System.Boolean Dismiss(HaloUI.Abstractions.SnackbarHandle handle)
   method System.Int32 DismissAll()
-type class HaloUI.Services.ThemeDomRuntime : HaloUI.Services.JsModuleRuntimeBase, HaloUI.Abstractions.IThemeDomRuntime, System.IAsyncDisposable, System.IDisposable
-  ctor(Microsoft.JSInterop.IJSRuntime jsRuntime)
-  method System.Threading.Tasks.ValueTask SetBodyThemeAttributeAsync(System.String themeValue, System.Threading.CancellationToken cancellationToken = default)
 type class HaloUI.Services.ThemeState
-  ctor(HaloUI.Theme.Sdk.Runtime.IThemeCatalog catalog, HaloUI.Abstractions.IThemeDomRuntime themeDomRuntime, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
-  ctor(HaloUI.Theme.Sdk.Runtime.IThemeCatalog catalog, System.String themeKey, HaloUI.Theme.HaloTheme theme, System.Boolean hasExplicitTheme, HaloUI.Abstractions.IThemeDomRuntime themeDomRuntime, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
-  ctor(System.String themeKey, HaloUI.Theme.HaloTheme theme, System.Boolean hasExplicitTheme, HaloUI.Abstractions.IThemeDomRuntime themeDomRuntime, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
+  ctor(HaloUI.Theme.Sdk.Runtime.IThemeCatalog catalog, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
+  ctor(HaloUI.Theme.Sdk.Runtime.IThemeCatalog catalog, System.String themeKey, HaloUI.Theme.HaloTheme theme, System.Boolean hasExplicitTheme, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
+  ctor(System.String themeKey, HaloUI.Theme.HaloTheme theme, System.Boolean hasExplicitTheme, Microsoft.Extensions.Logging.ILogger<HaloUI.Services.ThemeState> logger = default)
   field System.String CookieName
   method System.Boolean SetTheme(System.String themeKey, HaloUI.Theme.HaloTheme theme)
   property HaloUI.Theme.HaloTheme CurrentTheme {get;}

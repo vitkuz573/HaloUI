@@ -80,9 +80,9 @@ public sealed class ArchitectureGovernanceTests
     }
 
     [Fact]
-    public void HaloSelectInterop_IsRoutedThroughSelectRuntimeServiceOnly()
+    public void OverlayInterop_IsRoutedThroughOverlayRuntimeServiceOnly()
     {
-        const string selectInteropPathLiteral = "./_content/HaloUI/js/haloSelect.js";
+        const string overlayInteropPathLiteral = "./_content/HaloUI/js/dialogAccessibility.js";
 
         var repoRoot = ResolveRepoRoot();
         var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
@@ -90,32 +90,12 @@ public sealed class ArchitectureGovernanceTests
             .ToArray();
 
         var references = csFiles
-            .Where(file => File.ReadAllText(file).Contains(selectInteropPathLiteral, StringComparison.Ordinal))
+            .Where(file => File.ReadAllText(file).Contains(overlayInteropPathLiteral, StringComparison.Ordinal))
             .Select(file => Path.GetRelativePath(repoRoot, file))
             .ToArray();
 
         Assert.Single(references);
-        Assert.Equal("HaloUI/Services/SelectRuntime.cs", references[0].Replace('\\', '/'));
-    }
-
-    [Fact]
-    public void HaloCoreInterop_IsRoutedThroughElementMeasurementRuntimeOnly()
-    {
-        const string coreInteropPathLiteral = "./_content/HaloUI/haloui.js";
-
-        var repoRoot = ResolveRepoRoot();
-        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
-            .Where(static file => !IsBuildArtifactPath(file))
-            .ToArray();
-
-        var references = csFiles
-            .Where(file => File.ReadAllText(file).Contains(coreInteropPathLiteral, StringComparison.Ordinal))
-            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
-            .OrderBy(static item => item)
-            .ToArray();
-
-        Assert.Single(references);
-        Assert.Equal("HaloUI/Services/ElementMeasurementRuntime.cs", references[0]);
+        Assert.Equal("HaloUI/Services/OverlayRuntime.cs", references[0].Replace('\\', '/'));
     }
 
     [Fact]
@@ -158,25 +138,6 @@ public sealed class ArchitectureGovernanceTests
     }
 
     [Fact]
-    public void Documentation_DoesNotReferenceRemovedHaloUiServerModule()
-    {
-        var repoRoot = ResolveRepoRoot();
-        var markdownFiles = Directory.EnumerateFiles(repoRoot, "*.md", SearchOption.AllDirectories)
-            .Where(static file => !IsBuildArtifactPath(file))
-            .ToArray();
-
-        var violations = markdownFiles
-            .Where(file => File.ReadAllText(file).Contains("HaloUI.Server", StringComparison.Ordinal))
-            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
-            .OrderBy(static item => item)
-            .ToArray();
-
-        Assert.True(
-            violations.Length == 0,
-            $"Found stale references to removed HaloUI.Server module:{Environment.NewLine}{string.Join(Environment.NewLine, violations)}");
-    }
-
-    [Fact]
     public void ThemeState_DoesNotUseDirectJsRuntimeCalls()
     {
         var repoRoot = ResolveRepoRoot();
@@ -185,26 +146,6 @@ public sealed class ArchitectureGovernanceTests
 
         Assert.DoesNotContain("IJSRuntime", text, StringComparison.Ordinal);
         Assert.DoesNotContain("document.body.setAttribute", text, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ThemeDomInterop_IsRoutedThroughThemeDomRuntimeOnly()
-    {
-        const string themeDomInteropPathLiteral = "./_content/HaloUI/js/themeDom.js";
-
-        var repoRoot = ResolveRepoRoot();
-        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
-            .Where(static file => !IsBuildArtifactPath(file))
-            .ToArray();
-
-        var references = csFiles
-            .Where(file => File.ReadAllText(file).Contains(themeDomInteropPathLiteral, StringComparison.Ordinal))
-            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
-            .OrderBy(static item => item)
-            .ToArray();
-
-        Assert.Single(references);
-        Assert.Equal("HaloUI/Services/ThemeDomRuntime.cs", references[0]);
     }
 
     private static string ResolveRepoRoot()

@@ -202,8 +202,9 @@
         border-top-color:transparent;
         background:var(--halo-expandable-panel-body-background);
         overflow:hidden;
-        transition:max-height 220ms ease, opacity 180ms ease, visibility 0s linear 220ms;
-        max-height:0;
+        display:grid;
+        grid-template-rows:0fr;
+        transition:grid-template-rows 220ms ease, opacity 180ms ease, visibility 0s linear 220ms;
         opacity:0;
         visibility:hidden;
         pointer-events:none;
@@ -215,13 +216,18 @@
     }
 
     .halo-expandable-panel__content.halo-is-expanded {
-        max-height:var(--halo-expandable-panel-content-expanded-height);
+        grid-template-rows:1fr;
         opacity:1;
         visibility:visible;
         pointer-events:auto;
-        transition:max-height 220ms ease, opacity 180ms ease;
+        transition:grid-template-rows 220ms ease, opacity 180ms ease;
         border-top-width:var(--halo-expandable-panel-body-border-width);
         border-top-color:var(--halo-expandable-panel-body-border-color);
+    }
+
+    .halo-expandable-panel__content-inner {
+        min-height:0;
+        overflow:hidden;
     }
 
     .halo-expandable-panel__body {
