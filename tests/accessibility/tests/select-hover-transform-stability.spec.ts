@@ -83,5 +83,31 @@ test.describe('Select overlay stability in transformed cards', () => {
     expect(stats.topRange ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(2);
     expect(stats.widthRange ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(2);
   });
-});
 
+  test('closes dropdown when clicking outside card bounds', async ({ page }) => {
+    await bootstrapDemoHost(page, {
+      theme: 'dark',
+      viewport: { name: 'desktop', width: 1366, height: 820 },
+    });
+
+    const section = getDemoSection(page, 'select-in-card');
+    await section.scrollIntoViewIfNeeded();
+
+    const trigger = section.locator('.halo-select__trigger').first();
+    await trigger.click();
+
+    const dropdown = page.locator('.halo-select__dropdown').first();
+    await expect(dropdown).toBeVisible();
+
+    const cardBounds = await section.locator('.halo-card').first().boundingBox();
+    if (!cardBounds) {
+      return;
+    }
+
+    const clickX = Math.min(Math.floor(cardBounds.x + cardBounds.width + 40), 1320);
+    const clickY = Math.floor(cardBounds.y + 20);
+
+    await page.mouse.click(clickX, clickY);
+    await expect(dropdown).toBeHidden();
+  });
+});
