@@ -8,7 +8,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloExpandablePanelTests : BunitContext
+public sealed class HaloExpandablePanelTests : HaloBunitContext
 {
     [Fact]
     public void DefaultHeader_BindsRegionToHeaderButton()

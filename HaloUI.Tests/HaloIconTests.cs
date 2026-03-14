@@ -11,7 +11,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloIconTests : BunitContext
+public sealed class HaloIconTests : HaloBunitContext
 {
     [Fact]
     public void RendersLigatureIcon_WithProviderClass()

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloButtonTests : BunitContext
+public class HaloButtonTests : HaloBunitContext
 {
     [Fact]
     public void RendersBaseVariantAndSizeClasses()

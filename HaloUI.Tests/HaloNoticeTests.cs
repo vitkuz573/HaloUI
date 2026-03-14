@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloNoticeTests : BunitContext
+public sealed class HaloNoticeTests : HaloBunitContext
 {
     [Fact]
     public void DoesNotEmitLiveRegionByDefault()

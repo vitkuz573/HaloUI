@@ -13,7 +13,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class InspectorHaloCompositionTests : BunitContext
+public class InspectorHaloCompositionTests : HaloBunitContext
 {
     public InspectorHaloCompositionTests()
     {

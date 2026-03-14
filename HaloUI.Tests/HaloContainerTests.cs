@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloContainerTests : BunitContext
+public class HaloContainerTests : HaloBunitContext
 {
     [Fact]
     public void AppliesModifierClassesAndRendersSections()

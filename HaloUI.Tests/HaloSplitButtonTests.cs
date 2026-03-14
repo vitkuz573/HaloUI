@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloSplitButtonTests : BunitContext
+public sealed class HaloSplitButtonTests : HaloBunitContext
 {
     [Fact]
     public void RendersTwoSegments_WithExpandedToggleAriaState()

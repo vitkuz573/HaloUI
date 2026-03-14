@@ -905,7 +905,7 @@ type class HaloUI.Components.HaloContainer : HaloUI.Components.Base.ThemeAwareCo
 type class HaloUI.Components.HaloDateTime<TValue> : HaloUI.Components.Base.HaloLabellableInputBase<TValue>, HaloUI.Abstractions.ILabellable, HaloUI.Abstractions.ILabellableInput, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
   property HaloUI.Enums.TextFieldUpdateBehavior UpdateBehavior {get;set;}
-  property Microsoft.AspNetCore.Components.EventCallback<System.Nullable<System.DateTimeOffset>> InputChanged {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<System.Nullable<System.DateTimeOffset>> ValueInput {get;set;}
   property System.Boolean Disabled {get;set;}
   property System.Boolean HasError {get;set;}
   property System.Boolean IncludeSeconds {get;set;}
@@ -1267,7 +1267,7 @@ type class HaloUI.Components.HaloText : HaloUI.Components.Base.ThemeAwareCompone
   property System.String Text {get;set;}
 type class HaloUI.Components.HaloTextArea : HaloUI.Components.Base.HaloLabellableInputBase<System.String>, HaloUI.Abstractions.ILabellable, HaloUI.Abstractions.ILabellableInput, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
-  property Microsoft.AspNetCore.Components.EventCallback<System.String> InputChanged {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<System.String> ValueInput {get;set;}
   property System.Boolean Disabled {get;set;}
   property System.Boolean Immediate {get;set;}
   property System.Boolean Spellcheck {get;set;}
@@ -1281,7 +1281,7 @@ type class HaloUI.Components.HaloTextField : HaloUI.Components.Base.HaloLabellab
   property HaloUI.Enums.InputFieldSize Size {get;set;}
   property HaloUI.Enums.TextFieldType Type {get;set;}
   property HaloUI.Enums.TextFieldUpdateBehavior UpdateBehavior {get;set;}
-  property Microsoft.AspNetCore.Components.EventCallback<System.String> InputChanged {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<System.String> ValueInput {get;set;}
   property Microsoft.AspNetCore.Components.RenderFragment EndAdornment {get;set;}
   property Microsoft.AspNetCore.Components.RenderFragment StartAdornment {get;set;}
   property System.Boolean Disabled {get;set;}

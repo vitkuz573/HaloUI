@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloToggleTests : BunitContext
+public class HaloToggleTests : HaloBunitContext
 {
     [Fact]
     public void RendersStateClassesAndAriaAttributes()

@@ -1,0 +1,93 @@
+@using HaloUI.Components
+
+<div class="space-y-4">
+    <p>
+        Maintenance window begins at 23:00 UTC. Connected sessions remain active while edge relays move
+        traffic to standby routes.
+    </p>
+
+    <p>
+        Review the rollout checklist and choose the jurisdiction used for compliance policy expansion.
+        The country selector is intentionally located near the bottom of the dialog to validate overlay behavior.
+    </p>
+
+    <HaloTextArea Label="Operator notes"
+                  Value="@_notes"
+                  ValueChanged="HandleNotesChanged"
+                  Rows="5"
+                  Immediate="true"
+                  ValueInput="HandleNotesInput"
+                  Placeholder="Capture rollout context, escalation owner, and rollback criteria." />
+
+    <HaloSelect TValue="string"
+                Label="Country"
+                Value="@_country"
+                ValueChanged="HandleCountryChanged"
+                Placeholder="Choose country">
+        @foreach (var country in Countries)
+        {
+            <HaloSelectOption Value="@country.Code" Text="@country.Name" />
+        }
+    </HaloSelect>
+</div>
+
+@code
+{
+    private string _notes = string.Empty;
+    private string _country = "US";
+
+    private static readonly IReadOnlyList<CountryOption> Countries =
+    [
+        new("US", "United States"),
+        new("CA", "Canada"),
+        new("GB", "United Kingdom"),
+        new("DE", "Germany"),
+        new("FR", "France"),
+        new("IT", "Italy"),
+        new("ES", "Spain"),
+        new("NL", "Netherlands"),
+        new("SE", "Sweden"),
+        new("NO", "Norway"),
+        new("FI", "Finland"),
+        new("PL", "Poland"),
+        new("CZ", "Czech Republic"),
+        new("RO", "Romania"),
+        new("TR", "Turkey"),
+        new("KZ", "Kazakhstan"),
+        new("AE", "United Arab Emirates"),
+        new("IN", "India"),
+        new("SG", "Singapore"),
+        new("JP", "Japan"),
+        new("KR", "South Korea"),
+        new("AU", "Australia"),
+        new("NZ", "New Zealand"),
+        new("BR", "Brazil"),
+        new("MX", "Mexico"),
+        new("ZA", "South Africa"),
+        new("EG", "Egypt")
+    ];
+
+    private Task HandleCountryChanged(string? value)
+    {
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            _country = value;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task HandleNotesChanged(string value)
+    {
+        _notes = value;
+        return Task.CompletedTask;
+    }
+
+    private Task HandleNotesInput(string value)
+    {
+        _notes = value;
+        return Task.CompletedTask;
+    }
+
+    private sealed record CountryOption(string Code, string Name);
+}

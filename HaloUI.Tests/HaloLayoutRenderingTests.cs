@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloLayoutRenderingTests : BunitContext
+public sealed class HaloLayoutRenderingTests : HaloBunitContext
 {
     [Fact]
     public void LayoutPanels_DoNotEmitInlineStyles()

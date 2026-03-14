@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloTextTests : BunitContext
+public class HaloTextTests : HaloBunitContext
 {
     [Fact]
     public void DefaultVariant_RendersParagraphWithBodyStyles()

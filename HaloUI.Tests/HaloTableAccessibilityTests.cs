@@ -11,7 +11,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloTableAccessibilityTests : BunitContext
+public sealed class HaloTableAccessibilityTests : HaloBunitContext
 {
     [Fact]
     public void RowSelectionInputs_ExposeDeterministicAriaLabels()

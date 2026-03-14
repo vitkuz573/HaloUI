@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloTableRenderingTests : BunitContext
+public sealed class HaloTableRenderingTests : HaloBunitContext
 {
     [Fact]
     public void LoadingState_DoesNotRenderEmptyMessage()

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloTextFieldTests : BunitContext
+public class HaloTextFieldTests : HaloBunitContext
 {
     [Fact]
     public void AppliesStateAndAdornmentModifierClasses()

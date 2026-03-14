@@ -8,7 +8,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloDateTimeTests : BunitContext
+public sealed class HaloDateTimeTests : HaloBunitContext
 {
     [Fact]
     public void DateTimeInput_WithLabel_BindsAccessibleName()

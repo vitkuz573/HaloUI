@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using HaloUI.Abstractions;
 using HaloUI.Components;
 using HaloUI.Enums;
+using HaloUI.DemoHost.Components.Pages;
 
 namespace HaloUI.DemoHost.Services;
 
@@ -23,9 +24,8 @@ public sealed class DemoDialogState
     {
         RenderFragment body = builder =>
         {
-            builder.OpenElement(0, "p");
-            builder.AddContent(1, "Maintenance window begins at 23:00 UTC. Connected sessions remain active.");
-            builder.CloseElement();
+            builder.OpenComponent<DemoDialogContent>(0);
+            builder.CloseComponent();
         };
 
         var dialogOptions = DialogOptions.Default with

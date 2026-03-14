@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloTreeViewTests : BunitContext
+public sealed class HaloTreeViewTests : HaloBunitContext
 {
     public HaloTreeViewTests()
     {

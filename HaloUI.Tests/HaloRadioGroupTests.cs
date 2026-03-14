@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloRadioGroupTests : BunitContext
+public sealed class HaloRadioGroupTests : HaloBunitContext
 {
     public HaloRadioGroupTests()
     {

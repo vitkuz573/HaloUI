@@ -8,7 +8,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloTextAreaTests : BunitContext
+public class HaloTextAreaTests : HaloBunitContext
 {
     [Fact]
     public void RendersDisabledStateAndAttributes()

@@ -67,8 +67,10 @@ This writes JSON manifests to `HaloUI.IconPacks.Material/Iconography/Packs/Mater
 ## Runtime contracts
 - Snackbar API is request-first: use `ISnackbarService.Enqueue(SnackbarRequest)` and `SnackbarRequest.Info/Success/Warning/Error`.
 - `ISnackbarService` no longer exposes message-level helper methods.
-- HaloUI runtime JS is minimized to overlay accessibility only (`dialogAccessibility.js` via `IOverlayRuntime`).
-- `HaloSelect`, expandable panel measurement, and theme switching no longer depend on custom JS modules.
+- HaloUI runtime JS is limited to two explicit modules:
+  - `dialogAccessibility.js` via `IOverlayRuntime` (focus trap, body scroll lock).
+  - `selectPositioning.js` via `ISelectPositioningRuntime` (viewport-aware HaloSelect placement).
+- No additional component JS module dependencies are allowed without contract/test updates.
 - Component coverage contracts for bUnit and Playwright are centralized in `contracts/component-contracts.json`.
 - Public API compatibility is pinned by `contracts/public-api.txt` and validated in tests.
 

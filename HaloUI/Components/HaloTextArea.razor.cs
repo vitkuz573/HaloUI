@@ -36,7 +36,7 @@ public partial class HaloTextArea
     public bool Immediate { get; set; }
     
     [Parameter]
-    public EventCallback<string> InputChanged { get; set; }
+    public EventCallback<string> ValueInput { get; set; }
 
     private string? _descriptionElementId;
 
@@ -102,9 +102,9 @@ public partial class HaloTextArea
 
         CurrentValueAsString = value;
 
-        if (!Immediate && InputChanged.HasDelegate)
+        if (!Immediate && ValueInput.HasDelegate)
         {
-            await InputChanged.InvokeAsync(value);
+            await ValueInput.InvokeAsync(value);
         }
     }
 
@@ -117,9 +117,9 @@ public partial class HaloTextArea
             CurrentValueAsString = value;
         }
 
-        if (InputChanged.HasDelegate)
+        if (ValueInput.HasDelegate)
         {
-            await InputChanged.InvokeAsync(value);
+            await ValueInput.InvokeAsync(value);
         }
     }
 

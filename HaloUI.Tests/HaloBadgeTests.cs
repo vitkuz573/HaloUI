@@ -11,7 +11,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloBadgeTests : BunitContext
+public class HaloBadgeTests : HaloBunitContext
 {
     [Fact]
     public void AppliesVariantClass()

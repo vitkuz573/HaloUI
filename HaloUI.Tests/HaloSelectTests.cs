@@ -14,7 +14,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class HaloSelectTests : BunitContext
+public class HaloSelectTests : HaloBunitContext
 {
     public HaloSelectTests()
     {

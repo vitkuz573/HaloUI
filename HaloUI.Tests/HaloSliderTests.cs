@@ -9,7 +9,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloSliderTests : BunitContext
+public sealed class HaloSliderTests : HaloBunitContext
 {
     [Fact]
     public void SliderWithLabel_RendersSliderSemantics()

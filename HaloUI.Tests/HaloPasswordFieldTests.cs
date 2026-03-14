@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloPasswordFieldTests : BunitContext
+public sealed class HaloPasswordFieldTests : HaloBunitContext
 {
     [Fact]
     public void ToggleVisibilityButton_UpdatesAriaState()

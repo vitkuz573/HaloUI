@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloNavLinkTests : BunitContext
+public sealed class HaloNavLinkTests : HaloBunitContext
 {
     [Fact]
     public void LinkWithVisibleText_RendersAnchor()

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public sealed class HaloTriStateCheckboxTests : BunitContext
+public sealed class HaloTriStateCheckboxTests : HaloBunitContext
 {
     [Fact]
     public void RendersStrictCheckboxSemantics_WhenAccessibleNameProvided()

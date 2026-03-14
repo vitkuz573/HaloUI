@@ -13,7 +13,7 @@ using Xunit;
 
 namespace HaloUI.Tests;
 
-public class ThemeProviderTests : BunitContext
+public class ThemeProviderTests : HaloBunitContext
 {
     [Fact]
     public void RendersStyleBlockWithCssVariables()
