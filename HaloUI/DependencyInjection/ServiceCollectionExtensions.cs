@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Iconography;
 using HaloUI.Services;
@@ -33,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddHaloUIDialogHost();
         services.AddHaloUISnackbarHost();
         services.TryAddScoped<ISelectRuntime, SelectRuntime>();
+        services.TryAddScoped<IElementMeasurementRuntime, ElementMeasurementRuntime>();
         services.TryAddSingleton<IHaloIconResolver>(_ => new PassthroughHaloIconResolver());
         services.TryAddSingleton<IAriaDiagnosticsHub, NoOpAriaDiagnosticsHub>();
 
@@ -61,12 +61,13 @@ public static class ServiceCollectionExtensions
 
         services.TryAddSingleton<IThemeCatalog>(_ => GeneratedThemeCatalog.Instance);
         services.TryAddScoped<IThemePreferenceStore, ThemePreferenceStore>();
+        services.TryAddScoped<IThemeDomRuntime, ThemeDomRuntime>();
 
         services.AddScoped<ThemeState>(sp =>
         {
             var catalog = sp.GetRequiredService<IThemeCatalog>();
             var themePreferenceStore = sp.GetRequiredService<IThemePreferenceStore>();
-            var jsRuntime = sp.GetService<IJSRuntime>();
+            var themeDomRuntime = sp.GetRequiredService<IThemeDomRuntime>();
             var logger = sp.GetService<ILogger<ThemeState>>();
 
             var defaultKey = catalog.DefaultThemeKey;
@@ -78,11 +79,11 @@ public static class ServiceCollectionExtensions
                 catalog.TryGetDescriptor(requestedKey, out var descriptor))
             {
                 var theme = new HaloTheme { Tokens = requestedSystem };
-                return new ThemeState(catalog, descriptor.Key, theme, preference.HasExplicitTheme, jsRuntime, logger);
+                return new ThemeState(catalog, descriptor.Key, theme, preference.HasExplicitTheme, themeDomRuntime, logger);
             }
 
             var fallbackTheme = new HaloTheme { Tokens = catalog.CreateThemeSystem(defaultKey) };
-            return new ThemeState(catalog, defaultKey, fallbackTheme, false, jsRuntime, logger);
+            return new ThemeState(catalog, defaultKey, fallbackTheme, false, themeDomRuntime, logger);
         });
 
         services.AddCascadingValue(sp => sp.GetRequiredService<ThemeState>().Context);

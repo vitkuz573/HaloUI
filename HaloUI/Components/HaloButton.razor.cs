@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
+using HaloUI.Components.Internal;
 using HaloUI.Enums;
 using HaloUI.Iconography;
 using HaloUI.Theme;
@@ -137,36 +138,17 @@ public partial class HaloButton
 
     private static string GetVariantClass(ButtonVariant variant)
     {
-        return variant switch
-        {
-            ButtonVariant.Primary => "halo-button--primary",
-            ButtonVariant.Secondary => "halo-button--secondary",
-            ButtonVariant.Tertiary => "halo-button--tertiary",
-            ButtonVariant.Danger => "halo-button--danger",
-            ButtonVariant.Warning => "halo-button--warning",
-            ButtonVariant.Ghost => "halo-button--ghost",
-            _ => "halo-button--secondary"
-        };
+        return ButtonClassMaps.GetVariantClass(variant, "halo-button");
     }
 
     private static string GetSizeClass(ButtonSize size)
     {
-        return size switch
-        {
-            ButtonSize.ExtraSmall => "halo-button--size-xs",
-            ButtonSize.Small => "halo-button--size-sm",
-            ButtonSize.Medium => "halo-button--size-md",
-            _ => "halo-button--size-sm"
-        };
+        return ButtonClassMaps.GetSizeClass(size, "halo-button");
     }
 
     private static string GetDensityClass(ButtonDensity density)
     {
-        return density switch
-        {
-            ButtonDensity.Compact => "halo-button--density-compact",
-            _ => "halo-button--density-default"
-        };
+        return ButtonClassMaps.GetDensityClass(density, "halo-button");
     }
 
     private string GetLabelClass()

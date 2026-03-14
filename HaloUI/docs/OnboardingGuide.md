@@ -6,7 +6,7 @@ Use this playbook to ramp up new engineers, designers, or QA working on the Halo
 - [ ] Read the product charter (`docs/Charter.md`) and roadmap (`ROADMAP.md`).
 - [ ] Review Phase 0 findings and risk register (`docs/Phase0-Findings.md`).
 - [ ] Walk through component/token architecture (`HaloUI/README.md`).
-- [ ] Set up development environment: `dotnet build`, `dotnet test HaloUI.Tests`, `npm ci` in `HaloUI.Server` if working on UI assets.
+- [ ] Set up development environment: `dotnet build`, `dotnet test HaloUI.Tests`, and `npm ci` in `tests/accessibility` for Playwright/axe checks.
 - [ ] Meet the governance board representative for your discipline (see `docs/GovernanceBoard.md`).
 
 ## 2. Required Training

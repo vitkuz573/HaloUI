@@ -167,6 +167,7 @@ var matches = ThemeDocs.Find("primary background");
 - **Accessibility host/tests** – `HaloUI.DemoHost` renders real components for Playwright + axe automation; `tests/accessibility/playwright.config.ts` manages the web server lifecycle.
 - **WCAG compatibility contract** – `docs/WCAG22-Compatibility.md` defines the normative WCAG/APG baseline and the mandatory component coverage gate (`HaloUI.Tests/AccessibilityCoverageContractTests.cs`).
 - **Responsive compatibility contract** – `docs/ResponsiveCompatibility.md` defines adaptive behavior requirements and the responsive coverage gate (`HaloUI.Tests/ResponsiveCoverageContractTests.cs`).
+- **Shared coverage manifest** – `contracts/component-contracts.json` is the single source of truth for component coverage metadata consumed by both C# and Playwright suites.
 
 ## Token Validation
 `Theme/Tokens/Validation/TokenValidator.cs` exposes helper methods to verify token consistency (color formats, contrast ratios, CSS size expressions, easing curves, etc.). Use it when importing external design tokens or generating brand variations:

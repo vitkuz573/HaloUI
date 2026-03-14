@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;

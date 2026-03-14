@@ -85,7 +85,9 @@ public sealed class ArchitectureGovernanceTests
         const string selectInteropPathLiteral = "./_content/HaloUI/js/haloSelect.js";
 
         var repoRoot = ResolveRepoRoot();
-        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories).ToArray();
+        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
+            .Where(static file => !IsBuildArtifactPath(file))
+            .ToArray();
 
         var references = csFiles
             .Where(file => File.ReadAllText(file).Contains(selectInteropPathLiteral, StringComparison.Ordinal))
@@ -94,6 +96,95 @@ public sealed class ArchitectureGovernanceTests
 
         Assert.Single(references);
         Assert.Equal("HaloUI/Services/SelectRuntime.cs", references[0].Replace('\\', '/'));
+    }
+
+    [Fact]
+    public void HaloCoreInterop_IsRoutedThroughElementMeasurementRuntimeOnly()
+    {
+        const string coreInteropPathLiteral = "./_content/HaloUI/haloui.js";
+
+        var repoRoot = ResolveRepoRoot();
+        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
+            .Where(static file => !IsBuildArtifactPath(file))
+            .ToArray();
+
+        var references = csFiles
+            .Where(file => File.ReadAllText(file).Contains(coreInteropPathLiteral, StringComparison.Ordinal))
+            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
+            .OrderBy(static item => item)
+            .ToArray();
+
+        Assert.Single(references);
+        Assert.Equal("HaloUI/Services/ElementMeasurementRuntime.cs", references[0]);
+    }
+
+    [Fact]
+    public void Components_DoNotDependOnJsInteropDirectly()
+    {
+        var repoRoot = ResolveRepoRoot();
+        var componentFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI", "Components"), "*.*", SearchOption.AllDirectories)
+            .Where(static file => Path.GetExtension(file) is ".cs" or ".razor")
+            .Where(static file => !IsBuildArtifactPath(file))
+            .ToArray();
+
+        var violations = new List<string>();
+        var forbiddenMarkers = new[]
+        {
+            "using Microsoft.JSInterop;",
+            "IJSRuntime",
+            "IJSObjectReference",
+            "[JSImport",
+            "JSImport("
+        };
+
+        foreach (var file in componentFiles)
+        {
+            var text = File.ReadAllText(file);
+            var relativePath = Path.GetRelativePath(repoRoot, file).Replace('\\', '/');
+
+            foreach (var marker in forbiddenMarkers)
+            {
+                if (text.Contains(marker, StringComparison.Ordinal))
+                {
+                    violations.Add($"{relativePath}: {marker}");
+                }
+            }
+        }
+
+        var distinctViolations = violations.Distinct(StringComparer.Ordinal).OrderBy(static item => item).ToArray();
+        Assert.True(
+            distinctViolations.Length == 0,
+            $"Found direct JS interop usage in components:{Environment.NewLine}{string.Join(Environment.NewLine, distinctViolations)}");
+    }
+
+    [Fact]
+    public void Documentation_DoesNotReferenceRemovedHaloUiServerModule()
+    {
+        var repoRoot = ResolveRepoRoot();
+        var markdownFiles = Directory.EnumerateFiles(repoRoot, "*.md", SearchOption.AllDirectories)
+            .Where(static file => !IsBuildArtifactPath(file))
+            .ToArray();
+
+        var violations = markdownFiles
+            .Where(file => File.ReadAllText(file).Contains("HaloUI.Server", StringComparison.Ordinal))
+            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
+            .OrderBy(static item => item)
+            .ToArray();
+
+        Assert.True(
+            violations.Length == 0,
+            $"Found stale references to removed HaloUI.Server module:{Environment.NewLine}{string.Join(Environment.NewLine, violations)}");
+    }
+
+    [Fact]
+    public void ThemeState_DoesNotUseDirectJsRuntimeCalls()
+    {
+        var repoRoot = ResolveRepoRoot();
+        var themeStatePath = Path.Combine(repoRoot, "HaloUI", "Services", "ThemeState.cs");
+        var text = File.ReadAllText(themeStatePath);
+
+        Assert.DoesNotContain("IJSRuntime", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("document.body.setAttribute", text, StringComparison.Ordinal);
     }
 
     private static string ResolveRepoRoot()

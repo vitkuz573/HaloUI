@@ -6,54 +6,22 @@ using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
 using HaloUI.Components;
+using HaloUI.Tests.Contracts;
 using Xunit;
 
 namespace HaloUI.Tests;
 
 public sealed class ResponsiveCoverageContractTests
 {
-    private static readonly IReadOnlyDictionary<string, ResponsiveCoverageEntry> ComponentCoverage = new Dictionary<string, ResponsiveCoverageEntry>(StringComparer.Ordinal)
-    {
-        ["AriaInspector"] = new(ResponsiveCoverageKind.Diagnostics),
-        ["DialogBody"] = new(ResponsiveCoverageKind.Structural),
-        ["DialogFooter"] = new(ResponsiveCoverageKind.Structural),
-        ["DialogHeader"] = new(ResponsiveCoverageKind.Structural),
-        ["DialogHost"] = new(ResponsiveCoverageKind.Adaptive),
-        ["DialogInspector"] = new(ResponsiveCoverageKind.Diagnostics),
-        ["SnackbarHost"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloButton"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloBadge"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloCard"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloContainer"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloDateTime"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloDialog"] = new(ResponsiveCoverageKind.Structural),
-        ["HaloExpandablePanel"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloIcon"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
-        ["HaloLabel"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloLayout"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloNavLink"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloNotice"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloPasswordField"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
-        ["HaloRadioButton"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloRadioGroup"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloSelect"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloSelectOption"] = new(ResponsiveCoverageKind.Structural),
-        ["HaloSkeleton"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
-        ["HaloSlider"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloSplitButton"] = new(ResponsiveCoverageKind.Adaptive, RequireStylesheetInspection: false),
-        ["HaloSparkline"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTable"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTableColumn"] = new(ResponsiveCoverageKind.Structural),
-        ["HaloTab"] = new(ResponsiveCoverageKind.Structural),
-        ["HaloTabs"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloText"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTextArea"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTextField"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloToggle"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTreeView"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTreeViewNode"] = new(ResponsiveCoverageKind.Adaptive),
-        ["HaloTriStateCheckbox"] = new(ResponsiveCoverageKind.Adaptive)
-    };
+    private static readonly ComponentContractManifest Manifest = ComponentContractManifest.Load(FindRepositoryRoot());
+
+    private static readonly IReadOnlyDictionary<string, ResponsiveCoverageEntry> ComponentCoverage = Manifest.Components
+        .ToDictionary(
+            static component => component.Name,
+            static component => new ResponsiveCoverageEntry(
+                ParseResponsiveKind(component.ResponsiveKind),
+                component.RequireStylesheetInspection),
+            StringComparer.Ordinal);
 
     [Fact]
     public void PublicHaloComponents_MustBeExplicitlyClassifiedForResponsiveCoverage()
@@ -168,6 +136,17 @@ public sealed class ResponsiveCoverageContractTests
         return cssContent.Contains("@media", StringComparison.Ordinal) ||
                cssContent.Contains("@container", StringComparison.Ordinal) ||
                cssContent.Contains("clamp(", StringComparison.Ordinal);
+    }
+
+    private static ResponsiveCoverageKind ParseResponsiveKind(string value)
+    {
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "structural" => ResponsiveCoverageKind.Structural,
+            "adaptive" => ResponsiveCoverageKind.Adaptive,
+            "diagnostics" => ResponsiveCoverageKind.Diagnostics,
+            _ => throw new InvalidOperationException($"Unknown responsiveKind in component contracts: '{value}'.")
+        };
     }
 
     private sealed record ResponsiveCoverageEntry(ResponsiveCoverageKind Kind, bool RequireStylesheetInspection = true);

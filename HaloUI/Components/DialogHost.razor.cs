@@ -4,7 +4,6 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 using HaloUI.Abstractions;
 using HaloUI.Enums;
 using HaloUI.Iconography;

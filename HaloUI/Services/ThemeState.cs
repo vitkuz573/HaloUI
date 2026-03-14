@@ -2,6 +2,7 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
+using HaloUI.Abstractions;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Runtime;
 using HaloUI.Theme.Tokens;
@@ -18,31 +19,43 @@ public sealed class ThemeState
     public const string CookieName = "halo-theme";
 
     private readonly HaloThemeContext _context;
-    private readonly IJSRuntime? _jsRuntime;
+    private readonly IThemeDomRuntime _themeDomRuntime;
     private readonly ILogger<ThemeState>? _logger;
     private string _currentThemeKey;
     private bool _hasExplicitTheme;
 
-    public ThemeState(IThemeCatalog catalog, IJSRuntime jsRuntime, ILogger<ThemeState>? logger = null)
-        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, jsRuntime, logger)
+    public ThemeState(IThemeCatalog catalog, IThemeDomRuntime themeDomRuntime, ILogger<ThemeState>? logger = null)
+        : this(GetDefaultThemeKey(catalog, out var theme), theme, false, themeDomRuntime, logger)
     {
     }
 
-    public ThemeState(IThemeCatalog catalog, string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null, ILogger<ThemeState>? logger = null)
-        : this(themeKey, theme, hasExplicitTheme, jsRuntime, logger)
+    public ThemeState(
+        IThemeCatalog catalog,
+        string themeKey,
+        HaloTheme theme,
+        bool hasExplicitTheme,
+        IThemeDomRuntime themeDomRuntime,
+        ILogger<ThemeState>? logger = null)
+        : this(themeKey, theme, hasExplicitTheme, themeDomRuntime, logger)
     {
         ArgumentNullException.ThrowIfNull(catalog);
     }
 
-    public ThemeState(string themeKey, HaloTheme theme, bool hasExplicitTheme, IJSRuntime? jsRuntime = null, ILogger<ThemeState>? logger = null)
+    public ThemeState(
+        string themeKey,
+        HaloTheme theme,
+        bool hasExplicitTheme,
+        IThemeDomRuntime themeDomRuntime,
+        ILogger<ThemeState>? logger = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(themeKey);
         ArgumentNullException.ThrowIfNull(theme);
+        ArgumentNullException.ThrowIfNull(themeDomRuntime);
 
         _context = new HaloThemeContext(theme);
         _currentThemeKey = themeKey;
         _hasExplicitTheme = hasExplicitTheme;
-        _jsRuntime = jsRuntime;
+        _themeDomRuntime = themeDomRuntime;
         _logger = logger;
         
         SetBodyThemeAttribute(theme);
@@ -96,11 +109,6 @@ public sealed class ThemeState
 
     private void SetBodyThemeAttribute(HaloTheme theme)
     {
-        if (_jsRuntime is null)
-        {
-            return;
-        }
-
         var themeValue = theme.Tokens.Scheme == ThemeScheme.Dark ? "dark" : "light";
 
         _ = SetBodyThemeAttributeAsync(themeValue);
@@ -110,7 +118,7 @@ public sealed class ThemeState
     {
         try
         {
-            await _jsRuntime!.InvokeVoidAsync("document.body.setAttribute", "data-theme", themeValue);
+            await _themeDomRuntime.SetBodyThemeAttributeAsync(themeValue);
         }
         catch (JSDisconnectedException)
         {

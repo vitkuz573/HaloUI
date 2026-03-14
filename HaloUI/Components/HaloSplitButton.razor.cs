@@ -3,6 +3,7 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Microsoft.AspNetCore.Components;
+using HaloUI.Components.Internal;
 using HaloUI.Enums;
 using HaloUI.Iconography;
 using HaloUI.Theme;
@@ -252,35 +253,16 @@ public partial class HaloSplitButton
 
     private static string GetVariantClass(ButtonVariant variant)
     {
-        return variant switch
-        {
-            ButtonVariant.Primary => "halo-split-button--primary",
-            ButtonVariant.Secondary => "halo-split-button--secondary",
-            ButtonVariant.Tertiary => "halo-split-button--tertiary",
-            ButtonVariant.Danger => "halo-split-button--danger",
-            ButtonVariant.Warning => "halo-split-button--warning",
-            ButtonVariant.Ghost => "halo-split-button--ghost",
-            _ => "halo-split-button--secondary"
-        };
+        return ButtonClassMaps.GetVariantClass(variant, "halo-split-button");
     }
 
     private static string GetSizeClass(ButtonSize size)
     {
-        return size switch
-        {
-            ButtonSize.ExtraSmall => "halo-split-button--size-xs",
-            ButtonSize.Small => "halo-split-button--size-sm",
-            ButtonSize.Medium => "halo-split-button--size-md",
-            _ => "halo-split-button--size-sm"
-        };
+        return ButtonClassMaps.GetSizeClass(size, "halo-split-button");
     }
 
     private static string GetDensityClass(ButtonDensity density)
     {
-        return density switch
-        {
-            ButtonDensity.Compact => "halo-split-button--density-compact",
-            _ => "halo-split-button--density-default"
-        };
+        return ButtonClassMaps.GetDensityClass(density, "halo-split-button");
     }
 }

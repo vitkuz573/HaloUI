@@ -7,75 +7,27 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
 using HaloUI.Components;
+using HaloUI.Tests.Contracts;
 using Xunit;
 
 namespace HaloUI.Tests;
 
 public sealed class AccessibilityCoverageContractTests
 {
-    private static readonly IReadOnlyDictionary<string, ComponentCoverageEntry> ComponentCoverage = new Dictionary<string, ComponentCoverageEntry>(StringComparer.Ordinal)
-    {
-        ["AriaInspector"] = new(ComponentCoverageKind.Diagnostics),
-        ["DialogBody"] = new(ComponentCoverageKind.Structural),
-        ["DialogFooter"] = new(ComponentCoverageKind.Structural),
-        ["DialogHeader"] = new(ComponentCoverageKind.Structural),
-        ["DialogHost"] = new(
-            ComponentCoverageKind.Interactive,
-            "tests/accessibility/tests/dialoghost.spec.ts",
-            "HaloUI.Tests/DialogServiceTests.cs"),
-        ["DialogInspector"] = new(ComponentCoverageKind.Diagnostics),
-        ["SnackbarHost"] = new(
-            ComponentCoverageKind.Interactive,
-            "tests/accessibility/tests/snackbarhost.spec.ts"),
-        ["HaloButton"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloButtonTests.cs"),
-        ["HaloBadge"] = new(ComponentCoverageKind.Presentational, "HaloUI.Tests/HaloBadgeTests.cs"),
-        ["HaloCard"] = new(ComponentCoverageKind.Presentational),
-        ["HaloContainer"] = new(ComponentCoverageKind.Presentational),
-        ["HaloDateTime"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloDateTimeTests.cs"),
-        ["HaloDialog"] = new(ComponentCoverageKind.Structural),
-        ["HaloExpandablePanel"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloExpandablePanelTests.cs"),
-        ["HaloIcon"] = new(ComponentCoverageKind.Presentational, "HaloUI.Tests/HaloIconTests.cs"),
-        ["HaloLabel"] = new(ComponentCoverageKind.Presentational),
-        ["HaloLayout"] = new(ComponentCoverageKind.Structural),
-        ["HaloNavLink"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloNavLinkTests.cs"),
-        ["HaloNotice"] = new(ComponentCoverageKind.Presentational, "HaloUI.Tests/HaloNoticeTests.cs"),
-        ["HaloPasswordField"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloPasswordFieldTests.cs"),
-        ["HaloRadioButton"] = new(ComponentCoverageKind.Structural),
-        ["HaloRadioGroup"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloRadioGroupTests.cs"),
-        ["HaloSelect"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloSelectTests.cs"),
-        ["HaloSelectOption"] = new(ComponentCoverageKind.Structural),
-        ["HaloSkeleton"] = new(ComponentCoverageKind.Presentational),
-        ["HaloSlider"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloSliderTests.cs"),
-        ["HaloSplitButton"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloSplitButtonTests.cs"),
-        ["HaloSparkline"] = new(ComponentCoverageKind.Presentational),
-        ["HaloTable"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTableAccessibilityTests.cs"),
-        ["HaloTableColumn"] = new(ComponentCoverageKind.Structural),
-        ["HaloTab"] = new(ComponentCoverageKind.Structural),
-        ["HaloTabs"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTabsTests.cs"),
-        ["HaloText"] = new(ComponentCoverageKind.Presentational),
-        ["HaloTextArea"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTextAreaTests.cs"),
-        ["HaloTextField"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTextFieldTests.cs"),
-        ["HaloToggle"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloToggleTests.cs"),
-        ["HaloTreeView"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTreeViewTests.cs"),
-        ["HaloTreeViewNode"] = new(ComponentCoverageKind.Structural),
-        ["HaloTriStateCheckbox"] = new(ComponentCoverageKind.Interactive, "HaloUI.Tests/HaloTriStateCheckboxTests.cs")
-    };
+    private static readonly ComponentContractManifest Manifest = ComponentContractManifest.Load(FindRepositoryRoot());
 
-    private static readonly IReadOnlyDictionary<string, string[]> FocusIndicatorCoverage = new Dictionary<string, string[]>(StringComparer.Ordinal)
-    {
-        ["HaloButton"] = [":focus-visible"],
-        ["HaloDateTime"] = [":focus-visible"],
-        ["HaloExpandablePanel"] = [":focus-visible"],
-        ["HaloRadioButton"] = [":focus-visible"],
-        ["HaloSelect"] = [":focus-visible"],
-        ["HaloSlider"] = [":focus-visible"],
-        ["HaloTabs"] = [":focus-visible"],
-        ["HaloToggle"] = [":focus-within"],
-        ["HaloTreeViewNode"] = [":focus-visible"],
-        ["HaloTriStateCheckbox"] = [":focus-visible"],
-        ["HaloTextArea"] = [":focus-visible"],
-        ["HaloTextField"] = [":focus-visible"]
-    };
+    private static readonly IReadOnlyDictionary<string, ComponentCoverageEntry> ComponentCoverage = Manifest.Components
+        .ToDictionary(
+            static component => component.Name,
+            static component => new ComponentCoverageEntry(ParseAccessibilityKind(component.AccessibilityKind), component.EvidenceFiles),
+            StringComparer.Ordinal);
+
+    private static readonly IReadOnlyDictionary<string, string[]> FocusIndicatorCoverage = Manifest.Components
+        .Where(static component => component.FocusIndicators.Length > 0)
+        .ToDictionary(
+            static component => component.Name,
+            static component => component.FocusIndicators,
+            StringComparer.Ordinal);
 
     [Fact]
     public void PublicHaloComponents_MustBeExplicitlyClassified()
@@ -297,6 +249,18 @@ public sealed class AccessibilityCoverageContractTests
         }
 
         return false;
+    }
+
+    private static ComponentCoverageKind ParseAccessibilityKind(string value)
+    {
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "structural" => ComponentCoverageKind.Structural,
+            "presentational" => ComponentCoverageKind.Presentational,
+            "interactive" => ComponentCoverageKind.Interactive,
+            "diagnostics" => ComponentCoverageKind.Diagnostics,
+            _ => throw new InvalidOperationException($"Unknown accessibilityKind in component contracts: '{value}'.")
+        };
     }
 
     private sealed record ComponentCoverageEntry(ComponentCoverageKind Kind, params string[] EvidenceFiles);

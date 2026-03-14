@@ -1,5 +1,5 @@
-export function measureExpandablePanel(contentId) {
-    const element = document.getElementById(contentId);
+export function measureElementHeight(elementId) {
+    const element = document.getElementById(elementId);
     if (!element) {
         return 0;
     }

@@ -3,6 +3,8 @@
 // Licensed under the GNU Affero General Public License v3.0.
 
 using Bunit;
+using Microsoft.Extensions.DependencyInjection;
+using HaloUI.Abstractions;
 using HaloUI.Components;
 using Xunit;
 
@@ -10,6 +12,11 @@ namespace HaloUI.Tests;
 
 public sealed class HaloExpandablePanelTests : BunitContext
 {
+    public HaloExpandablePanelTests()
+    {
+        Services.AddSingleton<IElementMeasurementRuntime, NoOpElementMeasurementRuntime>();
+    }
+
     [Fact]
     public void DefaultHeader_BindsRegionToHeaderButton()
     {

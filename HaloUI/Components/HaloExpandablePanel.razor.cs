@@ -4,14 +4,14 @@
 
 using System.Text;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using HaloUI.Abstractions;
 using HaloUI.Iconography;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 
 namespace HaloUI.Components;
 
-public partial class HaloExpandablePanel : IAsyncDisposable
+public partial class HaloExpandablePanel
 {
     private readonly string _contentId = $"halo-exp-panel-{Guid.NewGuid():N}";
     private readonly string _headerButtonId = $"halo-exp-panel-header-{Guid.NewGuid():N}";
@@ -89,14 +89,15 @@ public partial class HaloExpandablePanel : IAsyncDisposable
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
+    [Inject]
+    private IElementMeasurementRuntime ElementMeasurementRuntime { get; set; } = default!;
+
     private bool _expanded;
     private bool _initialized;
     private bool _hasRenderedBody;
     private bool _hasRenderedFooter;
     private double? _contentHeight;
     private bool _isMeasuringContent;
-    private IJSObjectReference? _module;
-    private bool _moduleRequested;
 
     protected override void OnParametersSet()
     {
@@ -307,13 +308,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
                 StateHasChanged();
             }
         }
-        catch (JSDisconnectedException)
-        {
-        }
         catch (InvalidOperationException)
-        {
-        }
-        catch (JSException)
         {
         }
         finally
@@ -324,42 +319,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
     private Task<double> MeasureContentHeightAsync()
     {
-        return InvokeModuleAsync(static (module, id) => module.InvokeAsync<double>("measureExpandablePanel", id), _contentId);
-    }
-
-    private async Task<T> InvokeModuleAsync<T>(Func<IJSObjectReference, string, ValueTask<T>> action, string arg)
-    {
-        var module = await EnsureModuleAsync();
-        return await action(module, arg);
-    }
-
-    private async Task<IJSObjectReference> EnsureModuleAsync()
-    {
-        if (_module is not null)
-        {
-            return _module;
-        }
-
-        if (_moduleRequested)
-        {
-            throw new InvalidOperationException("Module loading is already in progress.");
-        }
-
-        _moduleRequested = true;
-
-        try
-        {
-            _module = await JsRuntime.InvokeAsync<IJSObjectReference>(
-                "import",
-                "./_content/HaloUI/haloui.js");
-
-            return _module;
-        }
-        catch
-        {
-            _moduleRequested = false;
-            throw;
-        }
+        return ElementMeasurementRuntime.MeasureElementHeightAsync(_contentId).AsTask();
     }
 
     private void FlagRenderedSections()
@@ -375,18 +335,4 @@ public partial class HaloExpandablePanel : IAsyncDisposable
         }
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        if (_module is not null)
-        {
-            try
-            {
-                await _module.DisposeAsync();
-            }
-            catch
-            {
-                // Ignored.
-            }
-        }
-    }
 }

@@ -68,6 +68,8 @@ This writes JSON manifests to `HaloUI.IconPacks.Material/Iconography/Packs/Mater
 - Snackbar API is request-first: use `ISnackbarService.Enqueue(SnackbarRequest)` and `SnackbarRequest.Info/Success/Warning/Error`.
 - `ISnackbarService` no longer exposes message-level helper methods.
 - `HaloSelect` JS interop is routed via `ISelectRuntime`; components should not import `haloSelect.js` directly.
+- Layout measurement interop is routed via `IElementMeasurementRuntime`; components should not import `haloui.js` directly.
+- Component coverage contracts for bUnit and Playwright are centralized in `contracts/component-contracts.json`.
 
 ## Accessibility and UI automation
 From `tests/accessibility`:
