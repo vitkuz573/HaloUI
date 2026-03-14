@@ -110,4 +110,70 @@ test.describe('Select overlay stability in transformed cards', () => {
     await page.mouse.click(clickX, clickY);
     await expect(dropdown).toBeHidden();
   });
+
+  test('closes dropdown when clicking inside card but outside select', async ({ page }) => {
+    await bootstrapDemoHost(page, {
+      theme: 'dark',
+      viewport: { name: 'desktop', width: 1366, height: 820 },
+    });
+
+    const section = getDemoSection(page, 'select-in-card');
+    await section.scrollIntoViewIfNeeded();
+
+    const trigger = section.locator('.halo-select__trigger').first();
+    await trigger.click();
+
+    const dropdown = page.locator('.halo-select__dropdown').first();
+    await expect(dropdown).toBeVisible();
+
+    const cardBounds = await section.locator('.halo-card').first().boundingBox();
+    const triggerBounds = await trigger.boundingBox();
+    if (!cardBounds || !triggerBounds) {
+      return;
+    }
+
+    const clickX = Math.floor(cardBounds.x + 24);
+    const preferredY = triggerBounds.y - 12;
+    const minY = cardBounds.y + 12;
+    const maxY = cardBounds.y + cardBounds.height - 12;
+    const clickY = Math.floor(Math.min(Math.max(preferredY, minY), maxY));
+
+    await page.mouse.click(clickX, clickY);
+    await expect(dropdown).toBeHidden();
+  });
+
+  test('keeps only one select open at a time', async ({ page }) => {
+    await bootstrapDemoHost(page, {
+      theme: 'dark',
+      viewport: { name: 'desktop', width: 1366, height: 820 },
+    });
+
+    const firstSection = getDemoSection(page, 'select');
+    await firstSection.scrollIntoViewIfNeeded();
+    const firstTrigger = firstSection.locator('.halo-select__trigger').first();
+    await firstTrigger.click();
+    await expect(page.locator('.halo-select__dropdown')).toHaveCount(1);
+    await expect(page.locator('.halo-select__dropdown').first()).toBeVisible();
+
+    const secondSection = getDemoSection(page, 'select-in-card');
+    await secondSection.scrollIntoViewIfNeeded();
+    const secondTrigger = secondSection.locator('.halo-select__trigger').first();
+    const secondBounds = await secondTrigger.boundingBox();
+    if (!secondBounds) {
+      return;
+    }
+
+    const secondX = Math.floor(secondBounds.x + (secondBounds.width / 2));
+    const secondY = Math.floor(secondBounds.y + (secondBounds.height / 2));
+
+    // First click on another trigger must close the currently open select via backdrop.
+    await page.mouse.click(secondX, secondY);
+    await expect(page.locator('.halo-select__dropdown')).toHaveCount(0);
+
+    // Second click opens the target select; still only one select can be open.
+    await page.mouse.click(secondX, secondY);
+    const dropdowns = page.locator('.halo-select__dropdown');
+    await expect(dropdowns).toHaveCount(1);
+    await expect(dropdowns.first()).toBeVisible();
+  });
 });
