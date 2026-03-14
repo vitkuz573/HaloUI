@@ -27,6 +27,11 @@
       "evidenceFiles": [
         "tests/accessibility/tests/dialoghost.spec.ts",
         "HaloUI.Tests/DialogServiceTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "expanded"
       ]
     },
     {
@@ -40,6 +45,10 @@
       "responsiveKind": "adaptive",
       "evidenceFiles": [
         "tests/accessibility/tests/snackbarhost.spec.ts"
+      ],
+      "requiredStates": [
+        "default",
+        "focus"
       ]
     },
     {
@@ -51,6 +60,12 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "loading"
       ]
     },
     {
@@ -80,6 +95,13 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "readonly",
+        "error"
       ]
     },
     {
@@ -96,6 +118,12 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "expanded",
+        "disabled"
       ]
     },
     {
@@ -123,6 +151,12 @@
       "responsiveKind": "adaptive",
       "evidenceFiles": [
         "HaloUI.Tests/HaloNavLinkTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "selected",
+        "disabled"
       ]
     },
     {
@@ -140,6 +174,12 @@
       "requireStylesheetInspection": false,
       "evidenceFiles": [
         "HaloUI.Tests/HaloPasswordFieldTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "error"
       ]
     },
     {
@@ -156,6 +196,12 @@
       "responsiveKind": "adaptive",
       "evidenceFiles": [
         "HaloUI.Tests/HaloRadioGroupTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "selected",
+        "disabled"
       ]
     },
     {
@@ -167,6 +213,13 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "expanded",
+        "disabled",
+        "error"
       ]
     },
     {
@@ -189,6 +242,11 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled"
       ]
     },
     {
@@ -198,6 +256,12 @@
       "requireStylesheetInspection": false,
       "evidenceFiles": [
         "HaloUI.Tests/HaloSplitButtonTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "expanded",
+        "disabled"
       ]
     },
     {
@@ -211,6 +275,13 @@
       "responsiveKind": "adaptive",
       "evidenceFiles": [
         "HaloUI.Tests/HaloTableAccessibilityTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "empty",
+        "selected",
+        "expanded"
       ]
     },
     {
@@ -232,6 +303,12 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "selected",
+        "disabled"
       ]
     },
     {
@@ -248,6 +325,13 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "readonly",
+        "error"
       ]
     },
     {
@@ -259,6 +343,13 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "readonly",
+        "error"
       ]
     },
     {
@@ -270,6 +361,12 @@
       ],
       "focusIndicators": [
         ":focus-within"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "selected",
+        "disabled"
       ]
     },
     {
@@ -278,6 +375,13 @@
       "responsiveKind": "adaptive",
       "evidenceFiles": [
         "HaloUI.Tests/HaloTreeViewTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "expanded",
+        "selected",
+        "disabled"
       ]
     },
     {
@@ -297,6 +401,12 @@
       ],
       "focusIndicators": [
         ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "selected",
+        "disabled"
       ]
     }
   ],
@@ -305,127 +415,196 @@
       "id": "buttons",
       "heading": "Buttons",
       "presenceSelector": "[data-testid=\"button-primary-action\"]",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        "[data-testid=\"button-primary-action\"]",
+        "[data-testid=\"button-secondary-action\"]",
+        "[data-testid=\"button-warning-action\"]"
+      ]
     },
     {
       "id": "button-density",
       "heading": "Button Density",
       "presenceSelector": "button",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        "button"
+      ]
     },
     {
       "id": "text-fields",
       "heading": "Text Fields",
       "presenceSelector": "input[type=\"text\"]",
-      "focusSelector": "input[type=\"text\"]"
+      "focusSelector": "input[type=\"text\"]",
+      "requiredStateSelectors": [
+        "input[type=\"text\"]:not([disabled])",
+        "input[type=\"text\"][disabled]"
+      ]
     },
     {
       "id": "password",
       "heading": "Password",
       "presenceSelector": "input[type=\"password\"], input[type=\"text\"]",
-      "focusSelector": "input"
+      "focusSelector": "input",
+      "requiredStateSelectors": [
+        "input[type=\"password\"], input[type=\"text\"]"
+      ]
     },
     {
       "id": "text-area",
       "heading": "Text Area",
       "presenceSelector": "textarea",
-      "focusSelector": "textarea"
+      "focusSelector": "textarea",
+      "requiredStateSelectors": [
+        "textarea"
+      ]
     },
     {
       "id": "select",
       "heading": "Select",
       "presenceSelector": "select, [role=\"combobox\"]",
-      "focusSelector": "select, [role=\"combobox\"]"
+      "focusSelector": "select, [role=\"combobox\"]",
+      "requiredStateSelectors": [
+        "select, [role=\"combobox\"]"
+      ]
     },
     {
       "id": "datetime",
       "heading": "Date Time",
       "presenceSelector": "input[type=\"datetime-local\"]",
-      "focusSelector": "input[type=\"datetime-local\"]"
+      "focusSelector": "input[type=\"datetime-local\"]",
+      "requiredStateSelectors": [
+        "input[type=\"datetime-local\"]"
+      ]
     },
     {
       "id": "slider",
       "heading": "Slider",
       "presenceSelector": "[role=\"slider\"]",
-      "focusSelector": "[role=\"slider\"]"
+      "focusSelector": "[role=\"slider\"]",
+      "requiredStateSelectors": [
+        "[role=\"slider\"]"
+      ]
     },
     {
       "id": "toggles",
       "heading": "Toggles",
       "presenceSelector": "[role=\"switch\"]",
-      "focusSelector": "[role=\"switch\"]"
+      "focusSelector": "[role=\"switch\"]",
+      "requiredStateSelectors": [
+        "[role=\"switch\"]"
+      ]
     },
     {
       "id": "tri-state",
       "heading": "Tri State",
       "presenceSelector": "[role=\"checkbox\"]",
-      "focusSelector": "[role=\"checkbox\"]"
+      "focusSelector": "[role=\"checkbox\"]",
+      "requiredStateSelectors": [
+        "[role=\"checkbox\"]"
+      ]
     },
     {
       "id": "radio-group",
       "heading": "Radio Group",
       "presenceSelector": "[role=\"radio\"]",
-      "focusSelector": "[role=\"radio\"]"
+      "focusSelector": "[role=\"radio\"]",
+      "requiredStateSelectors": [
+        "[role=\"radio\"]"
+      ]
     },
     {
       "id": "tabs",
       "heading": "Tabs",
       "presenceSelector": "[role=\"tablist\"]",
-      "focusSelector": "[role=\"tab\"]"
+      "focusSelector": "[role=\"tab\"]",
+      "requiredStateSelectors": [
+        "[role=\"tablist\"]",
+        "[role=\"tab\"]"
+      ]
     },
     {
       "id": "badges",
       "heading": "Badges",
       "presenceSelector": ".halo-badge",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        ".halo-badge"
+      ]
     },
     {
       "id": "cards",
       "heading": "Cards",
       "presenceSelector": ".halo-card",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        ".halo-card"
+      ]
     },
     {
       "id": "notices",
       "heading": "Notices",
       "presenceSelector": ".halo-notice",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        ".halo-notice"
+      ]
     },
     {
       "id": "expandable-panel",
       "heading": "Expandable Panel",
       "presenceSelector": ".halo-expandable-panel",
-      "focusSelector": ".halo-expandable-panel__header-button"
+      "focusSelector": ".halo-expandable-panel__header-button",
+      "requiredStateSelectors": [
+        ".halo-expandable-panel",
+        ".halo-expandable-panel__header-button"
+      ]
     },
     {
       "id": "table",
       "heading": "Table",
       "presenceSelector": "[data-testid=\"device-table\"]",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        "[data-testid=\"device-table\"] .halo-table__desktop-section:visible, [data-testid=\"device-table\"] .halo-table__mobile-section:visible"
+      ]
     },
     {
       "id": "tree-view",
       "heading": "Tree View",
       "presenceSelector": "[role=\"tree\"]",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        "[role=\"tree\"]",
+        "[role=\"treeitem\"]"
+      ]
     },
     {
       "id": "dialog",
       "heading": "Dialog",
       "presenceSelector": "[data-testid=\"button-open-dialog\"]",
-      "focusSelector": "[data-testid=\"button-open-dialog\"]"
+      "focusSelector": "[data-testid=\"button-open-dialog\"]",
+      "requiredStateSelectors": [
+        "[data-testid=\"button-open-dialog\"]"
+      ]
     },
     {
       "id": "snackbar",
       "heading": "Snackbar",
       "presenceSelector": "[data-testid=\"button-show-snackbar\"]",
-      "focusSelector": "[data-testid=\"button-show-snackbar\"]"
+      "focusSelector": "[data-testid=\"button-show-snackbar\"]",
+      "requiredStateSelectors": [
+        "[data-testid=\"button-show-snackbar\"]"
+      ]
     },
     {
       "id": "skeleton",
       "heading": "Skeleton",
       "presenceSelector": "span[role=\"presentation\"][aria-hidden=\"true\"]",
-      "focusSelector": "button"
+      "focusSelector": "button",
+      "requiredStateSelectors": [
+        "span[role=\"presentation\"][aria-hidden=\"true\"]"
+      ]
     }
   ]
 }

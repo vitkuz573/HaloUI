@@ -10,17 +10,13 @@ namespace HaloUI.Services;
 /// <summary>
 /// JS-backed runtime for element measurement operations.
 /// </summary>
-public sealed class ElementMeasurementRuntime : IElementMeasurementRuntime
+public sealed class ElementMeasurementRuntime : JsModuleRuntimeBase, IElementMeasurementRuntime
 {
     private const string ModulePath = "./_content/HaloUI/haloui.js";
 
-    private readonly IJSRuntime _jsRuntime;
-    private IJSObjectReference? _module;
-    private Task<IJSObjectReference>? _moduleTask;
-
     public ElementMeasurementRuntime(IJSRuntime jsRuntime)
+        : base(jsRuntime, ModulePath)
     {
-        _jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
     }
 
     public async ValueTask<double> MeasureElementHeightAsync(string elementId, CancellationToken cancellationToken = default)
@@ -30,43 +26,6 @@ public sealed class ElementMeasurementRuntime : IElementMeasurementRuntime
             return 0;
         }
 
-        var module = await GetModuleAsync(cancellationToken);
-        return await module.InvokeAsync<double>("measureElementHeight", cancellationToken, elementId);
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_module is null)
-        {
-            return;
-        }
-
-        try
-        {
-            await _module.DisposeAsync();
-        }
-        catch (JSDisconnectedException)
-        {
-            // Browser disconnected while scope was disposing.
-        }
-        catch (ObjectDisposedException)
-        {
-            // Runtime already disposed.
-        }
-    }
-
-    private async ValueTask<IJSObjectReference> GetModuleAsync(CancellationToken cancellationToken)
-    {
-        if (_module is not null)
-        {
-            return _module;
-        }
-
-        _moduleTask ??= _jsRuntime
-            .InvokeAsync<IJSObjectReference>("import", cancellationToken, ModulePath)
-            .AsTask();
-
-        _module = await _moduleTask;
-        return _module;
+        return await InvokeAsync<double>("measureElementHeight", cancellationToken, elementId);
     }
 }

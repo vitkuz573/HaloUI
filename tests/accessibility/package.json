@@ -5,8 +5,9 @@
   "scripts": {
     "pretest": "playwright install",
     "test": "playwright test",
-    "test:matrix": "playwright test tests/matrix-render.spec.ts tests/matrix-focus.spec.ts",
+    "test:matrix": "playwright test tests/matrix-render.spec.ts tests/matrix-focus.spec.ts tests/matrix-states.spec.ts",
     "test:a11y": "playwright test tests/critical-a11y.spec.ts",
+    "test:perf": "node ./scripts/check-budgets.mjs",
     "screenshots": "HALOUI_CAPTURE_SCREENSHOTS=1 playwright test tests/visual-gallery.spec.ts --workers=1",
     "test:report": "playwright show-report"
   },

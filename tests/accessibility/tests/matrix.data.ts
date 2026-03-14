@@ -13,6 +13,7 @@ export interface DemoSectionContract {
   readonly heading: string;
   readonly presenceSelector: string;
   readonly focusSelector: string;
+  readonly requiredStateSelectors?: readonly string[];
 }
 
 interface ComponentContractManifest {

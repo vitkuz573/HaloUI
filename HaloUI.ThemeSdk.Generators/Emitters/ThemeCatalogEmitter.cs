@@ -23,6 +23,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("using System;");
         builder.AppendLine("using System.Collections.Generic;");
         builder.AppendLine("using System.Collections.ObjectModel;");
+        builder.AppendLine("using HaloUI.Iconography;");
         builder.AppendLine("using HaloUI.Theme.Tokens;");
         builder.AppendLine("using HaloUI.Theme.Tokens.Brand;");
         builder.AppendLine();
@@ -41,7 +42,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("    string Key,");
         builder.AppendLine("    string DisplayName,");
         builder.AppendLine("    string Description,");
-        builder.AppendLine("    string Icon,");
+        builder.AppendLine("    HaloIconToken Icon,");
         builder.AppendLine("    ThemeDescriptorKind Kind,");
         builder.AppendLine("    string GroupKey,");
         builder.AppendLine("    string BaseThemeKey,");
@@ -53,7 +54,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("public sealed record ThemeGroupDescriptor(");
         builder.AppendLine("    string Key,");
         builder.AppendLine("    string DisplayName,");
-        builder.AppendLine("    string Icon,");
+        builder.AppendLine("    HaloIconToken Icon,");
         builder.AppendLine("    ThemeDescriptorKind Kind,");
         builder.AppendLine("    IReadOnlyList<string> ThemeKeys);");
         builder.AppendLine();
@@ -77,6 +78,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("using System;");
         builder.AppendLine("using System.Collections.Generic;");
         builder.AppendLine("using System.Collections.ObjectModel;");
+        builder.AppendLine("using HaloUI.Iconography;");
         builder.AppendLine();
         builder.Append("namespace ");
         builder.Append(ThemeSdkGenerator.RootNamespace);
@@ -256,7 +258,7 @@ internal static class ThemeCatalogEmitter
             builder.Append(ThemeSdkGenerator.Escape(displayName));
             builder.Append("\", \"");
             builder.Append(ThemeSdkGenerator.Escape(description));
-            builder.Append("\", \"palette\", ThemeDescriptorKind.Base, \"base\", \"");
+            builder.Append("\", HaloIconToken.Create(\"palette\"), ThemeDescriptorKind.Base, \"base\", \"");
             builder.Append(ThemeSdkGenerator.Escape(themeKey));
             builder.Append("\", null, null, ");
             builder.Append(isDefault ? "true" : "false");
@@ -287,9 +289,9 @@ internal static class ThemeCatalogEmitter
                 builder.Append(ThemeSdkGenerator.Escape($"{displayName} ({name})"));
                 builder.Append("\", \"");
                 builder.Append(ThemeSdkGenerator.Escape($"{name} density for {displayName}"));
-                builder.Append("\", \"");
+                builder.Append("\", HaloIconToken.Create(\"");
                 builder.Append(ThemeSdkGenerator.Escape(icon));
-                builder.Append("\", ThemeDescriptorKind.Density, \"density\", \"");
+                builder.Append("\"), ThemeDescriptorKind.Density, \"density\", \"");
                 builder.Append(ThemeSdkGenerator.Escape(themeKey));
                 builder.Append("\", \"");
                 builder.Append(name);
@@ -339,9 +341,9 @@ internal static class ThemeCatalogEmitter
                 builder.Append(ThemeSdkGenerator.Escape($"{brandDisplay} ({baseDisplay})"));
                 builder.Append("\", \"");
                 builder.Append(ThemeSdkGenerator.Escape(descriptorDescription));
-                builder.Append("\", \"");
+                builder.Append("\", HaloIconToken.Create(\"");
                 builder.Append(ThemeSdkGenerator.Escape(icon));
-                builder.Append("\", ThemeDescriptorKind.Brand, \"");
+                builder.Append("\"), ThemeDescriptorKind.Brand, \"");
                 builder.Append(ThemeSdkGenerator.Escape(groupKey));
                 builder.Append("\", \"");
                 builder.Append(ThemeSdkGenerator.Escape(themeKey));
@@ -361,7 +363,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("        group = new ThemeGroupDescriptor(");
         builder.AppendLine("            \"base\",");
         builder.AppendLine("            \"Base Themes\",");
-        builder.AppendLine("            \"palette\",");
+        builder.AppendLine("            HaloIconToken.Create(\"palette\"),");
         builder.AppendLine("            ThemeDescriptorKind.Base,");
         builder.Append("            new string[] { ");
         AppendCommaSeparated(builder, manifest.ThemeKeys);
@@ -381,7 +383,7 @@ internal static class ThemeCatalogEmitter
         builder.AppendLine("        group = new ThemeGroupDescriptor(");
         builder.AppendLine("            \"density\",");
         builder.AppendLine("            \"Density Options\",");
-        builder.AppendLine("            \"tune\",");
+        builder.AppendLine("            HaloIconToken.Create(\"tune\"),");
         builder.AppendLine("            ThemeDescriptorKind.Density,");
         builder.Append("            new string[] { ");
 
@@ -425,7 +427,7 @@ internal static class ThemeCatalogEmitter
             builder.Append("            \"");
             builder.Append(ThemeSdkGenerator.Escape(displayName));
             builder.AppendLine("\",");
-            builder.AppendLine("            \"palette\",");
+            builder.AppendLine("            HaloIconToken.Create(\"palette\"),");
             builder.AppendLine("            ThemeDescriptorKind.Brand,");
             builder.Append("            new string[] { ");
             AppendCommaSeparated(builder, themeKeys);

@@ -187,6 +187,26 @@ public sealed class ArchitectureGovernanceTests
         Assert.DoesNotContain("document.body.setAttribute", text, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ThemeDomInterop_IsRoutedThroughThemeDomRuntimeOnly()
+    {
+        const string themeDomInteropPathLiteral = "./_content/HaloUI/js/themeDom.js";
+
+        var repoRoot = ResolveRepoRoot();
+        var csFiles = Directory.EnumerateFiles(Path.Combine(repoRoot, "HaloUI"), "*.cs", SearchOption.AllDirectories)
+            .Where(static file => !IsBuildArtifactPath(file))
+            .ToArray();
+
+        var references = csFiles
+            .Where(file => File.ReadAllText(file).Contains(themeDomInteropPathLiteral, StringComparison.Ordinal))
+            .Select(file => Path.GetRelativePath(repoRoot, file).Replace('\\', '/'))
+            .OrderBy(static item => item)
+            .ToArray();
+
+        Assert.Single(references);
+        Assert.Equal("HaloUI/Services/ThemeDomRuntime.cs", references[0]);
+    }
+
     private static string ResolveRepoRoot()
     {
         var current = new DirectoryInfo(AppContext.BaseDirectory);

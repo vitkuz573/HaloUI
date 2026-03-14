@@ -60,7 +60,7 @@ Each consumer must designate a liaison to the Halo governance board and contribu
 5. **Consumer empathy**: Provide migration guides, samples, and office hours for integrating teams.
 
 ## 8. Governance & Artefacts
-- Roadmap: `HaloUI/ROADMAP.md`
+- Roadmap: `ROADMAP.md`
 - Baseline inventory & findings: `docs/BaselineInventory.md`, `docs/Phase0-Findings.md`
 - Checklists: `docs/checklists/*.md`
 - Governance process: `docs/Phase1-Governance.md`

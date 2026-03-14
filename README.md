@@ -69,7 +69,9 @@ This writes JSON manifests to `HaloUI.IconPacks.Material/Iconography/Packs/Mater
 - `ISnackbarService` no longer exposes message-level helper methods.
 - `HaloSelect` JS interop is routed via `ISelectRuntime`; components should not import `haloSelect.js` directly.
 - Layout measurement interop is routed via `IElementMeasurementRuntime`; components should not import `haloui.js` directly.
+- Theme DOM operations are routed via `IThemeDomRuntime`; services/components should not call browser DOM JS directly.
 - Component coverage contracts for bUnit and Playwright are centralized in `contracts/component-contracts.json`.
+- Public API compatibility is pinned by `contracts/public-api.txt` and validated in tests.
 
 ## Accessibility and UI automation
 From `tests/accessibility`:
@@ -89,10 +91,23 @@ Run critical a11y scans:
 HALOUI_SKIP_WEBSERVER=1 HALOUI_A11Y_PORT=5210 npm run test:a11y
 ```
 
+Run performance budgets:
+```bash
+HALOUI_BUILD_CONFIGURATION=Release npm run test:perf
+```
+
 Generate screenshot gallery:
 ```bash
 HALOUI_SKIP_WEBSERVER=1 HALOUI_A11Y_PORT=5210 npm run screenshots
 ```
+
+Update public API baseline intentionally:
+```bash
+HALOUI_UPDATE_PUBLIC_API_CONTRACT=1 dotnet test HaloUI.Tests/HaloUI.Tests.csproj --filter FullyQualifiedName~PublicApiContractTests
+```
+
+## Planning
+- Active roadmap: `ROADMAP.md`
 
 ## Screenshot gallery
 

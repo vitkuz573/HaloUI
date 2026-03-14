@@ -1,0 +1,34 @@
+{
+  "budgets": [
+    {
+      "name": "HaloUI core runtime",
+      "path": "HaloUI/wwwroot/haloui.js",
+      "maxBytes": 8192,
+      "maxGzipBytes": 4096
+    },
+    {
+      "name": "Dialog accessibility runtime",
+      "path": "HaloUI/wwwroot/js/dialogAccessibility.js",
+      "maxBytes": 16384,
+      "maxGzipBytes": 6144
+    },
+    {
+      "name": "Select runtime",
+      "path": "HaloUI/wwwroot/js/haloSelect.js",
+      "maxBytes": 24576,
+      "maxGzipBytes": 9216
+    },
+    {
+      "name": "Theme DOM runtime",
+      "path": "HaloUI/wwwroot/js/themeDom.js",
+      "maxBytes": 4096,
+      "maxGzipBytes": 2048
+    },
+    {
+      "name": "Scoped component stylesheet bundle",
+      "path": "HaloUI/obj/${configuration}/net10.0/scopedcss/projectbundle/HaloUI.bundle.scp.css",
+      "maxBytes": 262144,
+      "maxGzipBytes": 49152
+    }
+  ]
+}

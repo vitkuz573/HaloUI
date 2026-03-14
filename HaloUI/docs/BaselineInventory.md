@@ -1,6 +1,6 @@
 # HaloUI Baseline Inventory
 
-This document is the starting point for Phase 0 (Baseline Readiness). It captures the current asset catalogue and highlights immediate follow-ups for risk assessment. Status columns are intentionally left as `TBD` so workstream owners can update them during the audit.
+This document captures the current HaloUI baseline and immediate follow-ups. Status columns are kept current to reduce drift between governance docs and implementation state.
 
 ---
 
@@ -8,39 +8,39 @@ This document is the starting point for Phase 0 (Baseline Readiness). It capture
 
 | Component | Location | Category | Maturity | Notes |
 |-----------|----------|----------|----------|-------|
-| `AriaInspector` | `Components/AriaInspector.razor` | Diagnostics | TBD | |
-| `DialogBody` | `Components/DialogBody.razor` | Dialog | TBD | |
-| `DialogFooter` | `Components/DialogFooter.razor` | Dialog | TBD | |
-| `DialogHeader` | `Components/DialogHeader.razor` | Dialog | TBD | |
-| `DialogHost` | `Components/DialogHost.razor` | Dialog | TBD | |
-| `DialogInspector` | `Components/DialogInspector.razor` | Diagnostics | TBD | |
-| `SnackbarHost` | `Components/SnackbarHost.razor` | Feedback | TBD | |
-| `HaloBadge` | `Components/HaloBadge.razor` | Data display | TBD | |
+| `AriaInspector` | `Components/AriaInspector.razor` | Diagnostics | Operational | |
+| `DialogBody` | `Components/DialogBody.razor` | Dialog | Operational | |
+| `DialogFooter` | `Components/DialogFooter.razor` | Dialog | Operational | |
+| `DialogHeader` | `Components/DialogHeader.razor` | Dialog | Operational | |
+| `DialogHost` | `Components/DialogHost.razor` | Dialog | Operational | |
+| `DialogInspector` | `Components/DialogInspector.razor` | Diagnostics | Operational | |
+| `SnackbarHost` | `Components/SnackbarHost.razor` | Feedback | Operational | |
+| `HaloBadge` | `Components/HaloBadge.razor` | Data display | Operational | |
 | `HaloButton` | `Components/HaloButton.razor` | Actions | In Review | Warning variant tokens/styles validated across Light/DarkGlass; ghost variant now exposed via `ButtonVariant`. |
-| `HaloCard` | `Components/HaloCard.razor` | Layout | TBD | |
-| `HaloContainer` | `Components/HaloContainer.razor` | Layout | TBD | |
-| `HaloDialog` | `Components/HaloDialog.razor` | Dialog | TBD | |
-| `HaloExpandablePanel` | `Components/HaloExpandablePanel.razor` | Disclosure | TBD | |
-| `HaloLabel` | `Components/HaloLabel.razor` | Typography | TBD | |
-| `HaloLayout` | `Components/HaloLayout.razor` | Layout | TBD | |
-| `HaloNotice` | `Components/HaloNotice.razor` | Feedback | TBD | |
-| `HaloPasswordField` | `Components/HaloPasswordField.razor` | Forms | TBD | |
-| `HaloRadioButton` | `Components/HaloRadioButton.razor` | Forms | TBD | |
-| `HaloRadioGroup` | `Components/HaloRadioGroup.razor` | Forms | TBD | |
-| `HaloSelect` | `Components/HaloSelect.razor` | Forms | TBD | |
-| `HaloSelectOption` | `Components/HaloSelectOption.razor` | Forms | TBD | |
-| `HaloSkeleton` | `Components/HaloSkeleton.razor` | Feedback | TBD | |
-| `HaloSlider` | `Components/HaloSlider.razor` | Forms | TBD | |
-| `HaloTab` | `Components/HaloTab.razor` | Navigation | TBD | |
-| `HaloTable` | `Components/HaloTable.razor` | Data display | TBD | |
-| `HaloTableColumn` | `Components/HaloTableColumn.razor` | Data display | TBD | |
-| `HaloTabs` | `Components/HaloTabs.razor` | Navigation | TBD | |
-| `HaloText` | `Components/HaloText.razor` | Typography | TBD | |
-| `HaloTextArea` | `Components/HaloTextArea.razor` | Forms | TBD | |
-| `HaloTextField` | `Components/HaloTextField.razor` | Forms | TBD | |
-| `HaloToggle` | `Components/HaloToggle.razor` | Forms | TBD | |
-| `HaloTreeView` | `Components/HaloTreeView.razor` | Navigation | TBD | |
-| `HaloTreeViewNode` | `Components/HaloTreeViewNode.razor` | Navigation | TBD | |
+| `HaloCard` | `Components/HaloCard.razor` | Layout | Operational | |
+| `HaloContainer` | `Components/HaloContainer.razor` | Layout | Operational | |
+| `HaloDialog` | `Components/HaloDialog.razor` | Dialog | Operational | |
+| `HaloExpandablePanel` | `Components/HaloExpandablePanel.razor` | Disclosure | Operational | |
+| `HaloLabel` | `Components/HaloLabel.razor` | Typography | Operational | |
+| `HaloLayout` | `Components/HaloLayout.razor` | Layout | Operational | |
+| `HaloNotice` | `Components/HaloNotice.razor` | Feedback | Operational | |
+| `HaloPasswordField` | `Components/HaloPasswordField.razor` | Forms | Operational | |
+| `HaloRadioButton` | `Components/HaloRadioButton.razor` | Forms | Operational | |
+| `HaloRadioGroup` | `Components/HaloRadioGroup.razor` | Forms | Operational | |
+| `HaloSelect` | `Components/HaloSelect.razor` | Forms | Operational | |
+| `HaloSelectOption` | `Components/HaloSelectOption.razor` | Forms | Operational | |
+| `HaloSkeleton` | `Components/HaloSkeleton.razor` | Feedback | Operational | |
+| `HaloSlider` | `Components/HaloSlider.razor` | Forms | Operational | |
+| `HaloTab` | `Components/HaloTab.razor` | Navigation | Operational | |
+| `HaloTable` | `Components/HaloTable.razor` | Data display | Operational | |
+| `HaloTableColumn` | `Components/HaloTableColumn.razor` | Data display | Operational | |
+| `HaloTabs` | `Components/HaloTabs.razor` | Navigation | Operational | |
+| `HaloText` | `Components/HaloText.razor` | Typography | Operational | |
+| `HaloTextArea` | `Components/HaloTextArea.razor` | Forms | Operational | |
+| `HaloTextField` | `Components/HaloTextField.razor` | Forms | Operational | |
+| `HaloToggle` | `Components/HaloToggle.razor` | Forms | Operational | |
+| `HaloTreeView` | `Components/HaloTreeView.razor` | Navigation | Operational | |
+| `HaloTreeViewNode` | `Components/HaloTreeViewNode.razor` | Navigation | Operational | |
 
 **Next steps**
 - Assign owners for maturity scoring and functional review.
@@ -53,14 +53,14 @@ This document is the starting point for Phase 0 (Baseline Readiness). It capture
 
 | Service | Location | Purpose | Maturity | Notes |
 |---------|----------|---------|----------|-------|
-| `AriaDiagnosticsHub` | `Services/AriaDiagnosticsHub.cs` | Real-time accessibility diagnostics | TBD | |
-| `AriaInspectorState` | `Services/AriaInspectorState.cs` | Aria inspector state management | TBD | |
-| `DialogDiagnosticsHub` | `Services/DialogDiagnosticsHub.cs` | Dialog telemetry | TBD | |
-| `DialogInspectorState` | `Services/DialogInspectorState.cs` | Dialog inspector state | TBD | |
-| `DialogService` | `Services/DialogService.cs` | Dialog orchestration | TBD | |
-| `NoOpAriaDiagnosticsHub` | `Services/NoOpAriaDiagnosticsHub.cs` | Diagnostics fallback | TBD | |
-| `SnackbarService` | `Services/SnackbarService.cs` | Snackbar orchestration | TBD | |
-| `ThemeState` | `Services/ThemeState.cs` | Theme state management | TBD | |
+| `AriaDiagnosticsHub` | `Services/AriaDiagnosticsHub.cs` | Real-time accessibility diagnostics | Operational | |
+| `AriaInspectorState` | `Services/AriaInspectorState.cs` | Aria inspector state management | Operational | |
+| `DialogDiagnosticsHub` | `Services/DialogDiagnosticsHub.cs` | Dialog telemetry | Operational | |
+| `DialogInspectorState` | `Services/DialogInspectorState.cs` | Dialog inspector state | Operational | |
+| `DialogService` | `Services/DialogService.cs` | Dialog orchestration | Operational | |
+| `NoOpAriaDiagnosticsHub` | `Services/NoOpAriaDiagnosticsHub.cs` | Diagnostics fallback | Operational | |
+| `SnackbarService` | `Services/SnackbarService.cs` | Snackbar orchestration | Operational | |
+| `ThemeState` | `Services/ThemeState.cs` | Theme state management | Operational | |
 
 **Next steps**
 - Validate DI registration paths and confirm public surface area.
@@ -73,17 +73,17 @@ This document is the starting point for Phase 0 (Baseline Readiness). It capture
 
 | Area | Assets | Coverage Notes | Owner | Follow-up |
 |------|--------|----------------|-------|-----------|
-| Manifest | `Theme/Tokens/design-tokens.json` | Contains current design tokens; review required for completeness | TBD | Validate merge process and versioning |
-| Core Tokens | Color, Spacing, Border, Shadow, Typography, Transition | `Core/*.cs` | TBD | Check scale ordering, token naming consistency |
-| Semantic Tokens | Color, Typography, Spacing | `Semantic/*.cs` | TBD | Map to component usage and accessibility constraints |
+| Manifest | `Theme/Tokens/design-tokens.json` | Contains current design tokens; review required for completeness | HaloUI Core | Validate merge process and versioning |
+| Core Tokens | Color, Spacing, Border, Shadow, Typography, Transition | `Core/*.cs` | HaloUI Core | Check scale ordering, token naming consistency |
+| Semantic Tokens | Color, Typography, Spacing | `Semantic/*.cs` | HaloUI Core | Map to component usage and accessibility constraints |
 | Component Tokens | Badge, Button, Card, Container, Dialog, ExpandablePanel, Input, Label, Radio, Select, Skeleton, Slider, Snackbar, Tab, Table, Text, Toggle, TreeView | `Component/*.cs` | In Review | Warning button tokens added; confirm ghost tokens usage or deprecate. |
-| Brand Tokens | `Brand/BrandTokens.cs` | TBD | Ensure brand palette generator covers all supported brands |
-| Motion Tokens | `Motion/MotionTokens.cs` | TBD | Validate duration/easing coverage for interaction patterns |
-| Responsive Tokens | `Responsive/ResponsiveTokens.cs` | TBD | Assess breakpoint strategy for large/small form factors |
-| Accessibility Tokens | `Accessibility/AccessibilityTokens.cs` | TBD | Confirm focus, contrast, and touch target defaults |
-| Variants | `Variants/ThemeVariants.cs` | TBD | Check density presets and host integration points |
-| Generation Pipeline | Files under `Generation/` | TBD | Review generator accuracy, caching, and error reporting |
-| Validation | `Validation/TokenValidator.cs` | TBD | Extend to CI enforcement and reporting |
+| Brand Tokens | `Brand/BrandTokens.cs` | HaloUI Core | Ensure brand palette generator covers all supported brands |
+| Motion Tokens | `Motion/MotionTokens.cs` | HaloUI Core | Validate duration/easing coverage for interaction patterns |
+| Responsive Tokens | `Responsive/ResponsiveTokens.cs` | HaloUI Core | Assess breakpoint strategy for large/small form factors |
+| Accessibility Tokens | `Accessibility/AccessibilityTokens.cs` | HaloUI Core | Confirm focus, contrast, and touch target defaults |
+| Variants | `Variants/ThemeVariants.cs` | HaloUI Core | Check density presets and host integration points |
+| Generation Pipeline | Files under `Generation/` | HaloUI Core | Review generator accuracy, caching, and error reporting |
+| Validation | `Validation/TokenValidator.cs` | HaloUI Core | Extend to CI enforcement and reporting |
 
 **Next steps**
 - Implement automated validation job covering contrast, scale monotonicity, and brand coverage.
@@ -96,11 +96,11 @@ This document is the starting point for Phase 0 (Baseline Readiness). It capture
 
 | Area | Location | Current State | Follow-up |
 |------|----------|---------------|-----------|
-| Unit tests | `HaloUI.Tests/*` | TBD | Measure coverage, identify missing components/states. |
-| Visual/interaction tests | N/A | TBD | Plan for Playwright + visual regression coverage. |
-| Accessibility automation | N/A | TBD | Integrate axe/pa11y into test pipeline. |
-| Build & analyzers | `.csproj`, analyzers | TBD | Confirm enforcement of styling/token usage. |
-| Docs tooling | README, yet-to-be Storybook | TBD | Determine documentation platform and hosting. |
+| Unit tests | `HaloUI.Tests/*` | Operational | Measure coverage, identify missing components/states. |
+| Visual/interaction tests | `HaloUI.Tests.E2E/*`, `tests/accessibility/tests/matrix-*.spec.ts` | Operational | Expand matrix state contracts as new sections/components land. |
+| Accessibility automation | `tests/accessibility/tests/critical-a11y.spec.ts` | Operational | Keep WCAG-critical assertions aligned with component contracts. |
+| Build & analyzers | `.csproj`, analyzers | Operational | Confirm enforcement of styling/token usage. |
+| Docs tooling | README, yet-to-be Storybook | Operational | Determine documentation platform and hosting. |
 
 ---
 

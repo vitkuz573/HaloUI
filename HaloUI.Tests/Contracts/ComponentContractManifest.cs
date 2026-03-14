@@ -58,6 +58,8 @@ internal sealed record ComponentContractDescriptor
     public string[] EvidenceFiles { get; init; } = [];
 
     public string[] FocusIndicators { get; init; } = [];
+
+    public string[] RequiredStates { get; init; } = [];
 }
 
 internal sealed record DemoSectionContractDescriptor
@@ -69,4 +71,6 @@ internal sealed record DemoSectionContractDescriptor
     public required string PresenceSelector { get; init; }
 
     public required string FocusSelector { get; init; }
+
+    public string[] RequiredStateSelectors { get; init; } = [];
 }

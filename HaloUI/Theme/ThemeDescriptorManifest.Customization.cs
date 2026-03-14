@@ -2,7 +2,7 @@
 // This file is part of the HaloUI project.
 // Licensed under the GNU Affero General Public License v3.0.
 
-using System;
+using HaloUI.Theme;
 
 namespace HaloUI.Theme.Sdk.Runtime;
 
@@ -19,9 +19,9 @@ public static partial class ThemeDescriptorManifest
 
     static partial void OnGroupCreated(ref ThemeGroupDescriptor group)
     {
-        if (group.Kind == ThemeDescriptorKind.Brand && string.Equals(group.Icon, "palette", StringComparison.OrdinalIgnoreCase))
+        if (group.Kind == ThemeDescriptorKind.Brand && group.Icon == HaloThemeIcons.Palette)
         {
-            group = group with { Icon = "palette" };
+            group = group with { Icon = HaloThemeIcons.Palette };
         }
     }
 
@@ -29,8 +29,8 @@ public static partial class ThemeDescriptorManifest
     {
         var icon = descriptor.Key switch
         {
-            "DarkGlass" => "nightlight_round",
-            "Light" => "wb_sunny",
+            "DarkGlass" => HaloThemeIcons.NightlightRound,
+            "Light" => HaloThemeIcons.WbSunny,
             _ => descriptor.Icon
         };
 

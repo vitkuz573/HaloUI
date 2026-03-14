@@ -10,31 +10,22 @@ namespace HaloUI.Services;
 /// <summary>
 /// Default browser DOM runtime for theme interactions.
 /// </summary>
-public sealed class ThemeDomRuntime : IThemeDomRuntime, IDisposable
+public sealed class ThemeDomRuntime : JsModuleRuntimeBase, IThemeDomRuntime
 {
-    private readonly IJSRuntime _jsRuntime;
+    private const string ModulePath = "./_content/HaloUI/js/themeDom.js";
 
     public ThemeDomRuntime(IJSRuntime jsRuntime)
+        : base(jsRuntime, ModulePath)
     {
-        _jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
     }
 
-    public ValueTask SetBodyThemeAttributeAsync(string themeValue, CancellationToken cancellationToken = default)
+    public async ValueTask SetBodyThemeAttributeAsync(string themeValue, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(themeValue))
         {
-            return ValueTask.CompletedTask;
+            return;
         }
 
-        return _jsRuntime.InvokeVoidAsync("document.body.setAttribute", cancellationToken, "data-theme", themeValue);
-    }
-
-    public ValueTask DisposeAsync()
-    {
-        return ValueTask.CompletedTask;
-    }
-
-    public void Dispose()
-    {
+        await InvokeVoidAsync("setBodyThemeAttribute", cancellationToken, themeValue);
     }
 }

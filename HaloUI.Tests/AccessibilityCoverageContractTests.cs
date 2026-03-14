@@ -19,7 +19,10 @@ public sealed class AccessibilityCoverageContractTests
     private static readonly IReadOnlyDictionary<string, ComponentCoverageEntry> ComponentCoverage = Manifest.Components
         .ToDictionary(
             static component => component.Name,
-            static component => new ComponentCoverageEntry(ParseAccessibilityKind(component.AccessibilityKind), component.EvidenceFiles),
+            static component => new ComponentCoverageEntry(
+                ParseAccessibilityKind(component.AccessibilityKind),
+                component.EvidenceFiles,
+                component.RequiredStates),
             StringComparer.Ordinal);
 
     private static readonly IReadOnlyDictionary<string, string[]> FocusIndicatorCoverage = Manifest.Components
@@ -59,6 +62,50 @@ public sealed class AccessibilityCoverageContractTests
 
         Assert.True(missingEvidence.Length == 0,
             $"Interactive components must declare at least one accessibility evidence file: {string.Join(", ", missingEvidence)}.");
+    }
+
+    [Fact]
+    public void InteractiveComponents_MustDeclareStateContracts()
+    {
+        var missingStateContracts = ComponentCoverage
+            .Where(entry => entry.Value.Kind == ComponentCoverageKind.Interactive)
+            .Where(entry => entry.Value.RequiredStates.Length == 0)
+            .Select(entry => entry.Key)
+            .OrderBy(name => name)
+            .ToArray();
+
+        Assert.True(
+            missingStateContracts.Length == 0,
+            $"Interactive components must declare required state contracts: {string.Join(", ", missingStateContracts)}.");
+    }
+
+    [Fact]
+    public void RequiredStateContracts_MustUseKnownStateVocabulary()
+    {
+        var allowedStates = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "default",
+            "focus",
+            "disabled",
+            "readonly",
+            "loading",
+            "error",
+            "selected",
+            "expanded",
+            "empty"
+        };
+
+        var invalidStates = ComponentCoverage
+            .SelectMany(
+                entry => entry.Value.RequiredStates.Select(state => (Component: entry.Key, State: state)))
+            .Where(entry => !allowedStates.Contains(entry.State))
+            .Select(entry => $"{entry.Component}:{entry.State}")
+            .OrderBy(name => name)
+            .ToArray();
+
+        Assert.True(
+            invalidStates.Length == 0,
+            $"Found unknown required state contracts: {string.Join(", ", invalidStates)}.");
     }
 
     [Fact]
@@ -263,7 +310,10 @@ public sealed class AccessibilityCoverageContractTests
         };
     }
 
-    private sealed record ComponentCoverageEntry(ComponentCoverageKind Kind, params string[] EvidenceFiles);
+    private sealed record ComponentCoverageEntry(
+        ComponentCoverageKind Kind,
+        string[] EvidenceFiles,
+        string[] RequiredStates);
 
     private enum ComponentCoverageKind
     {

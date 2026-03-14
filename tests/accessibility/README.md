@@ -21,6 +21,7 @@ npx playwright install chromium
 npm test
 npm run test:matrix
 npm run test:a11y
+npm run test:perf
 npm run screenshots
 npm run test:report
 ```
@@ -35,6 +36,7 @@ Then run tests without Playwright-managed web server:
 ```bash
 HALOUI_SKIP_WEBSERVER=1 HALOUI_A11Y_PORT=5210 npm run test:matrix
 HALOUI_SKIP_WEBSERVER=1 HALOUI_A11Y_PORT=5210 npm run test:a11y
+HALOUI_BUILD_CONFIGURATION=Release npm run test:perf
 HALOUI_SKIP_WEBSERVER=1 HALOUI_A11Y_PORT=5210 npm run screenshots
 ```
 
