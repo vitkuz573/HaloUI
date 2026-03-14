@@ -114,12 +114,12 @@ public partial class HaloButton
 
         if (Loading)
         {
-            classBuilder.Add("is-loading");
+            classBuilder.Add("halo-is-loading");
         }
 
         if (Disabled || Loading)
         {
-            classBuilder.Add("is-disabled");
+            classBuilder.Add("halo-is-disabled");
         }
 
         if (Active)

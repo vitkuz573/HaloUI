@@ -13,8 +13,8 @@ namespace HaloUI.Components;
 
 public partial class HaloExpandablePanel : IAsyncDisposable
 {
-    private readonly string _contentId = $"exp-panel-{Guid.NewGuid():N}";
-    private readonly string _headerButtonId = $"exp-panel-header-{Guid.NewGuid():N}";
+    private readonly string _contentId = $"halo-exp-panel-{Guid.NewGuid():N}";
+    private readonly string _headerButtonId = $"halo-exp-panel-header-{Guid.NewGuid():N}";
     private static readonly string ContentHeightVar = ThemeCssVariables.Expandable.Panel.Content.Expanded.Height;
 
     [Parameter]
@@ -177,7 +177,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
         if (Disabled)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         AddClass(classes, Class);
@@ -199,7 +199,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
         if (Disabled)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         return string.Join(' ', classes);
@@ -214,7 +214,7 @@ public partial class HaloExpandablePanel : IAsyncDisposable
 
         if (_expanded)
         {
-            classes.Add("is-expanded");
+            classes.Add("halo-is-expanded");
         }
 
         return string.Join(' ', classes);

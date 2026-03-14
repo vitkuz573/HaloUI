@@ -18,6 +18,7 @@ public class InspectorHaloCompositionTests : BunitContext
     public InspectorHaloCompositionTests()
     {
         JSInterop.Mode = JSRuntimeMode.Loose;
+        Services.AddSingleton<ISelectRuntime, NoOpSelectRuntime>();
     }
 
     [Fact]
@@ -32,8 +33,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<DialogInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-di__search .halo-textfield"));
-        Assert.Equal(3, cut.FindAll(".rm-di__filters .halo-toggle").Count);
+        Assert.NotEmpty(cut.FindAll(".halo-di__search .halo-textfield"));
+        Assert.Equal(3, cut.FindAll(".halo-di__filters .halo-toggle").Count);
     }
 
     [Fact]
@@ -49,8 +50,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<DialogInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .halo-select"));
-        Assert.NotEmpty(cut.FindAll(".rm-di__access-filters .halo-textfield"));
+        Assert.NotEmpty(cut.FindAll(".halo-di__access-filters .halo-select"));
+        Assert.NotEmpty(cut.FindAll(".halo-di__access-filters .halo-textfield"));
     }
 
     [Fact]
@@ -65,8 +66,8 @@ public class InspectorHaloCompositionTests : BunitContext
 
         var cut = Render<AriaInspector>();
 
-        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .halo-textfield"));
-        Assert.NotEmpty(cut.FindAll(".rm-ai__search-row .halo-select"));
+        Assert.NotEmpty(cut.FindAll(".halo-ai__search-row .halo-textfield"));
+        Assert.NotEmpty(cut.FindAll(".halo-ai__search-row .halo-select"));
     }
 
     private sealed class FakeDialogDiagnosticsHub : IDialogDiagnosticsHub

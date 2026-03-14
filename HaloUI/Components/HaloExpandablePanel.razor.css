@@ -25,11 +25,11 @@
         border-color:transparent;
     }
 
-    .halo-expandable-panel:not(.is-disabled):hover {
+    .halo-expandable-panel:not(.halo-is-disabled):hover {
         box-shadow:var(--halo-expandable-panel-container-hover-shadow);
     }
 
-    .halo-expandable-panel.is-disabled {
+    .halo-expandable-panel.halo-is-disabled {
         opacity:var(--halo-expandable-panel-container-disabled-opacity);
         pointer-events:none;
     }
@@ -101,13 +101,13 @@
         box-shadow:var(--halo-expandable-panel-container-focus-ring);
     }
 
-    .halo-expandable-panel__header-button.is-disabled {
+    .halo-expandable-panel__header-button.halo-is-disabled {
         cursor:default;
         opacity:var(--halo-expandable-panel-header-button-disabled-opacity);
     }
 
-    .halo-expandable-panel__header-button.is-disabled:hover,
-    .halo-expandable-panel__header-button.is-disabled:active {
+    .halo-expandable-panel__header-button.halo-is-disabled:hover,
+    .halo-expandable-panel__header-button.halo-is-disabled:active {
         background:var(--halo-expandable-panel-header-button-background);
     }
 
@@ -188,7 +188,7 @@
         transition:var(--halo-expandable-panel-indicator-transition);
     }
 
-    .halo-expandable-panel ::deep .halo-expandable-panel__indicator.is-expanded {
+    .halo-expandable-panel ::deep .halo-expandable-panel__indicator.halo-is-expanded {
         transform:rotate(180deg);
     }
 
@@ -214,7 +214,7 @@
         background:transparent;
     }
 
-    .halo-expandable-panel__content.is-expanded {
+    .halo-expandable-panel__content.halo-is-expanded {
         max-height:var(--halo-expandable-panel-content-expanded-height);
         opacity:1;
         visibility:visible;

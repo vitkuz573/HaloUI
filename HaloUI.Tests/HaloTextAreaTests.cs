@@ -27,7 +27,7 @@ public class HaloTextAreaTests : BunitContext
 
         var textarea = cut.Find("textarea");
         Assert.Contains("halo-textarea__input", textarea.ClassList);
-        Assert.Contains("is-disabled", textarea.ClassList);
+        Assert.Contains("halo-is-disabled", textarea.ClassList);
         Assert.Equal("4", textarea.GetAttribute("rows"));
         Assert.Equal("Enter details", textarea.GetAttribute("placeholder"));
         Assert.Equal("false", textarea.GetAttribute("spellcheck"));

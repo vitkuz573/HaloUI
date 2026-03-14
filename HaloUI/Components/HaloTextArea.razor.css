@@ -38,7 +38,7 @@
     }
 
     .halo-textarea--disabled .halo-textarea__input,
-    .halo-textarea__input.is-disabled {
+    .halo-textarea__input.halo-is-disabled {
         background: var(--halo-input-disabled-background);
         color: var(--halo-input-disabled-text);
         border-color: var(--halo-input-disabled-border);
@@ -48,7 +48,7 @@
     }
 
     .halo-textarea--disabled .halo-textarea__input::placeholder,
-    .halo-textarea__input.is-disabled::placeholder {
+    .halo-textarea__input.halo-is-disabled::placeholder {
         color: var(--halo-input-disabled-placeholder);
     }
 

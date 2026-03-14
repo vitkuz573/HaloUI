@@ -15,6 +15,8 @@ public partial class SnackbarHost
 {
     private const int MaxVisibleItems = 4;
     private const string StackPositionStyle = "position:fixed;right:1rem;bottom:1rem;top:auto;left:auto;display:flex;flex-direction:column;z-index:500;gap:0.75rem;max-height:calc(100vh - 2rem);width:min(360px,calc(100vw - 2rem));";
+    private const string EnterAnimationClass = "halo-snackbar-enter";
+    private const string ExitAnimationClass = "halo-snackbar-exit";
     private static readonly string SnackbarDismissHoverVariable = ThemeCssVariables.Snackbar.Dismiss.Hover;
     private static readonly string SnackbarProgressDurationVariable = ThemeCssVariables.Snackbar.Progress.Duration;
     private readonly List<SnackbarItem> _items = [];
@@ -175,7 +177,7 @@ public partial class SnackbarHost
 
             item.CancelTimer();
             item.IsClosing = true;
-            item.CssClass = "toast-exit";
+            item.CssClass = ExitAnimationClass;
 
             StateHasChanged();
             
@@ -366,7 +368,7 @@ public partial class SnackbarHost
             Severity = message.Severity;
             DurationMs = message.DurationMs > 0 ? message.DurationMs : 0;
             RemainingMs = DurationMs;
-            CssClass = "toast-enter";
+            CssClass = EnterAnimationClass;
             CssOverride = message.CssClass;
             Action = message.Action;
             _cts = new CancellationTokenSource();

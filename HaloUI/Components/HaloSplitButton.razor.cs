@@ -185,7 +185,7 @@ public partial class HaloSplitButton
 
         if (Disabled || Loading)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         if (FullWidth)
@@ -211,12 +211,12 @@ public partial class HaloSplitButton
 
         if (Loading)
         {
-            classes.Add("is-loading");
+            classes.Add("halo-is-loading");
         }
 
         if (Disabled || Loading)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         return string.Join(' ', classes);
@@ -232,7 +232,7 @@ public partial class HaloSplitButton
 
         if (Disabled || Loading)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         if (ToggleActive)

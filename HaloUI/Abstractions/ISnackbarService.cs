@@ -36,6 +36,18 @@ public sealed record SnackbarRequest(
         var normalizedDuration = DurationMs < 0 ? 0 : DurationMs;
         return this with { DurationMs = normalizedDuration };
     }
+
+    public static SnackbarRequest Info(string message, int durationMs = 3000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
+        => new(message, SnackbarSeverity.Info, durationMs, title, action, cssClass);
+
+    public static SnackbarRequest Success(string message, int durationMs = 3000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
+        => new(message, SnackbarSeverity.Success, durationMs, title, action, cssClass);
+
+    public static SnackbarRequest Warning(string message, int durationMs = 4000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
+        => new(message, SnackbarSeverity.Warning, durationMs, title, action, cssClass);
+
+    public static SnackbarRequest Error(string message, int durationMs = 5000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
+        => new(message, SnackbarSeverity.Error, durationMs, title, action, cssClass);
 }
 
 /// <summary>
@@ -74,16 +86,4 @@ public interface ISnackbarService
     /// Requests dismissal of all active snackbar handles.
     /// </summary>
     int DismissAll();
-
-    SnackbarHandle Info(string message, int durationMs = 3000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
-        => Enqueue(new SnackbarRequest(message, SnackbarSeverity.Info, durationMs, title, action, cssClass));
-
-    SnackbarHandle Success(string message, int durationMs = 3000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
-        => Enqueue(new SnackbarRequest(message, SnackbarSeverity.Success, durationMs, title, action, cssClass));
-
-    SnackbarHandle Warning(string message, int durationMs = 4000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
-        => Enqueue(new SnackbarRequest(message, SnackbarSeverity.Warning, durationMs, title, action, cssClass));
-
-    SnackbarHandle Error(string message, int durationMs = 5000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
-        => Enqueue(new SnackbarRequest(message, SnackbarSeverity.Error, durationMs, title, action, cssClass));
 }

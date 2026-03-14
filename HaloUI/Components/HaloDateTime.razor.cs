@@ -187,17 +187,17 @@ public partial class HaloDateTime<TValue>
 
         if (Disabled)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         if (ReadOnly)
         {
-            classes.Add("is-readonly");
+            classes.Add("halo-is-readonly");
         }
 
         if (IsInvalid)
         {
-            classes.Add("is-error");
+            classes.Add("halo-is-error");
         }
 
         AddClasses(InputClass);

@@ -7,6 +7,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Components.Internal;
@@ -68,6 +69,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     [Parameter]
     public HaloSelectEnumBehavior<TValue> EnumBehavior { get; set; } = HaloSelectEnumBehavior<TValue>.Disabled;
 
+    [Inject]
+    private ISelectRuntime SelectRuntime { get; set; } = default!;
+
     private readonly string _selectId = AccessibilityIdGenerator.Create("halo-select");
     private readonly string _rootId;
     private readonly string _dropdownId;
@@ -81,7 +85,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private readonly List<OptionItem> _generatedEnumOptions = [];
     private OptionItem? _highlightedOption;
     private bool _isOpen;
-    private DomRect? _dropdownRect;
+    private SelectTriggerMeasurement? _dropdownRect;
     private bool _dropdownOpensUpward;
     private double? _dropdownMaxHeightPx;
     private bool _forceViewportPlacement;
@@ -92,7 +96,6 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private bool _preferMobileDropdownLayout;
     private bool _useNativeSelectPresentation;
     private ElementReference _triggerRef;
-    private IJSObjectReference? _module;
     private DotNetObjectReference<HaloSelect<TValue>>? _dotNetRef;
     private OptionItem? _pendingFocusOption;
     private bool _pendingFocusPreventScroll;
@@ -107,8 +110,6 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private string NativeSelectedOptionId => SelectedOption?.Id ?? string.Empty;
     private bool ShouldRenderNativePlaceholder => !string.IsNullOrWhiteSpace(Placeholder);
     private string NativePlaceholderText => Placeholder ?? "Select...";
-
-    private readonly record struct DomRect(double Width, double Height, double Top, double Bottom, double Left, double Right, double ViewportWidth, double ViewportHeight, bool IsInDialog);
 
     protected override bool TryParseValueFromString(string? value, out TValue result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
@@ -606,9 +607,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         if (_triggerRef.Context is not null)
         {
-            _module = await GetModuleAsync();
-            
-            var initialMeasurement = await _module.InvokeAsync<DomRect?>("measureTrigger", _triggerRef);
+            var initialMeasurement = await SelectRuntime.MeasureTriggerAsync(_triggerRef);
             
             if (initialMeasurement.HasValue)
             {
@@ -653,9 +652,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         if (_effectiveViewportPlacement && _triggerRef.Context is not null)
         {
-            _module = await GetModuleAsync();
-            
-            var measured = await _module.InvokeAsync<DomRect?>("measureTrigger", _triggerRef);
+            var measured = await SelectRuntime.MeasureTriggerAsync(_triggerRef);
             
             if (measured.HasValue)
             {
@@ -1098,20 +1095,12 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return ValueTask.CompletedTask;
     }
 
-    private async Task<IJSObjectReference> GetModuleAsync()
-    {
-        _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/HaloUI/js/haloSelect.js");
-        return _module;
-    }
-
     private async Task RegisterOutsideClickAsync()
     {
         try
         {
-            _module = await GetModuleAsync();
             _dotNetRef ??= DotNetObjectReference.Create(this);
-
-            await _module.InvokeVoidAsync("registerOutsideClick", _rootId, _dotNetRef);
+            await SelectRuntime.RegisterOutsideClickAsync(_rootId, _dotNetRef);
         }
         catch (JSDisconnectedException)
         {
@@ -1121,14 +1110,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private async Task UnregisterOutsideClickAsync()
     {
-        if (_module is null)
-        {
-            return;
-        }
-
         try
         {
-            await _module.InvokeVoidAsync("unregisterOutsideClick", _rootId);
+            await SelectRuntime.UnregisterOutsideClickAsync(_rootId);
         }
         catch (JSDisconnectedException)
         {
@@ -1194,8 +1178,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         try
         {
-            _module = await GetModuleAsync();
-            var useNativeSelect = await _module.InvokeAsync<bool>("shouldUseNativeSelect", MobileViewportBreakpointPx);
+            var useNativeSelect = await SelectRuntime.ShouldUseNativeSelectAsync(MobileViewportBreakpointPx);
             await ApplyViewportModeAsync(useNativeSelect);
         }
         catch (JSDisconnectedException)
@@ -1237,9 +1220,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         try
         {
-            _module = await GetModuleAsync();
             _dotNetRef ??= DotNetObjectReference.Create(this);
-            await _module.InvokeVoidAsync("registerViewportObserver", _rootId, MobileViewportBreakpointPx, _dotNetRef);
+            await SelectRuntime.RegisterViewportObserverAsync(_rootId, MobileViewportBreakpointPx, _dotNetRef);
             _viewportObserverRegistered = true;
         }
         catch (JSDisconnectedException)
@@ -1250,7 +1232,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private async Task UnregisterViewportObserverAsync()
     {
-        if (!_viewportObserverRegistered || _module is null)
+        if (!_viewportObserverRegistered)
         {
             _viewportObserverRegistered = false;
             return;
@@ -1258,7 +1240,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         try
         {
-            await _module.InvokeVoidAsync("unregisterViewportObserver", _rootId);
+            await SelectRuntime.UnregisterViewportObserverAsync(_rootId);
         }
         catch (JSDisconnectedException)
         {
@@ -1413,7 +1395,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return string.Join(';', items);
     }
 
-    private void CalculateDropdownPlacement(DomRect rect)
+    private void CalculateDropdownPlacement(SelectTriggerMeasurement rect)
     {
         var maxPreferredHeight = _preferMobileDropdownLayout
             ? Math.Min(rect.ViewportHeight * 0.6d, 22d * 16d)
@@ -1480,18 +1462,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (_module is not null)
-        {
-            try
-            {
-                await _module.InvokeVoidAsync("unregisterOutsideClick", _rootId);
-                await _module.InvokeVoidAsync("unregisterViewportObserver", _rootId);
-                await _module.DisposeAsync();
-            }
-            catch (JSDisconnectedException)
-            {
-            }
-        }
+        await UnregisterOutsideClickAsync();
+        await UnregisterViewportObserverAsync();
 
         _viewportObserverRegistered = false;
         _dotNetRef?.Dispose();

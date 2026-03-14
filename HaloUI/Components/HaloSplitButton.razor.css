@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.halo-split-button.is-disabled {
+.halo-split-button.halo-is-disabled {
     border-color: var(--halo-split-button-border-disabled);
     background: var(--halo-split-button-background-disabled);
     color: var(--halo-split-button-text-disabled);
@@ -57,7 +57,7 @@
     background: var(--halo-split-button-background-active);
 }
 
-.halo-split-button__segment.is-disabled,
+.halo-split-button__segment.halo-is-disabled,
 .halo-split-button__segment:disabled {
     cursor: not-allowed;
 }
@@ -89,7 +89,7 @@
     pointer-events: none;
 }
 
-.halo-split-button.is-disabled .halo-split-button__segment--toggle::before {
+.halo-split-button.halo-is-disabled .halo-split-button__segment--toggle::before {
     opacity: 0.28;
 }
 

@@ -292,11 +292,11 @@
     }
 }
 
-.toast-enter {
+.halo-snackbar-enter {
     animation: halo-snackbar-enter 0.25s ease-out forwards;
 }
 
-.toast-exit {
+.halo-snackbar-exit {
     animation: halo-snackbar-exit 0.18s ease-in forwards;
 }
 

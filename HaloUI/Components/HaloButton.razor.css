@@ -21,21 +21,21 @@
         position:relative;
     }
 
-    .halo-button:not(.is-disabled):hover {
+    .halo-button:not(.halo-is-disabled):hover {
         background:var(--halo-button-background-hover);
         border-color:var(--halo-button-border-hover);
     }
 
-    .halo-button:not(.is-disabled):active {
+    .halo-button:not(.halo-is-disabled):active {
         background:var(--halo-button-background-active);
     }
 
-    .halo-button.halo-button--active:not(.is-disabled):not(:disabled) {
+    .halo-button.halo-button--active:not(.halo-is-disabled):not(:disabled) {
         background:var(--halo-button-background-active);
         border-color:var(--halo-button-border-hover);
     }
 
-    .halo-button.is-disabled {
+    .halo-button.halo-is-disabled {
         cursor:not-allowed;
         opacity:0.6;
         background:var(--halo-button-background-disabled);
@@ -73,7 +73,7 @@
         color:var(--halo-button-text-color);
     }
 
-.halo-button.is-disabled ::deep .halo-button__icon {
+.halo-button.halo-is-disabled ::deep .halo-button__icon {
         color:var(--halo-button-text-disabled);
     }
 

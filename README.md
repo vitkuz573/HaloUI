@@ -64,6 +64,11 @@ Generate full Material icon manifests (all official `.codepoints` styles):
 
 This writes JSON manifests to `HaloUI.IconPacks.Material/Iconography/Packs/Material/`.
 
+## Runtime contracts
+- Snackbar API is request-first: use `ISnackbarService.Enqueue(SnackbarRequest)` and `SnackbarRequest.Info/Success/Warning/Error`.
+- `ISnackbarService` no longer exposes message-level helper methods.
+- `HaloSelect` JS interop is routed via `ISelectRuntime`; components should not import `haloSelect.js` directly.
+
 ## Accessibility and UI automation
 From `tests/accessibility`:
 

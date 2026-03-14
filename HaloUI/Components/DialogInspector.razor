@@ -12,29 +12,29 @@
 
 @if (_isVisible)
 {
-    <div class="rm-di">
-        <header class="rm-di__header">
-            <div class="rm-di__top">
-                <div class="rm-di__titles">
-                    <span class="rm-di__title">Dialog Inspector</span>
-                    <span class="rm-di__status">@HeaderStatus</span>
-                    <div class="rm-di__badges">
+    <div class="halo-di">
+        <header class="halo-di__header">
+            <div class="halo-di__top">
+                <div class="halo-di__titles">
+                    <span class="halo-di__title">Dialog Inspector</span>
+                    <span class="halo-di__status">@HeaderStatus</span>
+                    <div class="halo-di__badges">
                         @if (_preferences.IsPinned)
                         {
-                            <span class="rm-di-badge rm-di-badge--pinned">Pinned</span>
+                            <span class="halo-di-badge halo-di-badge--pinned">Pinned</span>
                         }
                         @if (_preferences.IsLogPaused)
                         {
-                            <span class="rm-di-badge rm-di-badge--paused">Paused</span>
+                            <span class="halo-di-badge halo-di-badge--paused">Paused</span>
                         }
                         @if (AnyFilters)
                         {
-                            <span class="rm-di-badge rm-di-badge--filters">Filters</span>
+                            <span class="halo-di-badge halo-di-badge--filters">Filters</span>
                         }
                     </div>
                 </div>
 
-                <div class="rm-di__actions">
+                <div class="halo-di__actions">
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
                               Density="ButtonDensity.Compact"
@@ -66,8 +66,8 @@
                 </div>
             </div>
 
-            <div class="rm-di__search-row">
-                <div class="rm-di__search">
+            <div class="halo-di__search-row">
+                <div class="halo-di__search">
                     <HaloTextField Type="TextFieldType.Search"
                                  Size="InputFieldSize.Small"
                                  Placeholder="Search title, principal, id, metadata…"
@@ -76,8 +76,8 @@
                                  InputChanged="HandleSearchInput" />
                 </div>
 
-                <div class="rm-di__view-switch">
-                    <span class="rm-di__view-label">View</span>
+                <div class="halo-di__view-switch">
+                    <span class="halo-di__view-label">View</span>
 
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
@@ -101,7 +101,7 @@
 
             @if (_preferences.ViewMode == InspectorViewMode.Activity)
             {
-                <div class="rm-di__filters">
+                <div class="halo-di__filters">
                     <HaloToggle Size="ToggleSize.Small"
                               Checked="@_preferences.ShowOnlyCancelled"
                               CheckedChanged="HandleCancelledFilterChanged"
@@ -129,7 +129,7 @@
 
                 @if (PendingEventCount > 0)
                 {
-                    <div class="rm-di__queue-banner">
+                    <div class="halo-di__queue-banner">
                         <span>@PendingEventCount event(s) queued while capture is paused.</span>
 
                         <HaloButton Size="ButtonSize.ExtraSmall"
@@ -144,8 +144,8 @@
             }
             else
             {
-                <div class="rm-di__access-filters">
-                    <div class="rm-di-field-group rm-di-field-group--reason">
+                <div class="halo-di__access-filters">
+                    <div class="halo-di-field-group halo-di-field-group--reason">
                         <span>Reason</span>
                         <HaloSelect TValue="DialogAccessDeniedReason?"
                                   Size="InputFieldSize.Small"
@@ -154,7 +154,7 @@
                                   EnumBehavior="@(new HaloUI.Components.Select.HaloSelectEnumBehavior<DialogAccessDeniedReason?> { Enabled = true, IncludeNullOption = true, NullOptionText = "All" })" />
                     </div>
 
-                    <div class="rm-di-field-group rm-di-field-group--role">
+                    <div class="halo-di-field-group halo-di-field-group--role">
                         <span>Role filter</span>
                         <HaloTextField Type="TextFieldType.Search"
                                      Size="InputFieldSize.Small"
@@ -175,27 +175,27 @@
             }
         </header>
 
-        <div class="rm-di__content">
-            <section class="rm-di__sessions">
+        <div class="halo-di__content">
+            <section class="halo-di__sessions">
                 @if (_activeSessions.Count == 0)
                 {
-                    <div class="rm-di-state">
+                    <div class="halo-di-state">
                         No dialogs are currently active.
                     </div>
                 }
                 else
                 {
-                    <ul class="rm-di-session-list">
+                    <ul class="halo-di-session-list">
                         @foreach (var session in _activeSessions)
                         {
-                            <li class="rm-di-session-card">
-                                <div class="rm-di-session-card__header">
-                                    <div class="rm-di-session-card__identity">
-                                        <span class="rm-di-session-card__title">@session.Title</span>
-                                        <span class="rm-di-session-card__id">@session.Id</span>
+                            <li class="halo-di-session-card">
+                                <div class="halo-di-session-card__header">
+                                    <div class="halo-di-session-card__identity">
+                                        <span class="halo-di-session-card__title">@session.Title</span>
+                                        <span class="halo-di-session-card__id">@session.Id</span>
                                     </div>
 
-                                    <div class="rm-di-session-card__meta">
+                                    <div class="halo-di-session-card__meta">
                                         <span>@FormatTimestamp(session.CreatedAt)</span>
                                         <span>↑ @FormatDuration(session.CreatedAt)</span>
 
@@ -208,43 +208,43 @@
                                     </div>
                                 </div>
 
-                                <div class="rm-di-session-card__details">
-                                    <div class="rm-di-detail">Size: <span class="rm-di-value">@session.Options.Size</span></div>
-                                    <div class="rm-di-detail">
+                                <div class="halo-di-session-card__details">
+                                    <div class="halo-di-detail">Size: <span class="halo-di-value">@session.Options.Size</span></div>
+                                    <div class="halo-di-detail">
                                         Presentation:
-                                        <span class="rm-di-value">@session.Options.Variant.Presentation</span>
+                                        <span class="halo-di-value">@session.Options.Variant.Presentation</span>
                                         @if (session.Options.Variant is DialogDrawerOptions drawerVariant)
                                         {
-                                            <span class="rm-di-subvalue">
+                                            <span class="halo-di-subvalue">
                                                 (@drawerVariant.Placement@if (!string.IsNullOrWhiteSpace(drawerVariant.Width)){<text>, @drawerVariant.Width</text>})
                                             </span>
                                         }
                                     </div>
-                                    <div class="rm-di-detail">
-                                        CloseOnEscape: <span class="rm-di-value">@session.Options.CloseOnEscape</span> ·
-                                        CloseOnOverlayClick: <span class="rm-di-value">@session.Options.CloseOnOverlayClick</span>
+                                    <div class="halo-di-detail">
+                                        CloseOnEscape: <span class="halo-di-value">@session.Options.CloseOnEscape</span> ·
+                                        CloseOnOverlayClick: <span class="halo-di-value">@session.Options.CloseOnOverlayClick</span>
                                     </div>
 
                                     @if (!string.IsNullOrWhiteSpace(session.Options.CssClass))
                                     {
-                                        <div class="rm-di-detail">CssClass: <span class="rm-di-value">@session.Options.CssClass</span></div>
+                                        <div class="halo-di-detail">CssClass: <span class="halo-di-value">@session.Options.CssClass</span></div>
                                     }
 
                                     @if (!string.IsNullOrWhiteSpace(session.Options.InitialFocusElementId))
                                     {
-                                        <div class="rm-di-detail">InitialFocus: <span class="rm-di-value">@session.Options.InitialFocusElementId</span></div>
+                                        <div class="halo-di-detail">InitialFocus: <span class="halo-di-value">@session.Options.InitialFocusElementId</span></div>
                                     }
                                 </div>
 
                                 @if (ShouldShowMetadata(session))
                                 {
-                                    <div class="rm-di-kv-panel">
-                                        <span class="rm-di-kv-panel__title">Metadata</span>
+                                    <div class="halo-di-kv-panel">
+                                        <span class="halo-di-kv-panel__title">Metadata</span>
                                         @foreach (var item in EnumerateMetadata(session.Metadata))
                                         {
-                                            <div class="rm-di-kv-row">
-                                                <span class="rm-di-kv-key">@item.Key</span>
-                                                <span class="rm-di-kv-value">@item.Value</span>
+                                            <div class="halo-di-kv-row">
+                                                <span class="halo-di-kv-key">@item.Key</span>
+                                                <span class="halo-di-kv-value">@item.Value</span>
                                             </div>
                                         }
                                     </div>
@@ -252,13 +252,13 @@
 
                                 @if (ShouldShowContext(session))
                                 {
-                                    <div class="rm-di-kv-panel">
-                                        <span class="rm-di-kv-panel__title">Context</span>
+                                    <div class="halo-di-kv-panel">
+                                        <span class="halo-di-kv-panel__title">Context</span>
                                         @foreach (var (label, value) in EnumerateContext(session.Context))
                                         {
-                                            <div class="rm-di-kv-row">
-                                                <span class="rm-di-kv-key">@label</span>
-                                                <span class="rm-di-kv-value">@value</span>
+                                            <div class="halo-di-kv-row">
+                                                <span class="halo-di-kv-key">@label</span>
+                                                <span class="halo-di-kv-value">@value</span>
                                             </div>
                                         }
                                     </div>
@@ -269,10 +269,10 @@
                 }
             </section>
 
-            <section class="rm-di__events">
-                <div class="rm-di__events-header">
-                    <span class="rm-di__events-title">@(_preferences.ViewMode == InspectorViewMode.Activity ? "Activity log" : "Access denials")</span>
-                    <span class="rm-di__events-summary">
+            <section class="halo-di__events">
+                <div class="halo-di__events-header">
+                    <span class="halo-di__events-title">@(_preferences.ViewMode == InspectorViewMode.Activity ? "Activity log" : "Access denials")</span>
+                    <span class="halo-di__events-summary">
                         @(_preferences.ViewMode switch
                         {
                             InspectorViewMode.Activity => GetActivityLogSummary(),
@@ -288,41 +288,41 @@
 
                     @if (activityEntries.Length == 0)
                     {
-                        <div class="rm-di-state rm-di-state--compact">
+                        <div class="halo-di-state halo-di-state--compact">
                             @(HasActivityFilters ? "No events match the current filters." : "Awaiting activity…")
                         </div>
                     }
                     else
                     {
-                        <ul class="rm-di-log-list">
+                        <ul class="halo-di-log-list">
                             @foreach (var entry in activityEntries)
                             {
                                 <li class="@GetActivityEntryClass(entry)">
-                                    <div class="rm-di-log-entry__body">
-                                        <span class="rm-di-log-entry__title">@entry.Title</span>
-                                        <span class="rm-di-log-entry__description">@entry.EventDescription</span>
+                                    <div class="halo-di-log-entry__body">
+                                        <span class="halo-di-log-entry__title">@entry.Title</span>
+                                        <span class="halo-di-log-entry__description">@entry.EventDescription</span>
 
                                         @if (!string.IsNullOrWhiteSpace(entry.Principal))
                                         {
-                                            <span class="rm-di-log-entry__meta">Principal · @entry.Principal</span>
+                                            <span class="halo-di-log-entry__meta">Principal · @entry.Principal</span>
                                         }
 
                                         @if (_preferences.ShowContext && entry.Context.HasContextData)
                                         {
-                                            <span class="rm-di-log-entry__meta">
+                                            <span class="halo-di-log-entry__meta">
                                                 @string.Join(" · ", EnumerateContext(entry.Context).Take(2).Select(tuple => $"{tuple.Label}: {tuple.Value}"))
                                             </span>
                                         }
 
                                         @if (_preferences.ShowMetadata && _options.CaptureMetadata && entry.HasMetadata)
                                         {
-                                            <span class="rm-di-log-entry__meta">
+                                            <span class="halo-di-log-entry__meta">
                                                 @string.Join(" · ", EnumerateMetadata(entry.Metadata).Take(2).Select(pair => $"{pair.Key}: {pair.Value}"))
                                             </span>
                                         }
                                     </div>
 
-                                    <div class="rm-di-log-entry__stamp">
+                                    <div class="halo-di-log-entry__stamp">
                                         <span>@FormatTimestamp(entry.Timestamp)</span>
                                         <span>@entry.DialogId</span>
                                     </div>
@@ -337,32 +337,32 @@
 
                     @if (denialEntries.Length == 0)
                     {
-                        <div class="rm-di-state rm-di-state--compact rm-di-state--danger">
+                        <div class="halo-di-state halo-di-state--compact halo-di-state--danger">
                             @(HasAccessFilters ? "No access denials match the current filters." : "No access denials recorded.")
                         </div>
                     }
                     else
                     {
-                        <ul class="rm-di-log-list">
+                        <ul class="halo-di-log-list">
                             @foreach (var entry in denialEntries)
                             {
-                                <li class="rm-di-log-entry rm-di-log-entry--denied">
-                                    <div class="rm-di-log-entry__body">
-                                        <span class="rm-di-log-entry__title">@entry.Title</span>
-                                        <span class="rm-di-log-entry__description">@entry.EventDescription</span>
+                                <li class="halo-di-log-entry halo-di-log-entry--denied">
+                                    <div class="halo-di-log-entry__body">
+                                        <span class="halo-di-log-entry__title">@entry.Title</span>
+                                        <span class="halo-di-log-entry__description">@entry.EventDescription</span>
 
                                         @if (!string.IsNullOrWhiteSpace(entry.Principal))
                                         {
-                                            <span class="rm-di-log-entry__meta">Principal · @entry.Principal</span>
+                                            <span class="halo-di-log-entry__meta">Principal · @entry.Principal</span>
                                         }
 
                                         @if (entry.MissingRoles?.Any() == true)
                                         {
-                                            <span class="rm-di-log-entry__meta">Missing roles · @string.Join(", ", entry.MissingRoles!)</span>
+                                            <span class="halo-di-log-entry__meta">Missing roles · @string.Join(", ", entry.MissingRoles!)</span>
                                         }
                                     </div>
 
-                                    <div class="rm-di-log-entry__stamp">
+                                    <div class="halo-di-log-entry__stamp">
                                         <span>@FormatTimestamp(entry.Timestamp)</span>
                                         <span>@entry.DialogId</span>
                                     </div>

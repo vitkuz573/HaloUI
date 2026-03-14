@@ -212,9 +212,9 @@ public partial class AriaInspector
     {
         return severity switch
         {
-            AriaDiagnosticsSeverity.Error => "rm-ai-entry rm-ai-entry--error",
-            AriaDiagnosticsSeverity.Warning => "rm-ai-entry rm-ai-entry--warning",
-            _ => "rm-ai-entry rm-ai-entry--ok"
+            AriaDiagnosticsSeverity.Error => "halo-ai-entry halo-ai-entry--error",
+            AriaDiagnosticsSeverity.Warning => "halo-ai-entry halo-ai-entry--warning",
+            _ => "halo-ai-entry halo-ai-entry--ok"
         };
     }
 
@@ -222,9 +222,9 @@ public partial class AriaInspector
     {
         return severity switch
         {
-            AriaDiagnosticsSeverity.Error => "rm-ai-pill rm-ai-pill--error",
-            AriaDiagnosticsSeverity.Warning => "rm-ai-pill rm-ai-pill--warning",
-            _ => "rm-ai-pill rm-ai-pill--ok"
+            AriaDiagnosticsSeverity.Error => "halo-ai-pill halo-ai-pill--error",
+            AriaDiagnosticsSeverity.Warning => "halo-ai-pill halo-ai-pill--warning",
+            _ => "halo-ai-pill halo-ai-pill--ok"
         };
     }
 

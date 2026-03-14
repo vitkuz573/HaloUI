@@ -34,8 +34,8 @@ public class HaloTextFieldTests : BunitContext
         Assert.Contains("halo-textfield__input", input.ClassList);
         Assert.Contains("halo-textfield__input--adorned-start", input.ClassList);
         Assert.Contains("halo-textfield__input--adorned-end", input.ClassList);
-        Assert.Contains("is-error", input.ClassList);
-        Assert.Contains("is-disabled", input.ClassList);
+        Assert.Contains("halo-is-error", input.ClassList);
+        Assert.Contains("halo-is-disabled", input.ClassList);
 
         Assert.Equal("search", input.GetAttribute("type"));
         Assert.Equal("Search devices", input.GetAttribute("placeholder"));
@@ -58,7 +58,7 @@ public class HaloTextFieldTests : BunitContext
 
         var input = cut.Find("input");
         Assert.Contains("halo-textfield__input", input.ClassList);
-        Assert.Contains("is-readonly", input.ClassList);
+        Assert.Contains("halo-is-readonly", input.ClassList);
         Assert.Equal("readonly", input.GetAttribute("readonly"));
         Assert.Equal("true", input.GetAttribute("aria-readonly"));
     }

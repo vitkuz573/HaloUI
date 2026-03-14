@@ -12,25 +12,25 @@
 
 @if (_isVisible)
 {
-    <div class="rm-ai">
-        <header class="rm-ai__header">
-            <div class="rm-ai__top">
-                <div class="rm-ai__titles">
-                    <span class="rm-ai__title">ARIA Inspector</span>
-                    <span class="rm-ai__status">@HeaderStatus</span>
-                    <div class="rm-ai__badges">
+    <div class="halo-ai">
+        <header class="halo-ai__header">
+            <div class="halo-ai__top">
+                <div class="halo-ai__titles">
+                    <span class="halo-ai__title">ARIA Inspector</span>
+                    <span class="halo-ai__status">@HeaderStatus</span>
+                    <div class="halo-ai__badges">
                         @if (_preferences.IsPinned)
                         {
-                            <span class="rm-ai-badge rm-ai-badge--pinned">Pinned</span>
+                            <span class="halo-ai-badge halo-ai-badge--pinned">Pinned</span>
                         }
                         @if (HasFilters)
                         {
-                            <span class="rm-ai-badge rm-ai-badge--filters">Filters</span>
+                            <span class="halo-ai-badge halo-ai-badge--filters">Filters</span>
                         }
                     </div>
                 </div>
 
-                <div class="rm-ai__actions">
+                <div class="halo-ai__actions">
                     <HaloButton Size="ButtonSize.ExtraSmall"
                               Variant="ButtonVariant.Secondary"
                               Density="ButtonDensity.Compact"
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="rm-ai__toggles">
+            <div class="halo-ai__toggles">
                 <HaloButton Size="ButtonSize.ExtraSmall"
                           Variant="ButtonVariant.Secondary"
                           Density="ButtonDensity.Compact"
@@ -84,7 +84,7 @@
                 </HaloButton>
             </div>
 
-            <div class="rm-ai__search-row">
+            <div class="halo-ai__search-row">
                 <HaloTextField Type="TextFieldType.Search"
                              Size="InputFieldSize.Small"
                              Placeholder="Search in attributes..."
@@ -105,49 +105,49 @@
             </div>
         </header>
 
-        <div class="rm-ai__content">
-            <section class="rm-ai__events">
+        <div class="halo-ai__content">
+            <section class="halo-ai__events">
                 @{ var filteredEvents = GetFilteredEvents().ToList(); }
 
                 @if (_eventLog.Count == 0)
                 {
-                    <div class="rm-ai-state">
+                    <div class="halo-ai-state">
                         No accessibility inspections recorded yet.
                     </div>
                 }
                 else if (!filteredEvents.Any())
                 {
-                    <div class="rm-ai-state">
+                    <div class="halo-ai-state">
                         No accessibility inspections match the current filters.
                     </div>
                 }
                 else
                 {
-                    <ul class="rm-ai-list">
+                    <ul class="halo-ai-list">
                         @foreach (var entry in filteredEvents)
                         {
                             <li class="@GetEntryClass(entry.Severity)">
-                                <div class="rm-ai-entry__header">
-                                    <div class="rm-ai-entry__identity">
-                                        <span class="rm-ai-entry__role">@FormatRole(entry.Role)</span>
-                                        <span class="rm-ai-entry__compliance">Compliance: @entry.Compliance</span>
+                                <div class="halo-ai-entry__header">
+                                    <div class="halo-ai-entry__identity">
+                                        <span class="halo-ai-entry__role">@FormatRole(entry.Role)</span>
+                                        <span class="halo-ai-entry__compliance">Compliance: @entry.Compliance</span>
 
-                                        <div class="rm-ai-entry__chips">
+                                        <div class="halo-ai-entry__chips">
                                             <span class="@GetSeverityPillClass(entry.Severity)">@entry.Severity</span>
 
                                             @if (!string.IsNullOrWhiteSpace(entry.Metadata.Source))
                                             {
-                                                <span class="rm-ai-chip">@entry.Metadata.Source</span>
+                                                <span class="halo-ai-chip">@entry.Metadata.Source</span>
                                             }
 
                                             @if (!string.IsNullOrWhiteSpace(entry.Metadata.ElementId))
                                             {
-                                                <span class="rm-ai-chip">id: @entry.Metadata.ElementId</span>
+                                                <span class="halo-ai-chip">id: @entry.Metadata.ElementId</span>
                                             }
                                         </div>
                                     </div>
 
-                                    <div class="rm-ai-entry__stamp">
+                                    <div class="halo-ai-entry__stamp">
                                         <span>@FormatTimestamp(entry.Timestamp)</span>
                                         <span>@entry.Id</span>
                                     </div>
@@ -155,41 +155,41 @@
 
                                 @if (entry.Metadata.Tags.Count > 0)
                                 {
-                                    <div class="rm-ai-entry__chips rm-ai-entry__chips--tags">
+                                    <div class="halo-ai-entry__chips halo-ai-entry__chips--tags">
                                         @foreach (var tag in entry.Metadata.Tags)
                                         {
-                                            <span class="rm-ai-chip">@tag.Key: @tag.Value</span>
+                                            <span class="halo-ai-chip">@tag.Key: @tag.Value</span>
                                         }
                                     </div>
                                 }
 
                                 @if (entry.MissingRequired.Count > 0)
                                 {
-                                    <div class="rm-ai-note rm-ai-note--danger">
-                                        <span class="rm-ai-note__title">Missing required:</span>
+                                    <div class="halo-ai-note halo-ai-note--danger">
+                                        <span class="halo-ai-note__title">Missing required:</span>
                                         <span>@string.Join(", ", entry.MissingRequired)</span>
                                     </div>
                                 }
 
                                 @if (entry.Disallowed.Count > 0)
                                 {
-                                    <div class="rm-ai-note rm-ai-note--error">
-                                        <span class="rm-ai-note__title">Disallowed attributes:</span>
+                                    <div class="halo-ai-note halo-ai-note--error">
+                                        <span class="halo-ai-note__title">Disallowed attributes:</span>
                                         <span>@string.Join(", ", entry.Disallowed)</span>
                                     </div>
                                 }
 
                                 @if (entry.Recommendations.Count > 0)
                                 {
-                                    <div class="rm-ai-note rm-ai-note--warning">
-                                        <span class="rm-ai-note__title">Recommendations:</span>
+                                    <div class="halo-ai-note halo-ai-note--warning">
+                                        <span class="halo-ai-note__title">Recommendations:</span>
                                         <span>@string.Join(", ", entry.Recommendations)</span>
                                     </div>
                                 }
 
                                 @if (_preferences.ShowAttributes)
                                 {
-                                    <dl class="rm-ai-attrs">
+                                    <dl class="halo-ai-attrs">
                                         @foreach (var attr in entry.Attributes.OrderBy(static pair => pair.Key, StringComparer.OrdinalIgnoreCase))
                                         {
                                             <dt>@attr.Key</dt>

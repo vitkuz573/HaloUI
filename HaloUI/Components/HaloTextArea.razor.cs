@@ -80,7 +80,7 @@ public partial class HaloTextArea
 
         if (Disabled)
         {
-            classes.Add("is-disabled");
+            classes.Add("halo-is-disabled");
         }
 
         if (!string.IsNullOrWhiteSpace(InputClass))

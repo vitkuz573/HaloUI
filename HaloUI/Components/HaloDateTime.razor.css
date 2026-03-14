@@ -48,7 +48,7 @@
     }
 
     .halo-datetime--error .halo-datetime__input,
-    .halo-datetime__input.is-error {
+    .halo-datetime__input.halo-is-error {
         background:var(--halo-input-error-background);
         color:var(--halo-input-error-text);
         border-color:var(--halo-input-error-border);
@@ -56,12 +56,12 @@
     }
 
     .halo-datetime--error .halo-datetime__input::placeholder,
-    .halo-datetime__input.is-error::placeholder {
+    .halo-datetime__input.halo-is-error::placeholder {
         color:var(--halo-input-error-placeholder);
     }
 
     .halo-datetime--disabled .halo-datetime__input,
-    .halo-datetime__input.is-disabled {
+    .halo-datetime__input.halo-is-disabled {
         background:var(--halo-input-disabled-background);
         color:var(--halo-input-disabled-text);
         border-color:var(--halo-input-disabled-border);
@@ -70,12 +70,12 @@
     }
 
     .halo-datetime--disabled .halo-datetime__input::placeholder,
-    .halo-datetime__input.is-disabled::placeholder {
+    .halo-datetime__input.halo-is-disabled::placeholder {
         color:var(--halo-input-disabled-placeholder);
     }
 
     .halo-datetime--readonly .halo-datetime__input,
-    .halo-datetime__input.is-readonly {
+    .halo-datetime__input.halo-is-readonly {
         background:var(--halo-input-disabled-background);
         color:var(--halo-input-disabled-text);
         border-color:var(--halo-input-disabled-border);
@@ -84,7 +84,7 @@
     }
 
     .halo-datetime--readonly .halo-datetime__input::placeholder,
-    .halo-datetime__input.is-readonly::placeholder {
+    .halo-datetime__input.halo-is-readonly::placeholder {
         color:var(--halo-input-disabled-placeholder);
     }
 

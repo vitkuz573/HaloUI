@@ -80,7 +80,7 @@
     }
 
     .halo-textfield--disabled .halo-textfield__input,
-    .halo-textfield__input.is-disabled {
+    .halo-textfield__input.halo-is-disabled {
         background: var(--halo-input-disabled-background);
         color: var(--halo-input-disabled-text);
         border-color: var(--halo-input-disabled-border);
@@ -89,12 +89,12 @@
     }
 
     .halo-textfield--disabled .halo-textfield__input::placeholder,
-    .halo-textfield__input.is-disabled::placeholder {
+    .halo-textfield__input.halo-is-disabled::placeholder {
         color: var(--halo-input-disabled-placeholder);
     }
 
     .halo-textfield--readonly .halo-textfield__input,
-    .halo-textfield__input.is-readonly {
+    .halo-textfield__input.halo-is-readonly {
         background: var(--halo-input-disabled-background);
         color: var(--halo-input-disabled-text);
         border-color: var(--halo-input-disabled-border);
@@ -103,7 +103,7 @@
     }
 
     .halo-textfield--readonly .halo-textfield__input::placeholder,
-    .halo-textfield__input.is-readonly::placeholder {
+    .halo-textfield__input.halo-is-readonly::placeholder {
         color: var(--halo-input-disabled-placeholder);
     }
 

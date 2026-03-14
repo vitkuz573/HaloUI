@@ -238,7 +238,7 @@ public partial class HaloTable<TItem>
 
         if (IsCollapsible && !_isExpanded)
         {
-            classes.Add("is-collapsed");
+            classes.Add("halo-is-collapsed");
         }
 
         return string.Join(' ', classes);
@@ -346,7 +346,7 @@ public partial class HaloTable<TItem>
         var classes = new List<string> { "halo-table__mobile-card" };
         if (_state.IsSelected(item) && _options.SelectionMode != TableSelectionMode.None)
         {
-            classes.Add("is-selected");
+            classes.Add("halo-is-selected");
         }
 
         return string.Join(' ', classes);
@@ -361,7 +361,7 @@ public partial class HaloTable<TItem>
     {
         if (_state.IsSelected(item) && _options.SelectionMode != TableSelectionMode.None)
         {
-            return "is-selected";
+            return "halo-is-selected";
         }
 
         return string.Empty;
@@ -372,7 +372,7 @@ public partial class HaloTable<TItem>
         var classes = new List<string> { "halo-table__head-button" };
         if (_state.GetSortDirection(columnId) is TableSortDirection.Ascending or TableSortDirection.Descending)
         {
-            classes.Add("is-active");
+            classes.Add("halo-is-active");
         }
 
         return string.Join(' ', classes);

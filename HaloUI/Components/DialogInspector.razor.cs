@@ -35,10 +35,10 @@ public partial class DialogInspector
     {
         return entry.Kind switch
         {
-            DialogInspectorEventKind.Opened => "rm-di-log-entry rm-di-log-entry--opened",
-            DialogInspectorEventKind.AccessDenied => "rm-di-log-entry rm-di-log-entry--denied",
-            DialogInspectorEventKind.Closed when entry.WasCancelled => "rm-di-log-entry rm-di-log-entry--cancelled",
-            _ => "rm-di-log-entry rm-di-log-entry--closed"
+            DialogInspectorEventKind.Opened => "halo-di-log-entry halo-di-log-entry--opened",
+            DialogInspectorEventKind.AccessDenied => "halo-di-log-entry halo-di-log-entry--denied",
+            DialogInspectorEventKind.Closed when entry.WasCancelled => "halo-di-log-entry halo-di-log-entry--cancelled",
+            _ => "halo-di-log-entry halo-di-log-entry--closed"
         };
     }
 

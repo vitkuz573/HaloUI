@@ -1,11 +1,8 @@
 @typeparam TValue
 
-@using Microsoft.JSInterop
 @using HaloUI.Components.Base
 
 @inherits HaloLabellableInputBase<TValue>
-
-@inject IJSRuntime JsRuntime
 
 <div id="@_rootId" class="@BuildWrapperClass()" tabindex="-1" @attributes="BuildWrapperAttributes()">
     @if (!string.IsNullOrWhiteSpace(Label))

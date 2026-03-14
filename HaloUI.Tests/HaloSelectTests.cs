@@ -7,6 +7,8 @@ using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
+using HaloUI.Abstractions;
 using HaloUI.Components;
 using HaloUI.Components.Select;
 using HaloUI.Enums;
@@ -19,6 +21,7 @@ public class HaloSelectTests : BunitContext
     public HaloSelectTests()
     {
         JSInterop.Mode = JSRuntimeMode.Loose;
+        Services.AddSingleton<ISelectRuntime, NoOpSelectRuntime>();
     }
 
     [Fact]
