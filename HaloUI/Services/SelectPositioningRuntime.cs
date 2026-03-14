@@ -66,6 +66,69 @@ internal sealed class SelectPositioningRuntime : JsModuleRuntimeBase, ISelectPos
             result.MaxHeightPx);
     }
 
+    public async ValueTask RegisterOutsideCloseAsync(
+        string selectId,
+        ElementReference triggerElement,
+        ElementReference dropdownElement,
+        object dotNetReference,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(selectId))
+        {
+            return;
+        }
+
+        try
+        {
+            await InvokeVoidAsync(
+                "registerOutsideClose",
+                cancellationToken,
+                selectId,
+                triggerElement,
+                dropdownElement,
+                dotNetReference);
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+    }
+
+    public async ValueTask UnregisterOutsideCloseAsync(
+        string selectId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(selectId))
+        {
+            return;
+        }
+
+        try
+        {
+            await InvokeVoidAsync("unregisterOutsideClose", cancellationToken, selectId);
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+    }
+
     private sealed record SelectPositioningRequest(
         bool PreferUpward,
         double MaxHeightPx,

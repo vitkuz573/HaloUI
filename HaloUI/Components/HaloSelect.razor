@@ -51,12 +51,7 @@
 
             @if (_isOpen)
             {
-                <button type="button"
-                        class="halo-select__backdrop"
-                        tabindex="-1"
-                        aria-hidden="true"
-                        @onclick="HandleBackdropClickAsync"></button>
-                <div id="@_dropdownId" class="@BuildDropdownClass()" role="listbox" aria-labelledby="@InputId" style="@BuildDropdownPositionStyle()" tabindex="-1" @onkeydown="HandleDropdownKeyDown">
+                <div id="@_dropdownId" class="@BuildDropdownClass()" role="listbox" aria-labelledby="@InputId" style="@BuildDropdownPositionStyle()" tabindex="-1" @onkeydown="HandleDropdownKeyDown" @ref="_dropdownRef">
                     @if (_optionItems.Count == 0)
                     {
                         <div class="halo-select__empty">No options</div>

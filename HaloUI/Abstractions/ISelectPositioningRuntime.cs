@@ -20,6 +20,23 @@ internal interface ISelectPositioningRuntime : IAsyncDisposable
         double maxHeightPx,
         double gapPx,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Registers global outside-interaction handling for an opened select.
+    /// </summary>
+    ValueTask RegisterOutsideCloseAsync(
+        string selectId,
+        ElementReference triggerElement,
+        ElementReference dropdownElement,
+        object dotNetReference,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Unregisters global outside-interaction handling for a select.
+    /// </summary>
+    ValueTask UnregisterOutsideCloseAsync(
+        string selectId,
+        CancellationToken cancellationToken = default);
 }
 
 /// <summary>

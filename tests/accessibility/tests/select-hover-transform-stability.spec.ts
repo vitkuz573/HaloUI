@@ -166,14 +166,17 @@ test.describe('Select overlay stability in transformed cards', () => {
     const secondX = Math.floor(secondBounds.x + (secondBounds.width / 2));
     const secondY = Math.floor(secondBounds.y + (secondBounds.height / 2));
 
-    // First click on another trigger must close the currently open select via backdrop.
-    await page.mouse.click(secondX, secondY);
-    await expect(page.locator('.halo-select__dropdown')).toHaveCount(0);
-
-    // Second click opens the target select; still only one select can be open.
+    // One click on another trigger closes the previous select and opens the new one.
     await page.mouse.click(secondX, secondY);
     const dropdowns = page.locator('.halo-select__dropdown');
     await expect(dropdowns).toHaveCount(1);
     await expect(dropdowns.first()).toBeVisible();
+
+    const activeDropdownBounds = await dropdowns.first().boundingBox();
+    if (!activeDropdownBounds) {
+      return;
+    }
+
+    expect(Math.abs(activeDropdownBounds.x - secondBounds.x)).toBeLessThanOrEqual(4);
   });
 });

@@ -12,6 +12,7 @@ using HaloUI.Accessibility.Aria;
 using HaloUI.Components.Internal;
 using HaloUI.Components.Select;
 using HaloUI.Enums;
+using HaloUI.Services;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
 using HaloUI.Theme.Tokens.Component;
@@ -90,8 +91,13 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private DateTimeOffset? _lastTypeaheadAt;
     private bool _pointerInteractionMode;
     private ElementReference _triggerRef;
+    private ElementReference _dropdownRef;
     private OptionItem? _pendingFocusOption;
     private bool _pendingFocusPreventScroll;
+    private bool _outsideCloseRegistrationPending;
+    private bool _outsideCloseRegistered;
+    private SelectOutsideCloseBridge? _outsideCloseBridge;
+    private bool _isDisposed;
 
     private bool IsInvalid => HasError || (EditContext?.GetValidationMessages(FieldIdentifier).Any() ?? false);
     private bool IsTriggerDisabled => Disabled;
@@ -608,6 +614,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             _dropdownOpensUpward = initialPlacement.OpenUpward;
         }
         _pendingPlacementMeasurement = true;
+        _outsideCloseRegistrationPending = true;
+        _outsideCloseRegistered = false;
 
         _isOpen = true;
 
@@ -639,16 +647,21 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return;
         }
 
+        await UnregisterOutsideCloseAsync();
+
         _isOpen = false;
         _dropdownOpensUpward = EffectiveBehavior.OpenUpward;
         _dropdownMaxHeightPx = null;
         _dropdownPlacement = null;
+        _dropdownRef = default;
         _pendingPlacementMeasurement = false;
         _typeaheadBuffer = string.Empty;
         _lastTypeaheadAt = null;
         _pendingFocusOption = null;
         _pendingFocusPreventScroll = false;
         _pointerInteractionMode = false;
+        _outsideCloseRegistrationPending = false;
+        _outsideCloseRegistered = false;
 
         if (focusTrigger)
         {
@@ -1065,6 +1078,15 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             }
         }
 
+        if (!UseNativeSelectPresentation &&
+            _isOpen &&
+            _outsideCloseRegistrationPending &&
+            !_outsideCloseRegistered &&
+            _dropdownRef.Context is not null)
+        {
+            await RegisterOutsideCloseAsync();
+        }
+
         if (!UseNativeSelectPresentation && _pendingFocusOption is { ElementRef.Context: not null } option)
         {
             var preventScroll = _pendingFocusPreventScroll;
@@ -1078,6 +1100,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         {
             _pendingFocusOption = null;
             _pendingFocusPreventScroll = false;
+            _outsideCloseRegistrationPending = false;
+            _outsideCloseRegistered = false;
         }
 
         await base.OnAfterRenderAsync(firstRender);
@@ -1139,9 +1163,53 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             DropdownGapPx);
     }
 
-    private Task HandleBackdropClickAsync()
+    private async Task RegisterOutsideCloseAsync()
     {
-        return CloseDropdownAsync();
+        if (SelectPositioningRuntime is null ||
+            _outsideCloseRegistered ||
+            _dropdownRef.Context is null)
+        {
+            return;
+        }
+
+        _outsideCloseBridge ??= new SelectOutsideCloseBridge(RequestCloseFromOutsideInteractionAsync);
+
+        await SelectPositioningRuntime.RegisterOutsideCloseAsync(
+            _selectId,
+            _triggerRef,
+            _dropdownRef,
+            _outsideCloseBridge.GetOrCreateReference());
+
+        _outsideCloseRegistered = true;
+        _outsideCloseRegistrationPending = false;
+    }
+
+    private async Task UnregisterOutsideCloseAsync()
+    {
+        if (SelectPositioningRuntime is null)
+        {
+            return;
+        }
+
+        await SelectPositioningRuntime.UnregisterOutsideCloseAsync(_selectId);
+    }
+
+    private Task RequestCloseFromOutsideInteractionAsync()
+    {
+        if (_isDisposed || !_isOpen)
+        {
+            return Task.CompletedTask;
+        }
+
+        return InvokeAsync(async () =>
+        {
+            if (_isDisposed || !_isOpen)
+            {
+                return;
+            }
+
+            await CloseDropdownAsync();
+        });
     }
 
     private string BuildWrapperClass()
@@ -1288,7 +1356,23 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return LabelVariant.Primary;
     }
 
-    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+    public async ValueTask DisposeAsync()
+    {
+        if (_isDisposed)
+        {
+            return;
+        }
+
+        _isDisposed = true;
+
+        await UnregisterOutsideCloseAsync();
+
+        _outsideCloseRegistered = false;
+        _outsideCloseRegistrationPending = false;
+
+        _outsideCloseBridge?.Dispose();
+        _outsideCloseBridge = null;
+    }
 
     private sealed class OptionItem
     {

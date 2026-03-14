@@ -1,5 +1,6 @@
 const VIEWPORT_PADDING_PX = 8;
 const MIN_DROPDOWN_HEIGHT_PX = 112;
+let activeOutsideCloseRegistration = null;
 
 function toFiniteNumber(value, fallback) {
     return Number.isFinite(value) ? value : fallback;
@@ -151,4 +152,102 @@ export function calculateDropdownPlacement(triggerElement, request) {
         widthPx: Math.round(widthPx),
         maxHeightPx: Math.floor(maxHeightPx)
     };
+}
+
+function clearActiveOutsideCloseRegistration() {
+    if (!activeOutsideCloseRegistration) {
+        return;
+    }
+
+    document.removeEventListener(
+        'pointerdown',
+        activeOutsideCloseRegistration.onPointerDownCapture,
+        true);
+    document.removeEventListener(
+        'focusin',
+        activeOutsideCloseRegistration.onFocusInCapture,
+        true);
+    activeOutsideCloseRegistration = null;
+}
+
+function isInside(element, target) {
+    return element instanceof Element && element.contains(target);
+}
+
+function requestClose(dotNetReference) {
+    if (!dotNetReference || typeof dotNetReference.invokeMethodAsync !== 'function') {
+        return;
+    }
+
+    void dotNetReference.invokeMethodAsync('RequestCloseAsync').catch(() => { });
+}
+
+export function registerOutsideClose(selectId, triggerElement, dropdownElement, dotNetReference) {
+    if (
+        typeof selectId !== 'string' ||
+        selectId.length === 0 ||
+        !(triggerElement instanceof Element) ||
+        !(dropdownElement instanceof Element) ||
+        !dotNetReference) {
+        return;
+    }
+
+    if (activeOutsideCloseRegistration) {
+        const previous = activeOutsideCloseRegistration;
+        clearActiveOutsideCloseRegistration();
+
+        if (previous.selectId !== selectId) {
+            requestClose(previous.dotNetReference);
+        }
+    }
+
+    const onPointerDownCapture = (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) {
+            return;
+        }
+
+        if (isInside(triggerElement, target) || isInside(dropdownElement, target)) {
+            return;
+        }
+
+        clearActiveOutsideCloseRegistration();
+        requestClose(dotNetReference);
+    };
+
+    const onFocusInCapture = (event) => {
+        const target = event.target;
+        if (!(target instanceof Node)) {
+            return;
+        }
+
+        if (isInside(triggerElement, target) || isInside(dropdownElement, target)) {
+            return;
+        }
+
+        clearActiveOutsideCloseRegistration();
+        requestClose(dotNetReference);
+    };
+
+    activeOutsideCloseRegistration = {
+        selectId,
+        dotNetReference,
+        onPointerDownCapture,
+        onFocusInCapture
+    };
+
+    document.addEventListener('pointerdown', onPointerDownCapture, true);
+    document.addEventListener('focusin', onFocusInCapture, true);
+}
+
+export function unregisterOutsideClose(selectId) {
+    if (!activeOutsideCloseRegistration) {
+        return;
+    }
+
+    if (activeOutsideCloseRegistration.selectId !== selectId) {
+        return;
+    }
+
+    clearActiveOutsideCloseRegistration();
 }

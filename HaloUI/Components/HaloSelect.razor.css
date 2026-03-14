@@ -42,22 +42,6 @@
         width:100%;
     }
 
-    .halo-select__backdrop {
-        position:fixed;
-        /*
-         * Select can live inside transformed ancestors (e.g. HaloCard:hover with translateY),
-         * which re-roots fixed positioning to that ancestor. Expanding inset keeps the
-         * backdrop clickable across the viewport instead of only inside the ancestor bounds.
-         */
-        inset:-100vmax;
-        border:none;
-        background:transparent;
-        margin:0;
-        padding:0;
-        z-index:calc(var(--halo-select-dropdown-z-index, 1000) - 1);
-        cursor:default;
-    }
-
     .halo-select__trigger {
         display:flex;
         align-items:center;
