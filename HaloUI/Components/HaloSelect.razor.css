@@ -193,6 +193,11 @@
     }
 
     .halo-select__dropdown {
+        position:fixed;
+        top:0;
+        left:0;
+        right:auto;
+        bottom:auto;
         display:flex;
         flex-direction:column;
         overflow-y:auto;
@@ -206,6 +211,14 @@
         padding:var(--halo-select-dropdown-padding-y) var(--halo-select-dropdown-padding-x);
         z-index:var(--halo-select-dropdown-z-index);
         max-width:100%;
+        max-height:min(var(--halo-select-dropdown-max-height, 16rem), calc(100dvh - 1rem));
+        visibility:hidden;
+        pointer-events:none;
+    }
+
+    .halo-select__dropdown--upward {
+        top:0;
+        bottom:auto;
     }
 
     .halo-select__option {

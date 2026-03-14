@@ -6,6 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Components.Internal;
@@ -65,6 +67,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     [Parameter]
     public HaloSelectEnumBehavior<TValue> EnumBehavior { get; set; } = HaloSelectEnumBehavior<TValue>.Disabled;
 
+    [Inject]
+    private IServiceProvider ServiceProvider { get; set; } = default!;
+
     private readonly string _selectId = AccessibilityIdGenerator.Create("halo-select");
     private readonly string _rootId;
     private readonly string _dropdownId;
@@ -80,6 +85,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private bool _isOpen;
     private bool _dropdownOpensUpward;
     private double? _dropdownMaxHeightPx;
+    private SelectDropdownPlacement? _dropdownPlacement;
+    private bool _pendingPlacementMeasurement;
     private string _typeaheadBuffer = string.Empty;
     private DateTimeOffset? _lastTypeaheadAt;
     private bool _pointerInteractionMode;
@@ -93,6 +100,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private HaloSelectBehaviorOptions EffectiveBehavior => Behavior ?? HaloSelectBehaviorOptions.Default;
     private HaloSelectEnumBehavior<TValue> EffectiveEnumBehavior => EnumBehavior ?? HaloSelectEnumBehavior<TValue>.Disabled;
     private bool UseNativeSelectPresentation => EffectiveBehavior.Presentation == HaloSelectPresentation.Native;
+    private ISelectPositioningRuntime? SelectPositioningRuntime => ServiceProvider.GetService<ISelectPositioningRuntime>();
     private string NativeSelectedOptionId => SelectedOption?.Id ?? string.Empty;
     private bool ShouldRenderNativePlaceholder => !string.IsNullOrWhiteSpace(Placeholder);
     private string NativePlaceholderText => Placeholder ?? "Select...";
@@ -596,6 +604,12 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         _dropdownOpensUpward = EffectiveBehavior.OpenUpward;
         _dropdownMaxHeightPx = EffectiveBehavior.MaxDropdownHeightPx;
+        _dropdownPlacement = await TryCalculateDropdownPlacementAsync();
+        if (_dropdownPlacement is { } initialPlacement)
+        {
+            _dropdownOpensUpward = initialPlacement.OpenUpward;
+        }
+        _pendingPlacementMeasurement = true;
 
         _isOpen = true;
 
@@ -630,6 +644,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         _isOpen = false;
         _dropdownOpensUpward = EffectiveBehavior.OpenUpward;
         _dropdownMaxHeightPx = null;
+        _dropdownPlacement = null;
+        _pendingPlacementMeasurement = false;
         _typeaheadBuffer = string.Empty;
         _lastTypeaheadAt = null;
         _pendingFocusOption = null;
@@ -1041,6 +1057,16 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!UseNativeSelectPresentation && _isOpen && _pendingPlacementMeasurement)
+        {
+            _pendingPlacementMeasurement = false;
+            if (await RefreshDropdownPlacementAsync())
+            {
+                await base.OnAfterRenderAsync(firstRender);
+                return;
+            }
+        }
+
         if (!UseNativeSelectPresentation && _pendingFocusOption is { ElementRef.Context: not null } option)
         {
             var preventScroll = _pendingFocusPreventScroll;
@@ -1057,6 +1083,62 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         }
 
         await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task<bool> RefreshDropdownPlacementAsync()
+    {
+        if (SelectPositioningRuntime is null)
+        {
+            return false;
+        }
+
+        var configuredMaxHeight = ResolveConfiguredDropdownMaxHeightPx();
+        var measuredPlacement = await SelectPositioningRuntime.CalculateDropdownPlacementAsync(
+            _triggerRef,
+            _dropdownOpensUpward,
+            configuredMaxHeight,
+            DropdownGapPx);
+
+        if (measuredPlacement is null)
+        {
+            return false;
+        }
+
+        var shouldRender = false;
+
+        if (_dropdownOpensUpward != measuredPlacement.OpenUpward)
+        {
+            _dropdownOpensUpward = measuredPlacement.OpenUpward;
+            shouldRender = true;
+        }
+
+        if (_dropdownPlacement != measuredPlacement)
+        {
+            _dropdownPlacement = measuredPlacement;
+            shouldRender = true;
+        }
+
+        if (shouldRender)
+        {
+            StateHasChanged();
+            return true;
+        }
+
+        return false;
+    }
+
+    private async Task<SelectDropdownPlacement?> TryCalculateDropdownPlacementAsync()
+    {
+        if (SelectPositioningRuntime is null)
+        {
+            return null;
+        }
+
+        return await SelectPositioningRuntime.CalculateDropdownPlacementAsync(
+            _triggerRef,
+            _dropdownOpensUpward,
+            ResolveConfiguredDropdownMaxHeightPx(),
+            DropdownGapPx);
     }
 
     private Task HandleBackdropClickAsync()
@@ -1136,10 +1218,61 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return string.Join(' ', classes);
     }
 
+    private string BuildDropdownClass()
+    {
+        var classes = new List<string> { "halo-select__dropdown" };
+
+        if (_dropdownOpensUpward)
+        {
+            classes.Add("halo-select__dropdown--upward");
+        }
+
+        return string.Join(' ', classes);
+    }
+
     private string BuildDropdownPositionStyle()
     {
         var items = new List<string>();
 
+        var computedMaxHeight = ResolveConfiguredDropdownMaxHeightPx();
+
+        items.Add(FormattableString.Invariant($"--halo-select-dropdown-max-height:{computedMaxHeight}px"));
+        items.Add(FormattableString.Invariant($"--halo-select-dropdown-gap:{DropdownGapPx}px"));
+
+        if (_dropdownPlacement is not null)
+        {
+            items.Add("position:fixed");
+            items.Add(FormattableString.Invariant($"top:{_dropdownPlacement.TopPx}px"));
+            items.Add(FormattableString.Invariant($"left:{_dropdownPlacement.LeftPx}px"));
+            items.Add(FormattableString.Invariant($"width:{_dropdownPlacement.WidthPx}px"));
+            items.Add(FormattableString.Invariant($"min-width:{_dropdownPlacement.WidthPx}px"));
+            items.Add(FormattableString.Invariant($"max-width:{_dropdownPlacement.WidthPx}px"));
+            items.Add(FormattableString.Invariant($"max-height:{_dropdownPlacement.MaxHeightPx}px"));
+            items.Add("right:auto");
+            items.Add("bottom:auto");
+            items.Add("visibility:visible");
+            items.Add("pointer-events:auto");
+        }
+        else if (_isOpen)
+        {
+            // Keep dropdown out of layout/scroll flow until viewport placement is computed.
+            items.Add("position:fixed");
+            items.Add("top:0");
+            items.Add("left:0");
+            items.Add("right:auto");
+            items.Add("bottom:auto");
+            items.Add("width:0");
+            items.Add("min-width:0");
+            items.Add("max-height:0");
+            items.Add("visibility:hidden");
+            items.Add("pointer-events:none");
+        }
+
+        return string.Join(';', items);
+    }
+
+    private double ResolveConfiguredDropdownMaxHeightPx()
+    {
         var computedMaxHeight = _dropdownMaxHeightPx ?? DefaultDropdownMaxHeightPx;
 
         if (computedMaxHeight <= 0)
@@ -1147,23 +1280,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             computedMaxHeight = DefaultDropdownMaxHeightPx;
         }
 
-        items.Add("position:absolute");
-        items.Add("left:0");
-        items.Add("right:0");
-
-        if (_dropdownOpensUpward)
-        {
-            items.Add("top:auto");
-            items.Add(FormattableString.Invariant($"bottom:calc(100% + {DropdownGapPx}px)"));
-        }
-        else
-        {
-            items.Add(FormattableString.Invariant($"top:calc(100% + {DropdownGapPx}px)"));
-        }
-
-        items.Add(FormattableString.Invariant($"max-height:{computedMaxHeight}px"));
-
-        return string.Join(';', items);
+        return computedMaxHeight;
     }
 
     private static string BuildOptionClass(bool isSelected, bool isHighlighted, bool isDisabled)

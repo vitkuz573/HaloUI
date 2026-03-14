@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
         services.AddHaloUIThemeProvider();
         services.AddHaloUIDialogHost();
         services.AddHaloUISnackbarHost();
+        services.TryAddScoped<ISelectPositioningRuntime, SelectPositioningRuntime>();
         services.TryAddSingleton<IHaloIconResolver>(_ => new PassthroughHaloIconResolver());
         services.TryAddSingleton<IAriaDiagnosticsHub, NoOpAriaDiagnosticsHub>();
 
