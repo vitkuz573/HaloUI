@@ -5,6 +5,79 @@ function toFiniteNumber(value, fallback) {
     return Number.isFinite(value) ? value : fallback;
 }
 
+function createsFixedPositionContainingBlock(element) {
+    const style = window.getComputedStyle(element);
+    if (!style) {
+        return false;
+    }
+
+    if (style.transform && style.transform !== 'none') {
+        return true;
+    }
+
+    if (style.perspective && style.perspective !== 'none') {
+        return true;
+    }
+
+    if (style.filter && style.filter !== 'none') {
+        return true;
+    }
+
+    const backdropFilter = style.backdropFilter || style.webkitBackdropFilter;
+    if (backdropFilter && backdropFilter !== 'none') {
+        return true;
+    }
+
+    const contain = (style.contain || '').toLowerCase();
+    if (
+        contain.includes('paint') ||
+        contain.includes('layout') ||
+        contain.includes('strict') ||
+        contain.includes('content')
+    ) {
+        return true;
+    }
+
+    const willChange = (style.willChange || '').toLowerCase();
+    return (
+        willChange.includes('transform') ||
+        willChange.includes('perspective') ||
+        willChange.includes('filter')
+    );
+}
+
+function findFixedPositionContainingBlock(element) {
+    let current = element.parentElement;
+
+    while (current instanceof Element) {
+        if (createsFixedPositionContainingBlock(current)) {
+            return current;
+        }
+
+        current = current.parentElement;
+    }
+
+    return null;
+}
+
+function getFixedPositionContainingBlockOffset(element) {
+    const containingBlock = findFixedPositionContainingBlock(element);
+    if (!(containingBlock instanceof Element)) {
+        return { offsetLeftPx: 0, offsetTopPx: 0 };
+    }
+
+    const rect = containingBlock.getBoundingClientRect();
+
+    if (!Number.isFinite(rect.left) || !Number.isFinite(rect.top)) {
+        return { offsetLeftPx: 0, offsetTopPx: 0 };
+    }
+
+    return {
+        offsetLeftPx: rect.left,
+        offsetTopPx: rect.top
+    };
+}
+
 export function calculateDropdownPlacement(triggerElement, request) {
     if (!(triggerElement instanceof Element)) {
         return null;
@@ -61,11 +134,15 @@ export function calculateDropdownPlacement(triggerElement, request) {
 
     leftPx = Math.max(VIEWPORT_PADDING_PX, leftPx);
 
-    const topPx = openUpward
+    let topPx = openUpward
         ? Math.max(VIEWPORT_PADDING_PX, rect.top - gapPx - maxHeightPx)
         : Math.min(
             viewportHeight - VIEWPORT_PADDING_PX - maxHeightPx,
             rect.bottom + gapPx);
+
+    const fixedOffset = getFixedPositionContainingBlockOffset(triggerElement);
+    leftPx -= fixedOffset.offsetLeftPx;
+    topPx -= fixedOffset.offsetTopPx;
 
     return {
         openUpward,
