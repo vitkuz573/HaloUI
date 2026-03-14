@@ -18,16 +18,19 @@ public partial class SnackbarHost
     private static readonly string SnackbarDismissHoverVariable = ThemeCssVariables.Snackbar.Dismiss.Hover;
     private static readonly string SnackbarProgressDurationVariable = ThemeCssVariables.Snackbar.Progress.Duration;
     private readonly List<SnackbarItem> _items = [];
+
     protected override void OnInitialized()
     {
-        Snackbar.OnShow += HandleShow;
+        Snackbar.OnEnqueued += HandleEnqueued;
+        Snackbar.OnDismissRequested += HandleDismissRequested;
     }
 
     protected override void Dispose(bool disposing)
     {
         if (disposing)
         {
-            Snackbar.OnShow -= HandleShow;
+            Snackbar.OnEnqueued -= HandleEnqueued;
+            Snackbar.OnDismissRequested -= HandleDismissRequested;
 
             foreach (var item in _items)
             {
@@ -40,11 +43,11 @@ public partial class SnackbarHost
         base.Dispose(disposing);
     }
 
-    private void HandleShow(SnackbarMessage message)
+    private void HandleEnqueued(SnackbarEnqueued enqueued)
     {
         _ = InvokeAsync(() =>
         {
-            var item = new SnackbarItem(message);
+            var item = new SnackbarItem(enqueued);
 
             _items.Add(item);
 
@@ -59,6 +62,11 @@ public partial class SnackbarHost
         });
     }
 
+    private void HandleDismissRequested(SnackbarHandle handle)
+    {
+        _ = BeginDismissAsync(handle);
+    }
+
     private void TrimOverflow()
     {
         if (_items.Count <= MaxVisibleItems)
@@ -67,7 +75,7 @@ public partial class SnackbarHost
         }
 
         var overflow = _items.Count - MaxVisibleItems;
-        var toDismiss = new List<Guid>(overflow);
+        var toDismiss = new List<SnackbarHandle>(overflow);
 
         for (var i = 0; i < _items.Count && overflow > 0; i++)
         {
@@ -78,13 +86,13 @@ public partial class SnackbarHost
                 continue;
             }
 
-            toDismiss.Add(candidate.Id);
+            toDismiss.Add(candidate.Handle);
             overflow--;
         }
 
-        foreach (var id in toDismiss)
+        foreach (var handle in toDismiss)
         {
-            _ = BeginDismissAsync(id);
+            Snackbar.Dismiss(handle);
         }
     }
 
@@ -113,7 +121,7 @@ public partial class SnackbarHost
             return;
         }
 
-        await BeginDismissAsync(item.Id).ConfigureAwait(false);
+        Snackbar.Dismiss(item.Handle);
     }
 
     private Task OnSnackbarPointerEnterAsync(SnackbarItem item)
@@ -144,9 +152,13 @@ public partial class SnackbarHost
         return Task.CompletedTask;
     }
 
-    private Task Dismiss(Guid id) => BeginDismissAsync(id);
+    private Task Dismiss(SnackbarHandle handle)
+    {
+        Snackbar.Dismiss(handle);
+        return Task.CompletedTask;
+    }
 
-    private async Task BeginDismissAsync(Guid id)
+    private async Task BeginDismissAsync(SnackbarHandle handle)
     {
         SnackbarItem? item = null;
         
@@ -154,7 +166,7 @@ public partial class SnackbarHost
 
         await InvokeAsync(() =>
         {
-            item = _items.Find(i => i.Id == id);
+            item = _items.Find(i => i.Handle == handle);
 
             if (item is null || item.IsClosing)
             {
@@ -210,7 +222,7 @@ public partial class SnackbarHost
 
         if (item.Action.DismissOnAction)
         {
-            await BeginDismissAsync(item.Id).ConfigureAwait(false);
+            Snackbar.Dismiss(item.Handle);
         }
     }
 
@@ -345,9 +357,10 @@ public partial class SnackbarHost
         private DateTime? _timerStartedUtc;
         private bool _disposed;
 
-        public SnackbarItem(SnackbarMessage message)
+        public SnackbarItem(SnackbarEnqueued enqueued)
         {
-            Id = Guid.NewGuid();
+            var message = enqueued.Request;
+            Handle = enqueued.Handle;
             Text = message.Text;
             Title = message.Title;
             Severity = message.Severity;
@@ -359,7 +372,9 @@ public partial class SnackbarHost
             _cts = new CancellationTokenSource();
         }
 
-        public Guid Id { get; }
+        public SnackbarHandle Handle { get; }
+
+        public Guid Id => Handle.Id;
 
         public string Text { get; }
 

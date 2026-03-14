@@ -174,12 +174,12 @@ public partial class AccessibilitySamples
             _ => ("System notice", "Critical maintenance begins at 02:00 UTC.")
         };
 
-        SnackbarService.Show(
+        _ = SnackbarService.Enqueue(new SnackbarRequest(
             message,
             severity,
-            durationMs: 6000,
-            title: title,
-            action: new SnackbarAction("View", () => Task.CompletedTask));
+            DurationMs: 6000,
+            Title: title,
+            Action: new SnackbarAction("View", () => Task.CompletedTask)));
     }
 
     private Task OnTriStateChanged(TriState nextState)

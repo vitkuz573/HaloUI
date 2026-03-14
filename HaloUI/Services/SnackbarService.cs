@@ -8,11 +8,66 @@ namespace HaloUI.Services;
 
 public class SnackbarService : ISnackbarService
 {
-    public event Action<SnackbarMessage>? OnShow;
+    private readonly Lock _sync = new();
+    private readonly HashSet<SnackbarHandle> _activeHandles = [];
 
-    public void Show(string message, SnackbarSeverity severity = SnackbarSeverity.Info, int durationMs = 3000, string? title = null, SnackbarAction? action = null, string? cssClass = null)
+    public event Action<SnackbarEnqueued>? OnEnqueued;
+
+    public event Action<SnackbarHandle>? OnDismissRequested;
+
+    public SnackbarHandle Enqueue(SnackbarRequest request)
     {
-        var normalizedDuration = durationMs < 0 ? 0 : durationMs;
-        OnShow?.Invoke(new SnackbarMessage(message, severity, normalizedDuration, title, action, cssClass));
+        ArgumentNullException.ThrowIfNull(request);
+
+        var normalized = request.Normalize();
+        var handle = new SnackbarHandle(Guid.NewGuid());
+
+        lock (_sync)
+        {
+            _activeHandles.Add(handle);
+        }
+
+        OnEnqueued?.Invoke(new SnackbarEnqueued(handle, normalized));
+        return handle;
+    }
+
+    public bool Dismiss(SnackbarHandle handle)
+    {
+        var removed = false;
+
+        lock (_sync)
+        {
+            removed = _activeHandles.Remove(handle);
+        }
+
+        if (removed)
+        {
+            OnDismissRequested?.Invoke(handle);
+        }
+
+        return removed;
+    }
+
+    public int DismissAll()
+    {
+        SnackbarHandle[] handles;
+
+        lock (_sync)
+        {
+            if (_activeHandles.Count == 0)
+            {
+                return 0;
+            }
+
+            handles = [.. _activeHandles];
+            _activeHandles.Clear();
+        }
+
+        foreach (var handle in handles)
+        {
+            OnDismissRequested?.Invoke(handle);
+        }
+
+        return handles.Length;
     }
 }

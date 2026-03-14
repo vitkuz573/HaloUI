@@ -4,6 +4,7 @@
 
 @using HaloUI.Abstractions
 @using HaloUI.Components
+@using HaloUI.Components.Select
 @using HaloUI.Components.Table
 @using HaloUI.Enums
 
@@ -119,7 +120,7 @@
                             Label="Region"
                             Description="Region selection for failover policy."
                             Placeholder="Select region"
-                            UseViewportPlacement="false"
+                            Behavior="@(new HaloSelectBehaviorOptions { UseViewportPlacement = false, UseNativeSelectOnMobile = true })"
                             @bind-Value="_selectedRegion">
                     <HaloSelectOption Value="@("emea")">EMEA</HaloSelectOption>
                     <HaloSelectOption Value="@("apac")">APAC</HaloSelectOption>

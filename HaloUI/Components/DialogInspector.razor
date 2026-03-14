@@ -151,9 +151,7 @@
                                   Size="InputFieldSize.Small"
                                   Value="@_preferences.AccessReasonFilter"
                                   ValueChanged="HandleAccessReasonChanged"
-                                  UseEnumOptions="true"
-                                  EnumIncludeNullOption="true"
-                                  EnumNullOptionText="All" />
+                                  EnumBehavior="@(new HaloUI.Components.Select.HaloSelectEnumBehavior<DialogAccessDeniedReason?> { Enabled = true, IncludeNullOption = true, NullOptionText = "All" })" />
                     </div>
 
                     <div class="rm-di-field-group rm-di-field-group--role">

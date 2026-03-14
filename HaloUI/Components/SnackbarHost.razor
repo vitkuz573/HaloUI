@@ -37,7 +37,7 @@
                                 title="Dismiss"
                                 aria-label="Dismiss notification"
                                 @onclick:stopPropagation="true"
-                                @onclick="@(() => Dismiss(item.Id))">
+                                @onclick="@(() => Dismiss(item.Handle))">
                             <HaloIcon Name="@HaloDefaultIcons.Close" Decorative="true" />
                         </button>
                     </div>

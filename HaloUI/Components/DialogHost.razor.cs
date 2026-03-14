@@ -21,8 +21,6 @@ public partial class DialogHost : IAsyncDisposable
     private DialogRequest? _activeRequest;
     private Guid _activeSessionId;
     private ElementReference _dialogElement;
-    private IJSObjectReference? _dialogAccessibilityModule;
-    private Task<IJSObjectReference>? _dialogAccessibilityModuleTask;
     private bool _focusTrapActive;
     private bool _shouldActivateFocus;
     private IDialogReference? _subscribedReference;
@@ -42,7 +40,7 @@ public partial class DialogHost : IAsyncDisposable
     };
 
     [Inject]
-    private IJSRuntime JsRuntime { get; set; } = default!;
+    private IOverlayRuntime OverlayRuntime { get; set; } = default!;
 
     protected override void OnInitialized()
     {
@@ -81,15 +79,9 @@ public partial class DialogHost : IAsyncDisposable
             return;
         }
 
-        if (_dialogAccessibilityModule is null)
-        {
-            _focusTrapActive = false;
-            return;
-        }
-
         try
         {
-            await _dialogAccessibilityModule.InvokeVoidAsync("releaseFocusTrap", _dialogElement, _previouslyFocusedElementId);
+            await OverlayRuntime.ReleaseFocusTrapAsync(_dialogElement, _previouslyFocusedElementId);
         }
         catch (JSDisconnectedException)
         {
@@ -108,24 +100,9 @@ public partial class DialogHost : IAsyncDisposable
 
     private async Task ActivateFocusTrapAsync()
     {
-        IJSObjectReference module;
-
         try
         {
-            module = await GetAccessibilityModuleAsync();
-        }
-        catch (JSDisconnectedException)
-        {
-            return;
-        }
-        catch (ObjectDisposedException)
-        {
-            return;
-        }
-
-        try
-        {
-            _previouslyFocusedElementId = await module.InvokeAsync<string?>("trapFocus", _dialogElement);
+            _previouslyFocusedElementId = await OverlayRuntime.TrapFocusAsync(_dialogElement);
         }
         catch (JSDisconnectedException)
         {
@@ -143,7 +120,7 @@ public partial class DialogHost : IAsyncDisposable
         {
             try
             {
-                focused = await module.InvokeAsync<bool>("focusElementById", targetId);
+                focused = await OverlayRuntime.FocusElementByIdAsync(targetId);
             }
             catch (JSException)
             {
@@ -197,22 +174,6 @@ public partial class DialogHost : IAsyncDisposable
         DialogService.OnShow -= HandleShow;
         await ReleaseFocusTrapAsync();
         await UnlockBodyScrollAsync(force: true);
-
-        if (_dialogAccessibilityModule is not null)
-        {
-            try
-            {
-                await _dialogAccessibilityModule.DisposeAsync();
-            }
-            catch (JSDisconnectedException)
-            {
-                // JSRuntime already disconnected.
-            }
-            catch (ObjectDisposedException)
-            {
-                // Module already disposed.
-            }
-        }
     }
 
     private void SetActiveSession(DialogSession session)
@@ -283,23 +244,6 @@ public partial class DialogHost : IAsyncDisposable
         StateHasChanged();
     }
 
-    private async Task<IJSObjectReference> GetAccessibilityModuleAsync()
-    {
-        if (_dialogAccessibilityModule is not null)
-        {
-            return _dialogAccessibilityModule;
-        }
-
-        const string modulePath = "./_content/HaloUI/js/dialogAccessibility.js";
-
-        _dialogAccessibilityModuleTask ??= JsRuntime
-            .InvokeAsync<IJSObjectReference>("import", modulePath)
-            .AsTask();
-
-        _dialogAccessibilityModule = await _dialogAccessibilityModuleTask;
-        return _dialogAccessibilityModule;
-    }
-
     private async Task LockBodyScrollAsync()
     {
         if (_requestStack.Count == 0)
@@ -307,24 +251,9 @@ public partial class DialogHost : IAsyncDisposable
             return;
         }
 
-        IJSObjectReference module;
-
         try
         {
-            module = await GetAccessibilityModuleAsync();
-        }
-        catch (JSDisconnectedException)
-        {
-            return;
-        }
-        catch (ObjectDisposedException)
-        {
-            return;
-        }
-
-        try
-        {
-            await module.InvokeVoidAsync("lockBodyScroll");
+            await OverlayRuntime.LockBodyScrollAsync();
         }
         catch (JSDisconnectedException)
         {
@@ -343,14 +272,9 @@ public partial class DialogHost : IAsyncDisposable
             return;
         }
 
-        if (_dialogAccessibilityModule is null)
-        {
-            return;
-        }
-
         try
         {
-            await _dialogAccessibilityModule.InvokeVoidAsync("unlockBodyScroll");
+            await OverlayRuntime.UnlockBodyScrollAsync();
         }
         catch (JSDisconnectedException)
         {

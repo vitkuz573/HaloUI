@@ -10,6 +10,7 @@ using Microsoft.JSInterop;
 using HaloUI.Accessibility;
 using HaloUI.Accessibility.Aria;
 using HaloUI.Components.Internal;
+using HaloUI.Components.Select;
 using HaloUI.Enums;
 using HaloUI.Theme;
 using HaloUI.Theme.Sdk.Css;
@@ -62,28 +63,10 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     public string? AriaDescribedBy { get; set; }
     
     [Parameter]
-    public bool UseEnumOptions { get; set; }
-    
-    [Parameter]
-    public bool EnumIncludeNullOption { get; set; }
-    
-    [Parameter]
-    public string? EnumNullOptionText { get; set; }
-    
-    [Parameter]
-    public Func<TValue, string>? EnumTextSelector { get; set; }
-    
-    [Parameter]
-    public Func<TValue, bool>? EnumFilter { get; set; }
-    
-    [Parameter]
-    public Func<TValue, bool>? EnumDisabledSelector { get; set; }
+    public HaloSelectBehaviorOptions Behavior { get; set; } = HaloSelectBehaviorOptions.Default;
 
     [Parameter]
-    public bool UseViewportPlacement { get; set; } = false;
-
-    [Parameter]
-    public bool UseNativeSelectOnMobile { get; set; } = true;
+    public HaloSelectEnumBehavior<TValue> EnumBehavior { get; set; } = HaloSelectEnumBehavior<TValue>.Disabled;
 
     private readonly string _selectId = AccessibilityIdGenerator.Create("halo-select");
     private readonly string _rootId;
@@ -118,7 +101,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private bool IsInvalid => HasError || (EditContext?.GetValidationMessages(FieldIdentifier).Any() ?? false);
     private bool IsTriggerDisabled => Disabled;
     private bool IsInteractive => !(Disabled || ReadOnly);
-    private bool UseNativeSelectPresentation => UseNativeSelectOnMobile && _useNativeSelectPresentation;
+    private HaloSelectBehaviorOptions EffectiveBehavior => Behavior ?? HaloSelectBehaviorOptions.Default;
+    private HaloSelectEnumBehavior<TValue> EffectiveEnumBehavior => EnumBehavior ?? HaloSelectEnumBehavior<TValue>.Disabled;
+    private bool UseNativeSelectPresentation => EffectiveBehavior.UseNativeSelectOnMobile && _useNativeSelectPresentation;
     private string NativeSelectedOptionId => SelectedOption?.Id ?? string.Empty;
     private bool ShouldRenderNativePlaceholder => !string.IsNullOrWhiteSpace(Placeholder);
     private string NativePlaceholderText => Placeholder ?? "Select...";
@@ -352,15 +337,15 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private void EnsureEnumOptions()
     {
-        if (!UseEnumOptions)
+        if (!EffectiveEnumBehavior.Enabled)
         {
             ClearGeneratedEnumOptions();
             return;
         }
 
-        if (EnumIncludeNullOption && Nullable.GetUnderlyingType(typeof(TValue)) is null)
+        if (EffectiveEnumBehavior.IncludeNullOption && Nullable.GetUnderlyingType(typeof(TValue)) is null)
         {
-            throw new InvalidOperationException("EnumIncludeNullOption can only be used when TValue is a nullable enum.");
+            throw new InvalidOperationException("EnumBehavior.IncludeNullOption can only be used when TValue is a nullable enum.");
         }
 
         var definitions = BuildEnumOptionDefinitions();
@@ -380,24 +365,24 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return BuildEnumOptionDefinitions(nullableEnumType, includeNullOption: true);
         }
 
-        throw new InvalidOperationException($"UseEnumOptions requires {nameof(TValue)} to be an enum or nullable enum.");
+        throw new InvalidOperationException($"EnumBehavior.Enabled requires {nameof(TValue)} to be an enum or nullable enum.");
     }
 
     private List<GeneratedOptionDefinition> BuildEnumOptionDefinitions(Type enumType, bool includeNullOption)
     {
         var definitions = new List<GeneratedOptionDefinition>();
 
-        if (includeNullOption && EnumIncludeNullOption)
+        if (includeNullOption && EffectiveEnumBehavior.IncludeNullOption)
         {
-            var nullText = EnumNullOptionText ?? Placeholder ?? string.Empty;
+            var nullText = EffectiveEnumBehavior.NullOptionText ?? Placeholder ?? string.Empty;
             definitions.Add(new GeneratedOptionDefinition(default, nullText, Disabled: false));
         }
 
         var options = EnumOptionGenerator.Generate(
             enumType,
-            EnumFilter is null ? null : value => EnumFilter((TValue)value),
-            EnumDisabledSelector is null ? null : value => EnumDisabledSelector((TValue)value),
-            EnumTextSelector is null ? null : value => EnumTextSelector((TValue)value));
+            EffectiveEnumBehavior.Filter is null ? null : value => EffectiveEnumBehavior.Filter((TValue)value),
+            EffectiveEnumBehavior.DisabledSelector is null ? null : value => EffectiveEnumBehavior.DisabledSelector((TValue)value),
+            EffectiveEnumBehavior.TextSelector is null ? null : value => EffectiveEnumBehavior.TextSelector((TValue)value));
 
         foreach (var option in options)
         {
@@ -614,9 +599,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         _dropdownRect = null;
         _dropdownOpensUpward = false;
-        _dropdownMaxHeightPx = UseViewportPlacement ? null : DefaultDropdownMaxHeightPx;
+        _dropdownMaxHeightPx = EffectiveBehavior.UseViewportPlacement ? null : DefaultDropdownMaxHeightPx;
         _forceViewportPlacement = false;
-        _effectiveViewportPlacement = UseViewportPlacement;
+        _effectiveViewportPlacement = EffectiveBehavior.UseViewportPlacement;
         _preferMobileDropdownLayout = false;
 
         if (_triggerRef.Context is not null)
@@ -631,7 +616,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
                 var isMobileViewport = measurement.ViewportWidth <= MobileViewportBreakpointPx;
                 _forceViewportPlacement = measurement.IsInDialog || isMobileViewport;
                 _preferMobileDropdownLayout = isMobileViewport;
-                _effectiveViewportPlacement = UseViewportPlacement || _forceViewportPlacement;
+                _effectiveViewportPlacement = EffectiveBehavior.UseViewportPlacement || _forceViewportPlacement;
 
                 if (_effectiveViewportPlacement)
                 {
@@ -1161,7 +1146,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     {
         return InvokeAsync(async () =>
         {
-            if (!UseNativeSelectOnMobile)
+            if (!EffectiveBehavior.UseNativeSelectOnMobile)
             {
                 await ApplyViewportModeAsync(useNativeSelect: false);
                 return;
@@ -1200,7 +1185,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private async Task ResolveNativeSelectPresentationAsync()
     {
-        if (!UseNativeSelectOnMobile)
+        if (!EffectiveBehavior.UseNativeSelectOnMobile)
         {
             await ApplyViewportModeAsync(useNativeSelect: false);
 
@@ -1239,7 +1224,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
     private async Task EnsureViewportObserverAsync()
     {
-        if (!UseNativeSelectOnMobile)
+        if (!EffectiveBehavior.UseNativeSelectOnMobile)
         {
             await UnregisterViewportObserverAsync();
             return;

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using HaloUI.Components;
+using HaloUI.Components.Select;
 using HaloUI.Enums;
 using Xunit;
 
@@ -29,7 +30,7 @@ public class HaloSelectTests : BunitContext
             parameters => parameters
                 .Add(p => p.Value, null)
                 .Add(p => p.SelectionChanged, EventCallback.Factory.Create<ChangeEventArgs>(this, eventArgs => args = eventArgs))
-                .Add(p => p.UseEnumOptions, true));
+                .Add(p => p.EnumBehavior, EnumOptions<TestOption?>()));
 
         OpenDropdown(cut);
         cut.FindAll("button[role='option']")[1].Click();
@@ -48,7 +49,7 @@ public class HaloSelectTests : BunitContext
         var cut = Render<HaloSelect<TestOption?>>(
             parameters => parameters
                 .Add(p => p.Value, null)
-                .Add(p => p.UseEnumOptions, true));
+                .Add(p => p.EnumBehavior, EnumOptions<TestOption?>()));
 
         OpenDropdown(cut);
         cut.FindAll("button[role='option']")[0].Click();
@@ -76,7 +77,7 @@ public class HaloSelectTests : BunitContext
                 childBuilder.AddAttribute(1, nameof(HaloSelect<>.Value), model.Selection);
                 childBuilder.AddAttribute(2, nameof(HaloSelect<>.ValueExpression), (Expression<Func<TestOption>>)(() => model.Selection));
                 childBuilder.AddAttribute(3, nameof(HaloSelect<>.ValueChanged), EventCallback.Factory.Create<TestOption>(this, value => model.Selection = value));
-                childBuilder.AddAttribute(4, nameof(HaloSelect<>.UseEnumOptions), true);
+                childBuilder.AddAttribute(4, nameof(HaloSelect<TestOption>.EnumBehavior), EnumOptions<TestOption>());
                 childBuilder.CloseComponent();
             }));
 
@@ -98,7 +99,7 @@ public class HaloSelectTests : BunitContext
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Label, "Environment")
             .Add(p => p.Required, true)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>()));
 
         var trigger = cut.Find("button.halo-select__trigger");
         Assert.Equal("true", trigger.GetAttribute("aria-required"));
@@ -115,7 +116,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Size, size)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>()));
 
         var wrapper = cut.Find("div.halo-select");
         Assert.Contains(expectedClass, wrapper.ClassList);
@@ -126,10 +127,10 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption>>(parameters => parameters
             .Add(p => p.Value, TestOption.Alpha)
-            .Add(p => p.UseEnumOptions, true)
-            .Add(p => p.EnumFilter, option => option != TestOption.Beta)
-            .Add(p => p.EnumDisabledSelector, option => option == TestOption.Alpha)
-            .Add(p => p.EnumTextSelector, option => $"Option {option}"));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption>(
+                filter: option => option != TestOption.Beta,
+                disabledSelector: option => option == TestOption.Alpha,
+                textSelector: option => $"Option {option}")));
 
         OpenDropdown(cut);
 
@@ -144,9 +145,9 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Value, TestOption.Beta)
-            .Add(p => p.UseEnumOptions, true)
-            .Add(p => p.EnumIncludeNullOption, true)
-            .Add(p => p.EnumNullOptionText, "No value"));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>(
+                includeNullOption: true,
+                nullOptionText: "No value")));
 
         OpenDropdown(cut);
 
@@ -156,13 +157,12 @@ public class HaloSelectTests : BunitContext
     }
 
     [Fact]
-    public void EnumIncludeNullOption_ForNonNullableEnum_Throws()
+    public void EnumBehaviorIncludeNullOption_ForNonNullableEnum_Throws()
     {
         Assert.Throws<InvalidOperationException>(() =>
             Render<HaloSelect<TestOption>>(parameters => parameters
                 .Add(p => p.Value, TestOption.Alpha)
-                .Add(p => p.UseEnumOptions, true)
-                .Add(p => p.EnumIncludeNullOption, true)));
+                .Add(p => p.EnumBehavior, EnumOptions<TestOption>(includeNullOption: true))));
     }
 
     [Fact]
@@ -170,8 +170,8 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Value, TestOption.Alpha)
-            .Add(p => p.UseEnumOptions, true)
-            .Add(p => p.UseNativeSelectOnMobile, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>())
+            .Add(p => p.Behavior, SelectBehavior(useNativeSelectOnMobile: true)));
 
         OpenDropdown(cut);
         await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(true));
@@ -188,8 +188,8 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Value, TestOption.Alpha)
-            .Add(p => p.UseEnumOptions, true)
-            .Add(p => p.UseNativeSelectOnMobile, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>())
+            .Add(p => p.Behavior, SelectBehavior(useNativeSelectOnMobile: true)));
 
         await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(true));
         await cut.InvokeAsync(() => cut.Instance.HandleViewportModeChangedAsync(false));
@@ -206,7 +206,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
         cut.Find("button.halo-select__trigger").KeyDown(new KeyboardEventArgs { Key = "g" });
@@ -223,7 +223,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TestOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TestOption?>()));
 
         OpenDropdown(cut);
 
@@ -250,7 +250,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -267,7 +267,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -282,7 +282,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -302,7 +302,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -323,7 +323,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -345,7 +345,7 @@ public class HaloSelectTests : BunitContext
     {
         var cut = Render<HaloSelect<TypeaheadOption?>>(parameters => parameters
             .Add(p => p.Value, null)
-            .Add(p => p.UseEnumOptions, true));
+            .Add(p => p.EnumBehavior, EnumOptions<TypeaheadOption?>()));
 
         OpenDropdown(cut);
 
@@ -368,6 +368,33 @@ public class HaloSelectTests : BunitContext
         {
             Assert.NotEmpty(cut.FindAll("button[role='option']"));
         });
+    }
+
+    private static HaloSelectEnumBehavior<TValue> EnumOptions<TValue>(
+        bool includeNullOption = false,
+        string? nullOptionText = null,
+        Func<TValue, bool>? filter = null,
+        Func<TValue, bool>? disabledSelector = null,
+        Func<TValue, string>? textSelector = null)
+    {
+        return new HaloSelectEnumBehavior<TValue>
+        {
+            Enabled = true,
+            IncludeNullOption = includeNullOption,
+            NullOptionText = nullOptionText,
+            Filter = filter,
+            DisabledSelector = disabledSelector,
+            TextSelector = textSelector
+        };
+    }
+
+    private static HaloSelectBehaviorOptions SelectBehavior(bool useViewportPlacement = false, bool useNativeSelectOnMobile = true)
+    {
+        return new HaloSelectBehaviorOptions
+        {
+            UseViewportPlacement = useViewportPlacement,
+            UseNativeSelectOnMobile = useNativeSelectOnMobile
+        };
     }
 
     private sealed class SelectModel

@@ -109,6 +109,7 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.TryAddScoped<IOverlayRuntime, OverlayRuntime>();
         services.TryAddSingleton<IDialogDiagnosticsHub, DialogDiagnosticsHub>();
         services.TryAddScoped<IDialogService, DialogService>();
 

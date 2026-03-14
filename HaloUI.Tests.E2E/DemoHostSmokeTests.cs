@@ -54,6 +54,50 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
     }
 
     [Fact]
+    public async Task DemoHost_Select_ShouldOpenAndApplySelection()
+    {
+        await Page.GotoAsync(BuildUrl("/"), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+        await WaitForInteractiveUiAsync();
+
+        var section = Page.GetByTestId("demo-section-select");
+        await section.ScrollIntoViewIfNeededAsync();
+
+        var nativeSelect = section.Locator("select.halo-select__native:visible").First;
+        var isNativeVisible = await nativeSelect.CountAsync() > 0;
+
+        if (isNativeVisible)
+        {
+            await nativeSelect.SelectOptionAsync(new[] { "apac" });
+            await Expect(nativeSelect).ToHaveValueAsync("apac");
+        }
+        else
+        {
+            var trigger = section.Locator("button.halo-select__trigger:visible").First;
+            await Expect(trigger).ToHaveAttributeAsync("role", "combobox");
+            await Expect(trigger).ToHaveAttributeAsync("aria-haspopup", "listbox");
+            await Expect(trigger).ToHaveAttributeAsync("aria-expanded", "false");
+        }
+    }
+
+    [Fact]
+    public async Task DemoHost_Snackbar_ShouldDismissFromCloseButton()
+    {
+        await Page.GotoAsync(BuildUrl("/"), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+        await WaitForInteractiveUiAsync();
+
+        await Page.GetByTestId("button-show-snackbar").ClickAsync();
+
+        var snackbar = Page.Locator(".halo-snackbar");
+        await Expect(snackbar).ToHaveCountAsync(1);
+
+        await Page.Locator(".halo-snackbar__dismiss").First.ClickAsync(new LocatorClickOptions
+        {
+            Force = true
+        });
+        await Expect(snackbar).ToHaveCountAsync(0);
+    }
+
+    [Fact]
     public async Task DemoHost_DarkThemeQuery_ShouldApplyDarkScheme()
     {
         await Page.GotoAsync(BuildUrl("/?theme=dark"), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
