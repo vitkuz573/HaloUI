@@ -32,6 +32,7 @@ public partial class AccessibilitySamples
     private string _adminPassword = string.Empty;
     private string _changeSummary = "Shift low-priority queues to standby nodes before release.";
     private string _selectedRegion = "emea";
+    private string _selectedRegionInCard = "emea";
     private DateTimeOffset? _maintenanceWindow = DateTimeOffset.UtcNow.AddHours(3);
     private readonly DateTimeOffset _maintenanceMin = DateTimeOffset.UtcNow.AddDays(-1);
     private readonly DateTimeOffset _maintenanceMax = DateTimeOffset.UtcNow.AddDays(14);

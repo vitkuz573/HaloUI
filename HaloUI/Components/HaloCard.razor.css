@@ -24,7 +24,8 @@
     container-type: inline-size;
 }
 
-.halo-card:hover {
+.halo-card:hover,
+.halo-card:has(.halo-select--open) {
     border-color: var(--halo-card-hover-border-color-instance);
     background: var(--halo-card-hover-background-instance);
     transform: translateY(-2px);
@@ -105,7 +106,8 @@
     transition: var(--halo-card-transition);
 }
 
-.halo-card:hover ::deep .halo-card__icon {
+.halo-card:hover ::deep .halo-card__icon,
+.halo-card:has(.halo-select--open) ::deep .halo-card__icon {
     color: var(--halo-card-icon-hover-color-instance);
 }
 

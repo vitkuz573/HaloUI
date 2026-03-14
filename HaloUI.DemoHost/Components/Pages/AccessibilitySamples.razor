@@ -129,6 +129,30 @@
             </div>
         </article>
 
+        <article id="select-in-card" class="demo-section" data-testid="demo-section-select-in-card">
+            <h2>Select In Card</h2>
+            <p>Dropdown stability when the trigger sits inside a hover-transformed card.</p>
+            <HaloCard Title="Routing policy"
+                      Subtitle="Stability probe"
+                      Icon="@Material.Outlined.Route"
+                      Value="Region policy"
+                      Label="Open the select and move pointer below dropdown"
+                      Variant="CardVariant.Primary">
+                <ChildContent>
+                    <div class="demo-stack" data-testid="select-in-card-container">
+                        <HaloSelect TValue="string"
+                                    Label="Fallback region"
+                                    Placeholder="Select region"
+                                    @bind-Value="_selectedRegionInCard">
+                            <HaloSelectOption Value="@("emea")">EMEA</HaloSelectOption>
+                            <HaloSelectOption Value="@("apac")">APAC</HaloSelectOption>
+                            <HaloSelectOption Value="@("amer")">AMER</HaloSelectOption>
+                        </HaloSelect>
+                    </div>
+                </ChildContent>
+            </HaloCard>
+        </article>
+
         <article id="datetime" class="demo-section" data-testid="demo-section-datetime">
             <h2>Date Time</h2>
             <p>Bound datetime-local field with min/max guards.</p>

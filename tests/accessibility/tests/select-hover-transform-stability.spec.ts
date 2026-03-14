@@ -1,0 +1,87 @@
+import { expect, test } from '@playwright/test';
+import { bootstrapDemoHost, getDemoSection } from './testUtils';
+
+test.describe('Select overlay stability in transformed cards', () => {
+  test('keeps a single stable dropdown when pointer leaves card bounds', async ({ page }) => {
+    await bootstrapDemoHost(page, {
+      theme: 'dark',
+      viewport: { name: 'desktop', width: 1366, height: 820 },
+    });
+
+    const section = getDemoSection(page, 'select-in-card');
+    await section.scrollIntoViewIfNeeded();
+
+    const trigger = section.locator('.halo-select__trigger').first();
+    await trigger.hover();
+    await trigger.click();
+
+    const dropdown = page.locator('.halo-select__dropdown').first();
+    await expect(dropdown).toBeVisible();
+
+    const dropdownBox = await dropdown.boundingBox();
+    if (!dropdownBox) {
+      return;
+    }
+
+    await page.mouse.move(
+      dropdownBox.x + (dropdownBox.width / 2),
+      dropdownBox.y + dropdownBox.height + 24,
+    );
+
+    const stats = await page.evaluate(async () => {
+      const sampleWindowMs = 700;
+      const start = performance.now();
+
+      let maxVisibleCount = 0;
+      let minLeft = Number.POSITIVE_INFINITY;
+      let maxLeft = Number.NEGATIVE_INFINITY;
+      let minTop = Number.POSITIVE_INFINITY;
+      let maxTop = Number.NEGATIVE_INFINITY;
+      let minWidth = Number.POSITIVE_INFINITY;
+      let maxWidth = Number.NEGATIVE_INFINITY;
+
+      while (performance.now() - start < sampleWindowMs) {
+        const dropdowns = Array.from(document.querySelectorAll<HTMLElement>('.halo-select__dropdown'));
+        const visibleDropdowns = dropdowns.filter((element) => {
+          const style = getComputedStyle(element);
+          if (style.visibility === 'hidden' || style.display === 'none' || style.pointerEvents === 'none') {
+            return false;
+          }
+
+          const rect = element.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0;
+        });
+
+        maxVisibleCount = Math.max(maxVisibleCount, visibleDropdowns.length);
+
+        if (visibleDropdowns.length > 0) {
+          const rect = visibleDropdowns[0].getBoundingClientRect();
+          minLeft = Math.min(minLeft, rect.left);
+          maxLeft = Math.max(maxLeft, rect.left);
+          minTop = Math.min(minTop, rect.top);
+          maxTop = Math.max(maxTop, rect.top);
+          minWidth = Math.min(minWidth, rect.width);
+          maxWidth = Math.max(maxWidth, rect.width);
+        }
+
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      }
+
+      const hasSamples = Number.isFinite(minLeft);
+      return {
+        hasSamples,
+        maxVisibleCount,
+        leftRange: hasSamples ? maxLeft - minLeft : null,
+        topRange: hasSamples ? maxTop - minTop : null,
+        widthRange: hasSamples ? maxWidth - minWidth : null,
+      };
+    });
+
+    expect(stats.hasSamples).toBeTruthy();
+    expect(stats.maxVisibleCount).toBe(1);
+    expect(stats.leftRange ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(2);
+    expect(stats.topRange ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(2);
+    expect(stats.widthRange ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(2);
+  });
+});
+
