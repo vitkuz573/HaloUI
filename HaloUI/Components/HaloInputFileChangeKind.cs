@@ -4,9 +4,9 @@
 
 namespace HaloUI.Components;
 
-public enum HaloInputFileMode
+public enum HaloInputFileChangeKind
 {
-    Inline,
-    Dropzone,
-    Hidden
+    Selected,
+    Rejected,
+    Cleared
 }

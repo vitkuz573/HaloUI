@@ -112,6 +112,58 @@
             </div>
         </article>
 
+        <article id="input-file" class="demo-section" data-testid="demo-section-input-file">
+            <h2>Input File</h2>
+            <p>Dropzone validation plus hidden trigger flow.</p>
+            <div class="demo-stack">
+                <HaloInputFile Mode="HaloInputFileMode.Dropzone"
+                               Label="Evidence files"
+                               Description="Only .txt files up to 1 KB. Maximum 2 files."
+                               BrowseText="Drop evidence files"
+                               AllowMultiple="true"
+                               Rules="_dropzoneInputRules"
+                               ShowRejections="true"
+                               Changed="OnDropzoneInputFileChanged"
+                               data-testid="input-file-dropzone" />
+
+                <HaloText Variant="TextVariant.BodySmall"
+                          Tone="TextTone.Secondary"
+                          Display="TextDisplay.Block"
+                          data-testid="input-file-accepted-count">
+                    Accepted files: @_dropzoneAcceptedCount
+                </HaloText>
+
+                @if (_dropzoneRejections.Count > 0)
+                {
+                    <ul data-testid="input-file-rejections" class="list-disc pl-5 text-sm text-red-600">
+                        @foreach (var rejectionMessage in _dropzoneRejections)
+                        {
+                            <li>@rejectionMessage</li>
+                        }
+                    </ul>
+                }
+
+                <div class="demo-row demo-row--align-center">
+                    <HaloInputFile @ref="_hiddenInputFile"
+                                   Mode="HaloInputFileMode.Hidden"
+                                   Rules="_hiddenInputRules"
+                                   Changed="OnHiddenInputFileChanged"
+                                   data-testid="input-file-hidden" />
+                    <HaloButton Variant="ButtonVariant.Secondary"
+                                Activated="OpenHiddenInputFileAsync"
+                                data-testid="input-file-open-hidden">
+                        Open hidden picker
+                    </HaloButton>
+                    <HaloText Variant="TextVariant.BodySmall"
+                              Tone="TextTone.Secondary"
+                              Display="TextDisplay.Block"
+                              data-testid="input-file-hidden-summary">
+                        @_hiddenInputSummary
+                    </HaloText>
+                </div>
+            </div>
+        </article>
+
         <article id="select" class="demo-section" data-testid="demo-section-select">
             <h2>Select</h2>
             <p>Custom combobox behavior and option semantics.</p>

@@ -478,6 +478,17 @@
       ]
     },
     {
+      "id": "input-file",
+      "heading": "Input File",
+      "presenceSelector": "[data-testid=\"input-file-dropzone\"]",
+      "focusSelector": "[data-testid=\"input-file-open-hidden\"]",
+      "requiredStateSelectors": [
+        "[data-testid=\"input-file-dropzone\"]",
+        "[data-testid=\"input-file-open-hidden\"]",
+        "[data-testid=\"input-file-hidden-summary\"]"
+      ]
+    },
+    {
       "id": "select",
       "heading": "Select",
       "presenceSelector": "select, [role=\"combobox\"]",

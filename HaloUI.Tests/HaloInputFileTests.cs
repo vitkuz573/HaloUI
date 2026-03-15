@@ -33,6 +33,21 @@ public sealed class HaloInputFileTests : HaloBunitContext
     }
 
     [Fact]
+    public void DropzoneMode_RendersDropzoneTrigger()
+    {
+        var cut = Render<HaloInputFile>(parameters => parameters
+            .Add(p => p.Mode, HaloInputFileMode.Dropzone)
+            .Add(p => p.AllowMultiple, true));
+
+        var wrapper = cut.Find("div.halo-inputfile");
+        Assert.Contains("halo-inputfile--mode-dropzone", wrapper.ClassList);
+
+        var trigger = cut.Find("label.halo-inputfile__trigger--dropzone");
+        Assert.Contains("Drop files here", trigger.TextContent);
+        Assert.Contains("or click to choose files", trigger.TextContent);
+    }
+
+    [Fact]
     public void HiddenMode_DoesNotRenderTriggerOrSummary()
     {
         var cut = Render<HaloInputFile>(parameters => parameters
@@ -53,8 +68,7 @@ public sealed class HaloInputFileTests : HaloBunitContext
 
         var cut = Render<HaloInputFile>(parameters => parameters
             .Add(p => p.AllowMultiple, true)
-            .Add(p => p.MaxFileSizeBytes, 1024)
-            .Add(p => p.AllowedExtensions, new[] { ".log" })
+            .Add(p => p.Rules, HaloInputFileRules.Multiple(maxFiles: 3, maxFileSizeBytes: 1024, ".log"))
             .Add(p => p.Changed, args => changed = args));
 
         cut.FindComponent<InputFile>().UploadFiles(
@@ -63,10 +77,29 @@ public sealed class HaloInputFileTests : HaloBunitContext
             InputFileContent.CreateFromBinary(new byte[20], "bad.txt", contentType: "text/plain"));
 
         Assert.NotNull(changed);
-        Assert.Equal(1, changed!.FileCount);
+        Assert.Equal(HaloInputFileChangeKind.Selected, changed!.Kind);
+        Assert.Equal(1, changed.FileCount);
         Assert.Equal(2, changed.Rejections.Count);
         Assert.Contains(changed.Rejections, r => r.Reason == HaloInputFileRejectionReason.FileTooLarge);
         Assert.Contains(changed.Rejections, r => r.Reason == HaloInputFileRejectionReason.InvalidExtension);
+    }
+
+    [Fact]
+    public void Validation_WhenAllFilesRejected_EmitsRejectedKind()
+    {
+        HaloInputFileChangeEventArgs? changed = null;
+
+        var cut = Render<HaloInputFile>(parameters => parameters
+            .Add(p => p.Rules, HaloInputFileRules.Single(maxFileSizeBytes: 1024, ".log"))
+            .Add(p => p.Changed, args => changed = args));
+
+        cut.FindComponent<InputFile>().UploadFiles(
+            InputFileContent.CreateFromBinary(new byte[10], "bad.txt", contentType: "text/plain"));
+
+        Assert.NotNull(changed);
+        Assert.Equal(HaloInputFileChangeKind.Rejected, changed!.Kind);
+        Assert.Equal(0, changed.FileCount);
+        Assert.Single(changed.Rejections);
     }
 
     [Fact]
@@ -83,8 +116,19 @@ public sealed class HaloInputFileTests : HaloBunitContext
         cut.Find("button.halo-inputfile__clear").Click();
 
         Assert.NotNull(lastArgs);
-        Assert.True(lastArgs!.IsCleared);
+        Assert.Equal(HaloInputFileChangeKind.Cleared, lastArgs!.Kind);
         Assert.Equal(0, lastArgs.FileCount);
+    }
+
+    [Fact]
+    public async Task OpenAsync_WhenInputIsDisabled_ReturnsFalse()
+    {
+        var cut = Render<HaloInputFile>(parameters => parameters
+            .Add(p => p.Disabled, true));
+
+        var opened = await cut.Instance.OpenAsync();
+
+        Assert.False(opened);
     }
 
     [Theory]
@@ -98,5 +142,12 @@ public sealed class HaloInputFileTests : HaloBunitContext
 
         var wrapper = cut.Find("div.halo-inputfile");
         Assert.Contains(expectedClass, wrapper.ClassList);
+    }
+
+    [Fact]
+    public void Rules_WithInvalidMaxFiles_Throws()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Render<HaloInputFile>(parameters => parameters
+            .Add(p => p.Rules, HaloInputFileRules.Multiple(maxFiles: 0))));
     }
 }

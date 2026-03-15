@@ -7,15 +7,17 @@ namespace HaloUI.Components;
 public sealed class HaloInputFileChangeEventArgs(
     IReadOnlyList<HaloInputFileSelection> files,
     IReadOnlyList<HaloInputFileRejection> rejections,
-    bool isCleared) : EventArgs
+    HaloInputFileChangeKind kind) : EventArgs
 {
     public IReadOnlyList<HaloInputFileSelection> Files { get; } = files;
 
     public IReadOnlyList<HaloInputFileRejection> Rejections { get; } = rejections;
 
-    public bool IsCleared { get; } = isCleared;
+    public HaloInputFileChangeKind Kind { get; } = kind;
 
     public int FileCount => Files.Count;
+
+    public bool HasFiles => Files.Count > 0;
 
     public bool HasValidationErrors => Rejections.Count > 0;
 }

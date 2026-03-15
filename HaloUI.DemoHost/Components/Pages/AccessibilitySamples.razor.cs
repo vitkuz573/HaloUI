@@ -31,6 +31,10 @@ public partial class AccessibilitySamples
     private string _disabledFieldValue = "Managed by policy";
     private string _adminPassword = string.Empty;
     private string _changeSummary = "Shift low-priority queues to standby nodes before release.";
+    private HaloInputFile? _hiddenInputFile;
+    private string _hiddenInputSummary = "No file selected";
+    private int _dropzoneAcceptedCount;
+    private readonly List<string> _dropzoneRejections = [];
     private string _selectedRegion = "emea";
     private string _selectedRegionInCard = "emea";
     private DateTimeOffset? _maintenanceWindow = DateTimeOffset.UtcNow.AddHours(3);
@@ -117,6 +121,14 @@ public partial class AccessibilitySamples
         EnableMultiSort = false,
         SelectionMode = TableSelectionMode.None
     };
+    private static readonly HaloInputFileRules _dropzoneInputRules = HaloInputFileRules.Multiple(
+        maxFiles: 2,
+        maxFileSizeBytes: 1024,
+        ".txt");
+    private static readonly HaloInputFileRules _hiddenInputRules = HaloInputFileRules.Single(
+        maxFileSizeBytes: 1024 * 1024,
+        ".txt",
+        ".log");
 
     private string CurrentThemeMode => ThemeState.CurrentTheme.Tokens.Scheme == ThemeScheme.Dark
         ? "dark"
@@ -210,6 +222,39 @@ public partial class AccessibilitySamples
     private Task OnTopologyNodeChanged(string? nodeId)
     {
         _selectedTopologyNode = nodeId;
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnDropzoneInputFileChanged(HaloInputFileChangeEventArgs args)
+    {
+        _dropzoneAcceptedCount = args.FileCount;
+        _dropzoneRejections.Clear();
+        _dropzoneRejections.AddRange(args.Rejections.Select(static rejection => rejection.Message));
+
+        return Task.CompletedTask;
+    }
+
+    private async Task OpenHiddenInputFileAsync()
+    {
+        if (_hiddenInputFile is null)
+        {
+            return;
+        }
+
+        await _hiddenInputFile.OpenAsync();
+    }
+
+    private Task OnHiddenInputFileChanged(HaloInputFileChangeEventArgs args)
+    {
+        if (args.Rejections.Count > 0)
+        {
+            _hiddenInputSummary = args.Rejections[0].Message;
+
+            return Task.CompletedTask;
+        }
+
+        _hiddenInputSummary = args.FileCount > 0 ? args.Files[0].Name : "No file selected";
 
         return Task.CompletedTask;
     }

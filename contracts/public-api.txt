@@ -966,7 +966,9 @@ type class HaloUI.Components.HaloIcon : HaloUI.Components.Base.ThemeAwareCompone
 type class HaloUI.Components.HaloInputFile : HaloUI.Components.Base.ThemeAwareComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
   method System.Threading.Tasks.Task ClearAsync()
+  method System.Threading.Tasks.Task<System.Boolean> OpenAsync(System.Threading.CancellationToken cancellationToken = default)
   property HaloUI.Components.HaloInputFileMode Mode {get;set;}
+  property HaloUI.Components.HaloInputFileRules Rules {get;set;}
   property HaloUI.Enums.InputFieldSize Size {get;set;}
   property Microsoft.AspNetCore.Components.ElementReference Element {get;}
   property Microsoft.AspNetCore.Components.EventCallback<HaloUI.Components.HaloInputFileChangeEventArgs> Changed {get;set;}
@@ -984,10 +986,7 @@ type class HaloUI.Components.HaloInputFile : HaloUI.Components.Base.ThemeAwareCo
   property System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> AdditionalAttributes {get;set;}
   property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileRejection> Rejections {get;}
   property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileSelection> Files {get;}
-  property System.Collections.Generic.IReadOnlyList<System.String> AllowedExtensions {get;set;}
   property System.Int32 MaxVisibleFiles {get;set;}
-  property System.Nullable<System.Int32> MaxFiles {get;set;}
-  property System.Nullable<System.Int64> MaxFileSizeBytes {get;set;}
   property System.String Accept {get;set;}
   property System.String AriaDescribedBy {get;set;}
   property System.String AriaLabel {get;set;}
@@ -1001,13 +1000,19 @@ type class HaloUI.Components.HaloInputFile : HaloUI.Components.Base.ThemeAwareCo
   property System.String MultiSelectionTextFormat {get;set;}
   property System.String NoSelectionText {get;set;}
 type class HaloUI.Components.HaloInputFileChangeEventArgs : System.EventArgs
-  ctor(System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileSelection> files, System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileRejection> rejections, System.Boolean isCleared)
+  ctor(System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileSelection> files, System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileRejection> rejections, HaloUI.Components.HaloInputFileChangeKind kind)
+  property HaloUI.Components.HaloInputFileChangeKind Kind {get;}
+  property System.Boolean HasFiles {get;}
   property System.Boolean HasValidationErrors {get;}
-  property System.Boolean IsCleared {get;}
   property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileRejection> Rejections {get;}
   property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileSelection> Files {get;}
   property System.Int32 FileCount {get;}
+type enum HaloUI.Components.HaloInputFileChangeKind : System.IComparable, System.IConvertible, System.IFormattable, System.ISpanFormattable
+  field HaloUI.Components.HaloInputFileChangeKind Cleared
+  field HaloUI.Components.HaloInputFileChangeKind Rejected
+  field HaloUI.Components.HaloInputFileChangeKind Selected
 type enum HaloUI.Components.HaloInputFileMode : System.IComparable, System.IConvertible, System.IFormattable, System.ISpanFormattable
+  field HaloUI.Components.HaloInputFileMode Dropzone
   field HaloUI.Components.HaloInputFileMode Hidden
   field HaloUI.Components.HaloInputFileMode Inline
 type class HaloUI.Components.HaloInputFileRejection : System.IEquatable<HaloUI.Components.HaloInputFileRejection>
@@ -1026,6 +1031,21 @@ type enum HaloUI.Components.HaloInputFileRejectionReason : System.IComparable, S
   field HaloUI.Components.HaloInputFileRejectionReason FileTooLarge
   field HaloUI.Components.HaloInputFileRejectionReason InvalidExtension
   field HaloUI.Components.HaloInputFileRejectionReason TooManyFiles
+type class HaloUI.Components.HaloInputFileRules : System.IEquatable<HaloUI.Components.HaloInputFileRules>
+  ctor()
+  method HaloUI.Components.HaloInputFileRules Multiple(System.Nullable<System.Int32> maxFiles = default, System.Nullable<System.Int64> maxFileSizeBytes = default, System.String[] allowedExtensions)
+  method HaloUI.Components.HaloInputFileRules Single(System.Nullable<System.Int64> maxFileSizeBytes = default, System.String[] allowedExtensions)
+  method HaloUI.Components.HaloInputFileRules WithAllowedExtensions(System.String[] allowedExtensions)
+  method HaloUI.Components.HaloInputFileRules WithMaxFileSize(System.Nullable<System.Int64> maxFileSizeBytes)
+  method HaloUI.Components.HaloInputFileRules WithMaxFiles(System.Nullable<System.Int32> maxFiles)
+  method System.Boolean Equals(HaloUI.Components.HaloInputFileRules other)
+  method System.Boolean Equals(System.Object obj)
+  method System.Int32 GetHashCode()
+  method System.String ToString()
+  property HaloUI.Components.HaloInputFileRules Default {get;}
+  property System.Collections.Generic.IReadOnlyList<System.String> AllowedExtensions {get;set;}
+  property System.Nullable<System.Int32> MaxFiles {get;set;}
+  property System.Nullable<System.Int64> MaxFileSizeBytes {get;set;}
 type class HaloUI.Components.HaloInputFileSelection
   ctor(Microsoft.AspNetCore.Components.Forms.IBrowserFile browserFile)
   property Microsoft.AspNetCore.Components.Forms.IBrowserFile BrowserFile {get;}

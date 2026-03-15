@@ -19,21 +19,29 @@
                    OnChange="HandleChangeAsync"
                    @attributes="BuildInputAttributes()" />
 
-        @if (Mode != HaloInputFileMode.Hidden)
+        @if (Mode == HaloInputFileMode.Inline)
         {
             <label class="@BuildTriggerClass()" for="@InputId" aria-disabled="@(Disabled ? "true" : "false")">
                 <span class="halo-inputfile__trigger-text">@ResolveBrowseText()</span>
             </label>
+        }
 
-            @if (ShowSummary)
-            {
-                <span id="@SummaryElementId" class="@BuildSummaryClass()" aria-live="polite">@BuildSummaryText()</span>
-            }
+        @if (Mode == HaloInputFileMode.Dropzone)
+        {
+            <label class="@BuildTriggerClass()" for="@InputId" aria-disabled="@(Disabled ? "true" : "false")">
+                <span class="halo-inputfile__dropzone-title">@ResolveDropzoneTitleText()</span>
+                <span class="halo-inputfile__dropzone-hint">@ResolveDropzoneHintText()</span>
+            </label>
+        }
 
-            @if (ShowClearButton && HasFiles && !Disabled)
-            {
-                <button type="button" class="halo-inputfile__clear" @onclick="ClearAsync">@ClearText</button>
-            }
+        @if (Mode != HaloInputFileMode.Hidden && ShowSummary)
+        {
+            <span id="@SummaryElementId" class="@BuildSummaryClass()" aria-live="polite">@BuildSummaryText()</span>
+        }
+
+        @if (Mode != HaloInputFileMode.Hidden && ShowClearButton && HasFiles && !Disabled)
+        {
+            <button type="button" class="halo-inputfile__clear" @onclick="ClearAsync">@ClearText</button>
         }
     </div>
 

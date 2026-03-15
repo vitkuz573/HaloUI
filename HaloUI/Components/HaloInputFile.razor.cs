@@ -5,6 +5,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using HaloUI.Abstractions;
 using HaloUI.Accessibility;
 using HaloUI.Enums;
 
@@ -15,6 +16,7 @@ public partial class HaloInputFile
     private readonly string _generatedInputId = AccessibilityIdGenerator.Create("halo-inputfile");
     private readonly List<HaloInputFileSelection> _selectedFiles = [];
     private readonly List<HaloInputFileRejection> _rejections = [];
+    private HaloInputFileRules _effectiveRules = HaloInputFileRules.Default;
     private HashSet<string>? _normalizedAllowedExtensions;
     private InputFile? _inputFile;
     private string? _labelElementId;
@@ -47,13 +49,7 @@ public partial class HaloInputFile
     public InputFieldSize Size { get; set; } = InputFieldSize.Medium;
 
     [Parameter]
-    public int? MaxFiles { get; set; }
-
-    [Parameter]
-    public long? MaxFileSizeBytes { get; set; }
-
-    [Parameter]
-    public IReadOnlyList<string>? AllowedExtensions { get; set; }
+    public HaloInputFileRules? Rules { get; set; } = HaloInputFileRules.Default;
 
     [Parameter]
     public string? Id { get; set; }
@@ -109,6 +105,9 @@ public partial class HaloInputFile
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
+    [Inject]
+    private IInputFileRuntime? InputFileRuntime { get; set; }
+
     public ElementReference Element => _inputFile?.Element ?? default;
 
     public IReadOnlyList<HaloInputFileSelection> Files => _selectedFiles;
@@ -142,19 +141,21 @@ public partial class HaloInputFile
             throw new ArgumentOutOfRangeException(nameof(MaxVisibleFiles), MaxVisibleFiles, "MaxVisibleFiles must be greater than zero.");
         }
 
-        if (MaxFiles is <= 0)
+        _effectiveRules = Rules ?? HaloInputFileRules.Default;
+
+        if (_effectiveRules.MaxFiles is <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(MaxFiles), MaxFiles, "MaxFiles must be greater than zero when specified.");
+            throw new ArgumentOutOfRangeException(nameof(Rules), _effectiveRules.MaxFiles, "Rules.MaxFiles must be greater than zero when specified.");
         }
 
-        if (MaxFileSizeBytes is <= 0)
+        if (_effectiveRules.MaxFileSizeBytes is <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(MaxFileSizeBytes), MaxFileSizeBytes, "MaxFileSizeBytes must be greater than zero when specified.");
+            throw new ArgumentOutOfRangeException(nameof(Rules), _effectiveRules.MaxFileSizeBytes, "Rules.MaxFileSizeBytes must be greater than zero when specified.");
         }
 
-        if (!AllowMultiple && MaxFiles is > 1)
+        if (!AllowMultiple && _effectiveRules.MaxFiles is > 1)
         {
-            throw new InvalidOperationException("MaxFiles cannot be greater than one when AllowMultiple is false.");
+            throw new InvalidOperationException("Rules.MaxFiles cannot be greater than one when AllowMultiple is false.");
         }
 
         _normalizedAllowedExtensions = BuildAllowedExtensionsSet();
@@ -171,9 +172,24 @@ public partial class HaloInputFile
         _rejections.Clear();
         _inputRenderKey++;
 
-        await NotifyChangedAsync(isCleared: true);
+        await NotifyChangedAsync(HaloInputFileChangeKind.Cleared);
 
         StateHasChanged();
+    }
+
+    public async Task<bool> OpenAsync(CancellationToken cancellationToken = default)
+    {
+        if (Disabled || _inputFile is null || InputFileRuntime is null)
+        {
+            return false;
+        }
+
+        if (_inputFile.Element is not { } inputElement)
+        {
+            return false;
+        }
+
+        return await InputFileRuntime.OpenAsync(inputElement, cancellationToken);
     }
 
     private async Task HandleChangeAsync(InputFileChangeEventArgs args)
@@ -197,7 +213,7 @@ public partial class HaloInputFile
                 continue;
             }
 
-            if (MaxFileSizeBytes is { } maxFileSizeBytes && file.Size > maxFileSizeBytes)
+            if (_effectiveRules.MaxFileSizeBytes is { } maxFileSizeBytes && file.Size > maxFileSizeBytes)
             {
                 _rejections.Add(new HaloInputFileRejection(
                     file.Name,
@@ -223,7 +239,7 @@ public partial class HaloInputFile
             _selectedFiles.Add(new HaloInputFileSelection(file));
         }
 
-        await NotifyChangedAsync(isCleared: false);
+        await NotifyChangedAsync(ResolveChangeKind());
     }
 
     private int ResolveMaxFiles()
@@ -233,19 +249,19 @@ public partial class HaloInputFile
             return 1;
         }
 
-        return MaxFiles ?? int.MaxValue;
+        return _effectiveRules.MaxFiles ?? int.MaxValue;
     }
 
     private HashSet<string>? BuildAllowedExtensionsSet()
     {
-        if (AllowedExtensions is null || AllowedExtensions.Count == 0)
+        if (_effectiveRules.AllowedExtensions.Count == 0)
         {
             return null;
         }
 
         var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var extension in AllowedExtensions)
+        foreach (var extension in _effectiveRules.AllowedExtensions)
         {
             var normalized = NormalizeExtension(extension);
 
@@ -292,14 +308,29 @@ public partial class HaloInputFile
         return normalized.ToLowerInvariant();
     }
 
-    private async Task NotifyChangedAsync(bool isCleared)
+    private HaloInputFileChangeKind ResolveChangeKind()
+    {
+        if (_selectedFiles.Count > 0)
+        {
+            return HaloInputFileChangeKind.Selected;
+        }
+
+        if (_rejections.Count > 0)
+        {
+            return HaloInputFileChangeKind.Rejected;
+        }
+
+        return HaloInputFileChangeKind.Cleared;
+    }
+
+    private async Task NotifyChangedAsync(HaloInputFileChangeKind kind)
     {
         if (!Changed.HasDelegate)
         {
             return;
         }
 
-        await Changed.InvokeAsync(new HaloInputFileChangeEventArgs(_selectedFiles.ToArray(), _rejections.ToArray(), isCleared));
+        await Changed.InvokeAsync(new HaloInputFileChangeEventArgs(_selectedFiles.ToArray(), _rejections.ToArray(), kind));
     }
 
     private IReadOnlyDictionary<string, object>? BuildRootAttributes()
@@ -452,6 +483,11 @@ public partial class HaloInputFile
             classes.Add("halo-inputfile__control--hidden");
         }
 
+        if (Mode == HaloInputFileMode.Dropzone)
+        {
+            classes.Add("halo-inputfile__control--dropzone");
+        }
+
         return string.Join(' ', classes);
     }
 
@@ -481,6 +517,11 @@ public partial class HaloInputFile
         {
             "halo-inputfile__trigger"
         };
+
+        if (Mode == HaloInputFileMode.Dropzone)
+        {
+            classes.Add("halo-inputfile__trigger--dropzone");
+        }
 
         if (Disabled)
         {
@@ -518,6 +559,23 @@ public partial class HaloInputFile
         }
 
         return AllowMultiple ? "Choose files" : "Choose file";
+    }
+
+    private string ResolveDropzoneTitleText()
+    {
+        if (!string.IsNullOrWhiteSpace(BrowseText))
+        {
+            return BrowseText!;
+        }
+
+        return AllowMultiple ? "Drop files here" : "Drop a file here";
+    }
+
+    private string ResolveDropzoneHintText()
+    {
+        return AllowMultiple
+            ? "or click to choose files"
+            : "or click to choose a file";
     }
 
     private string BuildSummaryText()
@@ -616,6 +674,7 @@ public partial class HaloInputFile
     {
         return mode switch
         {
+            HaloInputFileMode.Dropzone => "halo-inputfile--mode-dropzone",
             HaloInputFileMode.Hidden => "halo-inputfile--mode-hidden",
             _ => "halo-inputfile--mode-inline"
         };
@@ -666,4 +725,5 @@ public partial class HaloInputFile
 
         return string.Format(CultureInfo.CurrentCulture, "{0:0.#} {1}", value, units[unitIndex]);
     }
+
 }
