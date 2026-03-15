@@ -136,6 +136,24 @@
       ]
     },
     {
+      "name": "HaloInputFile",
+      "accessibilityKind": "interactive",
+      "responsiveKind": "adaptive",
+      "evidenceFiles": [
+        "HaloUI.Tests/HaloInputFileTests.cs"
+      ],
+      "focusIndicators": [
+        ":focus-visible"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "error",
+        "empty"
+      ]
+    },
+    {
       "name": "HaloLabel",
       "accessibilityKind": "presentational",
       "responsiveKind": "adaptive"

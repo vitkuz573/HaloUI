@@ -1,0 +1,77 @@
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="@BuildWrapperClass()" @attributes="BuildRootAttributes()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId"
+                   For="@InputId"
+                   Text="@Label"
+                   Variant="@ResolveLabelVariant()"
+                   Disabled="@Disabled"
+                   ShowRequiredIndicator="@Required" />
+    }
+
+    <div class="@BuildControlClass()">
+        <InputFile @key="_inputRenderKey"
+                   @ref="_inputFile"
+                   id="@InputId"
+                   class="@BuildInputClass()"
+                   OnChange="HandleChangeAsync"
+                   @attributes="BuildInputAttributes()" />
+
+        <label class="@BuildTriggerClass()" for="@InputId" aria-disabled="@(Disabled ? "true" : "false")">
+            @if (TriggerContent is null)
+            {
+                <span class="halo-inputfile__trigger-text">@ResolveButtonText()</span>
+            }
+            else
+            {
+                @TriggerContent
+            }
+        </label>
+
+        @if (ShowSummary)
+        {
+            <span id="@SummaryElementId" class="@BuildSummaryClass()">@BuildSummaryText()</span>
+        }
+
+        @if (ShowClearButton && HasSelectedFiles && !Disabled)
+        {
+            <button type="button" class="halo-inputfile__clear" @onclick="ClearAsync">@ClearButtonText</button>
+        }
+    </div>
+
+    @if (ShowSelectedFiles && HasSelectedFiles)
+    {
+        <ul class="@BuildListClass()">
+            @foreach (var file in GetVisibleFiles())
+            {
+                <li class="halo-inputfile__item">
+                    @if (ItemTemplate is null)
+                    {
+                        <span class="halo-inputfile__item-name">@file.Name</span>
+
+                        @if (ShowFileSize)
+                        {
+                            <span class="halo-inputfile__item-size">@FormatFileSize(file.Size)</span>
+                        }
+                    }
+                    else
+                    {
+                        @ItemTemplate(file)
+                    }
+                </li>
+            }
+
+            @if (HiddenFileCount > 0)
+            {
+                <li class="halo-inputfile__item halo-inputfile__item--more">+@HiddenFileCount more</li>
+            }
+        </ul>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p id="@DescriptionElementId" class="halo-inputfile__description">@Description</p>
+    }
+</div>

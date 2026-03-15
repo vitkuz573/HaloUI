@@ -963,6 +963,62 @@ type class HaloUI.Components.HaloIcon : HaloUI.Components.Base.ThemeAwareCompone
   property System.String AriaLabel {get;set;}
   property System.String Class {get;set;}
   property System.String Title {get;set;}
+type class HaloUI.Components.HaloInputFile : HaloUI.Components.Base.ThemeAwareComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
+  ctor()
+  method System.Threading.Tasks.Task ClearAsync()
+  property HaloUI.Enums.InputFieldSize Size {get;set;}
+  property Microsoft.AspNetCore.Components.ElementReference Element {get;}
+  property Microsoft.AspNetCore.Components.EventCallback SelectionCleared {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<HaloUI.Components.HaloInputFileChangedEventArgs> FilesChanged {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs> SelectionChanged {get;set;}
+  property Microsoft.AspNetCore.Components.RenderFragment TriggerContent {get;set;}
+  property Microsoft.AspNetCore.Components.RenderFragment<HaloUI.Components.HaloInputFileItem> ItemTemplate {get;set;}
+  property System.Boolean Disabled {get;set;}
+  property System.Boolean HasError {get;set;}
+  property System.Boolean HasSelectedFiles {get;}
+  property System.Boolean Multiple {get;set;}
+  property System.Boolean Required {get;set;}
+  property System.Boolean ShowClearButton {get;set;}
+  property System.Boolean ShowFileSize {get;set;}
+  property System.Boolean ShowSelectedFiles {get;set;}
+  property System.Boolean ShowSummary {get;set;}
+  property System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> AdditionalAttributes {get;set;}
+  property System.Collections.Generic.IReadOnlyDictionary<System.String, System.Object> InputAttributes {get;set;}
+  property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileItem> SelectedFiles {get;}
+  property System.Int32 MaxVisibleFiles {get;set;}
+  property System.Int32 SelectedFileCount {get;}
+  property System.String Accept {get;set;}
+  property System.String AriaDescribedBy {get;set;}
+  property System.String AriaLabel {get;set;}
+  property System.String AriaLabelledBy {get;set;}
+  property System.String ButtonClass {get;set;}
+  property System.String ButtonText {get;set;}
+  property System.String Class {get;set;}
+  property System.String ClearButtonText {get;set;}
+  property System.String ControlClass {get;set;}
+  property System.String Description {get;set;}
+  property System.String Id {get;set;}
+  property System.String InputClass {get;set;}
+  property System.String Label {get;set;}
+  property System.String ListClass {get;set;}
+  property System.String MultipleSelectionTextFormat {get;set;}
+  property System.String Placeholder {get;set;}
+  property System.String SummaryClass {get;set;}
+type class HaloUI.Components.HaloInputFileChangedEventArgs : System.EventArgs
+  ctor(System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileItem> files, Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs browserEventArgs)
+  property Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs BrowserEventArgs {get;}
+  property System.Collections.Generic.IReadOnlyList<HaloUI.Components.HaloInputFileItem> Files {get;}
+  property System.Int32 FileCount {get;}
+type class HaloUI.Components.HaloInputFileItem : System.IEquatable<HaloUI.Components.HaloInputFileItem>
+  ctor(System.String Name, System.Int64 Size, System.String ContentType)
+  method System.Boolean Equals(HaloUI.Components.HaloInputFileItem other)
+  method System.Boolean Equals(System.Object obj)
+  method System.Int32 GetHashCode()
+  method System.String ToString()
+  method System.Void Deconstruct(out System.String Name, out System.Int64 Size, out System.String ContentType)
+  property System.Int64 Size {get;set;}
+  property System.String ContentType {get;set;}
+  property System.String Name {get;set;}
 type class HaloUI.Components.HaloLabel : HaloUI.Components.Base.ThemeAwareComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
   property HaloUI.Enums.LabelElement Element {get;set;}
