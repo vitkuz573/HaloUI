@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 <div class="@BuildWrapperClass()" @attributes="BuildRootAttributes()">
-    @if (!string.IsNullOrWhiteSpace(Label))
+    @if (Mode != HaloInputFileMode.Hidden && !string.IsNullOrWhiteSpace(Label))
     {
         <HaloLabel Id="@LabelElementId"
                    For="@InputId"
@@ -19,46 +19,35 @@
                    OnChange="HandleChangeAsync"
                    @attributes="BuildInputAttributes()" />
 
-        <label class="@BuildTriggerClass()" for="@InputId" aria-disabled="@(Disabled ? "true" : "false")">
-            @if (TriggerContent is null)
-            {
-                <span class="halo-inputfile__trigger-text">@ResolveButtonText()</span>
-            }
-            else
-            {
-                @TriggerContent
-            }
-        </label>
-
-        @if (ShowSummary)
+        @if (Mode != HaloInputFileMode.Hidden)
         {
-            <span id="@SummaryElementId" class="@BuildSummaryClass()">@BuildSummaryText()</span>
-        }
+            <label class="@BuildTriggerClass()" for="@InputId" aria-disabled="@(Disabled ? "true" : "false")">
+                <span class="halo-inputfile__trigger-text">@ResolveBrowseText()</span>
+            </label>
 
-        @if (ShowClearButton && HasSelectedFiles && !Disabled)
-        {
-            <button type="button" class="halo-inputfile__clear" @onclick="ClearAsync">@ClearButtonText</button>
+            @if (ShowSummary)
+            {
+                <span id="@SummaryElementId" class="@BuildSummaryClass()" aria-live="polite">@BuildSummaryText()</span>
+            }
+
+            @if (ShowClearButton && HasFiles && !Disabled)
+            {
+                <button type="button" class="halo-inputfile__clear" @onclick="ClearAsync">@ClearText</button>
+            }
         }
     </div>
 
-    @if (ShowSelectedFiles && HasSelectedFiles)
+    @if (Mode != HaloInputFileMode.Hidden && ShowFileList && HasFiles)
     {
         <ul class="@BuildListClass()">
             @foreach (var file in GetVisibleFiles())
             {
                 <li class="halo-inputfile__item">
-                    @if (ItemTemplate is null)
-                    {
-                        <span class="halo-inputfile__item-name">@file.Name</span>
+                    <span class="halo-inputfile__item-name">@file.Name</span>
 
-                        @if (ShowFileSize)
-                        {
-                            <span class="halo-inputfile__item-size">@FormatFileSize(file.Size)</span>
-                        }
-                    }
-                    else
+                    @if (ShowFileSize)
                     {
-                        @ItemTemplate(file)
+                        <span class="halo-inputfile__item-size">@FormatFileSize(file.Size)</span>
                     }
                 </li>
             }
@@ -70,7 +59,17 @@
         </ul>
     }
 
-    @if (!string.IsNullOrWhiteSpace(Description))
+    @if (Mode != HaloInputFileMode.Hidden && ShowRejections && HasRejections)
+    {
+        <ul class="halo-inputfile__rejections">
+            @foreach (var rejection in Rejections)
+            {
+                <li class="halo-inputfile__rejection">@rejection.Message</li>
+            }
+        </ul>
+    }
+
+    @if (Mode != HaloInputFileMode.Hidden && !string.IsNullOrWhiteSpace(Description))
     {
         <p id="@DescriptionElementId" class="halo-inputfile__description">@Description</p>
     }

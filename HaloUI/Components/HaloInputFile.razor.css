@@ -9,6 +9,10 @@
         width:100%;
     }
 
+    .halo-inputfile--mode-hidden {
+        display:none;
+    }
+
     .halo-inputfile--size-sm {
         --halo-inputfile-size-height:var(--halo-input-size-sm-height, var(--halo-input-size-md-height));
         --halo-inputfile-size-padding-x:var(--halo-input-size-sm-padding-x, var(--halo-input-size-md-padding-x));
@@ -34,6 +38,10 @@
         min-width:0;
         width:100%;
         flex-wrap:wrap;
+    }
+
+    .halo-inputfile__control--hidden {
+        display:block;
     }
 
     .halo-inputfile__input {
@@ -123,7 +131,8 @@
         outline:none;
     }
 
-    .halo-inputfile__files {
+    .halo-inputfile__files,
+    .halo-inputfile__rejections {
         margin:0;
         padding:0;
         list-style:none;
@@ -132,7 +141,8 @@
         gap:0.375rem;
     }
 
-    .halo-inputfile__item {
+    .halo-inputfile__item,
+    .halo-inputfile__rejection {
         display:flex;
         align-items:center;
         justify-content:space-between;
@@ -140,8 +150,16 @@
         min-width:0;
         padding:0.375rem 0.5rem;
         border-radius:var(--halo-input-border-radius);
-        background:var(--halo-color-surface-elevated, color-mix(in srgb, var(--halo-input-default-background) 92%, #000 8%));
         color:var(--halo-input-default-text);
+    }
+
+    .halo-inputfile__item {
+        background:var(--halo-color-surface-elevated, color-mix(in srgb, var(--halo-input-default-background) 92%, #000 8%));
+    }
+
+    .halo-inputfile__rejection {
+        background:color-mix(in srgb, var(--halo-input-error-background) 90%, #000 10%);
+        color:var(--halo-input-error-text);
     }
 
     .halo-inputfile__item-name {
@@ -197,7 +215,8 @@
     .halo-inputfile--disabled .halo-inputfile__summary,
     .halo-inputfile--disabled .halo-inputfile__description,
     .halo-inputfile--disabled .halo-inputfile__item,
-    .halo-inputfile--disabled .halo-inputfile__item-size {
+    .halo-inputfile--disabled .halo-inputfile__item-size,
+    .halo-inputfile--disabled .halo-inputfile__rejection {
         color:var(--halo-input-disabled-text);
     }
 

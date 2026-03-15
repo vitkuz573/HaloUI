@@ -13,7 +13,9 @@ namespace HaloUI.Components;
 public partial class HaloInputFile
 {
     private readonly string _generatedInputId = AccessibilityIdGenerator.Create("halo-inputfile");
-    private readonly List<HaloInputFileItem> _selectedFiles = [];
+    private readonly List<HaloInputFileSelection> _selectedFiles = [];
+    private readonly List<HaloInputFileRejection> _rejections = [];
+    private HashSet<string>? _normalizedAllowedExtensions;
     private InputFile? _inputFile;
     private string? _labelElementId;
     private string? _descriptionElementId;
@@ -21,19 +23,13 @@ public partial class HaloInputFile
     private int _inputRenderKey;
 
     [Parameter]
-    public EventCallback<InputFileChangeEventArgs> SelectionChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<HaloInputFileChangedEventArgs> FilesChanged { get; set; }
-
-    [Parameter]
-    public EventCallback SelectionCleared { get; set; }
+    public EventCallback<HaloInputFileChangeEventArgs> Changed { get; set; }
 
     [Parameter]
     public string? Accept { get; set; }
 
     [Parameter]
-    public bool Multiple { get; set; }
+    public bool AllowMultiple { get; set; }
 
     [Parameter]
     public bool Disabled { get; set; }
@@ -45,7 +41,19 @@ public partial class HaloInputFile
     public bool HasError { get; set; }
 
     [Parameter]
+    public HaloInputFileMode Mode { get; set; } = HaloInputFileMode.Inline;
+
+    [Parameter]
     public InputFieldSize Size { get; set; } = InputFieldSize.Medium;
+
+    [Parameter]
+    public int? MaxFiles { get; set; }
+
+    [Parameter]
+    public long? MaxFileSizeBytes { get; set; }
+
+    [Parameter]
+    public IReadOnlyList<string>? AllowedExtensions { get; set; }
 
     [Parameter]
     public string? Id { get; set; }
@@ -57,22 +65,22 @@ public partial class HaloInputFile
     public string? Description { get; set; }
 
     [Parameter]
-    public string? Placeholder { get; set; } = "No file selected";
+    public string? BrowseText { get; set; }
 
     [Parameter]
-    public string? ButtonText { get; set; }
+    public string? NoSelectionText { get; set; } = "No file selected";
 
     [Parameter]
-    public string? ClearButtonText { get; set; } = "Clear";
+    public string? MultiSelectionTextFormat { get; set; } = "{0} files selected";
 
     [Parameter]
-    public string? MultipleSelectionTextFormat { get; set; } = "{0} files selected";
+    public string? ClearText { get; set; } = "Clear";
 
     [Parameter]
     public bool ShowSummary { get; set; } = true;
 
     [Parameter]
-    public bool ShowSelectedFiles { get; set; } = true;
+    public bool ShowFileList { get; set; } = true;
 
     [Parameter]
     public bool ShowFileSize { get; set; } = true;
@@ -81,25 +89,13 @@ public partial class HaloInputFile
     public bool ShowClearButton { get; set; }
 
     [Parameter]
+    public bool ShowRejections { get; set; }
+
+    [Parameter]
     public int MaxVisibleFiles { get; set; } = 3;
 
     [Parameter]
     public string? Class { get; set; }
-
-    [Parameter]
-    public string? ControlClass { get; set; }
-
-    [Parameter]
-    public string? InputClass { get; set; }
-
-    [Parameter]
-    public string? ButtonClass { get; set; }
-
-    [Parameter]
-    public string? SummaryClass { get; set; }
-
-    [Parameter]
-    public string? ListClass { get; set; }
 
     [Parameter]
     public string? AriaLabel { get; set; }
@@ -110,25 +106,18 @@ public partial class HaloInputFile
     [Parameter]
     public string? AriaDescribedBy { get; set; }
 
-    [Parameter]
-    public RenderFragment? TriggerContent { get; set; }
-
-    [Parameter]
-    public RenderFragment<HaloInputFileItem>? ItemTemplate { get; set; }
-
-    [Parameter]
-    public IReadOnlyDictionary<string, object>? InputAttributes { get; set; }
-
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     public ElementReference Element => _inputFile?.Element ?? default;
 
-    public IReadOnlyList<HaloInputFileItem> SelectedFiles => _selectedFiles;
+    public IReadOnlyList<HaloInputFileSelection> Files => _selectedFiles;
 
-    public bool HasSelectedFiles => _selectedFiles.Count > 0;
+    public IReadOnlyList<HaloInputFileRejection> Rejections => _rejections;
 
-    public int SelectedFileCount => _selectedFiles.Count;
+    public bool HasFiles => _selectedFiles.Count > 0;
+
+    public bool HasRejections => _rejections.Count > 0;
 
     private string InputId => string.IsNullOrWhiteSpace(Id) ? _generatedInputId : Id!;
 
@@ -140,7 +129,7 @@ public partial class HaloInputFile
         ? null
         : _descriptionElementId ??= AccessibilityIdGenerator.Create("halo-inputfile-description");
 
-    private string? SummaryElementId => !ShowSummary
+    private string? SummaryElementId => !ShowSummary || Mode == HaloInputFileMode.Hidden
         ? null
         : _summaryElementId ??= AccessibilityIdGenerator.Create("halo-inputfile-summary");
 
@@ -152,22 +141,37 @@ public partial class HaloInputFile
         {
             throw new ArgumentOutOfRangeException(nameof(MaxVisibleFiles), MaxVisibleFiles, "MaxVisibleFiles must be greater than zero.");
         }
+
+        if (MaxFiles is <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(MaxFiles), MaxFiles, "MaxFiles must be greater than zero when specified.");
+        }
+
+        if (MaxFileSizeBytes is <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(MaxFileSizeBytes), MaxFileSizeBytes, "MaxFileSizeBytes must be greater than zero when specified.");
+        }
+
+        if (!AllowMultiple && MaxFiles is > 1)
+        {
+            throw new InvalidOperationException("MaxFiles cannot be greater than one when AllowMultiple is false.");
+        }
+
+        _normalizedAllowedExtensions = BuildAllowedExtensionsSet();
     }
 
     public async Task ClearAsync()
     {
-        if (_selectedFiles.Count == 0)
+        if (_selectedFiles.Count == 0 && _rejections.Count == 0)
         {
             return;
         }
 
         _selectedFiles.Clear();
+        _rejections.Clear();
         _inputRenderKey++;
 
-        if (SelectionCleared.HasDelegate)
-        {
-            await SelectionCleared.InvokeAsync();
-        }
+        await NotifyChangedAsync(isCleared: true);
 
         StateHasChanged();
     }
@@ -175,21 +179,127 @@ public partial class HaloInputFile
     private async Task HandleChangeAsync(InputFileChangeEventArgs args)
     {
         _selectedFiles.Clear();
+        _rejections.Clear();
 
-        foreach (var file in args.GetMultipleFiles(int.MaxValue))
+        var effectiveMaxFiles = ResolveMaxFiles();
+        var files = args.GetMultipleFiles(int.MaxValue);
+
+        foreach (var file in files)
         {
-            _selectedFiles.Add(new HaloInputFileItem(file.Name, file.Size, file.ContentType));
+            if (_selectedFiles.Count >= effectiveMaxFiles)
+            {
+                _rejections.Add(new HaloInputFileRejection(
+                    file.Name,
+                    file.Size,
+                    file.ContentType,
+                    HaloInputFileRejectionReason.TooManyFiles,
+                    $"Only {effectiveMaxFiles} file(s) can be selected."));
+                continue;
+            }
+
+            if (MaxFileSizeBytes is { } maxFileSizeBytes && file.Size > maxFileSizeBytes)
+            {
+                _rejections.Add(new HaloInputFileRejection(
+                    file.Name,
+                    file.Size,
+                    file.ContentType,
+                    HaloInputFileRejectionReason.FileTooLarge,
+                    $"{file.Name} exceeds the maximum size of {FormatFileSize(maxFileSizeBytes)}."));
+                continue;
+            }
+
+            if (!IsExtensionAllowed(file.Name))
+            {
+                var extension = Path.GetExtension(file.Name);
+                _rejections.Add(new HaloInputFileRejection(
+                    file.Name,
+                    file.Size,
+                    file.ContentType,
+                    HaloInputFileRejectionReason.InvalidExtension,
+                    $"{file.Name} has an unsupported extension '{extension}'."));
+                continue;
+            }
+
+            _selectedFiles.Add(new HaloInputFileSelection(file));
         }
 
-        if (SelectionChanged.HasDelegate)
+        await NotifyChangedAsync(isCleared: false);
+    }
+
+    private int ResolveMaxFiles()
+    {
+        if (!AllowMultiple)
         {
-            await SelectionChanged.InvokeAsync(args);
+            return 1;
         }
 
-        if (FilesChanged.HasDelegate)
+        return MaxFiles ?? int.MaxValue;
+    }
+
+    private HashSet<string>? BuildAllowedExtensionsSet()
+    {
+        if (AllowedExtensions is null || AllowedExtensions.Count == 0)
         {
-            await FilesChanged.InvokeAsync(new HaloInputFileChangedEventArgs(_selectedFiles.ToArray(), args));
+            return null;
         }
+
+        var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var extension in AllowedExtensions)
+        {
+            var normalized = NormalizeExtension(extension);
+
+            if (!string.IsNullOrWhiteSpace(normalized))
+            {
+                set.Add(normalized);
+            }
+        }
+
+        return set.Count == 0 ? null : set;
+    }
+
+    private bool IsExtensionAllowed(string fileName)
+    {
+        if (_normalizedAllowedExtensions is null)
+        {
+            return true;
+        }
+
+        var extension = Path.GetExtension(fileName);
+
+        if (string.IsNullOrWhiteSpace(extension))
+        {
+            return false;
+        }
+
+        return _normalizedAllowedExtensions.Contains(NormalizeExtension(extension));
+    }
+
+    private static string NormalizeExtension(string? extension)
+    {
+        if (string.IsNullOrWhiteSpace(extension))
+        {
+            return string.Empty;
+        }
+
+        var normalized = extension.Trim();
+
+        if (!normalized.StartsWith(".", StringComparison.Ordinal))
+        {
+            normalized = $".{normalized}";
+        }
+
+        return normalized.ToLowerInvariant();
+    }
+
+    private async Task NotifyChangedAsync(bool isCleared)
+    {
+        if (!Changed.HasDelegate)
+        {
+            return;
+        }
+
+        await Changed.InvokeAsync(new HaloInputFileChangeEventArgs(_selectedFiles.ToArray(), _rejections.ToArray(), isCleared));
     }
 
     private IReadOnlyDictionary<string, object>? BuildRootAttributes()
@@ -220,15 +330,14 @@ public partial class HaloInputFile
             .ForComponent(typeof(HaloInputFile))
             .WithInspectorElementId(InputId)
             .WithAttribute("id", InputId)
-            .WithDisabled(Disabled)
-            .WithAccessibleNameFromAdditionalAttributes(InputAttributes);
+            .WithDisabled(Disabled);
 
         if (Required)
         {
             builder.WithRequired(true);
         }
 
-        if (HasError)
+        if (HasError || HasRejections)
         {
             builder.WithInvalid(true);
         }
@@ -248,48 +357,39 @@ public partial class HaloInputFile
             builder.WithDescribedBy(descriptionReference);
         }
 
-        var attributes = AccessibilityAttributesBuilder.Merge(
-            InputAttributes,
-            builder.Build(),
-            "id",
-            "class",
-            "accept",
-            "multiple",
-            "disabled",
-            "required",
-            "onchange",
-            "style",
-            "type");
-
-        attributes["id"] = InputId;
-        attributes["type"] = "file";
+        var attributes = builder.Build();
+        var bag = new Dictionary<string, object>(attributes, StringComparer.OrdinalIgnoreCase)
+        {
+            ["id"] = InputId,
+            ["type"] = "file"
+        };
 
         if (!string.IsNullOrWhiteSpace(Accept))
         {
-            attributes["accept"] = Accept!;
+            bag["accept"] = Accept!;
         }
 
-        if (Multiple)
+        if (AllowMultiple)
         {
-            attributes["multiple"] = "multiple";
+            bag["multiple"] = "multiple";
         }
 
         if (Disabled)
         {
-            attributes["disabled"] = "disabled";
+            bag["disabled"] = "disabled";
         }
 
         if (Required)
         {
-            attributes["required"] = "required";
+            bag["required"] = "required";
         }
 
-        return attributes.Count > 0 ? attributes : null;
+        return bag;
     }
 
     private LabelVariant ResolveLabelVariant()
     {
-        if (HasError)
+        if (HasError || HasRejections)
         {
             return LabelVariant.Danger;
         }
@@ -307,7 +407,8 @@ public partial class HaloInputFile
         var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "halo-inputfile",
-            GetSizeClass(Size)
+            GetSizeClass(Size),
+            GetModeClass(Mode)
         };
 
         if (Disabled)
@@ -315,12 +416,12 @@ public partial class HaloInputFile
             classes.Add("halo-inputfile--disabled");
         }
 
-        if (HasError)
+        if (HasError || HasRejections)
         {
             classes.Add("halo-inputfile--error");
         }
 
-        if (HasSelectedFiles)
+        if (HasFiles)
         {
             classes.Add("halo-inputfile--has-files");
         }
@@ -346,7 +447,10 @@ public partial class HaloInputFile
             "halo-inputfile__control"
         };
 
-        AddClasses(classes, ControlClass);
+        if (Mode == HaloInputFileMode.Hidden)
+        {
+            classes.Add("halo-inputfile__control--hidden");
+        }
 
         return string.Join(' ', classes);
     }
@@ -363,16 +467,9 @@ public partial class HaloInputFile
             classes.Add("halo-is-disabled");
         }
 
-        if (HasError)
+        if (HasError || HasRejections)
         {
             classes.Add("halo-is-error");
-        }
-
-        AddClasses(classes, InputClass);
-
-        if (InputAttributes is not null && InputAttributes.TryGetValue("class", out var additionalClass) && additionalClass is not null)
-        {
-            AddClasses(classes, additionalClass.ToString());
         }
 
         return string.Join(' ', classes);
@@ -390,8 +487,6 @@ public partial class HaloInputFile
             classes.Add("halo-is-disabled");
         }
 
-        AddClasses(classes, ButtonClass);
-
         return string.Join(' ', classes);
     }
 
@@ -402,45 +497,41 @@ public partial class HaloInputFile
             "halo-inputfile__summary"
         };
 
-        if (!HasSelectedFiles)
+        if (!HasFiles)
         {
             classes.Add("halo-inputfile__summary--empty");
         }
-
-        AddClasses(classes, SummaryClass);
 
         return string.Join(' ', classes);
     }
 
     private string BuildListClass()
     {
-        var classes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "halo-inputfile__files"
-        };
-
-        AddClasses(classes, ListClass);
-
-        return string.Join(' ', classes);
+        return "halo-inputfile__files";
     }
 
-    private string ResolveButtonText()
+    private string ResolveBrowseText()
     {
-        if (!string.IsNullOrWhiteSpace(ButtonText))
+        if (!string.IsNullOrWhiteSpace(BrowseText))
         {
-            return ButtonText!;
+            return BrowseText!;
         }
 
-        return Multiple ? "Choose files" : "Choose file";
+        return AllowMultiple ? "Choose files" : "Choose file";
     }
 
     private string BuildSummaryText()
     {
         if (_selectedFiles.Count == 0)
         {
-            return string.IsNullOrWhiteSpace(Placeholder)
+            if (_rejections.Count > 0)
+            {
+                return _rejections[0].Message;
+            }
+
+            return string.IsNullOrWhiteSpace(NoSelectionText)
                 ? "No file selected"
-                : Placeholder!;
+                : NoSelectionText!;
         }
 
         if (_selectedFiles.Count == 1)
@@ -448,9 +539,9 @@ public partial class HaloInputFile
             return _selectedFiles[0].Name;
         }
 
-        var format = string.IsNullOrWhiteSpace(MultipleSelectionTextFormat)
+        var format = string.IsNullOrWhiteSpace(MultiSelectionTextFormat)
             ? "{0} files selected"
-            : MultipleSelectionTextFormat!;
+            : MultiSelectionTextFormat!;
 
         try
         {
@@ -462,7 +553,7 @@ public partial class HaloInputFile
         }
     }
 
-    private IReadOnlyList<HaloInputFileItem> GetVisibleFiles()
+    private IReadOnlyList<HaloInputFileSelection> GetVisibleFiles()
     {
         if (_selectedFiles.Count <= MaxVisibleFiles)
         {
@@ -470,26 +561,6 @@ public partial class HaloInputFile
         }
 
         return _selectedFiles.Take(MaxVisibleFiles).ToArray();
-    }
-
-    private static string FormatFileSize(long size)
-    {
-        if (size < 1024)
-        {
-            return $"{size} B";
-        }
-
-        var units = new[] { "KB", "MB", "GB", "TB" };
-        var value = size / 1024d;
-        var unitIndex = 0;
-
-        while (value >= 1024d && unitIndex < units.Length - 1)
-        {
-            value /= 1024d;
-            unitIndex++;
-        }
-
-        return string.Format(CultureInfo.CurrentCulture, "{0:0.#} {1}", value, units[unitIndex]);
     }
 
     private string[] GetLabelReferences()
@@ -541,6 +612,15 @@ public partial class HaloInputFile
         };
     }
 
+    private static string GetModeClass(HaloInputFileMode mode)
+    {
+        return mode switch
+        {
+            HaloInputFileMode.Hidden => "halo-inputfile--mode-hidden",
+            _ => "halo-inputfile--mode-inline"
+        };
+    }
+
     private static IEnumerable<string> SplitIds(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -565,5 +645,25 @@ public partial class HaloInputFile
         {
             destination.Add(token);
         }
+    }
+
+    private static string FormatFileSize(long size)
+    {
+        if (size < 1024)
+        {
+            return $"{size} B";
+        }
+
+        var units = new[] { "KB", "MB", "GB", "TB" };
+        var value = size / 1024d;
+        var unitIndex = 0;
+
+        while (value >= 1024d && unitIndex < units.Length - 1)
+        {
+            value /= 1024d;
+            unitIndex++;
+        }
+
+        return string.Format(CultureInfo.CurrentCulture, "{0:0.#} {1}", value, units[unitIndex]);
     }
 }
