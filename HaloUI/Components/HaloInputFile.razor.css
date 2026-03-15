@@ -55,7 +55,7 @@
     align-items: stretch;
 }
 
-.halo-inputfile__input {
+::deep .halo-inputfile__input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -117,7 +117,7 @@
     line-height: var(--halo-typography-caption-line-height);
 }
 
-.halo-inputfile__input:focus-visible + .halo-inputfile__trigger {
+::deep .halo-inputfile__input:focus-visible + .halo-inputfile__trigger {
     border-color: var(--halo-input-focus-border);
     box-shadow: var(--halo-input-focus-shadow);
 }
