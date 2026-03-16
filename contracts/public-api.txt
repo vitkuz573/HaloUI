@@ -1140,6 +1140,20 @@ type class HaloUI.Components.HaloNotice : HaloUI.Components.Base.ThemeAwareCompo
   property System.String AriaLabel {get;set;}
   property System.String AriaLive {get;set;}
   property System.String AriaRole {get;set;}
+type class HaloUI.Components.HaloOtpField : HaloUI.Components.Base.HaloLabellableInputBase<System.String>, HaloUI.Abstractions.ILabellable, HaloUI.Abstractions.ILabellableInput, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
+  ctor()
+  property HaloUI.Enums.InputFieldSize Size {get;set;}
+  property HaloUI.Enums.TextFieldUpdateBehavior UpdateBehavior {get;set;}
+  property Microsoft.AspNetCore.Components.EventCallback<System.String> ValueInput {get;set;}
+  property System.Boolean Disabled {get;set;}
+  property System.Boolean HasError {get;set;}
+  property System.Boolean ReadOnly {get;set;}
+  property System.Int32 Length {get;set;}
+  property System.String AriaDescribedBy {get;set;}
+  property System.String AriaLabel {get;set;}
+  property System.String AriaLabelledBy {get;set;}
+  property System.String Class {get;set;}
+  property System.String Placeholder {get;set;}
 type class HaloUI.Components.HaloPasswordField : HaloUI.Components.Base.ThemeAwareInputText, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()
   property System.String Label {get;set;}

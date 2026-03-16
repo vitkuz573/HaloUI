@@ -1,0 +1,137 @@
+.halo-otpfield {
+    --halo-otpfield-size-height: var(--halo-input-size-md-height);
+    --halo-otpfield-size-cell: 2.8rem;
+    --halo-otpfield-size-font-size: var(--halo-input-font-size);
+    --halo-otpfield-size-gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-width: 0;
+    width: 100%;
+}
+
+.halo-otpfield--size-sm {
+    --halo-otpfield-size-height: var(--halo-input-size-sm-height, var(--halo-input-size-md-height));
+    --halo-otpfield-size-cell: 2.4rem;
+    --halo-otpfield-size-font-size: calc(var(--halo-input-font-size) - 0.0625rem);
+    --halo-otpfield-size-gap: 0.4rem;
+}
+
+.halo-otpfield--size-md {
+    --halo-otpfield-size-height: var(--halo-input-size-md-height);
+    --halo-otpfield-size-cell: 2.8rem;
+    --halo-otpfield-size-font-size: var(--halo-input-font-size);
+    --halo-otpfield-size-gap: 0.5rem;
+}
+
+.halo-otpfield--size-lg {
+    --halo-otpfield-size-height: var(--halo-input-size-lg-height, var(--halo-input-size-md-height));
+    --halo-otpfield-size-cell: 3.15rem;
+    --halo-otpfield-size-font-size: calc(var(--halo-input-font-size) + 0.0625rem);
+    --halo-otpfield-size-gap: 0.6rem;
+}
+
+.halo-otpfield__group {
+    --halo-otpfield-length: 6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: min(100%, calc((var(--halo-otpfield-size-cell) * var(--halo-otpfield-length)) + (var(--halo-otpfield-size-gap) * (var(--halo-otpfield-length) - 1))));
+    gap: var(--halo-otpfield-size-gap);
+}
+
+.halo-otpfield__segment {
+    flex: 0 0 var(--halo-otpfield-size-cell);
+    width: var(--halo-otpfield-size-cell);
+    min-height: var(--halo-otpfield-size-height);
+    padding: 0;
+    text-align: center;
+    letter-spacing: 0.02em;
+    font-size: var(--halo-otpfield-size-font-size);
+    font-weight: calc(var(--halo-input-font-weight) + 50);
+    font-family: var(--halo-input-font-family, var(--halo-brand-typography-body-font-family, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif));
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    line-height: 1;
+    caret-color: transparent;
+    background: var(--halo-input-default-background);
+    color: var(--halo-input-default-text);
+    border: var(--halo-input-border-width) solid var(--halo-input-default-border);
+    border-radius: var(--halo-input-border-radius);
+    box-shadow: var(--halo-input-default-shadow);
+    outline: none;
+    appearance: none;
+    box-sizing: border-box;
+    transition: var(--halo-input-transition);
+}
+
+.halo-otpfield__segment::placeholder {
+    color: var(--halo-input-default-placeholder);
+    opacity: 1;
+}
+
+.halo-otpfield__segment:focus-visible {
+    border-color: var(--halo-input-focus-border);
+    box-shadow: var(--halo-input-focus-shadow);
+}
+
+.halo-otpfield--error .halo-otpfield__segment,
+.halo-otpfield__segment.halo-is-error {
+    background: var(--halo-input-error-background);
+    color: var(--halo-input-error-text);
+    border-color: var(--halo-input-error-border);
+    box-shadow: var(--halo-input-error-shadow);
+}
+
+.halo-otpfield--error .halo-otpfield__segment::placeholder,
+.halo-otpfield__segment.halo-is-error::placeholder {
+    color: var(--halo-input-error-placeholder);
+}
+
+.halo-otpfield--error .halo-otpfield__segment:focus-visible,
+.halo-otpfield__segment.halo-is-error:focus-visible {
+    border-color: var(--halo-input-error-border);
+    box-shadow: var(--halo-input-error-shadow);
+}
+
+.halo-otpfield--disabled .halo-otpfield__segment,
+.halo-otpfield__segment.halo-is-disabled {
+    background: var(--halo-input-disabled-background);
+    color: var(--halo-input-disabled-text);
+    border-color: var(--halo-input-disabled-border);
+    box-shadow: var(--halo-input-disabled-shadow);
+    cursor: not-allowed;
+}
+
+.halo-otpfield--disabled .halo-otpfield__segment::placeholder,
+.halo-otpfield__segment.halo-is-disabled::placeholder {
+    color: var(--halo-input-disabled-placeholder);
+}
+
+.halo-otpfield--readonly .halo-otpfield__segment,
+.halo-otpfield__segment.halo-is-readonly {
+    background: var(--halo-input-disabled-background);
+    color: var(--halo-input-disabled-text);
+    border-color: var(--halo-input-disabled-border);
+    box-shadow: var(--halo-input-disabled-shadow);
+    cursor: default;
+}
+
+.halo-otpfield--readonly .halo-otpfield__segment::placeholder,
+.halo-otpfield__segment.halo-is-readonly::placeholder {
+    color: var(--halo-input-disabled-placeholder);
+}
+
+@media (max-width:640px), (hover:none) and (pointer:coarse) {
+    .halo-otpfield__group {
+        gap: max(var(--halo-otpfield-size-gap), 0.45rem);
+    }
+
+    .halo-otpfield__segment {
+        width: max(var(--halo-otpfield-size-cell), 2.75rem);
+        flex-basis: max(var(--halo-otpfield-size-cell), 2.75rem);
+        min-height: max(var(--halo-otpfield-size-height), 2.75rem);
+        font-size: max(var(--halo-otpfield-size-font-size), 16px);
+    }
+}

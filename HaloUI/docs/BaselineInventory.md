@@ -24,6 +24,7 @@ This document captures the current HaloUI baseline and immediate follow-ups. Sta
 | `HaloLabel` | `Components/HaloLabel.razor` | Typography | Operational | |
 | `HaloLayout` | `Components/HaloLayout.razor` | Layout | Operational | |
 | `HaloNotice` | `Components/HaloNotice.razor` | Feedback | Operational | |
+| `HaloOtpField` | `Components/HaloOtpField.razor` | Forms | Operational | |
 | `HaloPasswordField` | `Components/HaloPasswordField.razor` | Forms | Operational | |
 | `HaloRadioButton` | `Components/HaloRadioButton.razor` | Forms | Operational | |
 | `HaloRadioGroup` | `Components/HaloRadioGroup.razor` | Forms | Operational | |

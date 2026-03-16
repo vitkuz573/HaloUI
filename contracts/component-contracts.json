@@ -186,6 +186,21 @@
       ]
     },
     {
+      "name": "HaloOtpField",
+      "accessibilityKind": "interactive",
+      "responsiveKind": "adaptive",
+      "evidenceFiles": [
+        "HaloUI.Tests/HaloOtpFieldTests.cs"
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "disabled",
+        "readonly",
+        "error"
+      ]
+    },
+    {
       "name": "HaloPasswordField",
       "accessibilityKind": "interactive",
       "responsiveKind": "adaptive",

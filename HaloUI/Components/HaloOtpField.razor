@@ -1,0 +1,44 @@
+﻿@using HaloUI.Components.Base
+
+@inherits HaloLabellableInputBase<string>
+
+<div class="@BuildWrapperClass()">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <HaloLabel Id="@LabelElementId"
+                 For="@InputId"
+                 Text="@Label"
+                 Variant="@ResolveLabelVariant()"
+                 Disabled="@(Disabled || ReadOnly)"
+                 ShowRequiredIndicator="@(IsRequired)" />
+    }
+
+    <div class="halo-otpfield__group" role="group" style="@BuildGroupStyle()">
+        @for (var index = 0; index < Length; index++)
+        {
+            var segmentIndex = index;
+
+            <input id="@GetSegmentId(segmentIndex)"
+                   @key="GetSegmentKey(segmentIndex)"
+                   type="text"
+                   class="@BuildSegmentClass(segmentIndex)"
+                   value="@_segments[segmentIndex]"
+                   inputmode="numeric"
+                   autocomplete="@ResolveAutocomplete(segmentIndex)"
+                   enterkeyhint="done"
+                   maxlength="1"
+                   pattern="[0-9]*"
+                   placeholder="@ResolveSegmentPlaceholder(segmentIndex)"
+                   required="@(IsRequired)"
+                   disabled="@(Disabled)"
+                   readonly="@(ReadOnly)"
+                   @attributes="BuildSegmentAttributes(segmentIndex)"
+                   @oninput="args => HandleSegmentInputAsync(segmentIndex, args)"
+                   @onchange="args => HandleSegmentChangeAsync(segmentIndex, args)"
+                   @onkeydown="args => HandleSegmentKeyDownAsync(segmentIndex, args)"
+                   @onkeypress="args => HandleSegmentKeyPressAsync(segmentIndex, args)"
+                   @onkeypress:preventDefault="true"
+                   @ref="_segmentReferences[segmentIndex]" />
+        }
+    </div>
+</div>
