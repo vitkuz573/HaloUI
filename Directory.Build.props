@@ -7,6 +7,10 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <NoWarn>$(NoWarn);1591;8509</NoWarn>
     <EnableTrimAnalyzer>false</EnableTrimAnalyzer>
+    <RepositoryUrl>https://github.com/vitkuz573/HaloUI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/vitkuz573/HaloUI</PackageProjectUrl>
+    <PackageLicenseExpression Condition="'$(IsPackable)' != 'false'">MIT OR Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,3 @@
-// Copyright © 2023-2026 Vitaly Kuzyaev. All rights reserved.
-// This file is part of the HaloUI project.
-// Licensed under the GNU Affero General Public License v3.0.
-
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
@@ -1708,9 +1704,6 @@ public sealed class ThemeSdkGenerator : IIncrementalGenerator
         builder.AppendLine("//");
         builder.AppendLine("//  ⚠️ Do NOT modify this file manually.");
         builder.AppendLine("//  Changes will be lost when the source is regenerated.");
-        builder.AppendLine("//");
-        builder.AppendLine("//  Licensed under the GNU Affero General Public License v3.0");
-        builder.AppendLine("//  See: https://www.gnu.org/licenses/agpl-3.0.html");
         builder.AppendLine("// </auto-generated>");
         builder.AppendLine("//------------------------------------------------------------------------------");
         builder.AppendLine("#nullable enable");

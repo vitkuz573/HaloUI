@@ -129,4 +129,12 @@ HALOUI_UPDATE_PUBLIC_API_CONTRACT=1 dotnet test HaloUI.Tests/HaloUI.Tests.csproj
 ![Snackbar open dark desktop](tests/docs/media/snackbar-open-dark-desktop.png)
 
 ## License
-GNU Affero General Public License v3.0.
+HaloUI is dual-licensed under either:
+
+- MIT ([LICENSE-MIT](LICENSE-MIT))
+- Apache-2.0 ([LICENSE](LICENSE))
+
+at your option.
+
+Unless explicitly stated otherwise, submitted contributions are accepted under
+the same dual-license terms.
