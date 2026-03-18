@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 
 test.describe('DialogHost demo interactions', () => {
   test('opens dialog surface and closes via Escape', async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe('DialogHost demo interactions', () => {
     });
 
     const section = getDemoSection(page, 'dialog');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const trigger = section.getByTestId('button-open-dialog');
     await expect(trigger).toBeVisible();

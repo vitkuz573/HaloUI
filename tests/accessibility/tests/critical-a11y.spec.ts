@@ -3,6 +3,7 @@ import {
   bootstrapDemoHost,
   expectCleanAxeScan,
   getDemoSection,
+  scrollLocatorIntoView,
 } from './testUtils';
 import {
   DEMO_SECTION_CONTRACTS,
@@ -17,7 +18,7 @@ test.describe('HaloUI demo critical accessibility scans', () => {
       });
 
       const section = getDemoSection(page, contract.id);
-      await section.scrollIntoViewIfNeeded();
+      await scrollLocatorIntoView(section);
 
       await expectCleanAxeScan(page, {
         include: `[data-testid="demo-section-${contract.id}"]`,

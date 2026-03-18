@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import {
   bootstrapDemoHost,
   getDemoSection,
+  scrollLocatorIntoView,
 } from './testUtils';
 
 test.describe('HaloInputFile demo scenarios', () => {
@@ -12,7 +13,7 @@ test.describe('HaloInputFile demo scenarios', () => {
     });
 
     const section = getDemoSection(page, 'input-file');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const invalidChooserPromise = page.waitForEvent('filechooser');
     await section.getByTestId('input-file-open-hidden').click();

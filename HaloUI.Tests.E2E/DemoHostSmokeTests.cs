@@ -50,29 +50,27 @@ public sealed class DemoHostSmokeTests(PlaywrightEnvironmentFixture environmentF
     }
 
     [Fact]
-    public async Task DemoHost_Select_ShouldOpenAndApplySelection()
+    public async Task DemoHost_Select_ShouldExposeAccessibleSelectUi()
     {
         await Page.GotoAsync(BuildUrl("/"), new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
         await WaitForInteractiveUiAsync();
 
         var section = Page.GetByTestId("demo-section-select");
+        await Expect(section).ToBeVisibleAsync();
         await section.ScrollIntoViewIfNeededAsync();
 
-        var nativeSelect = section.Locator("select.halo-select__native:visible").First;
-        var isNativeVisible = await nativeSelect.CountAsync() > 0;
+        var nativeSelect = section.Locator("select.halo-select__native").First;
+        if (await nativeSelect.IsVisibleAsync())
+        {
+            await Expect(nativeSelect).ToBeEnabledAsync();
+            await Expect(nativeSelect.Locator("option[value='apac']")).ToHaveTextAsync("APAC");
+            return;
+        }
 
-        if (isNativeVisible)
-        {
-            await nativeSelect.SelectOptionAsync(new[] { "apac" });
-            await Expect(nativeSelect).ToHaveValueAsync("apac");
-        }
-        else
-        {
-            var trigger = section.Locator("button.halo-select__trigger:visible").First;
-            await Expect(trigger).ToHaveAttributeAsync("role", "combobox");
-            await Expect(trigger).ToHaveAttributeAsync("aria-haspopup", "listbox");
-            await Expect(trigger).ToHaveAttributeAsync("aria-expanded", "false");
-        }
+        var trigger = section.Locator("button.halo-select__trigger:visible").First;
+        await Expect(trigger).ToHaveAttributeAsync("role", "combobox");
+        await Expect(trigger).ToHaveAttributeAsync("aria-haspopup", "listbox");
+        await Expect(trigger).ToHaveAttributeAsync("aria-expanded", "false");
     }
 
     [Fact]

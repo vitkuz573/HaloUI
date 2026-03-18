@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 
 test.describe('Select overlay stability in transformed cards', () => {
   test('keeps a single stable dropdown when pointer leaves card bounds', async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe('Select overlay stability in transformed cards', () => {
     });
 
     const section = getDemoSection(page, 'select-in-card');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const trigger = section.locator('.halo-select__trigger').first();
     await trigger.hover();
@@ -91,7 +91,7 @@ test.describe('Select overlay stability in transformed cards', () => {
     });
 
     const section = getDemoSection(page, 'select-in-card');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const trigger = section.locator('.halo-select__trigger').first();
     await trigger.click();
@@ -118,7 +118,7 @@ test.describe('Select overlay stability in transformed cards', () => {
     });
 
     const section = getDemoSection(page, 'select-in-card');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const trigger = section.locator('.halo-select__trigger').first();
     await trigger.click();
@@ -149,14 +149,14 @@ test.describe('Select overlay stability in transformed cards', () => {
     });
 
     const firstSection = getDemoSection(page, 'select');
-    await firstSection.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(firstSection);
     const firstTrigger = firstSection.locator('.halo-select__trigger').first();
     await firstTrigger.click();
     await expect(page.locator('.halo-select__dropdown')).toHaveCount(1);
     await expect(page.locator('.halo-select__dropdown').first()).toBeVisible();
 
     const secondSection = getDemoSection(page, 'select-in-card');
-    await secondSection.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(secondSection);
     const secondTrigger = secondSection.locator('.halo-select__trigger').first();
     const secondBounds = await secondTrigger.boundingBox();
     if (!secondBounds) {

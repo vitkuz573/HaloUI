@@ -1,7 +1,7 @@
 .halo-notice {
     --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-info-subtle, #eff6ff) 100%, transparent);
     --halo-notice-border-color: var(--halo-color-feedback-info-default, #3b82f6);
-    --halo-notice-icon-color: var(--halo-color-feedback-info-default, #3b82f6);
+    --halo-notice-icon-color: var(--halo-color-feedback-info-text, #075985);
     background: var(--halo-notice-background);
     border: 1px solid var(--halo-notice-border-color);
     border-radius: 0.75rem;
@@ -18,25 +18,25 @@
 .halo-notice--info {
     --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-info-subtle, #eff6ff) 100%, transparent);
     --halo-notice-border-color: var(--halo-color-feedback-info-default, #3b82f6);
-    --halo-notice-icon-color: var(--halo-color-feedback-info-default, #3b82f6);
+    --halo-notice-icon-color: var(--halo-color-feedback-info-text, #075985);
 }
 
 .halo-notice--success {
     --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-success-subtle, #ecfdf3) 100%, transparent);
     --halo-notice-border-color: var(--halo-color-feedback-success-default, #10b981);
-    --halo-notice-icon-color: var(--halo-color-feedback-success-default, #10b981);
+    --halo-notice-icon-color: var(--halo-color-feedback-success-text, #065f46);
 }
 
 .halo-notice--warning {
     --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-warning-subtle, #fffbeb) 100%, transparent);
     --halo-notice-border-color: var(--halo-color-feedback-warning-default, #f59e0b);
-    --halo-notice-icon-color: var(--halo-color-feedback-warning-default, #f59e0b);
+    --halo-notice-icon-color: var(--halo-color-feedback-warning-text, #92400e);
 }
 
 .halo-notice--danger {
     --halo-notice-background: color-mix(in srgb, var(--halo-color-feedback-danger-subtle, #fef2f2) 100%, transparent);
     --halo-notice-border-color: var(--halo-color-feedback-danger-default, #ef4444);
-    --halo-notice-icon-color: var(--halo-color-feedback-danger-default, #ef4444);
+    --halo-notice-icon-color: var(--halo-color-feedback-danger-text, #9f1239);
 }
 
 .halo-notice__icon {

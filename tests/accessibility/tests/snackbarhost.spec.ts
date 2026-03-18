@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 
 test.describe('SnackbarHost demo interactions', () => {
   test('pushes snackbar and renders content/action', async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe('SnackbarHost demo interactions', () => {
     });
 
     const section = getDemoSection(page, 'snackbar');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     const trigger = section.getByTestId('button-show-snackbar');
     await expect(trigger).toBeVisible();

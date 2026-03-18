@@ -1,7 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 import type { ThemeVariant, ViewportPreset } from './matrix.data';
 
 const CAPTURE_FLAG = process.env.HALOUI_CAPTURE_SCREENSHOTS === '1';
@@ -46,7 +46,7 @@ test.describe('HaloUI screenshot gallery', () => {
 
         for (const sectionId of GALLERY_SECTIONS) {
           const section = getDemoSection(page, sectionId);
-          await section.scrollIntoViewIfNeeded();
+          await scrollLocatorIntoView(section);
 
           await section.screenshot({
             path: path.join(OUTPUT_DIR, `section-${sectionId}-${theme}-${viewport.name}.png`),
@@ -62,7 +62,7 @@ test.describe('HaloUI screenshot gallery', () => {
 
 async function captureDialogState(page: Page, theme: ThemeVariant, viewport: ViewportPreset): Promise<void> {
   const dialogSection = getDemoSection(page, 'dialog');
-  await dialogSection.scrollIntoViewIfNeeded();
+  await scrollLocatorIntoView(dialogSection);
 
   await dialogSection.getByTestId('button-open-dialog').click();
 
@@ -82,7 +82,7 @@ async function captureDialogState(page: Page, theme: ThemeVariant, viewport: Vie
 
 async function captureSnackbarState(page: Page, theme: ThemeVariant, viewport: ViewportPreset): Promise<void> {
   const snackbarSection = getDemoSection(page, 'snackbar');
-  await snackbarSection.scrollIntoViewIfNeeded();
+  await scrollLocatorIntoView(snackbarSection);
 
   await snackbarSection.getByTestId('button-show-snackbar').click();
 

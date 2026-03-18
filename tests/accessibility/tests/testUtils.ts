@@ -13,6 +13,9 @@ const AXE_TAGS = [
 ] as const;
 
 const DEFAULT_VIEWPORT: ViewportPreset = { name: 'desktop', width: 1600, height: 980 };
+const DETACHED_DOM_ERROR_PATTERN = /(?:Element is not attached|not attached to the DOM)/i;
+const SCROLL_RETRY_ATTEMPTS = 3;
+const SCROLL_RETRY_DELAY_MS = 100;
 
 type AxeScope = string | string[] | undefined;
 
@@ -41,6 +44,25 @@ export async function bootstrapDemoHost(page: Page, options?: BootstrapOptions):
 
 export function getDemoSection(page: Page, sectionId: string): Locator {
   return page.getByTestId(`demo-section-${sectionId}`);
+}
+
+export async function scrollLocatorIntoView(locator: Locator): Promise<void> {
+  for (let attempt = 1; attempt <= SCROLL_RETRY_ATTEMPTS; attempt += 1) {
+    try {
+      await locator.waitFor({ state: 'attached', timeout: 10_000 });
+      await expect(locator).toBeVisible({ timeout: 10_000 });
+      await locator.scrollIntoViewIfNeeded();
+      return;
+    } catch (error) {
+      if (!isDetachedDomError(error) || attempt === SCROLL_RETRY_ATTEMPTS) {
+        throw error;
+      }
+
+      await waitForDelay(SCROLL_RETRY_DELAY_MS);
+    }
+  }
+
+  throw new Error('Failed to scroll locator into view after retries.');
 }
 
 export async function focusFirstElementInSection(section: Locator, selector: string): Promise<Locator> {
@@ -87,4 +109,12 @@ async function findFirstVisible(candidates: Locator): Promise<Locator> {
 
   await expect(candidates.first()).toBeVisible();
   return candidates.first();
+}
+
+function isDetachedDomError(error: unknown): boolean {
+  return error instanceof Error && DETACHED_DOM_ERROR_PATTERN.test(error.message);
+}
+
+function waitForDelay(timeoutMs: number): Promise<void> {
+  return new Promise<void>((resolve) => setTimeout(resolve, timeoutMs));
 }

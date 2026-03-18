@@ -411,6 +411,12 @@ public partial class HaloInputFile
             bag["required"] = "required";
         }
 
+        if (Mode == HaloInputFileMode.Hidden)
+        {
+            bag["aria-hidden"] = "true";
+            bag["tabindex"] = "-1";
+        }
+
         return bag;
     }
 
@@ -621,7 +627,7 @@ public partial class HaloInputFile
     {
         var ids = new HashSet<string>(StringComparer.Ordinal);
 
-        if (LabelElementId is not null)
+        if (Mode != HaloInputFileMode.Hidden && LabelElementId is not null)
         {
             ids.Add(LabelElementId);
         }

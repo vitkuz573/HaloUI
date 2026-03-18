@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 
 test.describe('Select overlay positioning in transformed ancestors', () => {
   test('keeps dropdown anchored to trigger and preserves trigger width', async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe('Select overlay positioning in transformed ancestors', () => {
     });
 
     const section = getDemoSection(page, 'select');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     await section.evaluate((element) => {
       if (!(element instanceof HTMLElement)) {

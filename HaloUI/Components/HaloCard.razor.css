@@ -188,27 +188,27 @@
 .halo-card--variant-primary {
     --halo-card-hover-border-color-instance: var(--halo-card-primary-hover-border-color);
     --halo-card-hover-background-instance: var(--halo-card-primary-hover-background);
-    --halo-card-icon-color-instance: var(--halo-card-primary-icon-color);
-    --halo-card-icon-hover-color-instance: var(--halo-card-primary-icon-hover-color);
+    --halo-card-icon-color-instance: var(--halo-color-interactive-primary-active, #3730a3);
+    --halo-card-icon-hover-color-instance: var(--halo-color-interactive-primary-hover, #4338ca);
 }
 
 .halo-card--variant-success {
     --halo-card-hover-border-color-instance: var(--halo-card-success-hover-border-color);
     --halo-card-hover-background-instance: var(--halo-card-success-hover-background);
-    --halo-card-icon-color-instance: var(--halo-card-success-icon-color);
-    --halo-card-icon-hover-color-instance: var(--halo-card-success-icon-hover-color);
+    --halo-card-icon-color-instance: var(--halo-color-feedback-success-text, #065f46);
+    --halo-card-icon-hover-color-instance: var(--halo-color-feedback-success-text, #065f46);
 }
 
 .halo-card--variant-warning {
     --halo-card-hover-border-color-instance: var(--halo-card-warning-hover-border-color);
     --halo-card-hover-background-instance: var(--halo-card-warning-hover-background);
-    --halo-card-icon-color-instance: var(--halo-card-warning-icon-color);
-    --halo-card-icon-hover-color-instance: var(--halo-card-warning-icon-hover-color);
+    --halo-card-icon-color-instance: var(--halo-color-feedback-warning-text, #92400e);
+    --halo-card-icon-hover-color-instance: var(--halo-color-feedback-warning-text, #92400e);
 }
 
 .halo-card--variant-danger {
     --halo-card-hover-border-color-instance: var(--halo-card-danger-hover-border-color);
     --halo-card-hover-background-instance: var(--halo-card-danger-hover-background);
-    --halo-card-icon-color-instance: var(--halo-card-danger-icon-color);
-    --halo-card-icon-hover-color-instance: var(--halo-card-danger-icon-hover-color);
+    --halo-card-icon-color-instance: var(--halo-color-feedback-danger-text, #9f1239);
+    --halo-card-icon-hover-color-instance: var(--halo-color-feedback-danger-text, #9f1239);
 }

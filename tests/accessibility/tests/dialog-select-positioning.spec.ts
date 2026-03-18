@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { bootstrapDemoHost, getDemoSection } from './testUtils';
+import { bootstrapDemoHost, getDemoSection, scrollLocatorIntoView } from './testUtils';
 
 test.describe('Dialog select overlay behavior', () => {
   test('opens dropdown without transient dialog scroll and keeps popup in viewport', async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe('Dialog select overlay behavior', () => {
     });
 
     const section = getDemoSection(page, 'dialog');
-    await section.scrollIntoViewIfNeeded();
+    await scrollLocatorIntoView(section);
 
     await section.getByTestId('button-open-dialog').click();
 
