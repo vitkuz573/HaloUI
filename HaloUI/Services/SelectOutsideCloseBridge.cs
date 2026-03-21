@@ -21,7 +21,7 @@ internal sealed class SelectOutsideCloseBridge : IDisposable
         return _reference;
     }
 
-    [JSInvokable]
+    [JSInvokable("RequestClose")]
     public Task RequestCloseAsync() => _requestCloseAsync();
 
     public void Dispose()

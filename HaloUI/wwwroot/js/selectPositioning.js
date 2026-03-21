@@ -179,7 +179,7 @@ function requestClose(dotNetReference) {
         return;
     }
 
-    void dotNetReference.invokeMethodAsync('RequestCloseAsync').catch(() => { });
+    void dotNetReference.invokeMethodAsync('RequestClose').catch(() => { });
 }
 
 export function registerOutsideClose(selectId, triggerElement, dropdownElement, dotNetReference) {
