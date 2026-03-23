@@ -1317,6 +1317,7 @@ type class HaloUI.Components.HaloTable<TItem> : HaloUI.Components.Base.ThemeAwar
   property System.Boolean IsExpanded {get;set;}
   property System.Boolean IsLoading {get;set;}
   property System.Boolean IsSearchEnabled {get;set;}
+  property System.Boolean UseVirtualization {get;set;}
   property System.Collections.Generic.IEnumerable<System.Func<TItem, System.String>> SearchFields {get;set;}
   property System.Collections.Generic.IEnumerable<TItem> Items {get;set;}
   property System.Func<TItem, System.Object> RowKeySelector {get;set;}
@@ -1325,7 +1326,10 @@ type class HaloUI.Components.HaloTable<TItem> : HaloUI.Components.Base.ThemeAwar
   property System.Int32 SkeletonRowCount {get;set;}
   property System.Nullable<HaloUI.Enums.TableSelectionMode> SelectionMode {get;set;}
   property System.Object ItemsProviderState {get;set;}
+  property System.String DesktopSectionClass {get;set;}
   property System.String EmptyMessage {get;set;}
+  property System.String MobileSectionClass {get;set;}
+  property System.String TableClass {get;set;}
   property System.String Title {get;set;}
 type class HaloUI.Components.HaloTabs : HaloUI.Components.Base.ThemeAwareComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleAfterRender, Microsoft.AspNetCore.Components.IHandleEvent, System.IDisposable
   ctor()

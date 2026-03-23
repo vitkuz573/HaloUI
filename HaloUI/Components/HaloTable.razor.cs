@@ -95,6 +95,9 @@ public partial class HaloTable<TItem>
     [Parameter] public bool IsLoading { get; set; }
     [Parameter] public bool IsDense { get; set; } = false;
     [Parameter] public string EmptyMessage { get; set; } = "No items found.";
+    [Parameter] public string? DesktopSectionClass { get; set; }
+    [Parameter] public string? MobileSectionClass { get; set; }
+    [Parameter] public string? TableClass { get; set; }
     [Parameter] public Func<TItem, string, bool>? SearchPredicate { get; set; }
     [Parameter] public IEnumerable<Func<TItem, string?>>? SearchFields { get; set; }
     [Parameter] public int SkeletonRowCount { get; set; } = 5;
@@ -108,6 +111,7 @@ public partial class HaloTable<TItem>
     [Parameter] public EventCallback<TableSelectionChangedEventArgs<TItem>> SelectionChanged { get; set; }
     [Parameter] public EventCallback<TablePaginationState> PaginationChanged { get; set; }
     [Parameter] public int OverscanCount { get; set; } = 3;
+    [Parameter] public bool UseVirtualization { get; set; } = true;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -226,6 +230,21 @@ public partial class HaloTable<TItem>
         }
 
         return string.Join(' ', classes);
+    }
+
+    private string GetDesktopSectionClasses()
+    {
+        return JoinClasses("halo-table__desktop-section", DesktopSectionClass);
+    }
+
+    private string GetTableClasses()
+    {
+        return JoinClasses("halo-table__table", TableClass);
+    }
+
+    private string GetMobileSectionClasses()
+    {
+        return JoinClasses("halo-table__mobile-section", MobileSectionClass);
     }
 
     private string GetHeaderContainerClasses()
@@ -629,6 +648,17 @@ public partial class HaloTable<TItem>
         return new ItemsProviderResult<TItem>(result.Items, result.TotalItemCount);
     }
 
+    private IReadOnlyList<TItem> GetNonVirtualizedItems()
+    {
+        var tableRequest = _state.BuildRequest(0, int.MaxValue, ItemsProviderState, default);
+        var result = _inMemoryProvider.Provide(tableRequest);
+
+        _state.UpdateVisibleItems(result.Items);
+        _state.UpdateTotalItemCount(result.TotalItemCount);
+
+        return result.Items;
+    }
+
     private void HandleStateChanged()
     {
         _providerInitialized = false;
@@ -674,6 +704,18 @@ public partial class HaloTable<TItem>
     private void ToggleFilterPanel()
     {
         _filtersExpanded = !_filtersExpanded;
+    }
+
+    private static string JoinClasses(string baseClass, string? additionalClass)
+    {
+        if (string.IsNullOrWhiteSpace(additionalClass))
+        {
+            return baseClass;
+        }
+
+        return string.Join(' ',
+            new[] { baseClass, additionalClass }
+                .Where(static value => !string.IsNullOrWhiteSpace(value)));
     }
 
     protected override void Dispose(bool disposing)

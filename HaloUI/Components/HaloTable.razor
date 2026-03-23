@@ -140,13 +140,17 @@
         }
 
         var visibleColumns = state.Columns.Where(static column => !column.Hidden).ToList();
-        var hasItems = state.Pagination.TotalItemCount > 0;
         var isLoading = IsLoading || (UsesExternalProvider && !_providerInitialized);
+        var useVirtualizedRendering = UsesExternalProvider || UseVirtualization;
+        var nonVirtualizedItems = useVirtualizedRendering ? null : GetNonVirtualizedItems();
+        var hasItems = useVirtualizedRendering
+            ? state.Pagination.TotalItemCount > 0
+            : nonVirtualizedItems is { Count: > 0 };
 
         @if (!IsCollapsible || _isExpanded)
         {
-            <div class="halo-table__desktop-section" id="@_contentId">
-                <table class="halo-table__table" aria-label="@_options.TableAriaLabel">
+            <div class="@GetDesktopSectionClasses()" id="@_contentId">
+                <table class="@GetTableClasses()" aria-label="@_options.TableAriaLabel">
                     <thead class="halo-table__head">
                         <tr>
                             @if (_options.SelectionMode == TableSelectionMode.Multiple)
@@ -287,7 +291,7 @@
                                 </tr>
                             }
                         }
-                        else if (hasItems)
+                        else if (useVirtualizedRendering && hasItems)
                         {
                             <Virtualize Context="item"
                                         ItemsProvider="ProvideItemsAsync"
@@ -324,6 +328,39 @@
                                 </ItemContent>
                             </Virtualize>
                         }
+                        else if (hasItems)
+                        {
+                            @foreach (var item in nonVirtualizedItems!)
+                            {
+                                <tr class="halo-table__row @GetRowStateClass(item)" @key="GetRowKey(item)">
+                                    @if (_options.SelectionMode == TableSelectionMode.Multiple)
+                                    {
+                                        <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
+                                            <input type="checkbox"
+                                                   checked="@state.IsSelected(item)"
+                                                   class="halo-table__selection-input"
+                                                   aria-label="@GetRowSelectionAriaLabel(item)"
+                                                   @onchange="() => OnRowSelectionToggled(item)" />
+                                        </td>
+                                    }
+                                    else if (_options.SelectionMode == TableSelectionMode.Single)
+                                    {
+                                        <td class="halo-table__cell halo-table__cell--selection @GetSelectionCellClasses()">
+                                            <input type="radio"
+                                                   name="@_selectionGroupId"
+                                                   checked="@state.IsSelected(item)"
+                                                   class="halo-table__selection-input"
+                                                   aria-label="@GetRowSelectionAriaLabel(item)"
+                                                   @onchange="() => OnRowSelectionToggled(item)" />
+                                        </td>
+                                    }
+                                    @foreach (var column in visibleColumns)
+                                    {
+                                        <td class="halo-table__cell @GetBodyCellClasses(column)">@column.Template(item)</td>
+                                    }
+                                </tr>
+                            }
+                        }
                         else if (!isLoading)
                         {
                             <tr>
@@ -333,7 +370,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="halo-table__mobile-section" id="@($"{_contentId}-mobile")">
+            <div class="@GetMobileSectionClasses()" id="@($"{_contentId}-mobile")">
                 @if (isLoading)
                 {
                     @for (var r = 0; r < SkeletonRowCount; r++)
@@ -390,7 +427,7 @@
                         <div class="halo-table__mobile-empty">@EmptyMessage</div>
                     }
                 }
-                else if (hasItems)
+                else if (useVirtualizedRendering && hasItems)
                 {
                     <Virtualize Context="item"
                                 ItemsProvider="ProvideItemsAsync"
@@ -426,6 +463,39 @@
                             </article>
                         </ItemContent>
                     </Virtualize>
+                }
+                else if (hasItems)
+                {
+                    @foreach (var item in nonVirtualizedItems!)
+                    {
+                        <article class="@GetMobileCardClass(item)" @key="GetRowKey(item)">
+                            <div class="halo-table__mobile-card-content">
+                                @foreach (var column in GetMobileColumns(visibleColumns))
+                                {
+                                    <div class="halo-table__mobile-row">
+                                        <span class="halo-table__mobile-label">@column.Title</span>
+                                        <div class="@GetMobileValueClasses(column)">@column.Template(item)</div>
+                                    </div>
+                                }
+                            </div>
+                            @if (_options.SelectionMode != TableSelectionMode.None)
+                            {
+                                <div class="halo-table__mobile-selection-footer">
+                                    <HaloButton Variant="ButtonVariant.Secondary"
+                                              Activated="() => OnRowSelectionToggled(item)">
+                                        @if (state.IsSelected(item))
+                                        {
+                                            <span>Selected</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Select</span>
+                                        }
+                                    </HaloButton>
+                                </div>
+                            }
+                        </article>
+                    }
                 }
                 else if (!isLoading)
                 {
