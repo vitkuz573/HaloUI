@@ -41,6 +41,9 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     
     [Parameter]
     public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool FullWidth { get; set; } = true;
     
     [Parameter]
     public InputFieldSize Size { get; set; } = InputFieldSize.Medium;
@@ -1213,6 +1216,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         var classes = new List<string>
         {
             "halo-select",
+            FullWidth ? "halo-select--full-width" : "halo-select--fit-content",
             Size switch
             {
                 InputFieldSize.Small => "halo-select--size-sm",
