@@ -22,6 +22,13 @@ internal static class ResponsiveFoundationCssBuilder
         builder.AppendLine(":where([class^=\"halo-\"], [class*=\" halo-\"]) :where(input, select, textarea, button) { max-inline-size: 100%; }");
         builder.AppendLine(":where(.halo-layout__header, .halo-layout__toolbar, .halo-layout__content, .halo-container__section, .halo-tabs__panels, .halo-table__mobile-section) { max-inline-size: 100%; }");
         builder.AppendLine(":where(.halo-text__content, .halo-label__text, .halo-badge__label, .halo-tree__label, .halo-tree__description, .halo-expandable-panel__title, .halo-expandable-panel__subtitle, .halo-expandable-panel__description, .halo-select__trigger-text) { overflow-wrap: anywhere; }");
+        builder.AppendLine(":where(.halo-flow-y-xs, .halo-flow-y-sm, .halo-flow-y-md, .halo-flow-y-lg, .halo-flow-y-xl, .halo-flow-y-2xl) { display: flex; flex-direction: column; min-width: 0; }");
+        builder.AppendLine(":where(.halo-flow-y-xs) { gap: var(--halo-spacing-gap-xs, 0.25rem); }");
+        builder.AppendLine(":where(.halo-flow-y-sm) { gap: var(--halo-spacing-gap-sm, 0.5rem); }");
+        builder.AppendLine(":where(.halo-flow-y-md) { gap: var(--halo-spacing-gap-md, 0.75rem); }");
+        builder.AppendLine(":where(.halo-flow-y-lg) { gap: var(--halo-spacing-gap-lg, 1rem); }");
+        builder.AppendLine(":where(.halo-flow-y-xl) { gap: var(--halo-spacing-gap-xl, 1.5rem); }");
+        builder.AppendLine(":where(.halo-flow-y-2xl) { gap: var(--halo-spacing-gap-xl2, 2rem); }");
         builder.AppendLine($":where(.halo-layout__content) {{ padding-inline: {fluid.FluidContainerPadding}; }}");
         builder.AppendLine($":where(.halo-table__mobile-section) {{ gap: {spacing.Section.GetValue("xs")}; }}");
 
