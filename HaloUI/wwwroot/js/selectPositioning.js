@@ -1,6 +1,7 @@
 const VIEWPORT_PADDING_PX = 8;
 const MIN_DROPDOWN_HEIGHT_PX = 112;
 let activeOutsideCloseRegistration = null;
+let activePlacementRefreshRegistration = null;
 
 function toFiniteNumber(value, fallback) {
     return Number.isFinite(value) ? value : fallback;
@@ -215,6 +216,14 @@ function requestClose(dotNetReference) {
     void dotNetReference.invokeMethodAsync('RequestClose').catch(() => { });
 }
 
+function requestPlacementRefresh(dotNetReference) {
+    if (!dotNetReference || typeof dotNetReference.invokeMethodAsync !== 'function') {
+        return;
+    }
+
+    void dotNetReference.invokeMethodAsync('RequestPlacementRefresh').catch(() => { });
+}
+
 export function registerOutsideClose(selectId, triggerElement, dropdownElement, dotNetReference) {
     if (
         typeof selectId !== 'string' ||
@@ -273,6 +282,117 @@ export function registerOutsideClose(selectId, triggerElement, dropdownElement, 
     document.addEventListener('focusin', onFocusInCapture, true);
 }
 
+function clearActivePlacementRefreshRegistration() {
+    if (!activePlacementRefreshRegistration) {
+        return;
+    }
+
+    activePlacementRefreshRegistration.cancelPendingFrame();
+    document.removeEventListener(
+        'scroll',
+        activePlacementRefreshRegistration.onDocumentScrollCapture,
+        true);
+    window.removeEventListener(
+        'resize',
+        activePlacementRefreshRegistration.onViewportChange,
+        activePlacementRefreshRegistration.viewportListenerOptions);
+    window.removeEventListener(
+        'orientationchange',
+        activePlacementRefreshRegistration.onViewportChange,
+        activePlacementRefreshRegistration.viewportListenerOptions);
+
+    if (window.visualViewport) {
+        window.visualViewport.removeEventListener(
+            'resize',
+            activePlacementRefreshRegistration.onViewportChange,
+            activePlacementRefreshRegistration.viewportListenerOptions);
+        window.visualViewport.removeEventListener(
+            'scroll',
+            activePlacementRefreshRegistration.onViewportChange,
+            activePlacementRefreshRegistration.viewportListenerOptions);
+    }
+
+    activePlacementRefreshRegistration = null;
+}
+
+export function registerPlacementRefresh(selectId, triggerElement, dropdownElement, dotNetReference) {
+    if (
+        typeof selectId !== 'string' ||
+        selectId.length === 0 ||
+        !(triggerElement instanceof Element) ||
+        !(dropdownElement instanceof Element) ||
+        !dotNetReference) {
+        return;
+    }
+
+    if (activePlacementRefreshRegistration) {
+        clearActivePlacementRefreshRegistration();
+    }
+
+    const viewportListenerOptions = { passive: true };
+    let frameRequested = false;
+    let frameRequestId = 0;
+
+    const cancelPendingFrame = () => {
+        if (!frameRequested) {
+            return;
+        }
+
+        window.cancelAnimationFrame(frameRequestId);
+        frameRequested = false;
+        frameRequestId = 0;
+    };
+
+    const scheduleRefresh = () => {
+        if (frameRequested) {
+            return;
+        }
+
+        frameRequested = true;
+        frameRequestId = window.requestAnimationFrame(() => {
+            frameRequested = false;
+            frameRequestId = 0;
+
+            if (!triggerElement.isConnected || !dropdownElement.isConnected) {
+                clearActivePlacementRefreshRegistration();
+                return;
+            }
+
+            requestPlacementRefresh(dotNetReference);
+        });
+    };
+
+    const onDocumentScrollCapture = (event) => {
+        const target = event.target;
+        if (target instanceof Node && isInside(dropdownElement, target)) {
+            return;
+        }
+
+        scheduleRefresh();
+    };
+
+    const onViewportChange = () => {
+        scheduleRefresh();
+    };
+
+    activePlacementRefreshRegistration = {
+        selectId,
+        onDocumentScrollCapture,
+        onViewportChange,
+        cancelPendingFrame,
+        viewportListenerOptions
+    };
+
+    document.addEventListener('scroll', onDocumentScrollCapture, true);
+    window.addEventListener('resize', onViewportChange, viewportListenerOptions);
+    window.addEventListener('orientationchange', onViewportChange, viewportListenerOptions);
+
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', onViewportChange, viewportListenerOptions);
+        window.visualViewport.addEventListener('scroll', onViewportChange, viewportListenerOptions);
+    }
+}
+
 export function unregisterOutsideClose(selectId) {
     if (!activeOutsideCloseRegistration) {
         return;
@@ -283,4 +403,16 @@ export function unregisterOutsideClose(selectId) {
     }
 
     clearActiveOutsideCloseRegistration();
+}
+
+export function unregisterPlacementRefresh(selectId) {
+    if (!activePlacementRefreshRegistration) {
+        return;
+    }
+
+    if (activePlacementRefreshRegistration.selectId !== selectId) {
+        return;
+    }
+
+    clearActivePlacementRefreshRegistration();
 }

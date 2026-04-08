@@ -29,9 +29,26 @@ internal interface ISelectPositioningRuntime : IAsyncDisposable
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Registers viewport and scroll listeners that request placement refreshes.
+    /// </summary>
+    ValueTask RegisterPlacementRefreshAsync(
+        string selectId,
+        ElementReference triggerElement,
+        ElementReference dropdownElement,
+        object dotNetReference,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Unregisters global outside-interaction handling for a select.
     /// </summary>
     ValueTask UnregisterOutsideCloseAsync(
+        string selectId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Unregisters placement refresh listeners for a select.
+    /// </summary>
+    ValueTask UnregisterPlacementRefreshAsync(
         string selectId,
         CancellationToken cancellationToken = default);
 }

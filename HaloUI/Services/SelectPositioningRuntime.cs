@@ -104,6 +104,42 @@ internal sealed class SelectPositioningRuntime : JsModuleRuntimeBase, ISelectPos
         }
     }
 
+    public async ValueTask RegisterPlacementRefreshAsync(
+        string selectId,
+        ElementReference triggerElement,
+        ElementReference dropdownElement,
+        object dotNetReference,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(selectId))
+        {
+            return;
+        }
+
+        try
+        {
+            await InvokeVoidAsync(
+                "registerPlacementRefresh",
+                cancellationToken,
+                selectId,
+                triggerElement,
+                dropdownElement,
+                dotNetReference);
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+    }
+
     public async ValueTask UnregisterOutsideCloseAsync(
         string selectId,
         CancellationToken cancellationToken = default)
@@ -116,6 +152,33 @@ internal sealed class SelectPositioningRuntime : JsModuleRuntimeBase, ISelectPos
         try
         {
             await InvokeVoidAsync("unregisterOutsideClose", cancellationToken, selectId);
+        }
+        catch (JSDisconnectedException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (InvalidOperationException)
+        {
+        }
+    }
+
+    public async ValueTask UnregisterPlacementRefreshAsync(
+        string selectId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(selectId))
+        {
+            return;
+        }
+
+        try
+        {
+            await InvokeVoidAsync("unregisterPlacementRefresh", cancellationToken, selectId);
         }
         catch (JSDisconnectedException)
         {

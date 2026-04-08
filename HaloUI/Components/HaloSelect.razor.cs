@@ -96,6 +96,11 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
     private bool _outsideCloseRegistrationPending;
     private bool _outsideCloseRegistered;
     private SelectOutsideCloseBridge? _outsideCloseBridge;
+    private bool _placementRefreshRegistrationPending;
+    private bool _placementRefreshRegistered;
+    private bool _placementRefreshInProgress;
+    private bool _placementRefreshQueued;
+    private SelectPlacementRefreshBridge? _placementRefreshBridge;
     private bool _isDisposed;
 
     private bool IsInvalid => HasError || (EditContext?.GetValidationMessages(FieldIdentifier).Any() ?? false);
@@ -615,6 +620,10 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         _pendingPlacementMeasurement = true;
         _outsideCloseRegistrationPending = true;
         _outsideCloseRegistered = false;
+        _placementRefreshRegistrationPending = true;
+        _placementRefreshRegistered = false;
+        _placementRefreshInProgress = false;
+        _placementRefreshQueued = false;
 
         _isOpen = true;
 
@@ -646,6 +655,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return;
         }
 
+        await UnregisterPlacementRefreshAsync();
         await UnregisterOutsideCloseAsync();
 
         _isOpen = false;
@@ -661,6 +671,10 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         _pointerInteractionMode = false;
         _outsideCloseRegistrationPending = false;
         _outsideCloseRegistered = false;
+        _placementRefreshRegistrationPending = false;
+        _placementRefreshRegistered = false;
+        _placementRefreshInProgress = false;
+        _placementRefreshQueued = false;
 
         if (focusTrigger)
         {
@@ -1079,6 +1093,15 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         if (!UseNativeSelectPresentation &&
             _isOpen &&
+            _placementRefreshRegistrationPending &&
+            !_placementRefreshRegistered &&
+            _dropdownRef.Context is not null)
+        {
+            await RegisterPlacementRefreshAsync();
+        }
+
+        if (!UseNativeSelectPresentation &&
+            _isOpen &&
             _outsideCloseRegistrationPending &&
             !_outsideCloseRegistered &&
             _dropdownRef.Context is not null)
@@ -1101,6 +1124,10 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             _pendingFocusPreventScroll = false;
             _outsideCloseRegistrationPending = false;
             _outsideCloseRegistered = false;
+            _placementRefreshRegistrationPending = false;
+            _placementRefreshRegistered = false;
+            _placementRefreshInProgress = false;
+            _placementRefreshQueued = false;
         }
 
         await base.OnAfterRenderAsync(firstRender);
@@ -1196,6 +1223,27 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         _outsideCloseRegistrationPending = false;
     }
 
+    private async Task RegisterPlacementRefreshAsync()
+    {
+        if (SelectPositioningRuntime is null ||
+            _placementRefreshRegistered ||
+            _dropdownRef.Context is null)
+        {
+            return;
+        }
+
+        _placementRefreshBridge ??= new SelectPlacementRefreshBridge(RequestPlacementRefreshFromViewportAsync);
+
+        await SelectPositioningRuntime.RegisterPlacementRefreshAsync(
+            _selectId,
+            _triggerRef,
+            _dropdownRef,
+            _placementRefreshBridge.GetOrCreateReference());
+
+        _placementRefreshRegistered = true;
+        _placementRefreshRegistrationPending = false;
+    }
+
     private async Task UnregisterOutsideCloseAsync()
     {
         if (SelectPositioningRuntime is null)
@@ -1204,6 +1252,54 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         }
 
         await SelectPositioningRuntime.UnregisterOutsideCloseAsync(_selectId);
+    }
+
+    private async Task UnregisterPlacementRefreshAsync()
+    {
+        if (SelectPositioningRuntime is null)
+        {
+            return;
+        }
+
+        await SelectPositioningRuntime.UnregisterPlacementRefreshAsync(_selectId);
+    }
+
+    private Task RequestPlacementRefreshFromViewportAsync()
+    {
+        if (_isDisposed || !_isOpen || UseNativeSelectPresentation)
+        {
+            return Task.CompletedTask;
+        }
+
+        return InvokeAsync(async () =>
+        {
+            if (_isDisposed || !_isOpen || UseNativeSelectPresentation)
+            {
+                return;
+            }
+
+            if (_placementRefreshInProgress)
+            {
+                _placementRefreshQueued = true;
+                return;
+            }
+
+            do
+            {
+                _placementRefreshQueued = false;
+                _placementRefreshInProgress = true;
+
+                try
+                {
+                    await RefreshDropdownPlacementAsync();
+                }
+                finally
+                {
+                    _placementRefreshInProgress = false;
+                }
+            }
+            while (_placementRefreshQueued && !_isDisposed && _isOpen && !UseNativeSelectPresentation);
+        });
     }
 
     private Task RequestCloseFromOutsideInteractionAsync()
@@ -1378,13 +1474,20 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         _isDisposed = true;
 
+        await UnregisterPlacementRefreshAsync();
         await UnregisterOutsideCloseAsync();
 
         _outsideCloseRegistered = false;
         _outsideCloseRegistrationPending = false;
+        _placementRefreshRegistered = false;
+        _placementRefreshRegistrationPending = false;
+        _placementRefreshInProgress = false;
+        _placementRefreshQueued = false;
 
         _outsideCloseBridge?.Dispose();
         _outsideCloseBridge = null;
+        _placementRefreshBridge?.Dispose();
+        _placementRefreshBridge = null;
     }
 
     private sealed class OptionItem
