@@ -33,6 +33,7 @@ public partial class AccessibilitySamples
     private readonly List<string> _dropzoneRejections = [];
     private string _selectedRegion = "emea";
     private string _selectedRegionInCard = "emea";
+    private string _selectedLayeringStatus = "all";
     private DateTimeOffset? _maintenanceWindow = DateTimeOffset.UtcNow.AddHours(3);
     private readonly DateTimeOffset _maintenanceMin = DateTimeOffset.UtcNow.AddDays(-1);
     private readonly DateTimeOffset _maintenanceMax = DateTimeOffset.UtcNow.AddDays(14);
@@ -111,6 +112,16 @@ public partial class AccessibilitySamples
     private readonly TableOptions _tableOptions = new()
     {
         TableAriaLabel = "Device health overview",
+        ShowToolbar = false,
+        ShowColumnFilters = false,
+        EnablePagination = false,
+        EnableMultiSort = false,
+        SelectionMode = TableSelectionMode.None
+    };
+
+    private readonly TableOptions _layeringTableOptions = new()
+    {
+        TableAriaLabel = "Select layering probe table",
         ShowToolbar = false,
         ShowColumnFilters = false,
         EnablePagination = false,

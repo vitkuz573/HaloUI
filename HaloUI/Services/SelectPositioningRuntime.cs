@@ -18,6 +18,7 @@ internal sealed class SelectPositioningRuntime : JsModuleRuntimeBase, ISelectPos
 
     public async ValueTask<SelectDropdownPlacement?> CalculateDropdownPlacementAsync(
         ElementReference triggerElement,
+        ElementReference dropdownElement,
         bool preferUpward,
         double maxHeightPx,
         double gapPx,
@@ -28,7 +29,12 @@ internal sealed class SelectPositioningRuntime : JsModuleRuntimeBase, ISelectPos
         try
         {
             var payload = new SelectPositioningRequest(preferUpward, maxHeightPx, gapPx);
-            result = await InvokeAsync<SelectPositioningResult?>("calculateDropdownPlacement", cancellationToken, triggerElement, payload);
+            result = await InvokeAsync<SelectPositioningResult?>(
+                "calculateDropdownPlacement",
+                cancellationToken,
+                triggerElement,
+                dropdownElement,
+                payload);
         }
         catch (JSDisconnectedException)
         {

@@ -12,6 +12,7 @@ internal interface ISelectPositioningRuntime : IAsyncDisposable
     /// </summary>
     ValueTask<SelectDropdownPlacement?> CalculateDropdownPlacementAsync(
         ElementReference triggerElement,
+        ElementReference dropdownElement,
         bool preferUpward,
         double maxHeightPx,
         double gapPx,

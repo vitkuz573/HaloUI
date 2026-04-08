@@ -79,7 +79,38 @@ function getFixedPositionContainingBlockOffset(element) {
     };
 }
 
-export function calculateDropdownPlacement(triggerElement, request) {
+function resolveRenderedDropdownHeightPx(dropdownElement, fallbackHeightPx) {
+    if (!(dropdownElement instanceof HTMLElement)) {
+        return fallbackHeightPx;
+    }
+
+    const measuredOffsetHeight = toFiniteNumber(dropdownElement.offsetHeight, NaN);
+    if (Number.isFinite(measuredOffsetHeight) && measuredOffsetHeight > 0) {
+        return measuredOffsetHeight;
+    }
+
+    const measuredRectHeight = toFiniteNumber(dropdownElement.getBoundingClientRect().height, NaN);
+    if (Number.isFinite(measuredRectHeight) && measuredRectHeight > 0) {
+        return measuredRectHeight;
+    }
+
+    const measuredScrollHeight = toFiniteNumber(dropdownElement.scrollHeight, NaN);
+    if (Number.isFinite(measuredScrollHeight) && measuredScrollHeight > 0) {
+        return Math.max(1, Math.min(fallbackHeightPx, measuredScrollHeight));
+    }
+
+    return fallbackHeightPx;
+}
+
+export function calculateDropdownPlacement(triggerElement, dropdownElementOrRequest, requestOrUndefined) {
+    let dropdownElement = dropdownElementOrRequest;
+    let request = requestOrUndefined;
+
+    if (requestOrUndefined === undefined && !(dropdownElementOrRequest instanceof Element)) {
+        dropdownElement = null;
+        request = dropdownElementOrRequest;
+    }
+
     if (!(triggerElement instanceof Element)) {
         return null;
     }
@@ -135,10 +166,12 @@ export function calculateDropdownPlacement(triggerElement, request) {
 
     leftPx = Math.max(VIEWPORT_PADDING_PX, leftPx);
 
+    const renderedHeightPx = resolveRenderedDropdownHeightPx(dropdownElement, maxHeightPx);
+
     let topPx = openUpward
-        ? Math.max(VIEWPORT_PADDING_PX, rect.top - gapPx - maxHeightPx)
+        ? Math.max(VIEWPORT_PADDING_PX, rect.top - gapPx - renderedHeightPx)
         : Math.min(
-            viewportHeight - VIEWPORT_PADDING_PX - maxHeightPx,
+            viewportHeight - VIEWPORT_PADDING_PX - renderedHeightPx,
             rect.bottom + gapPx);
 
     const fixedOffset = getFixedPositionContainingBlockOffset(triggerElement);

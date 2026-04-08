@@ -1116,6 +1116,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         var configuredMaxHeight = ResolveConfiguredDropdownMaxHeightPx();
         var measuredPlacement = await SelectPositioningRuntime.CalculateDropdownPlacementAsync(
             _triggerRef,
+            _dropdownRef,
             _dropdownOpensUpward,
             configuredMaxHeight,
             DropdownGapPx);
@@ -1125,6 +1126,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return false;
         }
 
+        var previousPlacement = _dropdownPlacement;
         var shouldRender = false;
 
         if (_dropdownOpensUpward != measuredPlacement.OpenUpward)
@@ -1141,6 +1143,16 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         if (shouldRender)
         {
+            var placementDirectionChanged = previousPlacement is null ||
+                previousPlacement.OpenUpward != measuredPlacement.OpenUpward;
+            var placementHeightBudgetChanged = previousPlacement is null ||
+                Math.Abs(previousPlacement.MaxHeightPx - measuredPlacement.MaxHeightPx) > 0.5d;
+
+            if (placementDirectionChanged || placementHeightBudgetChanged)
+            {
+                _pendingPlacementMeasurement = true;
+            }
+
             StateHasChanged();
             return true;
         }
@@ -1157,6 +1169,7 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
 
         return await SelectPositioningRuntime.CalculateDropdownPlacementAsync(
             _triggerRef,
+            default,
             _dropdownOpensUpward,
             ResolveConfiguredDropdownMaxHeightPx(),
             DropdownGapPx);

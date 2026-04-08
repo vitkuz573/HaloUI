@@ -205,6 +205,63 @@
             </HaloCard>
         </article>
 
+        <article id="select-table-layering" class="demo-section demo-section--full" data-testid="demo-section-select-table-layering">
+            <h2>Select Over Table</h2>
+            <p>Layering probe for dropdown overlays above adjacent table content.</p>
+            <div class="demo-stack">
+                <HaloCard Title="Grant Filters"
+                          Subtitle="Open a select and verify it stays above the table"
+                          Icon="@Material.Outlined.FilterAlt"
+                          Variant="CardVariant.Default">
+                    <ChildContent>
+                        <div class="demo-stack">
+                            <HaloSelect TValue="string"
+                                        Label="Status"
+                                        Placeholder="Select status"
+                                        Behavior="@(new HaloSelectBehaviorOptions { MaxDropdownHeightPx = 320d })"
+                                        @bind-Value="_selectedLayeringStatus">
+                                <HaloSelectOption Value="@("all")">All statuses</HaloSelectOption>
+                                <HaloSelectOption Value="@("active")">Active</HaloSelectOption>
+                                <HaloSelectOption Value="@("revoked")">Revoked</HaloSelectOption>
+                                <HaloSelectOption Value="@("pending")">Pending</HaloSelectOption>
+                                <HaloSelectOption Value="@("expired")">Expired</HaloSelectOption>
+                                <HaloSelectOption Value="@("scheduled")">Scheduled</HaloSelectOption>
+                                <HaloSelectOption Value="@("validation")">Validation required</HaloSelectOption>
+                                <HaloSelectOption Value="@("archived")">Archived</HaloSelectOption>
+                            </HaloSelect>
+                        </div>
+                    </ChildContent>
+                </HaloCard>
+
+                <div data-testid="select-table-layering-table">
+                    <HaloTable TItem="DeviceStatusRow"
+                               Items="_deviceRows"
+                               Options="@_layeringTableOptions"
+                               EmptyMessage="No rows found."
+                               Title="Zero-Touch Grants">
+                        <Columns>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Device">
+                                <Template Context="row">
+                                    <strong>@row.Name</strong>
+                                </Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Status">
+                                <Template Context="row">
+                                    <HaloBadge Variant="@GetStatusVariant(row.Status)" Text="@row.Status" />
+                                </Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Region">
+                                <Template Context="row">@row.Region</Template>
+                            </HaloTableColumn>
+                            <HaloTableColumn TItem="DeviceStatusRow" Title="Last check">
+                                <Template Context="row">@row.LastSeen</Template>
+                            </HaloTableColumn>
+                        </Columns>
+                    </HaloTable>
+                </div>
+            </div>
+        </article>
+
         <article id="datetime" class="demo-section" data-testid="demo-section-datetime">
             <h2>Date Time</h2>
             <p>Bound datetime-local field with min/max guards.</p>
