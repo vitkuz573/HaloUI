@@ -57,7 +57,7 @@ test.describe('Dialog select overlay behavior', () => {
       const probe = (window as typeof window & { __haloDialogSelectScrollProbe?: Array<{ index: number; top: number }> }).__haloDialogSelectScrollProbe ?? [];
       const dropdown = document.querySelector<HTMLElement>('.halo-select__dropdown');
       if (!dropdown) {
-        return { eventCount: probe.length, inViewport: false };
+        return { eventCount: probe.length, inViewport: false, hasOcclusion: true };
       }
 
       const rect = dropdown.getBoundingClientRect();
@@ -66,13 +66,31 @@ test.describe('Dialog select overlay behavior', () => {
         && rect.right <= window.innerWidth
         && rect.bottom <= window.innerHeight;
 
+      const samplePoints = [
+        { x: rect.left + rect.width / 2, y: rect.top + 8 },
+        { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 },
+        { x: rect.left + rect.width / 2, y: rect.bottom - 8 },
+      ]
+        .map((point) => ({
+          x: Math.min(window.innerWidth - 1, Math.max(0, Math.floor(point.x))),
+          y: Math.min(window.innerHeight - 1, Math.max(0, Math.floor(point.y))),
+        }))
+        .filter((point) => point.y >= rect.top && point.y <= rect.bottom);
+
+      const hasOcclusion = samplePoints.some((point) => {
+        const topElement = document.elementFromPoint(point.x, point.y);
+        return !(topElement instanceof Node) || !dropdown.contains(topElement);
+      });
+
       return {
         eventCount: probe.length,
         inViewport,
+        hasOcclusion,
       };
     });
 
     expect(result.eventCount).toBe(0);
     expect(result.inViewport).toBeTruthy();
+    expect(result.hasOcclusion).toBeFalsy();
   });
 });

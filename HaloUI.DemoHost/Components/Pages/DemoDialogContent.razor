@@ -11,24 +11,30 @@
         The country selector is intentionally located near the bottom of the dialog to validate overlay behavior.
     </p>
 
-    <HaloTextArea Label="Operator notes"
-                  Value="@_notes"
-                  ValueChanged="HandleNotesChanged"
-                  Rows="5"
-                  Immediate="true"
-                  ValueInput="HandleNotesInput"
-                  Placeholder="Capture rollout context, escalation owner, and rollback criteria." />
+    <HaloContainer>
+        <ChildContent>
+            <div class="space-y-4">
+                <HaloTextArea Label="Operator notes"
+                              Value="@_notes"
+                              ValueChanged="HandleNotesChanged"
+                              Rows="5"
+                              Immediate="true"
+                              ValueInput="HandleNotesInput"
+                              Placeholder="Capture rollout context, escalation owner, and rollback criteria." />
 
-    <HaloSelect TValue="string"
-                Label="Country"
-                Value="@_country"
-                ValueChanged="HandleCountryChanged"
-                Placeholder="Choose country">
-        @foreach (var country in Countries)
-        {
-            <HaloSelectOption Value="@country.Code" Text="@country.Name" />
-        }
-    </HaloSelect>
+                <HaloSelect TValue="string"
+                            Label="Country"
+                            Value="@_country"
+                            ValueChanged="HandleCountryChanged"
+                            Placeholder="Choose country">
+                    @foreach (var country in Countries)
+                    {
+                        <HaloSelectOption Value="@country.Code" Text="@country.Name" />
+                    }
+                </HaloSelect>
+            </div>
+        </ChildContent>
+    </HaloContainer>
 </div>
 
 @code

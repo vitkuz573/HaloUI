@@ -4,7 +4,6 @@
         border-radius: var(--halo-container-border-radius);
         color: var(--halo-container-text-color);
         box-shadow: var(--halo-container-shadow);
-        backdrop-filter: blur(var(--halo-container-backdrop-blur));
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -12,6 +11,21 @@
         min-width: 0;
         max-width: 100%;
         container-type: inline-size;
+        position: relative;
+    }
+
+    .halo-container::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        backdrop-filter: blur(var(--halo-container-backdrop-blur));
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .halo-container > * {
+        position: relative;
     }
 
     .halo-container--elevated {
