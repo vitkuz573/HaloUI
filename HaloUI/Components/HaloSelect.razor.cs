@@ -502,8 +502,13 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             return;
         }
 
-        ApplyOptionParameters(option, existing);
+        var optionChanged = ApplyOptionParameters(option, existing);
         SyncHighlight();
+
+        if (optionChanged)
+        {
+            StateHasChanged();
+        }
     }
 
     internal void UnregisterOption(HaloSelectOption<TValue> option)
@@ -535,8 +540,14 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         return item;
     }
 
-    private static void ApplyOptionParameters(HaloSelectOption<TValue> option, OptionItem item)
+    private static bool ApplyOptionParameters(HaloSelectOption<TValue> option, OptionItem item)
     {
+        var previousValue = item.Value;
+        var previousDisabled = item.Disabled;
+        var previousText = item.Text;
+        var previousUsesGeneratedContent = item.UsesGeneratedContent;
+        var previousContent = item.Content;
+
         item.Value = option.Value;
         item.Disabled = option.Disabled;
 
@@ -548,7 +559,25 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         }
 
         item.Text = text ?? string.Empty;
-        item.Content = option.ChildContent ?? (builder => builder.AddContent(0, item.Text));
+
+        if (option.ChildContent is { } customContent)
+        {
+            item.Content = customContent;
+            item.UsesGeneratedContent = false;
+        }
+        else
+        {
+            item.Content = item.GeneratedContent;
+            item.UsesGeneratedContent = true;
+        }
+
+        var valueChanged = !EqualityComparer<TValue>.Default.Equals(previousValue, item.Value);
+        var disabledChanged = previousDisabled != item.Disabled;
+        var textChanged = !string.Equals(previousText, item.Text, StringComparison.Ordinal);
+        var contentModeChanged = previousUsesGeneratedContent != item.UsesGeneratedContent;
+        var contentReferenceChanged = !ReferenceEquals(previousContent, item.Content);
+
+        return valueChanged || disabledChanged || textChanged || contentModeChanged || contentReferenceChanged;
     }
 
     private void SyncHighlight()
@@ -1497,6 +1526,8 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
             Component = component;
             Id = Guid.NewGuid().ToString("N");
             ElementId = $"{ownerId}-option-{Id}";
+            GeneratedContent = builder => builder.AddContent(0, Text);
+            Content = GeneratedContent;
         }
 
         public HaloSelectOption<TValue>? Component { get; }
@@ -1510,8 +1541,12 @@ public partial class HaloSelect<TValue> : IAsyncDisposable
         public string Text { get; set; } = string.Empty;
         
         public bool Disabled { get; set; }
-        
-        public RenderFragment Content { get; set; } = builder => { };
+
+        public RenderFragment GeneratedContent { get; }
+
+        public RenderFragment Content { get; set; }
+
+        public bool UsesGeneratedContent { get; set; } = true;
         
         public ElementReference ElementRef { get; set; }
     }
